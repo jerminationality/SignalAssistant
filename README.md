@@ -105,3 +105,4 @@ Qt’s QML engine runs entirely on the Pi, so only the `GuitarPi` binary and `qm
 - Add packaging (systemd service + `.desktop`) after confirming the realtime audio pipeline.
 
 Once these TODOs are complete, you’ll have feature parity on the Pi 4 and a ready-to-run build for the Pi 5 with zero extra work.
+# SignalAssistant
