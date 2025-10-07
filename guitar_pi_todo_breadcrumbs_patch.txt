@@ -1,0 +1,182 @@
+# Apply these edits to your existing scaffold files
+# Each block replaces the entire file in your current Canvas scaffold with TODO(Copilot) breadcrumbs.
+
+--- a/src/audio/CarlaClient.cpp
++++ b/src/audio/CarlaClient.cpp
+@@
+-#include "CarlaClient.h"
+-
+-bool CarlaClient::start() {
+-    // TODO: Connect to JACK, instantiate Carla rack/graph, load default chain
+-    // TODO: Connect system:capture_* -> gate input; chain modules; last -> system:playback_*
+-    return true;
+-}
+-
+-void CarlaClient::stop() {
+-    // TODO: disconnect graph, free resources (must be RT-safe)
+-}
+-
+-void CarlaClient::setBufferSize(int /*frames*/) {
+-    // TODO: request JACK buffer change; update internal latency text via signal
+-}
+-
+-void CarlaClient::setSampleRate(int /*sr*/) {
+-    // TODO
+-}
++#include "CarlaClient.h"
++
++// TODO(Copilot): Connect to JACK, create/attach Carla rack/graph, and load default chain
++// Chain: Gate → EQ → Amp → IR → Limiter. Expose ports for 2×2 now; plan for 6× later.
++
++bool CarlaClient::start() {
++    // TODO(Copilot): Start JACK client, ensure server running, attach Carla, instantiate plugins
++    // TODO(Copilot): Connect system:capture_* -> gate input; chain modules; last -> system:playback_*
++    return true; // Return false if any step fails
++}
++
++void CarlaClient::stop() {
++    // TODO(Copilot): Safely disconnect graph and free resources without blocking RT threads
++}
++
++void CarlaClient::setBufferSize(int /*frames*/) {
++    // TODO(Copilot): Request new JACK buffer size and update latency text via signal
++}
++
++void CarlaClient::setSampleRate(int /*sr*/) {
++    // TODO(Copilot): Rebuild graph or reconfigure plugins if necessary
++}
+
+--- a/src/AppController.cpp
++++ b/src/AppController.cpp
+@@
+-#include "AppController.h"
+-
+-AppController::AppController(QObject* parent): QObject(parent) {}
+-
+-void AppController::setCurrentPreset(const QString& p) {
+-    if (p == m_currentPreset) return;
+-    m_currentPreset = p;
+-    emit currentPresetChanged();
+-}
+-
+-QStringList AppController::availablePresets() const {
+-    // TODO: scan preset directory; for now return mock list
+-    return {"Default", "Crunch", "Chime", "Lead"};
+-}
+-
+-void AppController::savePreset(const QString& /*name*/) {
+-    // TODO: serialize chain + params to YAML/JSON
+-}
+-
+-void AppController::loadPreset(const QString& name) {
+-    setCurrentPreset(name);
+-    // TODO: deserialize preset and push params to audio engine
+-}
+-
+-void AppController::setBufferSize(int /*frames*/) {
+-    // TODO: forward to audio engine + emit latencyTextChanged when changed
+-}
+-
+-void AppController::setSampleRate(int /*sr*/) {
+-    // TODO
+-}
+-
+-void AppController::startAudio() {
+-    // TODO
+-}
+-
+-void AppController::stopAudio() {
+-    // TODO
+-}
++#include "AppController.h"
++
++AppController::AppController(QObject* parent): QObject(parent) {
++    // TODO(Copilot): Load persisted settings (sample rate, buffer size, last preset)
++}
++
++void AppController::setCurrentPreset(const QString& p) {
++    if (p == m_currentPreset) return;
++    m_currentPreset = p;
++    emit currentPresetChanged();
++    // TODO(Copilot): Push preset params to audio engine
++}
++
++QStringList AppController::availablePresets() const {
++    // TODO(Copilot): scan preset directory; for now return mock list
++    return {"Default", "Crunch", "Chime", "Lead"};
++}
++
++void AppController::savePreset(const QString& /*name*/) {
++    // TODO(Copilot): Serialize chain + params + IR path to YAML/JSON
++}
++
++void AppController::loadPreset(const QString& name) {
++    setCurrentPreset(name);
++    // TODO(Copilot): Deserialize preset and push params to audio engine
++}
++
++void AppController::setBufferSize(int /*frames*/) {
++    // TODO(Copilot): Forward to audio engine; recompute latency text and emit latencyTextChanged()
++}
++
++void AppController::setSampleRate(int /*sr*/) {
++    // TODO(Copilot): Forward to audio engine; recompute latency text
++}
++
++void AppController::startAudio() {
++    // TODO(Copilot): Start CarlaClient; display errors on failure
++}
++
++void AppController::stopAudio() {
++    // TODO(Copilot): Stop CarlaClient cleanly
++}
+
+--- a/qml/pages/HomePage.qml
++++ b/qml/pages/HomePage.qml
+@@
+ Item {
+     anchors.fill: parent
+-    ColumnLayout {
++    // TODO(Copilot): Bind meters to AppController/App signals for real input/output levels
++    ColumnLayout {
+         anchors.fill: parent
+         anchors.margins: 24
+         spacing: 16
+@@
+ }
+
+--- a/qml/pages/RigPage.qml
++++ b/qml/pages/RigPage.qml
+@@
+ Item {
+     anchors.fill: parent
+-    ColumnLayout { anchors.fill: parent; anchors.margins: 24; spacing: 12
++    // TODO(Copilot): Replace placeholders with draggable nodes bound to real plugin params
++    ColumnLayout { anchors.fill: parent; anchors.margins: 24; spacing: 12
+         Text { text: "Rig"; font.pixelSize: 24 }
+@@
+ }
+
+--- a/qml/pages/SettingsPage.qml
++++ b/qml/pages/SettingsPage.qml
+@@
+ Item {
+     anchors.fill: parent
+-    ColumnLayout { anchors.fill: parent; anchors.margins: 24; spacing: 12
++    // TODO(Copilot): Populate SR/buffer options from actual device caps via AppController
++    ColumnLayout { anchors.fill: parent; anchors.margins: 24; spacing: 12
+         Text { text: "Settings"; font.pixelSize: 24 }
+         RowLayout {
+             spacing: 12
+             Label { text: "Sample Rate" }
+             ComboBox { model: [44100, 48000, 96000]; onActivated: AppController.setSampleRate(currentText) }
+             Label { text: "Buffer (frames)" }
+             ComboBox { model: [64, 128, 256]; onActivated: AppController.setBufferSize(currentText) }
+             Button { text: "Start"; onClicked: AppController.startAudio() }
+             Button { text: "Stop"; onClicked: AppController.stopAudio() }
+         }
+         Rectangle { Layout.fillWidth: true; Layout.fillHeight: true; color: "#0b1220"; radius: 12
+             Text { anchors.centerIn: parent; text: "Hex mapping / gains (future)"; color: "#93c5fd" }
+         }
+     }
+ }
