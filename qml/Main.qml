@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import "components"
+import "pages"
 
 ApplicationWindow {
     id: root
@@ -8,6 +10,8 @@ ApplicationWindow {
     width: 1200
     height: 720
     title: "GuitarPi"
+    Component.onCompleted: AppController.startAudio()
+    Component.onDestruction: AppController.stopAudio()
 
     RowLayout {
         anchors.fill: parent

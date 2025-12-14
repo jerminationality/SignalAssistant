@@ -27,6 +27,17 @@ All feature work is tracked by `TODO(Copilot)` breadcrumbs that mirror the roadm
    ./scripts/install_deps_pi.sh
    ```
 
+   > **Heads-up:** The default Raspberry Pi OS repositories for Bookworm/Trixie do not provide Carla packages. The installer will skip them automatically and print manual install guidance. If you need the plugin host, install Carla separately before wiring up the audio engine—for example:
+   > 
+   > ```bash
+   > wget https://launchpad.net/~kxstudio-debian/+archive/kxstudio/+files/kxstudio-repos_11.2.0_all.deb
+   > sudo dpkg -i kxstudio-repos_11.2.0_all.deb
+   > sudo apt update
+   > sudo apt install carla carla-data
+   > ```
+   > 
+   > The KXStudio bridges (`carla-bridge-*`) are x86-only; on Raspberry Pi the native host is all you need. If you prefer bleeding-edge Carla versions, build from source following the upstream `INSTALL.md` after adding the Pi build dependencies listed there.
+
 3. Build the project (Qt 6 is provided by the packages above):
 
    ```bash
@@ -42,8 +53,15 @@ All feature work is tracked by `TODO(Copilot)` breadcrumbs that mirror the roadm
    ```
 
 4. Optional: enable realtime audio tweaks on the Pi 4 so behaviour matches the future Pi 5 environment:
-   - Set the CPU governor to `performance`: `sudo raspi-config nonint do_overclock 0` (or `echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor`).
+   - Apply the bundled low-latency script (USB IRQ pinning + CPU governor) after each reboot: `sudo ./scripts/setup_low_latency.sh`. Set `TARGET_CPU=n` if you want IRQs on a specific core, or `DRY_RUN=1` to preview changes.
+   - To automate it at boot, install the systemd unit: `sudo ./scripts/install_low_latency_service.sh`. Tweak `/etc/default/guitarpi-lowlatency` later if you want to pin to a different core.
    - Add your user to the `audio` and `realtime` groups, configure `/etc/security/limits.d/audio.conf` for RT priority 95 / memlock unlimited.
+   - If you want JACK to own the Scarlett automatically at login with 48 kHz / 64-frame buffers, run `./scripts/install_jackd_service.sh`. The script writes a user-level service (`~/.config/systemd/user/jackd.service`), disables the PipeWire stack for that user, and enables `jackd` immediately. For headless boots, enable lingering afterward: `sudo loginctl enable-linger $USER`. To undo it later, disable the unit and re-enable PipeWire:
+
+     ```bash
+     systemctl --user disable --now jackd.service
+     systemctl --user enable --now pipewire.service pipewire-pulse.service wireplumber.service
+     ```
 
 Running the app on Pi 4 ensures the software stack, JACK/Carla integration, and presets are validated before the Pi 5 shows up. Every artifact produced this way will also run on Pi 5 because both are arm64.
 
