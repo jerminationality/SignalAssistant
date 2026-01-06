@@ -1,0 +1,36 @@
+[
+    {
+        "moduleFiles": [
+            {
+                "entries": [
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 19,
+                        "durationMicroseconds": 207,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 6
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 34,
+                        "durationMicroseconds": 168,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 7
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 38,
+                        "durationMicroseconds": 160,
+                        "errorMessage": "",
+                        "functionName": "centerIn",
+                        "line": 16
+                    }
+                ],
+                "filepath": "/home/general/SignalAssistant/qml/pages/RecordPage.qml"
+            }
+        ],
+        "moduleId": "GuitarPi(GuitarPi)"
+    }
+]

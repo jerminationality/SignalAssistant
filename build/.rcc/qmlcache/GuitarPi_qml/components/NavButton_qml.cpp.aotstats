@@ -1,0 +1,20 @@
+[
+    {
+        "moduleFiles": [
+            {
+                "entries": [
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 16,
+                        "durationMicroseconds": 98,
+                        "errorMessage": "Cannot access value for name btn",
+                        "functionName": "color",
+                        "line": 12
+                    }
+                ],
+                "filepath": "/home/general/SignalAssistant/qml/components/NavButton.qml"
+            }
+        ],
+        "moduleId": "GuitarPi(GuitarPi)"
+    }
+]

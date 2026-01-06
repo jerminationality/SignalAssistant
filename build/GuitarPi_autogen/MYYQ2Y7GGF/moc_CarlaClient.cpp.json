@@ -1,0 +1,72 @@
+{
+    "classes": [
+        {
+            "className": "CarlaClient",
+            "lineNumber": 18,
+            "object": true,
+            "qualifiedClassName": "CarlaClient",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "count",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 0,
+                    "name": "xrunsChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "inL",
+                            "type": "float"
+                        },
+                        {
+                            "name": "inR",
+                            "type": "float"
+                        },
+                        {
+                            "name": "outL",
+                            "type": "float"
+                        },
+                        {
+                            "name": "outR",
+                            "type": "float"
+                        }
+                    ],
+                    "index": 1,
+                    "name": "metersSnapshot",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sampleRate",
+                            "type": "int"
+                        },
+                        {
+                            "name": "bufferSize",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 2,
+                    "name": "bufferConfigChanged",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "AudioEngine"
+                }
+            ]
+        }
+    ],
+    "inputFile": "CarlaClient.h",
+    "outputRevision": 68
+}

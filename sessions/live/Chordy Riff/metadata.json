@@ -1,0 +1,23 @@
+{
+    "durationSec": 65.01066666666667,
+    "folder": "Chordy Riff",
+    "label": "Chordy Riff",
+    "sampleRate": 48000,
+    "stringMidi": [
+        40,
+        45,
+        50,
+        55,
+        59,
+        64
+    ],
+    "stringNames": [
+        "E2",
+        "A",
+        "D",
+        "G",
+        "B",
+        "E4"
+    ],
+    "timestamp": "20251206-062710"
+}

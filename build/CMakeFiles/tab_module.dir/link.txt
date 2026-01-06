@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/tab_module.dir/link.d CMakeFiles/tab_module.dir/tab_module_autogen/mocs_compilation.cpp.o CMakeFiles/tab_module.dir/src/tab_module.cpp.o -o tab_module  libguitarpi_tab.a /usr/lib/aarch64-linux-gnu/libsndfile.so -laubio

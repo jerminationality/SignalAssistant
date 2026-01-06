@@ -1,0 +1,13 @@
+# SignalAssistant session log
+# Started at 2025-12-26 01:48:12
+2025-12-26 01:48:12 [session] mode=recorded session='20251226-010649 S1 F0 F1' path='/home/general/SignalAssistant/sessions/live/20251226-010649 S1 F0 F1' duration=10.60 files=6
+2025-12-26 01:48:12 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-26 01:48:12 [tracker-settings] string1 midi=40 lowCut=77.50Hz highCut=135.00Hz baseline=0.001000 gateRatio=0.05500 envFloor=0.001500 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.250 onsetScale=0.360
+2025-12-26 01:48:12 [tracker-settings] string2 midi=45 lowCut=102.50Hz highCut=215.00Hz baseline=0.001200 gateRatio=0.10000 envFloor=0.001800 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.610
+2025-12-26 01:48:12 [tracker-settings] string3 midi=50 lowCut=137.50Hz highCut=290.00Hz baseline=0.001400 gateRatio=0.13000 envFloor=0.002100 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.930
+2025-12-26 01:48:12 [tracker-settings] string4 midi=55 lowCut=187.50Hz highCut=385.00Hz baseline=0.001600 gateRatio=0.17000 envFloor=0.002400 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.440 onsetScale=1.260
+2025-12-26 01:48:12 [tracker-settings] string5 midi=59 lowCut=237.50Hz highCut=485.00Hz baseline=0.001800 gateRatio=0.21000 envFloor=0.002700 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=1.440
+2025-12-26 01:48:12 [tracker-settings] string6 midi=64 lowCut=317.50Hz highCut=650.00Hz baseline=0.002000 gateRatio=0.25000 envFloor=0.003000 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=1.620
+2025-12-26 01:48:12 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2025-12-26 01:48:12 [calibration] Calibration profile derived from tuning state
+# Session closed at 2025-12-26 01:48:13

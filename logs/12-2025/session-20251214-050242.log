@@ -1,0 +1,743 @@
+# SignalAssistant session log
+# Started at 2025-12-14 05:02:42
+2025-12-14 05:02:42 [session] mode=live session='' path='' duration=0.00 files=0
+2025-12-14 05:02:42 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-14 05:02:42 [tracker-settings] string1 midi=40 lowCut=37.08Hz highCut=445.00Hz baseline=0.000180 gateRatio=0.05500 envFloor=0.000450 sustainScale=0.580 retriggerScale=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006
+2025-12-14 05:02:42 [tracker-settings] string2 midi=45 lowCut=55.00Hz highCut=563.20Hz baseline=0.000220 gateRatio=0.10000 envFloor=0.000550 sustainScale=0.700 retriggerScale=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009
+2025-12-14 05:02:42 [tracker-settings] string4 midi=55 lowCut=127.40Hz highCut=862.39Hz baseline=0.000320 gateRatio=0.17000 envFloor=0.000780 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014
+2025-12-14 05:02:42 [tracker-settings] string5 midi=59 lowCut=160.51Hz highCut=1086.54Hz baseline=0.000370 gateRatio=0.21000 envFloor=0.000900 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016
+2025-12-14 05:02:42 [tracker-settings] string6 midi=64 lowCut=214.26Hz highCut=1450.36Hz baseline=0.000420 gateRatio=0.25000 envFloor=0.001050 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018
+2025-12-14 05:02:42 [tracker] [s1] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s1] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s1] calibration reset target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s2] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s2] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s2] calibration reset target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s3] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s3] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s3] calibration reset target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s4] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s4] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s4] calibration reset target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s5] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s5] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s5] calibration reset target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s6] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s6] refreshCalib: targetRms=0.25000 mult=5.000 calValid=0 avgRms=0.00100 gen=1 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s6] calibration reset target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s1] refreshCalib: targetRms=0.25000 mult=6.317 calValid=1 avgRms=0.03970 gen=7 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s1] calibration avg=0.03970 target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s2] refreshCalib: targetRms=0.25000 mult=8.000 calValid=1 avgRms=0.01940 gen=7 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s2] calibration avg=0.01940 target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s3] refreshCalib: targetRms=0.25000 mult=8.000 calValid=1 avgRms=0.01411 gen=7 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s3] calibration avg=0.01411 target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s4] refreshCalib: targetRms=0.25000 mult=8.000 calValid=1 avgRms=0.03018 gen=7 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s4] calibration avg=0.03018 target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s5] refreshCalib: targetRms=0.25000 mult=8.000 calValid=1 avgRms=0.02970 gen=7 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s5] calibration avg=0.02970 target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s6] refreshCalib: targetRms=0.25000 mult=8.000 calValid=1 avgRms=0.02331 gen=7 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s6] calibration avg=0.02331 target=0.02000 gain=1.000
+2025-12-14 05:02:42 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.000 calValid=1 avgRms=0.03970 gen=8 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:42 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:42 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=8 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:42 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:42 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=8 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:42 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:42 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=8 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:42 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:42 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=8 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:42 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:42 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=8 (applied in HexJackClient)
+2025-12-14 05:02:42 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:42 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:42 [tracker] [s1] aubio-raw t=0.0067 onset=4.000000 env=0.000095 peak=0.000204 gain=1.000
+2025-12-14 05:02:42 [tracker] [s1] onset-below-env-floor t=0.0067 env=0.000095 gate=0.000040 envDelta=0.000055 envFloor=0.000584 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000720 floor=0.000180 adapt=0.000973 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:42 [tracker] [s2] onset t=0.228 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.987 thresh=0.004 onsetDelta=0.98261 baseline=0.00022 adaptive=0.00021 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-14 05:02:42 [tracker] [s2] onset t=0.511 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.799 thresh=0.004 onsetDelta=0.79431 baseline=0.00022 adaptive=0.00017 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=250.00Hz pitchCents=1421.3
+2025-12-14 05:02:42 [tracker] [s2] note-start t=0.511 fret=11 midi=56 vel=0.00 env=0.00016
+2025-12-14 05:02:43 [tracker] [s2] release-quiet t=0.575 avgEnv=0.00013 floor=0.00017 quietFrames=8
+2025-12-14 05:02:43 [tracker] [s2] note-ended t=0.575 fret=11 dur=0.064
+2025-12-14 05:02:43 [tracker] [s1] aubio-raw t=0.7987 onset=0.896679 env=0.000099 peak=0.000246 gain=1.000
+2025-12-14 05:02:43 [tracker] [s1] onset-below-env-floor t=0.7987 env=0.000099 gate=0.000010 envDelta=0.000089 envFloor=0.000450 onset=0.896679 thresh=0.003000 onsetDelta=0.893679 baseline=0.000180 floor=0.000180 adapt=0.000131 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=216.19 pitchCents=1669.7
+2025-12-14 05:02:43 [tracker] [s1] aubio-raw t=0.8493 onset=0.820062 env=0.000145 peak=0.000350 gain=1.000
+2025-12-14 05:02:43 [tracker] [s1] onset-below-env-floor t=0.8493 env=0.000145 gate=0.000010 envDelta=0.000135 envFloor=0.000450 onset=0.820062 thresh=0.003000 onsetDelta=0.817062 baseline=0.000180 floor=0.000180 adapt=0.000131 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=160.00 pitchCents=1148.7
+2025-12-14 05:02:43 [tracker] [s1] aubio-raw t=1.0173 onset=0.886219 env=0.000089 peak=0.000276 gain=1.000
+2025-12-14 05:02:43 [tracker] [s1] onset-below-env-floor t=1.0173 env=0.000089 gate=0.000010 envDelta=0.000079 envFloor=0.000450 onset=0.886219 thresh=0.003000 onsetDelta=0.883219 baseline=0.000180 floor=0.000180 adapt=0.000137 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:43 [tracker] [s1] aubio-raw t=1.3133 onset=1.298002 env=0.000085 peak=0.000218 gain=1.000
+2025-12-14 05:02:43 [tracker] [s1] onset-below-env-floor t=1.3133 env=0.000085 gate=0.000010 envDelta=0.000075 envFloor=0.000450 onset=1.298002 thresh=0.003000 onsetDelta=1.295002 baseline=0.000180 floor=0.000180 adapt=0.000138 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=186.04 pitchCents=1409.7
+2025-12-14 05:02:44 [tracker] [s1] aubio-raw t=1.9293 onset=0.945895 env=0.000093 peak=0.000242 gain=1.000
+2025-12-14 05:02:44 [tracker] [s1] onset-below-env-floor t=1.9293 env=0.000093 gate=0.000010 envDelta=0.000083 envFloor=0.000450 onset=0.945895 thresh=0.003000 onsetDelta=0.942895 baseline=0.000180 floor=0.000180 adapt=0.000133 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=96.38 pitchCents=271.1
+2025-12-14 05:02:44 [tracker] [s1] aubio-raw t=2.0787 onset=1.159889 env=0.000179 peak=0.000460 gain=1.000
+2025-12-14 05:02:44 [tracker] [s1] onset-below-env-floor t=2.0787 env=0.000179 gate=0.000010 envDelta=0.000169 envFloor=0.000450 onset=1.159889 thresh=0.003000 onsetDelta=1.156888 baseline=0.000180 floor=0.000180 adapt=0.000141 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:44 [tracker] [s1] aubio-raw t=2.1373 onset=1.031138 env=0.000142 peak=0.000425 gain=1.000
+2025-12-14 05:02:44 [tracker] [s1] onset-below-env-floor t=2.1373 env=0.000142 gate=0.000010 envDelta=0.000132 envFloor=0.000450 onset=1.031138 thresh=0.003000 onsetDelta=1.028138 baseline=0.000180 floor=0.000180 adapt=0.000143 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=98.76 pitchCents=313.5
+2025-12-14 05:02:44 [tracker] [s1] aubio-raw t=2.5054 onset=1.004265 env=0.000130 peak=0.000309 gain=1.000
+2025-12-14 05:02:44 [tracker] [s1] onset-below-env-floor t=2.5054 env=0.000130 gate=0.000010 envDelta=0.000120 envFloor=0.000450 onset=1.004265 thresh=0.003000 onsetDelta=1.001265 baseline=0.000180 floor=0.000180 adapt=0.000135 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=195.12 pitchCents=1492.2
+2025-12-14 05:02:45 [tracker] [s1] aubio-raw t=2.6760 onset=0.996658 env=0.000106 peak=0.000256 gain=1.000
+2025-12-14 05:02:45 [tracker] [s1] onset-below-env-floor t=2.6760 env=0.000106 gate=0.000010 envDelta=0.000096 envFloor=0.000450 onset=0.996658 thresh=0.003000 onsetDelta=0.993658 baseline=0.000180 floor=0.000180 adapt=0.000137 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=102.57 pitchCents=378.8
+2025-12-14 05:02:45 [tracker] [s2] onset t=2.732 env=0.00019 gate=0.00000 envDelta=0.00019 envFloor=0.00015 onset=1.000 thresh=0.004 onsetDelta=0.99537 baseline=0.00022 adaptive=0.00016 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=333.29Hz pitchCents=1919.1
+2025-12-14 05:02:45 [tracker] [s1] aubio-raw t=3.1480 onset=0.765521 env=0.000122 peak=0.000265 gain=1.000
+2025-12-14 05:02:45 [tracker] [s1] onset-below-env-floor t=3.1480 env=0.000122 gate=0.000010 envDelta=0.000112 envFloor=0.000450 onset=0.765521 thresh=0.003000 onsetDelta=0.762521 baseline=0.000180 floor=0.000180 adapt=0.000143 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:45 [tracker] [s2] onset t=3.279 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.998 thresh=0.004 onsetDelta=0.99300 baseline=0.00022 adaptive=0.00018 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-14 05:02:45 [tracker] [s1] aubio-raw t=3.2920 onset=0.951394 env=0.000080 peak=0.000189 gain=1.000
+2025-12-14 05:02:45 [tracker] [s1] onset-below-env-floor t=3.2920 env=0.000080 gate=0.000010 envDelta=0.000070 envFloor=0.000450 onset=0.951394 thresh=0.003000 onsetDelta=0.948394 baseline=0.000180 floor=0.000180 adapt=0.000152 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=94.12 pitchCents=230.0
+2025-12-14 05:02:46 [tracker] [s2] onset t=3.644 env=0.00020 gate=0.00000 envDelta=0.00020 envFloor=0.00015 onset=1.054 thresh=0.004 onsetDelta=1.04953 baseline=0.00022 adaptive=0.00018 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=114.28Hz pitchCents=66.1
+2025-12-14 05:02:46 [tracker] [s2] note-start t=3.644 fret=6 midi=51 vel=0.00 env=0.00020
+2025-12-14 05:02:46 [tracker] [s2] release-quiet t=3.708 avgEnv=0.00015 floor=0.00018 quietFrames=8
+2025-12-14 05:02:46 [tracker] [s2] note-ended t=3.708 fret=6 dur=0.064
+2025-12-14 05:02:46 [tracker] [s1] aubio-raw t=3.7267 onset=1.054932 env=0.000132 peak=0.000328 gain=1.000
+2025-12-14 05:02:46 [tracker] [s1] onset-below-env-floor t=3.7267 env=0.000132 gate=0.000010 envDelta=0.000122 envFloor=0.000450 onset=1.054932 thresh=0.003000 onsetDelta=1.051932 baseline=0.000180 floor=0.000180 adapt=0.000148 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:46 [tracker] [s1] aubio-raw t=3.9187 onset=1.405466 env=0.000127 peak=0.000405 gain=1.000
+2025-12-14 05:02:46 [tracker] [s1] onset-below-env-floor t=3.9187 env=0.000127 gate=0.000010 envDelta=0.000117 envFloor=0.000450 onset=1.405466 thresh=0.003000 onsetDelta=1.402466 baseline=0.000180 floor=0.000180 adapt=0.000152 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:46 [tracker] [s1] aubio-raw t=3.9987 onset=0.992682 env=0.000111 peak=0.000259 gain=1.000
+2025-12-14 05:02:46 [tracker] [s1] onset-below-env-floor t=3.9987 env=0.000111 gate=0.000010 envDelta=0.000101 envFloor=0.000450 onset=0.992682 thresh=0.003000 onsetDelta=0.989682 baseline=0.000180 floor=0.000180 adapt=0.000142 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:46 [tracker] [s1] aubio-raw t=4.0894 onset=1.079979 env=0.000106 peak=0.000278 gain=1.000
+2025-12-14 05:02:46 [tracker] [s1] onset-below-env-floor t=4.0894 env=0.000106 gate=0.000010 envDelta=0.000097 envFloor=0.000450 onset=1.079979 thresh=0.003000 onsetDelta=1.076979 baseline=0.000180 floor=0.000180 adapt=0.000142 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=101.26 pitchCents=356.7
+2025-12-14 05:02:46 [tracker] [s1] aubio-raw t=4.1880 onset=1.351073 env=0.000113 peak=0.000267 gain=1.000
+2025-12-14 05:02:46 [tracker] [s1] onset-below-env-floor t=4.1880 env=0.000113 gate=0.000010 envDelta=0.000103 envFloor=0.000450 onset=1.351073 thresh=0.003000 onsetDelta=1.348073 baseline=0.000180 floor=0.000180 adapt=0.000132 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=145.44 pitchCents=983.6
+2025-12-14 05:02:47 [tracker] [s2] onset t=4.711 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=1.202 thresh=0.004 onsetDelta=1.19760 baseline=0.00022 adaptive=0.00017 lastPeak=0.00003 guard=0.060 activeAge=-1.000 pitch=166.67Hz pitchCents=719.4
+2025-12-14 05:02:47 [tracker] [s2] onset t=4.788 env=0.00017 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.996 thresh=0.004 onsetDelta=0.99136 baseline=0.00022 adaptive=0.00017 lastPeak=0.00002 guard=0.060 activeAge=-1.000 pitch=421.09Hz pitchCents=2324.0
+2025-12-14 05:02:47 [tracker] [s2] onset t=4.889 env=0.00020 gate=0.00000 envDelta=0.00020 envFloor=0.00015 onset=0.970 thresh=0.004 onsetDelta=0.96585 baseline=0.00022 adaptive=0.00017 lastPeak=0.00002 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-14 05:02:47 [tracker] [s1] aubio-raw t=5.2093 onset=0.717538 env=0.000123 peak=0.000336 gain=1.000
+2025-12-14 05:02:47 [tracker] [s1] onset-below-env-floor t=5.2093 env=0.000123 gate=0.000010 envDelta=0.000113 envFloor=0.000450 onset=0.717538 thresh=0.003000 onsetDelta=0.714538 baseline=0.000180 floor=0.000180 adapt=0.000146 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:47 [tracker] [s1] aubio-raw t=5.2600 onset=1.161647 env=0.000129 peak=0.000310 gain=1.000
+2025-12-14 05:02:47 [tracker] [s1] onset-below-env-floor t=5.2600 env=0.000129 gate=0.000010 envDelta=0.000119 envFloor=0.000450 onset=1.161647 thresh=0.003000 onsetDelta=1.158647 baseline=0.000180 floor=0.000180 adapt=0.000141 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=333.33 pitchCents=2419.3
+2025-12-14 05:02:48 [tracker] [s1] aubio-raw t=5.5399 onset=0.994242 env=0.000144 peak=0.000285 gain=1.000
+2025-12-14 05:02:48 [tracker] [s1] onset-below-env-floor t=5.5399 env=0.000144 gate=0.000010 envDelta=0.000134 envFloor=0.000450 onset=0.994242 thresh=0.003000 onsetDelta=0.991242 baseline=0.000180 floor=0.000180 adapt=0.000139 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:48 [tracker] [s2] onset t=5.812 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.994 thresh=0.004 onsetDelta=0.98941 baseline=0.00022 adaptive=0.00016 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=177.77Hz pitchCents=831.0
+2025-12-14 05:02:48 [tracker] [s1] aubio-raw t=6.1559 onset=1.348317 env=0.000123 peak=0.000314 gain=1.000
+2025-12-14 05:02:48 [tracker] [s1] onset-below-env-floor t=6.1559 env=0.000123 gate=0.000010 envDelta=0.000113 envFloor=0.000450 onset=1.348317 thresh=0.003000 onsetDelta=1.345317 baseline=0.000180 floor=0.000180 adapt=0.000126 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=108.10 pitchCents=469.9
+2025-12-14 05:02:48 [tracker] [s2] onset t=6.279 env=0.00015 gate=0.00000 envDelta=0.00015 envFloor=0.00015 onset=0.994 thresh=0.004 onsetDelta=0.98939 baseline=0.00022 adaptive=0.00016 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=421.06Hz pitchCents=2323.8
+2025-12-14 05:02:48 [tracker] [s2] note-start t=6.279 fret=10 midi=55 vel=0.00 env=0.00015
+2025-12-14 05:02:48 [tracker] [s1] aubio-raw t=6.3399 onset=1.105774 env=0.000147 peak=0.000433 gain=1.000
+2025-12-14 05:02:48 [tracker] [s1] onset-below-env-floor t=6.3399 env=0.000147 gate=0.000010 envDelta=0.000137 envFloor=0.000450 onset=1.105774 thresh=0.003000 onsetDelta=1.102774 baseline=0.000180 floor=0.000180 adapt=0.000138 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:48 [tracker] [s2] release-quiet t=6.343 avgEnv=0.00014 floor=0.00017 quietFrames=8
+2025-12-14 05:02:48 [tracker] [s2] note-ended t=6.343 fret=10 dur=0.064
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=6.8518 onset=0.993754 env=0.000110 peak=0.000278 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=6.8518 env=0.000110 gate=0.000010 envDelta=0.000100 envFloor=0.000450 onset=0.993754 thresh=0.003000 onsetDelta=0.990754 baseline=0.000180 floor=0.000180 adapt=0.000140 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=111.11 pitchCents=517.4
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=6.9932 onset=1.433675 env=0.000114 peak=0.000268 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=6.9932 env=0.000114 gate=0.000010 envDelta=0.000104 envFloor=0.000450 onset=1.433675 thresh=0.003000 onsetDelta=1.430675 baseline=0.000180 floor=0.000180 adapt=0.000137 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=159.99 pitchCents=1148.6
+2025-12-14 05:02:49 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=0.980 calValid=1 avgRms=0.03970 gen=9 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:49 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.0705 onset=4.000000 env=0.000089 peak=0.000286 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.0705 env=0.000089 gate=0.000010 envDelta=0.000079 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000131 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:49 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=9 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:49 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=9 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:49 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=9 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:49 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=9 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:49 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=9 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:49 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.010 calValid=1 avgRms=0.03970 gen=10 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:49 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.2358 onset=4.000000 env=0.000118 peak=0.000272 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.2358 env=0.000118 gate=0.000010 envDelta=0.000108 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000130 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:49 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=10 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:49 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=10 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:49 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=10 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=10 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:49 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=10 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:49 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=11 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:49 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s2] onset t=7.246 env=0.00017 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=4.000 thresh=0.004 onsetDelta=3.99550 baseline=0.00022 adaptive=0.00015 lastPeak=0.00003 guard=0.060 activeAge=-1.000 pitch=125.16Hz pitchCents=223.6
+2025-12-14 05:02:49 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=11 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:49 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=11 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:49 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=11 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:49 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=11 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:49 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.030 calValid=1 avgRms=0.03970 gen=11 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:49 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.2491 onset=4.000000 env=0.000123 peak=0.000430 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.2491 env=0.000123 gate=0.000010 envDelta=0.000113 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000127 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:49 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.080 calValid=1 avgRms=0.03970 gen=12 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:49 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.2758 onset=4.000000 env=0.000084 peak=0.000215 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.2758 env=0.000084 gate=0.000010 envDelta=0.000074 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000124 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=126.98 pitchCents=748.5
+2025-12-14 05:02:49 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:49 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s2] onset t=7.276 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=4.000 thresh=0.004 onsetDelta=3.99550 baseline=0.00022 adaptive=0.00015 lastPeak=0.00002 guard=0.060 activeAge=-1.000 pitch=115.93Hz pitchCents=91.0
+2025-12-14 05:02:49 [tracker] [s2] note-start t=7.276 fret=24 midi=69 vel=0.00 env=0.00016
+2025-12-14 05:02:49 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=12 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=12 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:49 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=12 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:49 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=12 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:49 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.110 calValid=1 avgRms=0.03970 gen=13 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:49 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.2945 onset=4.000000 env=0.000175 peak=0.000416 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.2945 env=0.000175 gate=0.000010 envDelta=0.000165 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000135 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=399.96 pitchCents=2734.8
+2025-12-14 05:02:49 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=13 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:49 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=13 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:49 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=13 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:49 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=13 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:49 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=13 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:49 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.130 calValid=1 avgRms=0.03970 gen=14 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:49 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.3105 onset=4.000000 env=0.000137 peak=0.000340 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.3105 env=0.000137 gate=0.000010 envDelta=0.000127 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000140 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:49 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=15 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:49 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=15 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:49 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=15 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:49 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=15 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:49 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=15 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:49 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:49 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.130 calValid=1 avgRms=0.03970 gen=15 (applied in HexJackClient)
+2025-12-14 05:02:49 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:49 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.3131 onset=4.000000 env=0.000089 peak=0.000200 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.3131 env=0.000089 gate=0.000010 envDelta=0.000079 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000138 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:49 [tracker] [s2] release-quiet t=7.340 avgEnv=0.00013 floor=0.00016 quietFrames=8
+2025-12-14 05:02:49 [tracker] [s2] note-ended t=7.340 fret=24 dur=0.064
+2025-12-14 05:02:49 [tracker] [s1] aubio-raw t=7.4091 onset=1.325154 env=0.000152 peak=0.000368 gain=1.000
+2025-12-14 05:02:49 [tracker] [s1] onset-below-env-floor t=7.4091 env=0.000152 gate=0.000010 envDelta=0.000142 envFloor=0.000450 onset=1.325154 thresh=0.003000 onsetDelta=1.322154 baseline=0.000180 floor=0.000180 adapt=0.000150 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=160.00 pitchCents=1148.7
+2025-12-14 05:02:49 [tracker] [s2] onset t=7.441 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=1.103 thresh=0.004 onsetDelta=1.09824 baseline=0.00022 adaptive=0.00017 lastPeak=0.00012 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.5371 onset=1.229089 env=0.000100 peak=0.000281 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.5371 env=0.000100 gate=0.000010 envDelta=0.000090 envFloor=0.000450 onset=1.229089 thresh=0.003000 onsetDelta=1.226089 baseline=0.000180 floor=0.000180 adapt=0.000142 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:50 [tracker] [s2] onset t=7.697 env=0.00023 gate=0.00000 envDelta=0.00023 envFloor=0.00015 onset=0.658 thresh=0.004 onsetDelta=0.65345 baseline=0.00022 adaptive=0.00017 lastPeak=0.00007 guard=0.060 activeAge=-1.000 pitch=137.93Hz pitchCents=391.8
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.6998 onset=1.001381 env=0.000144 peak=0.000316 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.6998 env=0.000144 gate=0.000010 envDelta=0.000134 envFloor=0.000450 onset=1.001381 thresh=0.003000 onsetDelta=0.998381 baseline=0.000180 floor=0.000180 adapt=0.000172 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=98.76 pitchCents=313.4
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=16 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=16 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=16 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=16 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.130 calValid=1 avgRms=0.03970 gen=16 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.7504 onset=4.000000 env=0.000132 peak=0.000382 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.7504 env=0.000132 gate=0.000010 envDelta=0.000122 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000161 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=16 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=17 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=17 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.160 calValid=1 avgRms=0.03970 gen=17 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.8411 onset=4.000000 env=0.000139 peak=0.000310 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.8411 env=0.000139 gate=0.000010 envDelta=0.000129 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000150 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=17 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=17 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=17 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=18 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.210 calValid=1 avgRms=0.03970 gen=18 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.8438 onset=4.000000 env=0.000130 peak=0.000402 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.8438 env=0.000130 gate=0.000010 envDelta=0.000120 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000150 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=18 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=18 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=18 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=18 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.290 calValid=1 avgRms=0.03970 gen=19 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.8864 onset=4.000000 env=0.000129 peak=0.000353 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.8864 env=0.000129 gate=0.000010 envDelta=0.000119 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000155 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=242.43 pitchCents=1868.1
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=19 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s2] onset t=7.886 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=4.000 thresh=0.004 onsetDelta=3.99550 baseline=0.00022 adaptive=0.00016 lastPeak=0.00005 guard=0.060 activeAge=-1.000 pitch=98.77Hz pitchCents=-186.5
+2025-12-14 05:02:50 [tracker] [s2] note-start t=7.886 fret=2 midi=47 vel=0.00 env=0.00016
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=19 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=19 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=19 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=20 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=20 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=20 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=20 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=20 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.310 calValid=1 avgRms=0.03970 gen=20 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.9264 onset=4.000000 env=0.000161 peak=0.000407 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.9264 env=0.000161 gate=0.000010 envDelta=0.000151 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000158 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=129.03 pitchCents=776.2
+2025-12-14 05:02:50 [tracker] [s2] release-quiet t=7.950 avgEnv=0.00017 floor=0.00018 quietFrames=8
+2025-12-14 05:02:50 [tracker] [s2] note-ended t=7.950 fret=2 dur=0.064
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.340 calValid=1 avgRms=0.03970 gen=21 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.9584 onset=4.000000 env=0.000118 peak=0.000254 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.9584 env=0.000118 gate=0.000010 envDelta=0.000108 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000173 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=173.90 pitchCents=1292.9
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=21 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=21 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=21 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=21 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=21 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=22 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=22 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.360 calValid=1 avgRms=0.03970 gen=23 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=7.9771 onset=4.000000 env=0.000151 peak=0.000386 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=7.9771 env=0.000151 gate=0.000010 envDelta=0.000141 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000177 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=23 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=23 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=23 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=23 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=23 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=24 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=24 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=24 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=24 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=24 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.620 calValid=1 avgRms=0.03970 gen=24 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.3824 onset=4.000000 env=0.000198 peak=0.000478 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.3824 env=0.000198 gate=0.000010 envDelta=0.000188 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000191 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=275.83 pitchCents=2091.6
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.570 calValid=1 avgRms=0.03970 gen=25 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.4117 onset=4.000000 env=0.000180 peak=0.000433 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.4117 env=0.000180 gate=0.000010 envDelta=0.000170 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000194 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=210.57 pitchCents=1624.1
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=25 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=25 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=25 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=25 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=25 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.540 calValid=1 avgRms=0.03970 gen=26 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.4197 onset=4.000000 env=0.000140 peak=0.000393 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.4197 env=0.000140 gate=0.000010 envDelta=0.000130 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000191 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=187.87 pitchCents=1426.6
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s2] onset t=8.420 env=0.00017 gate=0.00000 envDelta=0.00017 envFloor=0.00015 onset=4.000 thresh=0.004 onsetDelta=3.99550 baseline=0.00022 adaptive=0.00015 lastPeak=0.00006 guard=0.060 activeAge=-1.000 pitch=142.86Hz pitchCents=452.5
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=26 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=26 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=26 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=26 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=27 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=27 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=27 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=27 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=27 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.390 calValid=1 avgRms=0.03970 gen=27 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.4491 onset=4.000000 env=0.000131 peak=0.000368 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.4491 env=0.000131 gate=0.000010 envDelta=0.000121 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000195 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=285.75 pitchCents=2152.7
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=28 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s2] onset t=8.454 env=0.00017 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=4.000 thresh=0.004 onsetDelta=3.99550 baseline=0.00022 adaptive=0.00015 lastPeak=0.00005 guard=0.060 activeAge=-1.000 pitch=126.97Hz pitchCents=248.4
+2025-12-14 05:02:50 [tracker] [s2] note-start t=8.454 fret=2 midi=47 vel=0.00 env=0.00017
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=28 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=28 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=28 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=28 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=1.310 calValid=1 avgRms=0.03970 gen=28 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.4571 onset=4.000000 env=0.000103 peak=0.000266 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.4571 env=0.000103 gate=0.000010 envDelta=0.000093 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000189 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=0.980 calValid=1 avgRms=0.03970 gen=29 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.4891 onset=4.000000 env=0.000094 peak=0.000288 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.4891 env=0.000094 gate=0.000010 envDelta=0.000084 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000175 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=135.59 pitchCents=862.1
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=29 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=29 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=29 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=29 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=29 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=0.880 calValid=1 avgRms=0.03970 gen=30 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.5077 onset=4.000000 env=0.000089 peak=0.000211 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.5077 env=0.000089 gate=0.000010 envDelta=0.000079 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000161 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=320.07 pitchCents=2349.1
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=30 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s2] release-retrigger t=8.508 onset=4.000 gate=0.000 age=0.053
+2025-12-14 05:02:50 [tracker] [s2] note-ended t=8.508 fret=2 dur=0.053
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=30 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=30 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=30 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=30 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=0.830 calValid=1 avgRms=0.03970 gen=31 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:50 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s1] aubio-raw t=8.5211 onset=4.000000 env=0.000093 peak=0.000272 gain=1.000
+2025-12-14 05:02:50 [tracker] [s1] onset-below-env-floor t=8.5211 env=0.000093 gate=0.000010 envDelta=0.000083 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000153 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:50 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=31 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:50 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:50 [tracker] [s2] onset t=8.521 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=4.000 thresh=0.004 onsetDelta=3.99550 baseline=0.00022 adaptive=0.00014 lastPeak=0.00015 guard=0.060 activeAge=-1.000 pitch=125.16Hz pitchCents=223.6
+2025-12-14 05:02:50 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=31 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:50 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=31 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:50 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=31 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:50 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:50 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=31 (applied in HexJackClient)
+2025-12-14 05:02:50 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:50 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=0.780 calValid=1 avgRms=0.03970 gen=32 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:51 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:51 [tracker] [s1] aubio-raw t=8.5531 onset=4.000000 env=0.000086 peak=0.000249 gain=1.000
+2025-12-14 05:02:51 [tracker] [s1] onset-below-env-floor t=8.5531 env=0.000086 gate=0.000010 envDelta=0.000076 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000137 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=210.52 pitchCents=1623.7
+2025-12-14 05:02:51 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=32 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:51 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:51 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=32 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:51 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=32 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:51 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=32 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:51 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=32 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:51 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=0.750 calValid=1 avgRms=0.03970 gen=33 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:51 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:51 [tracker] [s1] aubio-raw t=8.5770 onset=4.000000 env=0.000082 peak=0.000238 gain=1.000
+2025-12-14 05:02:51 [tracker] [s1] onset-below-env-floor t=8.5770 env=0.000082 gate=0.000010 envDelta=0.000072 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000126 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.16 pitchCents=723.6
+2025-12-14 05:02:51 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=33 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:51 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:51 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=33 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:51 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=33 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:51 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=33 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:51 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=33 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:51 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s1] refreshCalib: targetRms=0.00166 mult=0.750 calValid=1 avgRms=0.03970 gen=34 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-14 05:02:51 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:51 [tracker] [s1] aubio-raw t=8.6090 onset=4.000000 env=0.000097 peak=0.000236 gain=1.000
+2025-12-14 05:02:51 [tracker] [s1] onset-below-env-floor t=8.6090 env=0.000097 gate=0.000010 envDelta=0.000087 envFloor=0.000450 onset=4.000000 thresh=0.003000 onsetDelta=3.997000 baseline=0.000180 floor=0.000180 adapt=0.000118 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=216.21 pitchCents=1669.9
+2025-12-14 05:02:51 [tracker] [s2] refreshCalib: targetRms=0.00090 mult=1.000 calValid=1 avgRms=0.01940 gen=34 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-14 05:02:51 [tracker] [s2] params baseline=0.000220 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-14 05:02:51 [tracker] [s3] refreshCalib: targetRms=0.00175 mult=1.000 calValid=1 avgRms=0.01411 gen=34 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-14 05:02:51 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s4] refreshCalib: targetRms=0.00184 mult=1.000 calValid=1 avgRms=0.03018 gen=34 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-14 05:02:51 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s5] refreshCalib: targetRms=0.00193 mult=1.000 calValid=1 avgRms=0.02970 gen=34 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-14 05:02:51 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s6] refreshCalib: targetRms=0.00198 mult=1.000 calValid=1 avgRms=0.02331 gen=34 (applied in HexJackClient)
+2025-12-14 05:02:51 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-14 05:02:51 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-14 05:02:51 [tracker] [s1] aubio-raw t=9.2143 onset=1.021169 env=0.000072 peak=0.000236 gain=1.000
+2025-12-14 05:02:51 [tracker] [s1] onset-below-env-floor t=9.2143 env=0.000072 gate=0.000010 envDelta=0.000062 envFloor=0.000450 onset=1.021169 thresh=0.003000 onsetDelta=1.018169 baseline=0.000180 floor=0.000180 adapt=0.000098 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=95.23 pitchCents=250.5
+2025-12-14 05:02:52 [tracker] [s1] aubio-raw t=9.8276 onset=0.997221 env=0.000081 peak=0.000214 gain=1.000
+2025-12-14 05:02:52 [tracker] [s1] onset-below-env-floor t=9.8276 env=0.000081 gate=0.000010 envDelta=0.000071 envFloor=0.000450 onset=0.997221 thresh=0.003000 onsetDelta=0.994221 baseline=0.000180 floor=0.000180 adapt=0.000105 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=347.80 pitchCents=2492.9
+2025-12-14 05:02:52 [tracker] [s1] aubio-raw t=10.1343 onset=1.008346 env=0.000082 peak=0.000231 gain=1.000
+2025-12-14 05:02:52 [tracker] [s1] onset-below-env-floor t=10.1343 env=0.000082 gate=0.000010 envDelta=0.000072 envFloor=0.000450 onset=1.008346 thresh=0.003000 onsetDelta=1.005346 baseline=0.000180 floor=0.000180 adapt=0.000106 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=102.56 pitchCents=378.8
+2025-12-14 05:02:52 [tracker] [s1] aubio-raw t=10.2036 onset=0.982638 env=0.000071 peak=0.000222 gain=1.000
+2025-12-14 05:02:52 [tracker] [s1] onset-below-env-floor t=10.2036 env=0.000071 gate=0.000010 envDelta=0.000061 envFloor=0.000450 onset=0.982638 thresh=0.003000 onsetDelta=0.979638 baseline=0.000180 floor=0.000180 adapt=0.000098 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=95.24 pitchCents=250.5
+2025-12-14 05:02:52 [tracker] [s1] aubio-raw t=10.3743 onset=0.504791 env=0.000086 peak=0.000276 gain=1.000
+2025-12-14 05:02:52 [tracker] [s1] onset-below-env-floor t=10.3743 env=0.000086 gate=0.000010 envDelta=0.000076 envFloor=0.000450 onset=0.504791 thresh=0.003000 onsetDelta=0.501791 baseline=0.000180 floor=0.000180 adapt=0.000090 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=117.65 pitchCents=616.4
+2025-12-14 05:02:52 [tracker] [s1] aubio-raw t=10.4436 onset=1.040266 env=0.000087 peak=0.000284 gain=1.000
+2025-12-14 05:02:52 [tracker] [s1] onset-below-env-floor t=10.4436 env=0.000087 gate=0.000010 envDelta=0.000077 envFloor=0.000450 onset=1.040266 thresh=0.003000 onsetDelta=1.037266 baseline=0.000180 floor=0.000180 adapt=0.000096 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:52 [tracker] [s2] onset t=10.460 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=1.290 thresh=0.004 onsetDelta=1.28514 baseline=0.00022 adaptive=0.00017 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=266.67Hz pitchCents=1533.1
+2025-12-14 05:02:53 [tracker] [s1] aubio-raw t=10.5502 onset=0.975477 env=0.000083 peak=0.000207 gain=1.000
+2025-12-14 05:02:53 [tracker] [s1] onset-below-env-floor t=10.5502 env=0.000083 gate=0.000010 envDelta=0.000073 envFloor=0.000450 onset=0.975477 thresh=0.003000 onsetDelta=0.972477 baseline=0.000180 floor=0.000180 adapt=0.000100 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=105.26 pitchCents=423.8
+2025-12-14 05:02:53 [tracker] [s1] aubio-raw t=10.6009 onset=1.449384 env=0.000092 peak=0.000262 gain=1.000
+2025-12-14 05:02:53 [tracker] [s1] onset-below-env-floor t=10.6009 env=0.000092 gate=0.000010 envDelta=0.000082 envFloor=0.000450 onset=1.449384 thresh=0.003000 onsetDelta=1.446384 baseline=0.000180 floor=0.000180 adapt=0.000095 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=133.33 pitchCents=833.0
+2025-12-14 05:02:53 [tracker] [s1] aubio-raw t=10.8729 onset=1.053429 env=0.000093 peak=0.000267 gain=1.000
+2025-12-14 05:02:53 [tracker] [s1] onset-below-env-floor t=10.8729 env=0.000093 gate=0.000010 envDelta=0.000083 envFloor=0.000450 onset=1.053429 thresh=0.003000 onsetDelta=1.050429 baseline=0.000180 floor=0.000180 adapt=0.000106 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=235.29 pitchCents=1816.3
+2025-12-14 05:02:53 [tracker] [s2] onset t=11.233 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.615 thresh=0.004 onsetDelta=0.61097 baseline=0.00022 adaptive=0.00017 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=94.11Hz pitchCents=-270.0
+2025-12-14 05:02:53 [tracker] [s1] aubio-raw t=11.4222 onset=1.458673 env=0.000111 peak=0.000317 gain=1.000
+2025-12-14 05:02:53 [tracker] [s1] onset-below-env-floor t=11.4222 env=0.000111 gate=0.000010 envDelta=0.000101 envFloor=0.000450 onset=1.458673 thresh=0.003000 onsetDelta=1.455673 baseline=0.000180 floor=0.000180 adapt=0.000098 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=129.03 pitchCents=776.3
+2025-12-14 05:02:54 [tracker] [s1] aubio-raw t=11.5795 onset=0.934298 env=0.000068 peak=0.000170 gain=1.000
+2025-12-14 05:02:54 [tracker] [s1] onset-below-env-floor t=11.5795 env=0.000068 gate=0.000010 envDelta=0.000058 envFloor=0.000450 onset=0.934298 thresh=0.003000 onsetDelta=0.931298 baseline=0.000180 floor=0.000180 adapt=0.000097 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=186.05 pitchCents=1409.8
+2025-12-14 05:02:54 [tracker] [s1] aubio-raw t=11.9635 onset=0.997739 env=0.000093 peak=0.000236 gain=1.000
+2025-12-14 05:02:54 [tracker] [s1] onset-below-env-floor t=11.9635 env=0.000093 gate=0.000010 envDelta=0.000083 envFloor=0.000450 onset=0.997739 thresh=0.003000 onsetDelta=0.994739 baseline=0.000180 floor=0.000180 adapt=0.000105 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:54 [tracker] [s1] aubio-raw t=12.0221 onset=0.995263 env=0.000081 peak=0.000190 gain=1.000
+2025-12-14 05:02:54 [tracker] [s1] onset-below-env-floor t=12.0221 env=0.000081 gate=0.000010 envDelta=0.000071 envFloor=0.000450 onset=0.995263 thresh=0.003000 onsetDelta=0.992263 baseline=0.000180 floor=0.000180 adapt=0.000099 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=195.12 pitchCents=1492.2
+2025-12-14 05:02:54 [tracker] [s2] onset t=12.222 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.720 thresh=0.004 onsetDelta=0.71561 baseline=0.00022 adaptive=0.00015 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=106.66Hz pitchCents=-53.3
+2025-12-14 05:02:54 [tracker] [s2] note-start t=12.222 fret=0 midi=45 vel=0.00 env=0.00016
+2025-12-14 05:02:54 [tracker] [s2] release-quiet t=12.286 avgEnv=0.00017 floor=0.00017 quietFrames=8
+2025-12-14 05:02:54 [tracker] [s2] note-ended t=12.286 fret=0 dur=0.064
+2025-12-14 05:02:54 [tracker] [s1] aubio-raw t=12.4328 onset=0.997965 env=0.000095 peak=0.000282 gain=1.000
+2025-12-14 05:02:54 [tracker] [s1] onset-below-env-floor t=12.4328 env=0.000095 gate=0.000010 envDelta=0.000085 envFloor=0.000450 onset=0.997965 thresh=0.003000 onsetDelta=0.994964 baseline=0.000180 floor=0.000180 adapt=0.000103 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=216.22 pitchCents=1670.0
+2025-12-14 05:02:55 [tracker] [s2] onset t=12.734 env=0.00023 gate=0.00000 envDelta=0.00022 envFloor=0.00015 onset=1.398 thresh=0.004 onsetDelta=1.39320 baseline=0.00022 adaptive=0.00018 lastPeak=0.00006 guard=0.060 activeAge=-1.000 pitch=380.97Hz pitchCents=2150.6
+2025-12-14 05:02:55 [tracker] [s1] aubio-raw t=12.7767 onset=0.960430 env=0.000086 peak=0.000226 gain=1.000
+2025-12-14 05:02:55 [tracker] [s1] onset-below-env-floor t=12.7767 env=0.000086 gate=0.000010 envDelta=0.000076 envFloor=0.000450 onset=0.960430 thresh=0.003000 onsetDelta=0.957430 baseline=0.000180 floor=0.000180 adapt=0.000111 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:55 [tracker] [s1] aubio-raw t=12.8594 onset=0.739968 env=0.000107 peak=0.000239 gain=1.000
+2025-12-14 05:02:55 [tracker] [s1] onset-below-env-floor t=12.8594 env=0.000107 gate=0.000010 envDelta=0.000097 envFloor=0.000450 onset=0.739968 thresh=0.003000 onsetDelta=0.736968 baseline=0.000180 floor=0.000180 adapt=0.000110 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=98.76 pitchCents=313.4
+2025-12-14 05:02:55 [tracker] [s1] aubio-raw t=12.9127 onset=0.996665 env=0.000075 peak=0.000183 gain=1.000
+2025-12-14 05:02:55 [tracker] [s1] onset-below-env-floor t=12.9127 env=0.000075 gate=0.000010 envDelta=0.000065 envFloor=0.000450 onset=0.996665 thresh=0.003000 onsetDelta=0.993665 baseline=0.000180 floor=0.000180 adapt=0.000106 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=363.67 pitchCents=2570.1
+2025-12-14 05:02:55 [tracker] [s1] aubio-raw t=13.3180 onset=0.781698 env=0.000085 peak=0.000198 gain=1.000
+2025-12-14 05:02:55 [tracker] [s1] onset-below-env-floor t=13.3180 env=0.000085 gate=0.000010 envDelta=0.000076 envFloor=0.000450 onset=0.781698 thresh=0.003000 onsetDelta=0.778698 baseline=0.000180 floor=0.000180 adapt=0.000106 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=307.72 pitchCents=2280.9
+2025-12-14 05:02:55 [tracker] [s1] aubio-raw t=13.3954 onset=0.641563 env=0.000094 peak=0.000287 gain=1.000
+2025-12-14 05:02:55 [tracker] [s1] onset-below-env-floor t=13.3954 env=0.000094 gate=0.000010 envDelta=0.000084 envFloor=0.000450 onset=0.641563 thresh=0.003000 onsetDelta=0.638563 baseline=0.000180 floor=0.000180 adapt=0.000102 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=470.53 pitchCents=3016.1
+2025-12-14 05:02:55 [tracker] [s1] aubio-raw t=13.4967 onset=0.641308 env=0.000081 peak=0.000191 gain=1.000
+2025-12-14 05:02:55 [tracker] [s1] onset-below-env-floor t=13.4967 env=0.000081 gate=0.000010 envDelta=0.000072 envFloor=0.000450 onset=0.641308 thresh=0.003000 onsetDelta=0.638308 baseline=0.000180 floor=0.000180 adapt=0.000107 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=228.58 pitchCents=1766.2
+2025-12-14 05:02:56 [tracker] [s1] aubio-raw t=13.7260 onset=0.736362 env=0.000104 peak=0.000230 gain=1.000
+2025-12-14 05:02:56 [tracker] [s1] onset-below-env-floor t=13.7260 env=0.000104 gate=0.000010 envDelta=0.000094 envFloor=0.000450 onset=0.736362 thresh=0.003000 onsetDelta=0.733362 baseline=0.000180 floor=0.000180 adapt=0.000108 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:56 [tracker] [s1] aubio-raw t=13.8273 onset=0.993192 env=0.000076 peak=0.000196 gain=1.000
+2025-12-14 05:02:56 [tracker] [s1] onset-below-env-floor t=13.8273 env=0.000076 gate=0.000010 envDelta=0.000067 envFloor=0.000450 onset=0.993192 thresh=0.003000 onsetDelta=0.990192 baseline=0.000180 floor=0.000180 adapt=0.000103 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=101.26 pitchCents=356.8
+2025-12-14 05:02:56 [tracker] [s1] aubio-raw t=14.1873 onset=0.983683 env=0.000091 peak=0.000198 gain=1.000
+2025-12-14 05:02:56 [tracker] [s1] onset-below-env-floor t=14.1873 env=0.000091 gate=0.000010 envDelta=0.000081 envFloor=0.000450 onset=0.983683 thresh=0.003000 onsetDelta=0.980683 baseline=0.000180 floor=0.000180 adapt=0.000115 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:56 [tracker] [s2] onset t=14.217 env=0.00020 gate=0.00000 envDelta=0.00020 envFloor=0.00015 onset=1.258 thresh=0.004 onsetDelta=1.25382 baseline=0.00022 adaptive=0.00017 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=142.85Hz pitchCents=452.4
+2025-12-14 05:02:56 [tracker] [s1] aubio-raw t=14.3100 onset=1.005185 env=0.000081 peak=0.000261 gain=1.000
+2025-12-14 05:02:56 [tracker] [s1] onset-below-env-floor t=14.3100 env=0.000081 gate=0.000010 envDelta=0.000071 envFloor=0.000450 onset=1.005185 thresh=0.003000 onsetDelta=1.002185 baseline=0.000180 floor=0.000180 adapt=0.000111 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:56 [tracker] [s2] onset t=14.310 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=1.225 thresh=0.004 onsetDelta=1.22085 baseline=0.00022 adaptive=0.00018 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=190.47Hz pitchCents=950.4
+2025-12-14 05:02:56 [tracker] [s1] aubio-raw t=14.4486 onset=1.032714 env=0.000093 peak=0.000212 gain=1.000
+2025-12-14 05:02:56 [tracker] [s1] onset-below-env-floor t=14.4486 env=0.000093 gate=0.000010 envDelta=0.000083 envFloor=0.000450 onset=1.032714 thresh=0.003000 onsetDelta=1.029714 baseline=0.000180 floor=0.000180 adapt=0.000106 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=333.25 pitchCents=2418.9
+2025-12-14 05:02:57 [tracker] [s1] aubio-raw t=14.5499 onset=0.995695 env=0.000147 peak=0.000350 gain=1.000
+2025-12-14 05:02:57 [tracker] [s1] onset-below-env-floor t=14.5499 env=0.000147 gate=0.000010 envDelta=0.000137 envFloor=0.000450 onset=0.995695 thresh=0.003000 onsetDelta=0.992695 baseline=0.000180 floor=0.000180 adapt=0.000123 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:57 [tracker] [s1] aubio-raw t=14.8166 onset=0.919266 env=0.000090 peak=0.000192 gain=1.000
+2025-12-14 05:02:57 [tracker] [s1] onset-below-env-floor t=14.8166 env=0.000090 gate=0.000010 envDelta=0.000080 envFloor=0.000450 onset=0.919266 thresh=0.003000 onsetDelta=0.916266 baseline=0.000180 floor=0.000180 adapt=0.000103 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=101.26 pitchCents=356.7
+2025-12-14 05:02:57 [tracker] [s1] aubio-raw t=14.8806 onset=0.991513 env=0.000096 peak=0.000256 gain=1.000
+2025-12-14 05:02:57 [tracker] [s1] onset-below-env-floor t=14.8806 env=0.000096 gate=0.000010 envDelta=0.000087 envFloor=0.000450 onset=0.991513 thresh=0.003000 onsetDelta=0.988513 baseline=0.000180 floor=0.000180 adapt=0.000106 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=421.08 pitchCents=2823.9
+2025-12-14 05:02:57 [tracker] [s1] aubio-raw t=15.3259 onset=0.995352 env=0.000095 peak=0.000220 gain=1.000
+2025-12-14 05:02:57 [tracker] [s1] onset-below-env-floor t=15.3259 env=0.000095 gate=0.000010 envDelta=0.000085 envFloor=0.000450 onset=0.995352 thresh=0.003000 onsetDelta=0.992352 baseline=0.000180 floor=0.000180 adapt=0.000115 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=177.78 pitchCents=1331.1
+2025-12-14 05:02:57 [tracker] [s2] onset t=15.443 env=0.00015 gate=0.00000 envDelta=0.00015 envFloor=0.00015 onset=1.129 thresh=0.004 onsetDelta=1.12469 baseline=0.00022 adaptive=0.00017 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=727.28Hz pitchCents=3270.0
+2025-12-14 05:02:57 [tracker] [s1] aubio-raw t=15.4752 onset=0.824616 env=0.000150 peak=0.000319 gain=1.000
+2025-12-14 05:02:57 [tracker] [s1] onset-below-env-floor t=15.4752 env=0.000150 gate=0.000010 envDelta=0.000140 envFloor=0.000450 onset=0.824616 thresh=0.003000 onsetDelta=0.821616 baseline=0.000180 floor=0.000180 adapt=0.000120 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:58 [tracker] [s2] onset t=15.825 env=0.00018 gate=0.00000 envDelta=0.00017 envFloor=0.00015 onset=1.020 thresh=0.004 onsetDelta=1.01580 baseline=0.00022 adaptive=0.00016 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=216.22Hz pitchCents=1170.0
+2025-12-14 05:02:58 [tracker] [s2] release-quiet t=15.889 avgEnv=0.00015 floor=0.00017 quietFrames=8
+2025-12-14 05:02:58 [tracker] [s2] note-ended t=15.889 fret=12 dur=0.064
+2025-12-14 05:02:58 [tracker] [s2] onset t=15.923 env=0.00023 gate=0.00000 envDelta=0.00022 envFloor=0.00015 onset=1.432 thresh=0.004 onsetDelta=1.42776 baseline=0.00022 adaptive=0.00017 lastPeak=0.00015 guard=0.060 activeAge=-1.000 pitch=347.82Hz pitchCents=1993.0
+2025-12-14 05:02:58 [tracker] [s1] aubio-raw t=15.9338 onset=0.994455 env=0.000074 peak=0.000174 gain=1.000
+2025-12-14 05:02:58 [tracker] [s1] onset-below-env-floor t=15.9338 env=0.000074 gate=0.000010 envDelta=0.000064 envFloor=0.000450 onset=0.994455 thresh=0.003000 onsetDelta=0.991455 baseline=0.000180 floor=0.000180 adapt=0.000113 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=228.57 pitchCents=1766.2
+2025-12-14 05:02:58 [tracker] [s1] aubio-raw t=16.1685 onset=0.997177 env=0.000109 peak=0.000223 gain=1.000
+2025-12-14 05:02:58 [tracker] [s1] onset-below-env-floor t=16.1685 env=0.000109 gate=0.000010 envDelta=0.000099 envFloor=0.000450 onset=0.997177 thresh=0.003000 onsetDelta=0.994177 baseline=0.000180 floor=0.000180 adapt=0.000105 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:59 [tracker] [s1] aubio-raw t=16.5871 onset=0.902063 env=0.000088 peak=0.000225 gain=1.000
+2025-12-14 05:02:59 [tracker] [s1] onset-below-env-floor t=16.5871 env=0.000088 gate=0.000010 envDelta=0.000078 envFloor=0.000450 onset=0.902063 thresh=0.003000 onsetDelta=0.899063 baseline=0.000180 floor=0.000180 adapt=0.000107 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=103.90 pitchCents=401.2
+2025-12-14 05:02:59 [tracker] [s2] onset t=16.728 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=0.993 thresh=0.004 onsetDelta=0.98830 baseline=0.00022 adaptive=0.00017 lastPeak=0.00003 guard=0.060 activeAge=-1.000 pitch=205.11Hz pitchCents=1078.7
+2025-12-14 05:02:59 [tracker] [s1] aubio-raw t=16.9871 onset=1.220176 env=0.000091 peak=0.000204 gain=1.000
+2025-12-14 05:02:59 [tracker] [s1] onset-below-env-floor t=16.9871 env=0.000091 gate=0.000010 envDelta=0.000081 envFloor=0.000450 onset=1.220176 thresh=0.003000 onsetDelta=1.217176 baseline=0.000180 floor=0.000180 adapt=0.000114 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:02:59 [tracker] [s1] aubio-raw t=17.0618 onset=1.221754 env=0.000116 peak=0.000296 gain=1.000
+2025-12-14 05:02:59 [tracker] [s1] onset-below-env-floor t=17.0618 env=0.000116 gate=0.000010 envDelta=0.000106 envFloor=0.000450 onset=1.221754 thresh=0.003000 onsetDelta=1.218754 baseline=0.000180 floor=0.000180 adapt=0.000115 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=421.03 pitchCents=2823.7
+2025-12-14 05:02:59 [tracker] [s1] aubio-raw t=17.1258 onset=1.110486 env=0.000069 peak=0.000187 gain=1.000
+2025-12-14 05:02:59 [tracker] [s1] onset-below-env-floor t=17.1258 env=0.000069 gate=0.000010 envDelta=0.000059 envFloor=0.000450 onset=1.110486 thresh=0.003000 onsetDelta=1.107486 baseline=0.000180 floor=0.000180 adapt=0.000110 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=333.38 pitchCents=2419.6
+2025-12-14 05:02:59 [tracker] [s1] aubio-raw t=17.3071 onset=1.097007 env=0.000089 peak=0.000220 gain=1.000
+2025-12-14 05:02:59 [tracker] [s1] onset-below-env-floor t=17.3071 env=0.000089 gate=0.000010 envDelta=0.000079 envFloor=0.000450 onset=1.097007 thresh=0.003000 onsetDelta=1.094007 baseline=0.000180 floor=0.000180 adapt=0.000106 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-14 05:03:00 [tracker] [s2] onset t=17.568 env=0.00019 gate=0.00000 envDelta=0.00019 envFloor=0.00015 onset=0.978 thresh=0.004 onsetDelta=0.97328 baseline=0.00022 adaptive=0.00018 lastPeak=0.00001 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-14 05:03:00 [tracker] [s1] aubio-raw t=17.7044 onset=1.383343 env=0.000105 peak=0.000264 gain=1.000
+2025-12-14 05:03:00 [tracker] [s1] onset-below-env-floor t=17.7044 env=0.000105 gate=0.000010 envDelta=0.000095 envFloor=0.000450 onset=1.383343 thresh=0.003000 onsetDelta=1.380342 baseline=0.000180 floor=0.000180 adapt=0.000121 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=96.38 pitchCents=271.2
+2025-12-14 05:03:00 [tracker] [s2] onset t=17.822 env=0.00018 gate=0.00000 envDelta=0.00018 envFloor=0.00015 onset=0.574 thresh=0.004 onsetDelta=0.56966 baseline=0.00022 adaptive=0.00017 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=275.89Hz pitchCents=1591.9
+2025-12-14 05:03:00 [tracker] [s2] note-start t=17.822 fret=2 midi=47 vel=0.00 env=0.00018
+2025-12-14 05:03:00 [tracker] [s2] release-quiet t=17.886 avgEnv=0.00017 floor=0.00019 quietFrames=8
+2025-12-14 05:03:00 [tracker] [s2] note-ended t=17.886 fret=2 dur=0.064
+2025-12-14 05:03:00 [tracker] [s2] onset t=17.891 env=0.00019 gate=0.00000 envDelta=0.00018 envFloor=0.00015 onset=0.991 thresh=0.004 onsetDelta=0.98675 baseline=0.00022 adaptive=0.00018 lastPeak=0.00016 guard=0.060 activeAge=-1.000 pitch=499.94Hz pitchCents=2621.1
+2025-12-14 05:03:00 [tracker] [s2] note-start t=17.891 fret=0 midi=45 vel=0.00 env=0.00019
+2025-12-14 05:03:00 [tracker] [s2] release-quiet t=17.955 avgEnv=0.00014 floor=0.00017 quietFrames=8
+2025-12-14 05:03:00 [tracker] [s2] note-ended t=17.955 fret=0 dur=0.064
+2025-12-14 05:03:00 [tracker] [s2] onset t=18.072 env=0.00016 gate=0.00000 envDelta=0.00016 envFloor=0.00015 onset=1.156 thresh=0.004 onsetDelta=1.15171 baseline=0.00022 adaptive=0.00018 lastPeak=0.00013 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-14 05:03:00 [tracker] [s1] aubio-raw t=18.3950 onset=0.817548 env=0.000107 peak=0.000315 gain=1.000
+2025-12-14 05:03:00 [tracker] [s1] onset-below-env-floor t=18.3950 env=0.000107 gate=0.000010 envDelta=0.000097 envFloor=0.000450 onset=0.817548 thresh=0.003000 onsetDelta=0.814548 baseline=0.000180 floor=0.000180 adapt=0.000107 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=190.47 pitchCents=1450.4
+2025-12-14 05:03:00 [tracker] [s1] aubio-raw t=18.4590 onset=0.738415 env=0.000141 peak=0.000281 gain=1.000
+2025-12-14 05:03:00 [tracker] [s1] onset-below-env-floor t=18.4590 env=0.000141 gate=0.000010 envDelta=0.000131 envFloor=0.000450 onset=0.738415 thresh=0.003000 onsetDelta=0.735415 baseline=0.000180 floor=0.000180 adapt=0.000115 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=125.00 pitchCents=721.2
+2025-12-14 05:03:01 [tracker] [s1] aubio-raw t=18.6830 onset=0.998264 env=0.000123 peak=0.000309 gain=1.000
+2025-12-14 05:03:01 [tracker] [s1] onset-below-env-floor t=18.6830 env=0.000123 gate=0.000010 envDelta=0.000113 envFloor=0.000450 onset=0.998264 thresh=0.003000 onsetDelta=0.995264 baseline=0.000180 floor=0.000180 adapt=0.000112 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=170.21 pitchCents=1255.8
+2025-12-14 05:03:01 [tracker] [s1] aubio-raw t=19.0803 onset=1.176309 env=0.000066 peak=0.000180 gain=1.000
+2025-12-14 05:03:01 [tracker] [s1] onset-below-env-floor t=19.0803 env=0.000066 gate=0.000010 envDelta=0.000057 envFloor=0.000450 onset=1.176309 thresh=0.003000 onsetDelta=1.173309 baseline=0.000180 floor=0.000180 adapt=0.000107 lastPeak=0.000000 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450 onsetThresh=0.003000 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=242.41 pitchCents=1867.9
+2025-12-14 05:03:01 [tracker] [s2] onset t=19.232 env=0.00018 gate=0.00000 envDelta=0.00018 envFloor=0.00015 onset=0.771 thresh=0.004 onsetDelta=0.76608 baseline=0.00022 adaptive=0.00017 lastPeak=0.00001 guard=0.060 activeAge=-1.000 pitch=102.56Hz pitchCents=-121.3
+2025-12-14 05:03:01 [tracker] [s2] note-start t=19.232 fret=0 midi=45 vel=0.00 env=0.00018
+2025-12-14 05:03:01 [tracker] [s2] release-quiet t=19.296 avgEnv=0.00012 floor=0.00017 quietFrames=8
+2025-12-14 05:03:01 [tracker] [s2] note-ended t=19.296 fret=0 dur=0.064
+2025-12-14 05:03:01 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/sessionwavs/session-20251214-050242 (shutdown)

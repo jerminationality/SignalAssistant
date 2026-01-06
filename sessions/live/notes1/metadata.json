@@ -1,0 +1,23 @@
+{
+    "durationSec": 17.293333333333333,
+    "folder": "notes1",
+    "label": "notes1",
+    "sampleRate": 48000,
+    "stringMidi": [
+        40,
+        45,
+        50,
+        55,
+        59,
+        64
+    ],
+    "stringNames": [
+        "E2",
+        "A",
+        "D",
+        "G",
+        "B",
+        "E4"
+    ],
+    "timestamp": "20251208-032449"
+}

@@ -49,13 +49,26 @@ SessionLogger::SessionLogger() {
     if (dir.empty())
         return;
 
+    // Create a month-year subfolder (MM-YYYY) under the resolved log directory
+    const auto now = std::chrono::system_clock::now();
+    const std::time_t tt = std::chrono::system_clock::to_time_t(now);
+    std::tm tm{};
+#if defined(_WIN32)
+    localtime_s(&tm, &tt);
+#else
+    localtime_r(&tt, &tm);
+#endif
+    std::ostringstream monthOss;
+    monthOss << std::put_time(&tm, "%m-%Y");
+    std::filesystem::path monthDir = std::filesystem::path(dir) / monthOss.str();
+
     std::error_code ec;
-    std::filesystem::create_directories(dir, ec);
+    std::filesystem::create_directories(monthDir, ec);
     if (ec)
         return;
 
     const std::string filename = "session-" + makeTimestampedName() + ".log";
-    std::filesystem::path path = std::filesystem::path(dir) / filename;
+    std::filesystem::path path = monthDir / filename;
     m_logPath = path.string();
     m_stream.open(path, std::ios::out | std::ios::trunc);
     if (!m_stream.is_open())
@@ -67,6 +80,15 @@ SessionLogger::SessionLogger() {
     m_running = true;
     m_worker = std::thread(&SessionLogger::workerLoop, this);
     m_ready = true;
+    
+    // Check for component filter environment variable
+    if (const char* filter = std::getenv("SIGNALASSISTANT_LOG_FILTER")) {
+        if (*filter) {
+            m_componentFilter = std::string(filter);
+            m_stream << "# Log filter active: " << m_componentFilter << "\n";
+            m_stream.flush();
+        }
+    }
 }
 
 SessionLogger::~SessionLogger() {
@@ -102,6 +124,8 @@ void SessionLogger::logf(const std::string& component, const char* fmt, ...) {
 }
 
 void SessionLogger::writeLine(const std::string& component, const std::string& message) {
+    if (!m_componentFilter.empty() && component != m_componentFilter)
+        return;
     enqueue(composeLine(component, message));
 }
 
@@ -156,6 +180,14 @@ std::string SessionLogger::formatString(const char* fmt, va_list args) {
     std::vsnprintf(buffer.data(), buffer.size(), fmt, args);
     buffer.resize(static_cast<std::size_t>(needed));
     return buffer;
+}
+
+void SessionLogger::setComponentFilter(const std::string& filter) {
+    m_componentFilter = filter;
+}
+
+void SessionLogger::clearComponentFilter() {
+    m_componentFilter.clear();
 }
 
 std::string SessionLogger::resolveLogDirectory() {

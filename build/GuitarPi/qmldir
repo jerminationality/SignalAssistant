@@ -1,0 +1,20 @@
+module GuitarPi
+typeinfo GuitarPi.qmltypes
+prefer :/qt/qml/GuitarPi/
+Main 1.0 qml/Main.qml
+HomePage 1.0 qml/pages/HomePage.qml
+RigPage 1.0 qml/pages/RigPage.qml
+RecordPage 1.0 qml/pages/RecordPage.qml
+TabPage 1.0 qml/pages/TabPage.qml
+SettingsPage 1.0 qml/pages/SettingsPage.qml
+CoreAccordion 1.0 qml/components/CoreAccordion.qml
+CoreComponent 1.0 qml/components/CoreComponent.qml
+NavButton 1.0 qml/components/NavButton.qml
+Meter 1.0 qml/components/Meter.qml
+LatencyBadge 1.0 qml/components/LatencyBadge.qml
+ColorizedIcon 1.0 qml/components/ColorizedIcon.qml
+MapOverview 1.0 qml/components/MapOverview.qml
+TestModeOverlay 1.0 qml/components/TestModeOverlay.qml
+RecordingOverlay 1.0 qml/components/RecordingOverlay.qml
+TuningPanel 1.0 qml/components/TuningPanel.qml
+

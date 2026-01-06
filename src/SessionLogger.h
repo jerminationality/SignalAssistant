@@ -15,8 +15,12 @@ public:
     void log(const std::string& component, const std::string& message);
     void logf(const std::string& component, const char* fmt, ...);
 
+    void setComponentFilter(const std::string& filter);
+    void clearComponentFilter();
+
     [[nodiscard]] bool enabled() const { return m_ready; }
     [[nodiscard]] const std::string& logFilePath() const { return m_logPath; }
+    [[nodiscard]] const std::string& componentFilter() const { return m_componentFilter; }
 
 private:
     SessionLogger();
@@ -33,6 +37,7 @@ private:
     static std::string resolveLogDirectory();
 
     std::string m_logPath;
+    std::string m_componentFilter;
     bool m_ready {false};
     std::ofstream m_stream;
     std::mutex m_queueMutex;

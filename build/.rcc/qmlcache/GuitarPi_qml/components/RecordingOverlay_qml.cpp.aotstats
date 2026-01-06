@@ -1,0 +1,68 @@
+[
+    {
+        "moduleFiles": [
+            {
+                "entries": [
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 23,
+                        "durationMicroseconds": 256,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 16
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 37,
+                        "durationMicroseconds": 323,
+                        "errorMessage": "",
+                        "functionName": "verticalCenter",
+                        "line": 25
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 37,
+                        "durationMicroseconds": 271,
+                        "errorMessage": "",
+                        "functionName": "verticalCenter",
+                        "line": 31
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 30,
+                        "durationMicroseconds": 178,
+                        "errorMessage": "",
+                        "functionName": "weight",
+                        "line": 36
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 22,
+                        "durationMicroseconds": 190,
+                        "errorMessage": "",
+                        "functionName": "cursorShape",
+                        "line": 48
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 20,
+                        "durationMicroseconds": 275,
+                        "errorMessage": "",
+                        "functionName": "onClicked",
+                        "line": 49
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 23,
+                        "durationMicroseconds": 145,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 47
+                    }
+                ],
+                "filepath": "/home/general/SignalAssistant/qml/components/RecordingOverlay.qml"
+            }
+        ],
+        "moduleId": "GuitarPi(GuitarPi)"
+    }
+]

@@ -220,7 +220,8 @@ bool AppController::ensureAudioClient() {
         });
 
         connect(client.get(), &CarlaClient::xrunsChanged, this, [](int count) {
-            qInfo("Carla xruns: %d", count);
+            // qInfo("Carla xruns: %d", count);
+            (void)count;
         });
 
         m_audioClient = std::move(client);
@@ -231,7 +232,8 @@ bool AppController::ensureAudioClient() {
         qInfo() << "AppController" << "hex-client" << "created";
 
         connect(client.get(), &HexJackClient::xrunsChanged, this, [](int count) {
-            qInfo("HexJack xruns: %d", count);
+            // qInfo("HexJack xruns: %d", count);
+            (void)count;
         });
 
         m_hexClient = std::move(client);

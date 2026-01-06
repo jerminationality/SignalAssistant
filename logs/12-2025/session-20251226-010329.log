@@ -1,0 +1,67 @@
+# SignalAssistant session log
+# Started at 2025-12-26 01:03:29
+2025-12-26 01:03:29 [session] mode=live session='' path='' duration=0.00 files=0
+2025-12-26 01:03:29 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-26 01:03:29 [tracker-settings] string1 midi=40 lowCut=77.50Hz highCut=160.00Hz baseline=0.001000 gateRatio=0.05500 envFloor=0.001500 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.400 onsetScale=0.360
+2025-12-26 01:03:29 [tracker-settings] string2 midi=45 lowCut=102.50Hz highCut=215.00Hz baseline=0.001200 gateRatio=0.10000 envFloor=0.001800 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.610
+2025-12-26 01:03:29 [tracker-settings] string3 midi=50 lowCut=137.50Hz highCut=290.00Hz baseline=0.001400 gateRatio=0.13000 envFloor=0.002100 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.930
+2025-12-26 01:03:29 [tracker-settings] string4 midi=55 lowCut=187.50Hz highCut=385.00Hz baseline=0.001600 gateRatio=0.17000 envFloor=0.002400 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.440 onsetScale=1.260
+2025-12-26 01:03:29 [tracker-settings] string5 midi=59 lowCut=237.50Hz highCut=485.00Hz baseline=0.001800 gateRatio=0.21000 envFloor=0.002700 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=1.440
+2025-12-26 01:03:29 [tracker-settings] string6 midi=64 lowCut=317.50Hz highCut=650.00Hz baseline=0.002000 gateRatio=0.25000 envFloor=0.003000 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=1.620
+2025-12-26 01:03:29 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2025-12-26 01:03:29 [calibration] Calibration profile derived from tuning state
+2025-12-26 01:05:49 [detection]      S6 Rejected Note (env=0.0008 < floor=0.0020)
+2025-12-26 01:05:49 [detection]      S5 Rejected Note (env=0.0013 < floor=0.0018)
+2025-12-26 01:05:51 [detection]      S5 Rejected Note (env=0.0006 < floor=0.0018)
+2025-12-26 01:05:51 [detection]      S6 Rejected Note (env=0.0010 < floor=0.0020)
+2025-12-26 01:05:51 [detection]      S4 Rejected Note (env=0.0007 < floor=0.0016)
+2025-12-26 01:05:56 [detection]      S4F1 ON (onset=0.998 env=0.0055)
+2025-12-26 01:05:57 [detection]      S4F1 OFF (sustained-quiet: avgEnv=0.0012 < floor=0.0016)
+2025-12-26 01:05:57 [detection]      S1 Rejected Note (env=0.0005 < floor=0.0010)
+2025-12-26 01:06:00 [detection]      S5 Rejected Note (env=0.0011 < floor=0.0018)
+2025-12-26 01:06:00 [detection]      S6 Rejected Note (env=0.0010 < floor=0.0020)
+2025-12-26 01:06:00 [detection]      S4 Rejected Note (env=0.0015 < floor=0.0016)
+2025-12-26 01:06:00 [detection]      S2 Rejected Note (env=0.0002 < floor=0.0012)
+2025-12-26 01:06:15 [detection]      S2F7 ON (onset=0.935 env=0.0117)
+2025-12-26 01:06:17 [detection]      S6 Rejected Note (env=0.0012 < floor=0.0020)
+2025-12-26 01:06:17 [detection]      S2F7 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0018)
+2025-12-26 01:06:17 [detection]      S1F2 ON (onset=1.084 env=0.4405)
+2025-12-26 01:06:18 [detection]      S1F2 OFF (retrigger: onset=0.989 ratio=7.60)
+2025-12-26 01:06:18 [detection]      S1F2 ON (onset=0.692 env=0.3004)
+2025-12-26 01:06:19 [detection]      S1F2 OFF (sharp-drop: 0.0219 -> 0.0009)
+2025-12-26 01:06:20 [detection]      S2F7 ON (onset=1.181 env=0.0091)
+2025-12-26 01:06:21 [detection]      S2F7 OFF (sustained-quiet: avgEnv=0.0009 < floor=0.0018)
+2025-12-26 01:06:22 [detection]      S3 Rejected Note (env=0.0009 < floor=0.0014)
+2025-12-26 01:06:23 [detection]      S1F6 ON (onset=0.947 env=0.0538)
+2025-12-26 01:06:24 [detection]      S1F6 OFF (sharp-drop: 0.0171 -> 0.0009)
+2025-12-26 01:06:27 [live-record] start
+2025-12-26 01:06:28 [detection]      S1F6 ON (onset=0.998 env=0.0719)
+2025-12-26 01:06:30 [detection]      S1F6 OFF (sharp-drop: 0.0077 -> 0.0010)
+2025-12-26 01:06:31 [detection]      S2F4 ON (onset=0.590 env=0.0054)
+2025-12-26 01:06:32 [detection]      S2F4 OFF (sustained-quiet: avgEnv=0.0006 < floor=0.0018)
+2025-12-26 01:06:33 [detection]      S1F2 ON (onset=0.746 env=0.3617)
+2025-12-26 01:06:33 [detection]      S2F0 ON (onset=1.174 env=0.0086)
+2025-12-26 01:06:33 [detection]      S1F2 OFF (retrigger: onset=1.045 ratio=2.71)
+2025-12-26 01:06:33 [detection]      S1F2 ON (onset=1.316 env=0.2265)
+2025-12-26 01:06:34 [detection]      S2F0 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0018)
+2025-12-26 01:06:34 [detection]      S1F2 OFF (sharp-drop: 0.0129 -> 0.0010)
+2025-12-26 01:06:35 [detection]      S1F2 ON (onset=0.798 env=0.0899)
+2025-12-26 01:06:35 [detection]      S1F2 OFF (retrigger: onset=0.908 ratio=2.19)
+2025-12-26 01:06:35 [detection]      S2F0 ON (onset=1.043 env=0.0079)
+2025-12-26 01:06:35 [detection]      S1F2 ON (onset=0.998 env=0.0371)
+2025-12-26 01:06:37 [detection]      S2F0 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0018)
+2025-12-26 01:06:37 [detection]      S1F2 OFF (sustained-quiet: avgEnv=0.0008 < floor=0.0010)
+2025-12-26 01:06:37 [live-record] stop duration=10.60
+2025-12-26 01:06:49 [live-record] label='20251226-010649 S1 F0 F1' duration=10.60
+2025-12-26 01:06:50 [live-record] saved session folder='20251226-010649 S1 F0 F1' duration=10.60
+2025-12-26 01:06:50 [detection]      S6F19 ON (onset=0.996 env=0.0042)
+2025-12-26 01:06:50 [detection]      S3F24 ON (onset=0.919 env=0.0023)
+2025-12-26 01:06:51 [detection]      S3F24 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0014)
+2025-12-26 01:06:51 [detection]      S6F19 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0020)
+2025-12-26 01:06:51 [detection]      S6F8 ON (onset=1.247 env=0.0061)
+2025-12-26 01:06:51 [detection]      S4F1 ON (onset=0.985 env=0.0047)
+2025-12-26 01:06:51 [detection]      S4F1 OFF (sustained-quiet: avgEnv=0.0009 < floor=0.0016)
+2025-12-26 01:06:52 [detection]      S6F8 OFF (sustained-quiet: avgEnv=0.0018 < floor=0.0020)
+2025-12-26 01:06:56 [detection]      S1F2 ON (onset=1.088 env=0.0033)
+2025-12-26 01:07:02 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/sessionwavs/session-20251226-010329 (shutdown)
+# Session closed at 2025-12-26 01:07:02

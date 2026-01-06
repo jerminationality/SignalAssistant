@@ -45,6 +45,14 @@ public:
     int bufferSize() const { return m_currentBufferSize.load(std::memory_order_acquire); }
     int sampleRate() const { return m_currentSampleRate.load(std::memory_order_acquire); }
 
+    std::array<float, 6> getRawMeters() const {
+        std::array<float, 6> snapshot;
+        for (std::size_t s = 0; s < 6; ++s) {
+            snapshot[s] = m_rawMeters[s].load(std::memory_order_relaxed);
+        }
+        return snapshot;
+    }
+
 signals:
     void bufferConfigChanged(int sampleRate, int bufferSize);
     void xrunsChanged(int count);
@@ -53,6 +61,7 @@ signals:
     void calibrationStepChanged(int stringIndex, bool capturing);
     void calibrationFinished(const std::array<float, 6>& averages,
                              const std::array<float, 6>& peaks);
+    void calibrationBaselineFloorCaptured(float noiseFloor);
 
 private:
     static int processCallback(jack_nframes_t nframes, void* arg);
@@ -83,6 +92,7 @@ private:
     std::atomic<int> m_xruns {0};
 
     std::array<std::atomic<float>, 6> m_detectionMeters {};
+    std::array<std::atomic<float>, 6> m_rawMeters {};
     QElapsedTimer m_meterLogTimer;
     bool m_meterLoggingEnabled {false};
 
@@ -114,6 +124,8 @@ private:
         std::array<double, 6> sumRms {};
         std::array<int, 6> samples {};
         std::array<float, 6> peakRms {};
+        double noiseFloorSum {0.0};
+        int noiseFloorSamples {0};
     };
 
     std::atomic<int> m_pendingCalibrationTarget {-2};

@@ -7,7 +7,7 @@
 
 namespace trackerparams {
 
-constexpr std::array<int, 6>   kFftMultipliers{{8, 7, 6, 5, 4, 4}};
+constexpr std::array<int, 6>   kFftMultipliers{{16, 7, 6, 5, 4, 4}};  // Low E: 12x=1536 samples (2.6 periods @ 82Hz)
 
 inline std::uint64_t settingsGeneration() {
     return NoteDetectionStore::instance().activeGeneration();
@@ -52,10 +52,6 @@ inline float targetRms(int s) {
 
 inline float calibrationGainMultiplier(int s) {
     return active(NoteParameter::CalibrationGainMultiplier, s, 1.0f);
-}
-
-inline float peakReleaseRatio(int s) {
-    return active(NoteParameter::PeakReleaseRatio, s, 0.15f);
 }
 
 inline float sustainFloorScale(int s) {

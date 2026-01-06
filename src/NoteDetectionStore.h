@@ -17,7 +17,6 @@ struct NoteDetectionParameterSetAtomic {
     std::array<std::atomic<float>, 6> gateRatio;
     std::array<std::atomic<float>, 6> sustainFloorScale;
     std::array<std::atomic<float>, 6> retriggerGateScale;
-    std::array<std::atomic<float>, 6> peakReleaseRatio;
     std::array<std::atomic<float>, 6> pitchTolerance;
     std::array<std::atomic<float>, 6> targetRms;
     std::array<std::atomic<float>, 6> calibrationGainMultiplier;

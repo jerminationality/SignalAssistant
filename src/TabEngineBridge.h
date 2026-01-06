@@ -1,6 +1,8 @@
 #pragma once
 #include <QObject>
 #include <QVariantList>
+#include <QElapsedTimer>
+#include <QTimer>
 #include <array>
 #include <atomic>
 #include <filesystem>
@@ -18,6 +20,8 @@ class TabEngineBridge : public QObject {
     Q_PROPERTY(QString eventsJson READ eventsJson NOTIFY eventsChanged)
     Q_PROPERTY(bool recording READ recording WRITE setRecording NOTIFY recordingChanged)
     Q_PROPERTY(QVariantList hexMeters READ hexMeters NOTIFY hexMetersChanged)
+    Q_PROPERTY(QVariantList rawMeters READ rawMeters NOTIFY rawMetersChanged)
+    Q_PROPERTY(QVariantList thresholds READ thresholds NOTIFY thresholdsChanged)
     Q_PROPERTY(bool calibrationRunning READ calibrationRunning NOTIFY calibrationStatusChanged)
     Q_PROPERTY(QString calibrationMessage READ calibrationMessage NOTIFY calibrationStatusChanged)
     Q_PROPERTY(QVariantList calibrationSteps READ calibrationSteps NOTIFY calibrationStatusChanged)
@@ -33,6 +37,8 @@ public:
     QString eventsJson() const { return m_eventsJson; }
     bool recording() const { return m_captureEnabled.load(std::memory_order_acquire); }
     QVariantList hexMeters() const { return m_hexMeters; }
+    QVariantList rawMeters() const { return m_rawMeters; }
+    QVariantList thresholds() const { return m_thresholds; }
     bool calibrationRunning() const { return m_calibrationRunning; }
     QString calibrationMessage() const { return m_calibrationMessage; }
     QVariantList calibrationSteps() const { return m_calibrationSteps; }
@@ -49,6 +55,7 @@ public:
     Q_INVOKABLE void recalibrateString(int stringIndex);
     Q_INVOKABLE void setTuningModeEnabled(bool enabled);
     Q_INVOKABLE void setCalibrationGain(int stringIndex, double gain);
+    Q_INVOKABLE void updateCalibrationMultipliers();
 
     void setAudioClient(HexAudioClient* client);
     void getCalibrationMultipliers(std::array<float, 6>& multipliers) const;
@@ -56,6 +63,7 @@ public:
     bool exportPendingCapture(const QString& label);
     bool hasPendingCapture() const { return m_pendingCaptureValid; }
     void discardPendingCapture();
+    void updateThresholdsDisplay();
 
     TabEngine& engine() { return *m_engine; }
     const TabEngine& engine() const { return *m_engine; }
@@ -69,12 +77,18 @@ public slots:
     void handleCalibrationStepChanged(int stringIndex, bool capturing);
     void handleCalibrationFinished(const std::array<float, 6>& averages,
                                    const std::array<float, 6>& peaks);
+    void handleCalibrationBaselineFloorCaptured(float noiseFloor);
+    void handleCalibrationFadeComplete();
 
 signals:
     void eventsChanged();
     void recordingChanged();
     void liveNoteTriggered(int stringIndex, int fretIndex, float velocity);
+    void liveNoteEnded(int stringIndex, int fretIndex);
+    void liveNoteEnvelopeUpdated(int stringIndex, float envelope);
     void hexMetersChanged();
+    void rawMetersChanged();
+    void thresholdsChanged();
     void calibrationStatusChanged();
     void tuningModeEnabledChanged();
     void tuningDeviationChanged();
@@ -117,11 +131,14 @@ private:
     QVariantList m_events;
     QString m_eventsJson {"[]"};
     QVariantList m_hexMeters;
+    QVariantList m_rawMeters;
+    QVariantList m_thresholds;
     bool m_calibrationRunning {false};
     QString m_calibrationMessage {QStringLiteral("Uncalibrated")};
     CalibrationProfile m_calibrationProfile;
     QVariantList m_calibrationSteps;
     std::array<int, 6> m_calibrationStepStates {};
+    QTimer* m_calibrationFadeTimer {nullptr};
     int m_activeCalibrationString {-1};
     bool m_activeCalibrationCapturing {false};
     bool m_calibrationLoaded {false};
@@ -142,6 +159,7 @@ private:
     std::atomic<bool> m_dispatchQueued {false};
     std::array<float, 6> m_lastLiveTriggerSec {};
     std::array<int, 6> m_lastLiveFret {};
+    std::array<bool, 6> m_activeNoteDisplayed {};
     std::array<std::vector<float>, 6> m_captureBuffers;
     std::array<std::vector<float>, 6> m_pendingCaptureBuffers;
     std::array<std::vector<float>, 6> m_sessionWaveTap;
@@ -158,6 +176,7 @@ private:
     bool m_externalMetersActive {false};
     bool m_tuningModeEnabled {false};
     std::array<float, 6> m_tuningDeviationCents {};
+    QElapsedTimer m_thresholdsUpdateTimer;
 
     void postMeterSnapshot(const std::array<float, 6>& meters);
     void updateTuningDeviation();

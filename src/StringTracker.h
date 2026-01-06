@@ -28,7 +28,8 @@ public:
   void setCalibration(const CalibrationProfile& profile);
   float lastPitchHz() const;
   float calibrationGain() const { return _calibrationGain; }
-  // void setCalibrationGain(float gain);  // Legacy - unused
+  void setCalibrationGain(float gain) { _calibrationGain = gain; }
+  StringThresholds getThresholds() const { return _lastThresholds; }
 
 private:
   void configureProcessing(float sr, int blockSamples);
@@ -43,11 +44,19 @@ private:
   void refreshCalibrationTarget();
 
   struct BandpassFilter {
-    float hpAlpha = 0.f;
-    float lpBeta = 0.f;
-    float hpState = 0.f;
-    float hpPrevInput = 0.f;
-    float lpState = 0.f;
+    // 2nd-order Butterworth bandpass (cascade of 2nd-order HP and LP sections)
+    // Highpass section (2nd order)
+    float hp_b0 = 0.f, hp_b1 = 0.f, hp_b2 = 0.f;
+    float hp_a1 = 0.f, hp_a2 = 0.f;
+    float hp_x1 = 0.f, hp_x2 = 0.f;  // input delay line
+    float hp_y1 = 0.f, hp_y2 = 0.f;  // output delay line
+    
+    // Lowpass section (2nd order)
+    float lp_b0 = 0.f, lp_b1 = 0.f, lp_b2 = 0.f;
+    float lp_a1 = 0.f, lp_a2 = 0.f;
+    float lp_x1 = 0.f, lp_x2 = 0.f;
+    float lp_y1 = 0.f, lp_y2 = 0.f;
+    
     void reset();
     void configure(float sr, float lowCutHz, float highCutHz, int stringIdx);
     float process(float x);
@@ -88,6 +97,7 @@ private:
   float _calibrationTargetRms = 0.0018f;
   bool  _calibrationValid = false;
   float _lastFeaturePitchHz = -1.f;
+  mutable StringThresholds _lastThresholds;
 #ifndef HAVE_AUBIO
   bool _warnedNoAubio = false;
 #endif

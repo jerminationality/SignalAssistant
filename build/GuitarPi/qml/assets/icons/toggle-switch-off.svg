@@ -1,0 +1,7 @@
+<svg width="82" height="36" viewBox="0 0 82 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background track (off state) -->
+  <rect x="0.5" y="0.5" width="81" height="35" rx="17.5" fill="#3C3027" stroke="#7A6957"/>
+  
+  <!-- Toggle knob (left position) -->
+  <circle cx="18" cy="18" r="15" fill="#F2E8D5" stroke="#B59879"/>
+</svg>

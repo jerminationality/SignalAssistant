@@ -1,0 +1,23 @@
+{
+    "durationSec": 53.29333333333334,
+    "folder": "Test2",
+    "label": "Test2",
+    "sampleRate": 48000,
+    "stringMidi": [
+        40,
+        45,
+        50,
+        55,
+        59,
+        64
+    ],
+    "stringNames": [
+        "E2",
+        "A",
+        "D",
+        "G",
+        "B",
+        "E4"
+    ],
+    "timestamp": "20251125-045919"
+}

@@ -1,0 +1,54 @@
+{
+    "classes": [
+        {
+            "className": "RecordedSessionPlayer",
+            "lineNumber": 23,
+            "object": true,
+            "qualifiedClassName": "RecordedSessionPlayer",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "positionSec",
+                            "type": "double"
+                        },
+                        {
+                            "name": "durationSec",
+                            "type": "double"
+                        }
+                    ],
+                    "index": 0,
+                    "name": "playbackProgress",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "name": "playbackFinished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "description",
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 2,
+                    "name": "playbackError",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "RecordedSessionPlayer.h",
+    "outputRevision": 68
+}

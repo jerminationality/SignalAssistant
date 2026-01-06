@@ -1,0 +1,2 @@
+/usr/bin/ar qc libguitarpi_tab.a CMakeFiles/guitarpi_tab.dir/guitarpi_tab_autogen/mocs_compilation.cpp.o CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.o CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o CMakeFiles/guitarpi_tab.dir/src/util.cpp.o CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o CMakeFiles/guitarpi_tab.dir/src/NoteDetectionConfig.cpp.o CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.o
+/usr/bin/ranlib libguitarpi_tab.a

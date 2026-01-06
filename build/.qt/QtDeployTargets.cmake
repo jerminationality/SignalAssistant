@@ -1,0 +1,8 @@
+set(__QT_DEPLOY_TARGET_GuitarPi_FILE /home/general/SignalAssistant/build/bin/GuitarPi)
+set(__QT_DEPLOY_TARGET_GuitarPi_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_TabPagePreview_FILE /home/general/SignalAssistant/build/TabPagePreview)
+set(__QT_DEPLOY_TARGET_TabPagePreview_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_guitarpi_tab_FILE /home/general/SignalAssistant/build/libguitarpi_tab.a)
+set(__QT_DEPLOY_TARGET_guitarpi_tab_TYPE STATIC_LIBRARY)
+set(__QT_DEPLOY_TARGET_tab_module_FILE /home/general/SignalAssistant/build/tab_module)
+set(__QT_DEPLOY_TARGET_tab_module_TYPE EXECUTABLE)

@@ -1,0 +1,15 @@
+-rootPath
+/home/general/SignalAssistant
+-cmake-output
+-output-file
+/home/general/SignalAssistant/build/.qt/qml_imports/GuitarPi_build.cmake
+-importPath
+/home/general/SignalAssistant/build/GuitarPi
+-importPath
+/home/general/SignalAssistant/build
+-importPath
+/usr/lib/aarch64-linux-gnu/qt6/qml
+-qrcFiles
+/home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc
+/home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc
+/home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc

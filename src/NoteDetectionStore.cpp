@@ -41,7 +41,6 @@ void NoteDetectionParameterSetAtomic::store(const NoteDetectionParameterSet& sou
     transfer(gateRatio, source.gateRatio);
     transfer(sustainFloorScale, source.sustainFloorScale);
     transfer(retriggerGateScale, source.retriggerGateScale);
-    transfer(peakReleaseRatio, source.peakReleaseRatio);
     transfer(pitchTolerance, source.pitchTolerance);
     transfer(targetRms, source.targetRms);
     transfer(calibrationGainMultiplier, source.calibrationGainMultiplier);
@@ -79,7 +78,6 @@ float* NoteDetectionStore::access(NoteDetectionParameterSet& set, NoteParameter 
         case NoteParameter::GateRatio: result = &set.gateRatio[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::SustainFloorScale: result = &set.sustainFloorScale[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::RetriggerGateScale: result = &set.retriggerGateScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::PeakReleaseRatio: result = &set.peakReleaseRatio[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::PitchTolerance: result = &set.pitchTolerance[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::TargetRms: result = &set.targetRms[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::CalibrationGainMultiplier: result = &set.calibrationGainMultiplier[static_cast<std::size_t>(stringIdx)]; break;
@@ -115,7 +113,6 @@ float NoteDetectionStore::activeValue(NoteParameter id, int stringIdx) const {
         case NoteParameter::GateRatio: return fetch(m_active.gateRatio);
         case NoteParameter::SustainFloorScale: return fetch(m_active.sustainFloorScale);
         case NoteParameter::RetriggerGateScale: return fetch(m_active.retriggerGateScale);
-        case NoteParameter::PeakReleaseRatio: return fetch(m_active.peakReleaseRatio);
         case NoteParameter::PitchTolerance: return fetch(m_active.pitchTolerance);
         case NoteParameter::TargetRms: return fetch(m_active.targetRms);
         case NoteParameter::CalibrationGainMultiplier: return fetch(m_active.calibrationGainMultiplier);

@@ -1,0 +1,249 @@
+# SignalAssistant session log
+# Started at 2025-12-25 05:04:47
+2025-12-25 05:04:47 [session] mode=live session='' path='' duration=0.00 files=0
+2025-12-25 05:04:47 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-25 05:04:47 [tracker-settings] string1 midi=40 lowCut=6386.53Hz highCut=52740.41Hz baseline=0.001000 gateRatio=0.05500 envFloor=0.001500 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.400 onsetScale=0.360
+2025-12-25 05:04:47 [tracker-settings] string2 midi=45 lowCut=11275.00Hz highCut=94600.00Hz baseline=0.001200 gateRatio=0.10000 envFloor=0.001800 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.610
+2025-12-25 05:04:47 [tracker-settings] string3 midi=50 lowCut=20189.45Hz highCut=170325.56Hz baseline=0.001400 gateRatio=0.13000 envFloor=0.002100 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.930
+2025-12-25 05:04:47 [tracker-settings] string4 midi=55 lowCut=36749.57Hz highCut=301836.47Hz baseline=0.001600 gateRatio=0.17000 envFloor=0.002400 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.440 onsetScale=1.260
+2025-12-25 05:04:47 [tracker-settings] string5 midi=59 lowCut=58648.64Hz highCut=479066.81Hz baseline=0.001800 gateRatio=0.21000 envFloor=0.002700 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=1.440
+2025-12-25 05:04:47 [tracker-settings] string6 midi=64 lowCut=104656.75Hz highCut=857031.69Hz baseline=0.002000 gateRatio=0.25000 envFloor=0.003000 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=1.620
+2025-12-25 05:04:47 [tracker] [s1] calibration reset target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s2] calibration reset target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s3] calibration reset target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s4] calibration reset target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s5] calibration reset target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s6] calibration reset target=0.00180 gain=1.000
+2025-12-25 05:04:47 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2025-12-25 05:04:47 [tracker] [s1] calibration avg=0.03937 target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s2] calibration avg=0.01560 target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s3] calibration avg=0.00661 target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s4] calibration avg=0.00473 target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s5] calibration avg=0.00699 target=0.00180 gain=1.000
+2025-12-25 05:04:47 [tracker] [s6] calibration avg=0.02247 target=0.00180 gain=1.000
+2025-12-25 05:04:47 [calibration] Calibration profile derived from tuning state
+2025-12-25 05:04:47 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=75.0 high=160.0
+2025-12-25 05:04:47 [tracker] [s1] params baseline=0.001000 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 pitchTol=0.400 onsetScale=0.100 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-40.0 pitchSilence=-90.0
+2025-12-25 05:04:47 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=100.0 high=215.0
+2025-12-25 05:04:47 [tracker] [s2] params baseline=0.001200 gate=0.0100 envFloor=0.000100 sustain=1.500 retrigger=1.250 pitchTol=0.400 onsetScale=0.100 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-40.0 pitchSilence=-90.0
+2025-12-25 05:04:47 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=135.0 high=290.0
+2025-12-25 05:04:47 [tracker] [s3] params baseline=0.001400 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 pitchTol=0.450 onsetScale=0.100 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-40.0 pitchSilence=-80.0
+2025-12-25 05:04:47 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=185.0 high=385.0
+2025-12-25 05:04:47 [tracker] [s4] params baseline=0.001600 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 pitchTol=0.440 onsetScale=0.100 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-40.0 pitchSilence=-80.0
+2025-12-25 05:04:47 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=235.0 high=485.0
+2025-12-25 05:04:47 [tracker] [s5] params baseline=0.001800 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 pitchTol=0.500 onsetScale=0.100 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-40.0 pitchSilence=-80.0
+2025-12-25 05:04:47 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=315.0 high=650.0
+2025-12-25 05:04:47 [tracker] [s6] params baseline=0.002000 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 pitchTol=0.550 onsetScale=0.100 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-40.0 pitchSilence=-80.0
+2025-12-25 05:04:59 [detection] [s2] PASS onset: onsetStrength=0.7422 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s2] PASS gate: envelope=0.0488 >= gateThreshold=0.0000
+2025-12-25 05:04:59 [detection] [s2] PASS envFloor: envelope=0.0488 >= envFloor=0.0012
+2025-12-25 05:04:59 [detection] [s2] ONSET ACCEPTED
+2025-12-25 05:04:59 [tracker] [s2] onset t=11.188 env=0.04881 gate=0.00001 envDelta=0.04880 envFloor=0.00120 onset=0.742 thresh=0.100 onsetDelta=0.64218 baseline=0.00120 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:04:59 [tracker] [s1] aubio-raw t=11.2009 onset=0.665767 env=0.006675 peak=0.009110 gain=1.000
+2025-12-25 05:04:59 [detection] [s1] PASS onset: onsetStrength=0.6658 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s1] PASS gate: envelope=0.0067 >= gateThreshold=0.0001
+2025-12-25 05:04:59 [detection] [s1] PASS envFloor: envelope=0.0067 >= envFloor=0.0010
+2025-12-25 05:04:59 [tracker] [s1] onset-accepted t=11.2009 env=0.006675 gate=0.000055 envDelta=0.006620 envFloor=0.001000 onset=0.665767 thresh=0.100000 onsetDelta=0.565767 baseline=0.001000 lastPeak=0.000000 baseParam=0.001000 gateRatio=0.0550 envParam=0.000450 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=140.49 pitchCents=923.6
+2025-12-25 05:04:59 [detection] [s1] ONSET ACCEPTED
+2025-12-25 05:04:59 [tracker] [s1] onset t=11.201 env=0.00667 gate=0.00006 envDelta=0.00662 envFloor=0.00100 onset=0.666 thresh=0.100 onsetDelta=0.56577 baseline=0.00100 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=140.49Hz pitchCents=923.6
+2025-12-25 05:04:59 [detection] [s3] PASS onset: onsetStrength=0.8490 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s3] PASS envFloor: envelope=0.0039 >= envFloor=0.0014
+2025-12-25 05:04:59 [detection] [s3] ONSET ACCEPTED
+2025-12-25 05:04:59 [tracker] [s3] onset t=11.201 env=0.00393 gate=0.00018 envDelta=0.00375 envFloor=0.00140 onset=0.849 thresh=0.100 onsetDelta=0.74901 baseline=0.00140 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:04:59 [detection] [s3] PASS onset: onsetStrength=0.6111 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s3] PASS gate: envelope=0.0041 >= gateThreshold=0.0002
+2025-12-25 05:04:59 [detection] [s3] PASS envFloor: envelope=0.0041 >= envFloor=0.0014
+2025-12-25 05:04:59 [detection] [s3] ONSET ACCEPTED
+2025-12-25 05:04:59 [tracker] [s3] onset t=11.294 env=0.00408 gate=0.00018 envDelta=0.00390 envFloor=0.00140 onset=0.611 thresh=0.100 onsetDelta=0.51107 baseline=0.00140 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:04:59 [detection] [s2] PASS onset: onsetStrength=0.9778 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s2] PASS gate: envelope=0.0773 >= gateThreshold=0.0000
+2025-12-25 05:04:59 [detection] [s2] ONSET ACCEPTED
+2025-12-25 05:04:59 [tracker] [s2] onset t=11.316 env=0.07729 gate=0.00001 envDelta=0.07728 envFloor=0.00120 onset=0.978 thresh=0.100 onsetDelta=0.87776 baseline=0.00120 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=148.69Hz pitchCents=521.8
+2025-12-25 05:04:59 [tracker] [s2] note-start t=11.316 fret=5 midi=50 vel=0.93 env=0.07729
+2025-12-25 05:04:59 [detection]      S2F5 ON (onset=0.978 env=0.0773)
+2025-12-25 05:04:59 [detection] [s2] PASS onset: onsetStrength=1.3256 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s2] PASS gate: envelope=0.0284 >= gateThreshold=0.0000
+2025-12-25 05:04:59 [detection] [s2] PASS envFloor: envelope=0.0284 >= envFloor=0.0012
+2025-12-25 05:04:59 [detection] [s2] REJECT separation: timeSince=0.0533 < guard=0.0600
+2025-12-25 05:04:59 [detection] [s2] PASS onset: onsetStrength=1.0117 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s2] PASS gate: envelope=0.1360 >= gateThreshold=0.0000
+2025-12-25 05:04:59 [detection] [s2] PASS envFloor: envelope=0.1360 >= envFloor=0.0012
+2025-12-25 05:04:59 [detection] [s2] PASS onset: onsetStrength=0.8927 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s2] PASS gate: envelope=0.0733 >= gateThreshold=0.0000
+2025-12-25 05:04:59 [detection] [s2] PASS envFloor: envelope=0.0733 >= envFloor=0.0012
+2025-12-25 05:04:59 [detection] [s2] PASS onset: onsetStrength=1.0423 >= onsetThreshold=0.1000
+2025-12-25 05:04:59 [detection] [s2] PASS gate: envelope=0.0543 >= gateThreshold=0.0000
+2025-12-25 05:04:59 [detection] [s2] PASS envFloor: envelope=0.0543 >= envFloor=0.0012
+2025-12-25 05:05:00 [detection] [s2] PASS onset: onsetStrength=1.0067 >= onsetThreshold=0.1000
+2025-12-25 05:05:00 [detection] [s2] PASS gate: envelope=0.0563 >= gateThreshold=0.0000
+2025-12-25 05:05:00 [detection] [s2] PASS envFloor: envelope=0.0563 >= envFloor=0.0012
+2025-12-25 05:05:00 [detection] [s2] PASS onset: onsetStrength=0.9966 >= onsetThreshold=0.1000
+2025-12-25 05:05:00 [detection] [s2] PASS gate: envelope=0.0334 >= gateThreshold=0.0000
+2025-12-25 05:05:00 [detection] [s2] PASS envFloor: envelope=0.0334 >= envFloor=0.0012
+2025-12-25 05:05:00 [detection] [s2] PASS onset: onsetStrength=0.8719 >= onsetThreshold=0.1000
+2025-12-25 05:05:00 [detection] [s2] PASS gate: envelope=0.0367 >= gateThreshold=0.0000
+2025-12-25 05:05:00 [detection] [s2] PASS envFloor: envelope=0.0367 >= envFloor=0.0012
+2025-12-25 05:05:01 [detection] [s2] PASS onset: onsetStrength=1.4922 >= onsetThreshold=0.1000
+2025-12-25 05:05:01 [detection] [s2] PASS gate: envelope=0.0074 >= gateThreshold=0.0000
+2025-12-25 05:05:01 [detection] [s2] PASS envFloor: envelope=0.0074 >= envFloor=0.0012
+2025-12-25 05:05:01 [detection] [s2] PASS onset: onsetStrength=1.4599 >= onsetThreshold=0.1000
+2025-12-25 05:05:01 [detection] [s2] PASS gate: envelope=0.0175 >= gateThreshold=0.0000
+2025-12-25 05:05:01 [detection] [s2] PASS envFloor: envelope=0.0175 >= envFloor=0.0012
+2025-12-25 05:05:01 [detection] [s2] PASS onset: onsetStrength=1.0170 >= onsetThreshold=0.1000
+2025-12-25 05:05:01 [detection] [s2] PASS gate: envelope=0.0215 >= gateThreshold=0.0000
+2025-12-25 05:05:01 [detection] [s2] PASS envFloor: envelope=0.0215 >= envFloor=0.0012
+2025-12-25 05:05:02 [detection] [s2] PASS onset: onsetStrength=0.9927 >= onsetThreshold=0.1000
+2025-12-25 05:05:02 [detection] [s2] PASS gate: envelope=0.0130 >= gateThreshold=0.0000
+2025-12-25 05:05:02 [detection] [s2] PASS envFloor: envelope=0.0130 >= envFloor=0.0012
+2025-12-25 05:05:02 [detection] [s2] PASS onset: onsetStrength=1.0497 >= onsetThreshold=0.1000
+2025-12-25 05:05:02 [detection] [s2] PASS envFloor: envelope=0.0149 >= envFloor=0.0012
+2025-12-25 05:05:02 [detection] [s2] PASS onset: onsetStrength=0.9432 >= onsetThreshold=0.1000
+2025-12-25 05:05:02 [detection] [s2] PASS gate: envelope=0.0116 >= gateThreshold=0.0000
+2025-12-25 05:05:02 [detection] [s2] PASS envFloor: envelope=0.0116 >= envFloor=0.0012
+2025-12-25 05:05:03 [detection] [s2] PASS onset: onsetStrength=1.2100 >= onsetThreshold=0.1000
+2025-12-25 05:05:03 [detection] [s2] PASS gate: envelope=0.0079 >= gateThreshold=0.0000
+2025-12-25 05:05:03 [detection] [s2] PASS envFloor: envelope=0.0079 >= envFloor=0.0012
+2025-12-25 05:05:03 [detection] [s2] PASS onset: onsetStrength=0.5903 >= onsetThreshold=0.1000
+2025-12-25 05:05:03 [detection] [s2] PASS gate: envelope=0.0132 >= gateThreshold=0.0000
+2025-12-25 05:05:03 [detection] [s2] PASS onset: onsetStrength=1.0467 >= onsetThreshold=0.1000
+2025-12-25 05:05:03 [detection] [s2] PASS gate: envelope=0.0075 >= gateThreshold=0.0000
+2025-12-25 05:05:04 [detection] [s2] PASS onset: onsetStrength=1.1701 >= onsetThreshold=0.1000
+2025-12-25 05:05:04 [detection] [s2] PASS gate: envelope=0.0055 >= gateThreshold=0.0000
+2025-12-25 05:05:04 [detection] [s2] PASS envFloor: envelope=0.0055 >= envFloor=0.0012
+2025-12-25 05:05:04 [detection] [s2] PASS onset: onsetStrength=1.2823 >= onsetThreshold=0.1000
+2025-12-25 05:05:04 [detection] [s2] PASS gate: envelope=0.0066 >= gateThreshold=0.0000
+2025-12-25 05:05:04 [detection] [s2] PASS onset: onsetStrength=1.0337 >= onsetThreshold=0.1000
+2025-12-25 05:05:04 [detection] [s2] PASS gate: envelope=0.0040 >= gateThreshold=0.0000
+2025-12-25 05:05:04 [detection] [s2] PASS envFloor: envelope=0.0040 >= envFloor=0.0012
+2025-12-25 05:05:05 [detection] [s2] PASS onset: onsetStrength=1.0028 >= onsetThreshold=0.1000
+2025-12-25 05:05:05 [detection] [s2] PASS gate: envelope=0.0062 >= gateThreshold=0.0000
+2025-12-25 05:05:07 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:07 [detection] [s2] sustain check: avgEnv=0.0019 >= sustainFloor=0.0018 (reset quiet count from 1)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 >= sustainFloor=0.0018 (reset quiet count from 2)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 >= sustainFloor=0.0018 (reset quiet count from 2)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 3/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 >= sustainFloor=0.0018 (reset quiet count from 3)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0019 >= sustainFloor=0.0018 (reset quiet count from 1)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0019 >= sustainFloor=0.0018 (reset quiet count from 1)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 >= sustainFloor=0.0018 (reset quiet count from 2)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 >= sustainFloor=0.0018 (reset quiet count from 2)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 3/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 4/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 5/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 6/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 7/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0019 >= sustainFloor=0.0018 (reset quiet count from 7)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 3/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 4/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 5/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 6/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0019 >= sustainFloor=0.0018 (reset quiet count from 6)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 >= sustainFloor=0.0018 (reset quiet count from 1)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 >= sustainFloor=0.0018 (reset quiet count from 1)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 1/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 2/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0016 < sustainFloor=0.0018 (quiet frame 3/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0017 < sustainFloor=0.0018 (quiet frame 4/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 5/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 6/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 7/8)
+2025-12-25 05:05:08 [detection] [s2] sustain check: avgEnv=0.0018 < sustainFloor=0.0018 (quiet frame 8/8)
+2025-12-25 05:05:08 [detection] [s2] NOTE-OFF: sustained quiet for 8 frames
+2025-12-25 05:05:08 [tracker] [s2] release-quiet t=20.366 avgEnv=0.00176 floor=0.00180 quietFrames=8
+2025-12-25 05:05:08 [detection]      S2F5 OFF (sustained-quiet: avgEnv=0.0018 < floor=0.0018)
+2025-12-25 05:05:08 [tracker] [s2] note-ended t=20.366 fret=5 dur=9.050
+2025-12-25 05:08:22 [detection] [s2] PASS onset: onsetStrength=1.1522 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s2] PASS gate: envelope=0.0056 >= gateThreshold=0.0000
+2025-12-25 05:08:22 [detection] [s2] PASS envFloor: envelope=0.0056 >= envFloor=0.0012
+2025-12-25 05:08:22 [detection] [s2] ONSET ACCEPTED
+2025-12-25 05:08:22 [tracker] [s2] onset t=214.932 env=0.00561 gate=0.00001 envDelta=0.00560 envFloor=0.00120 onset=1.152 thresh=0.100 onsetDelta=1.05221 baseline=0.00120 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:08:22 [detection] [s6] PASS onset: onsetStrength=1.3425 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s6] PASS gate: envelope=0.0180 >= gateThreshold=0.0005
+2025-12-25 05:08:22 [detection] [s6] PASS envFloor: envelope=0.0180 >= envFloor=0.0020
+2025-12-25 05:08:22 [detection] [s6] ONSET ACCEPTED
+2025-12-25 05:08:22 [tracker] [s6] onset t=214.935 env=0.01805 gate=0.00050 envDelta=0.01755 envFloor=0.00200 onset=1.342 thresh=0.100 onsetDelta=1.24247 baseline=0.00200 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=347.96Hz pitchCents=93.7
+2025-12-25 05:08:22 [detection] [s3] PASS onset: onsetStrength=0.9549 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s3] PASS gate: envelope=0.0069 >= gateThreshold=0.0002
+2025-12-25 05:08:22 [detection] [s3] PASS envFloor: envelope=0.0069 >= envFloor=0.0014
+2025-12-25 05:08:22 [detection] [s3] ONSET ACCEPTED
+2025-12-25 05:08:22 [tracker] [s3] onset t=214.938 env=0.00692 gate=0.00018 envDelta=0.00674 envFloor=0.00140 onset=0.955 thresh=0.100 onsetDelta=0.85489 baseline=0.00140 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:08:22 [detection] [s4] PASS onset: onsetStrength=0.5841 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s4] PASS gate: envelope=0.0019 >= gateThreshold=0.0003
+2025-12-25 05:08:22 [detection] [s4] PASS envFloor: envelope=0.0019 >= envFloor=0.0016
+2025-12-25 05:08:22 [detection] [s4] ONSET ACCEPTED
+2025-12-25 05:08:22 [tracker] [s4] onset t=214.943 env=0.00190 gate=0.00027 envDelta=0.00163 envFloor=0.00160 onset=0.584 thresh=0.100 onsetDelta=0.48412 baseline=0.00160 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:08:22 [tracker] [s1] aubio-raw t=214.9457 onset=0.956485 env=0.000855 peak=0.001413 gain=1.000
+2025-12-25 05:08:22 [detection] [s1] PASS onset: onsetStrength=0.9565 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s1] PASS gate: envelope=0.0009 >= gateThreshold=0.0001
+2025-12-25 05:08:22 [tracker] [s1] onset-below-env-floor t=214.9457 env=0.000855 gate=0.000055 envDelta=0.000800 envFloor=0.001000 onset=0.956485 thresh=0.100000 onsetDelta=0.856485 baseline=0.001000 lastPeak=0.000000 baseParam=0.001000 gateRatio=0.0550 envParam=0.000450 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=93.93 pitchCents=226.6
+2025-12-25 05:08:22 [detection] [s1] REJECT envFloor: envelope=0.0009 < envFloor=0.0010
+2025-12-25 05:08:22 [detection] [s5] PASS onset: onsetStrength=1.3100 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s5] PASS gate: envelope=0.0021 >= gateThreshold=0.0004
+2025-12-25 05:08:22 [detection] [s5] PASS envFloor: envelope=0.0021 >= envFloor=0.0018
+2025-12-25 05:08:22 [detection] [s5] ONSET ACCEPTED
+2025-12-25 05:08:22 [tracker] [s5] onset t=214.948 env=0.00208 gate=0.00038 envDelta=0.00170 envFloor=0.00180 onset=1.310 thresh=0.100 onsetDelta=1.21001 baseline=0.00180 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=420.94Hz pitchCents=923.3
+2025-12-25 05:08:22 [detection] [s6] PASS onset: onsetStrength=1.3628 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s6] PASS gate: envelope=0.0098 >= gateThreshold=0.0005
+2025-12-25 05:08:22 [detection] [s6] ONSET ACCEPTED
+2025-12-25 05:08:22 [tracker] [s6] onset t=214.994 env=0.00982 gate=0.00050 envDelta=0.00932 envFloor=0.00200 onset=1.363 thresh=0.100 onsetDelta=1.26282 baseline=0.00200 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=337.22Hz pitchCents=39.4
+2025-12-25 05:08:22 [detection] [s6] PASS onset: onsetStrength=1.1522 >= onsetThreshold=0.1000
+2025-12-25 05:08:22 [detection] [s6] PASS gate: envelope=0.0099 >= gateThreshold=0.0005
+2025-12-25 05:08:22 [detection] [s6] PASS envFloor: envelope=0.0099 >= envFloor=0.0020
+2025-12-25 05:08:22 [detection] [s6] ONSET ACCEPTED
+2025-12-25 05:08:22 [tracker] [s6] onset t=215.055 env=0.00989 gate=0.00050 envDelta=0.00939 envFloor=0.00200 onset=1.152 thresh=0.100 onsetDelta=1.05220 baseline=0.00200 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=332.96Hz pitchCents=17.4
+2025-12-25 05:08:22 [tracker] [s6] note-start t=215.055 fret=0 midi=64 vel=0.12 env=0.00989
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0019 < sustainFloor=0.0020 (quiet frame 1/8)
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0014 < sustainFloor=0.0020 (quiet frame 2/8)
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0010 < sustainFloor=0.0020 (quiet frame 3/8)
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0007 < sustainFloor=0.0020 (quiet frame 4/8)
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0007 < sustainFloor=0.0020 (quiet frame 5/8)
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0006 < sustainFloor=0.0020 (quiet frame 6/8)
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0006 < sustainFloor=0.0020 (quiet frame 7/8)
+2025-12-25 05:08:22 [detection] [s6] sustain check: avgEnv=0.0006 < sustainFloor=0.0020 (quiet frame 8/8)
+2025-12-25 05:08:22 [detection] [s6] NOTE-OFF: sustained quiet for 8 frames
+2025-12-25 05:08:22 [tracker] [s6] release-quiet t=215.194 avgEnv=0.00064 floor=0.00200 quietFrames=8
+2025-12-25 05:08:22 [detection]      S6F0 OFF (sustained-quiet: avgEnv=0.0006 < floor=0.0020)
+2025-12-25 05:08:22 [tracker] [s6] note-ended t=215.194 fret=0 dur=0.139
+2025-12-25 05:08:27 [detection] [s5] PASS onset: onsetStrength=1.3124 >= onsetThreshold=0.1000
+2025-12-25 05:08:27 [detection] [s5] PASS gate: envelope=0.0009 >= gateThreshold=0.0004
+2025-12-25 05:08:27 [detection] [s5] REJECT envFloor: envelope=0.0009 < envFloor=0.0018
+2025-12-25 05:08:27 [detection] [s6] PASS onset: onsetStrength=1.3214 >= onsetThreshold=0.1000
+2025-12-25 05:08:27 [detection] [s6] PASS gate: envelope=0.0009 >= gateThreshold=0.0005
+2025-12-25 05:08:27 [detection] [s6] REJECT envFloor: envelope=0.0009 < envFloor=0.0020
+2025-12-25 05:08:27 [tracker] [s1] aubio-raw t=219.2956 onset=1.379259 env=0.001551 peak=0.002176 gain=1.000
+2025-12-25 05:08:27 [detection] [s1] PASS onset: onsetStrength=1.3793 >= onsetThreshold=0.1000
+2025-12-25 05:08:27 [detection] [s1] PASS gate: envelope=0.0016 >= gateThreshold=0.0001
+2025-12-25 05:08:27 [detection] [s1] PASS envFloor: envelope=0.0016 >= envFloor=0.0010
+2025-12-25 05:08:27 [tracker] [s1] onset-accepted t=219.2956 env=0.001551 gate=0.000055 envDelta=0.001496 envFloor=0.001000 onset=1.379259 thresh=0.100000 onsetDelta=1.279259 baseline=0.001000 lastPeak=0.000000 baseParam=0.001000 gateRatio=0.0550 envParam=0.000450 retriggerScale=1.400 guard=0.060 guardRemain=0.000 activeAge=-1.000 retrigRemain=0.000 pitchHz=-1.00 pitchCents=0.0
+2025-12-25 05:08:27 [detection] [s1] ONSET ACCEPTED
+2025-12-25 05:08:27 [tracker] [s1] onset t=219.296 env=0.00155 gate=0.00006 envDelta=0.00150 envFloor=0.00100 onset=1.379 thresh=0.100 onsetDelta=1.27926 baseline=0.00100 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:08:27 [detection] [s2] PASS onset: onsetStrength=1.3282 >= onsetThreshold=0.1000
+2025-12-25 05:08:27 [detection] [s2] PASS gate: envelope=0.0019 >= gateThreshold=0.0000
+2025-12-25 05:08:27 [detection] [s2] PASS envFloor: envelope=0.0019 >= envFloor=0.0012
+2025-12-25 05:08:27 [detection] [s2] ONSET ACCEPTED
+2025-12-25 05:08:27 [tracker] [s2] onset t=219.296 env=0.00191 gate=0.00001 envDelta=0.00190 envFloor=0.00120 onset=1.328 thresh=0.100 onsetDelta=1.22822 baseline=0.00120 lastPeak=0.00000 guard=0.060 activeAge=-1.000 pitch=-1.00Hz pitchCents=0.0
+2025-12-25 05:08:27 [detection] [s3] PASS onset: onsetStrength=1.2908 >= onsetThreshold=0.1000
+2025-12-25 05:08:27 [detection] [s3] PASS gate: envelope=0.0011 >= gateThreshold=0.0002
+2025-12-25 05:08:27 [detection] [s3] REJECT envFloor: envelope=0.0011 < envFloor=0.0014
+2025-12-25 05:08:27 [detection] [s4] PASS onset: onsetStrength=1.2619 >= onsetThreshold=0.1000
+2025-12-25 05:08:27 [detection] [s4] PASS gate: envelope=0.0011 >= gateThreshold=0.0003
+2025-12-25 05:08:27 [detection] [s4] REJECT envFloor: envelope=0.0011 < envFloor=0.0016
+2025-12-25 05:12:25 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/sessionwavs/session-20251225-050447 (shutdown)

@@ -1,0 +1,495 @@
+# SignalAssistant session log
+# Started at 2025-12-08 02:53:11
+2025-12-08 02:53:11 [session] mode=live session='' path='' duration=0.00 files=0
+2025-12-08 02:53:11 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-08 02:53:11 [tracker-settings] string1 midi=40 lowCut=37.08Hz highCut=445.00Hz baseline=0.000180 gateRatio=0.05500 envFloor=0.000450 sustainScale=0.580 retriggerScale=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.300
+2025-12-08 02:53:11 [tracker-settings] string2 midi=45 lowCut=55.00Hz highCut=563.20Hz baseline=0.000220 gateRatio=0.10000 envFloor=0.000550 sustainScale=0.700 retriggerScale=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.450
+2025-12-08 02:53:11 [tracker-settings] string3 midi=50 lowCut=85.16Hz highCut=693.05Hz baseline=0.000260 gateRatio=0.13000 envFloor=0.000650 sustainScale=0.820 retriggerScale=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.580
+2025-12-08 02:53:11 [tracker-settings] string4 midi=55 lowCut=127.40Hz highCut=862.39Hz baseline=0.000320 gateRatio=0.17000 envFloor=0.000780 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.700
+2025-12-08 02:53:11 [tracker-settings] string5 midi=59 lowCut=160.51Hz highCut=1086.54Hz baseline=0.000370 gateRatio=0.21000 envFloor=0.000900 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.800
+2025-12-08 02:53:11 [tracker-settings] string6 midi=64 lowCut=214.26Hz highCut=1450.36Hz baseline=0.000420 gateRatio=0.25000 envFloor=0.001050 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.900
+2025-12-08 02:53:11 [tracker] [s1] calibration reset
+2025-12-08 02:53:11 [tracker] [s2] calibration reset
+2025-12-08 02:53:11 [tracker] [s3] calibration reset
+2025-12-08 02:53:11 [tracker] [s4] calibration reset
+2025-12-08 02:53:11 [tracker] [s5] calibration reset
+2025-12-08 02:53:11 [tracker] [s6] calibration reset
+2025-12-08 02:53:11 [tracker] [s1] calibration avg=0.03165 peak=0.10910
+2025-12-08 02:53:11 [tracker] [s2] calibration avg=0.01798 peak=0.04582
+2025-12-08 02:53:11 [tracker] [s3] calibration avg=0.01325 peak=0.06025
+2025-12-08 02:53:11 [tracker] [s4] calibration avg=0.03051 peak=0.11407
+2025-12-08 02:53:11 [tracker] [s5] calibration avg=0.03291 peak=0.07733
+2025-12-08 02:53:11 [tracker] [s6] calibration avg=0.04616 peak=0.12280
+2025-12-08 02:53:11 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-12-08 02:53:11 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-08 02:53:11 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-12-08 02:53:11 [tracker] [s2] params baseline=0.000220 gate=0.1000 envFloor=0.000550 sustain=0.700 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-08 02:53:11 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-12-08 02:53:11 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-08 02:53:11 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-12-08 02:53:11 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-08 02:53:11 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-12-08 02:53:11 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-08 02:53:11 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-12-08 02:53:11 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-08 02:53:11 [tracker] [s1] aubio-raw t=0.0067 onset=4.000000 env=0.000080 peak=0.000235 gain=1.000
+2025-12-08 02:53:11 [tracker] [s1] onset-below-gate t=0.0067 env=0.000080 onset=4.000000 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:11 [tracker] [s1] aubio-raw t=0.1347 onset=0.997197 env=0.000146 peak=0.000425 gain=1.000
+2025-12-08 02:53:11 [tracker] [s1] onset-below-gate t=0.1347 env=0.000146 onset=0.997197 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:11 [tracker] [s1] aubio-raw t=0.4173 onset=0.815268 env=0.000139 peak=0.000328 gain=1.000
+2025-12-08 02:53:11 [tracker] [s1] onset-below-gate t=0.4173 env=0.000139 onset=0.815268 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:12 [tracker] [s1] aubio-raw t=0.7613 onset=0.996509 env=0.000111 peak=0.000253 gain=1.000
+2025-12-08 02:53:12 [tracker] [s1] onset-below-gate t=0.7613 env=0.000111 onset=0.996509 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:12 [tracker] [s1] aubio-raw t=0.8653 onset=0.993398 env=0.000106 peak=0.000232 gain=1.000
+2025-12-08 02:53:12 [tracker] [s1] onset-below-gate t=0.8653 env=0.000106 onset=0.993398 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:12 [tracker] [s1] aubio-raw t=1.2360 onset=0.895567 env=0.000092 peak=0.000287 gain=1.000
+2025-12-08 02:53:12 [tracker] [s1] onset-below-gate t=1.2360 env=0.000092 onset=0.895567 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:12 [tracker] [s1] aubio-raw t=1.4120 onset=1.262771 env=0.000089 peak=0.000225 gain=1.000
+2025-12-08 02:53:12 [tracker] [s1] onset-below-gate t=1.4120 env=0.000089 onset=1.262771 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:13 [tracker] [s1] aubio-raw t=2.0120 onset=1.254619 env=0.000098 peak=0.000252 gain=1.000
+2025-12-08 02:53:13 [tracker] [s1] onset-below-gate t=2.0120 env=0.000098 onset=1.254619 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:13 [tracker] [s1] aubio-raw t=2.5907 onset=1.471745 env=0.000153 peak=0.000394 gain=1.000
+2025-12-08 02:53:13 [tracker] [s1] onset-below-gate t=2.5907 env=0.000153 onset=1.471745 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:14 [tracker] [s1] aubio-raw t=2.6867 onset=0.998326 env=0.000103 peak=0.000279 gain=1.000
+2025-12-08 02:53:14 [tracker] [s1] onset-below-gate t=2.6867 env=0.000103 onset=0.998326 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:14 [tracker] [s1] aubio-raw t=2.7800 onset=0.989011 env=0.000136 peak=0.000311 gain=1.000
+2025-12-08 02:53:14 [tracker] [s1] onset-below-gate t=2.7800 env=0.000136 onset=0.989011 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:14 [tracker] [s1] aubio-raw t=2.8707 onset=0.988682 env=0.000127 peak=0.000321 gain=1.000
+2025-12-08 02:53:14 [tracker] [s1] onset-below-gate t=2.8707 env=0.000127 onset=0.988682 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:14 [tracker] [s1] aubio-raw t=2.9640 onset=1.061112 env=0.000124 peak=0.000299 gain=1.000
+2025-12-08 02:53:14 [tracker] [s1] onset-below-gate t=2.9640 env=0.000124 onset=1.061112 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:14 [tracker] [s1] aubio-raw t=3.2334 onset=0.950511 env=0.000120 peak=0.000264 gain=1.000
+2025-12-08 02:53:14 [tracker] [s1] onset-below-gate t=3.2334 env=0.000120 onset=0.950511 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:14 [tracker] [s1] aubio-raw t=3.2894 onset=0.996927 env=0.000133 peak=0.000371 gain=1.000
+2025-12-08 02:53:14 [tracker] [s1] onset-below-gate t=3.2894 env=0.000133 onset=0.996927 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:14 [tracker] [s1] aubio-raw t=3.4227 onset=0.899257 env=0.000116 peak=0.000301 gain=1.000
+2025-12-08 02:53:14 [tracker] [s1] onset-below-gate t=3.4227 env=0.000116 onset=0.899257 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:15 [tracker] [s1] aubio-raw t=3.7987 onset=0.997278 env=0.000154 peak=0.000402 gain=1.000
+2025-12-08 02:53:15 [tracker] [s1] onset-below-gate t=3.7987 env=0.000154 onset=0.997278 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:15 [tracker] [s1] aubio-raw t=4.0014 onset=0.706302 env=0.000153 peak=0.000334 gain=1.000
+2025-12-08 02:53:15 [tracker] [s1] onset-below-gate t=4.0014 env=0.000153 onset=0.706302 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:15 [tracker] [s1] aubio-raw t=4.0947 onset=0.920450 env=0.000079 peak=0.000207 gain=1.000
+2025-12-08 02:53:15 [tracker] [s1] onset-below-gate t=4.0947 env=0.000079 onset=0.920450 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:16 [tracker] [s1] aubio-raw t=4.8387 onset=0.818470 env=0.000122 peak=0.000316 gain=1.000
+2025-12-08 02:53:16 [tracker] [s1] onset-below-gate t=4.8387 env=0.000122 onset=0.818470 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:16 [tracker] [s1] aubio-raw t=5.0280 onset=0.766798 env=0.000135 peak=0.000297 gain=1.000
+2025-12-08 02:53:16 [tracker] [s1] onset-below-gate t=5.0280 env=0.000135 onset=0.766798 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:16 [tracker] [s1] aubio-raw t=5.1373 onset=0.999420 env=0.000136 peak=0.000324 gain=1.000
+2025-12-08 02:53:16 [tracker] [s1] onset-below-gate t=5.1373 env=0.000136 onset=0.999420 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:16 [tracker] [s1] aubio-raw t=5.3186 onset=1.343765 env=0.000113 peak=0.000273 gain=1.000
+2025-12-08 02:53:16 [tracker] [s1] onset-below-gate t=5.3186 env=0.000113 onset=1.343765 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:16 [tracker] [s1] aubio-raw t=5.4439 onset=1.165129 env=0.000107 peak=0.000351 gain=1.000
+2025-12-08 02:53:16 [tracker] [s1] onset-below-gate t=5.4439 env=0.000107 onset=1.165129 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:17 [tracker] [s1] aubio-raw t=6.1239 onset=0.679784 env=0.000209 peak=0.000487 gain=1.000
+2025-12-08 02:53:17 [tracker] [s1] onset-below-gate t=6.1239 env=0.000209 onset=0.679784 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:17 [tracker] [s1] aubio-raw t=6.1799 onset=1.401993 env=0.000125 peak=0.000354 gain=1.000
+2025-12-08 02:53:17 [tracker] [s1] onset-below-gate t=6.1799 env=0.000125 onset=1.401993 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:17 [tracker] [s1] aubio-raw t=6.3479 onset=1.025423 env=0.000101 peak=0.000252 gain=1.000
+2025-12-08 02:53:17 [tracker] [s1] onset-below-gate t=6.3479 env=0.000101 onset=1.025423 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:17 [tracker] [s1] aubio-raw t=6.4919 onset=0.756494 env=0.000115 peak=0.000312 gain=1.000
+2025-12-08 02:53:17 [tracker] [s1] onset-below-gate t=6.4919 env=0.000115 onset=0.756494 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:17 [tracker] [s1] aubio-raw t=6.6039 onset=1.097365 env=0.000118 peak=0.000280 gain=1.000
+2025-12-08 02:53:17 [tracker] [s1] onset-below-gate t=6.6039 env=0.000118 onset=1.097365 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:18 [tracker] [s1] aubio-raw t=6.8705 onset=1.473683 env=0.000118 peak=0.000279 gain=1.000
+2025-12-08 02:53:18 [tracker] [s1] onset-below-gate t=6.8705 env=0.000118 onset=1.473683 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:18 [tracker] [s1] aubio-raw t=7.0038 onset=0.997322 env=0.000121 peak=0.000303 gain=1.000
+2025-12-08 02:53:18 [tracker] [s1] onset-below-gate t=7.0038 env=0.000121 onset=0.997322 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:18 [tracker] [s1] aubio-raw t=7.1158 onset=1.001600 env=0.000160 peak=0.000464 gain=1.000
+2025-12-08 02:53:18 [tracker] [s1] onset-below-gate t=7.1158 env=0.000160 onset=1.001600 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:18 [tracker] [s1] aubio-raw t=7.1798 onset=0.810684 env=0.000087 peak=0.000212 gain=1.000
+2025-12-08 02:53:18 [tracker] [s1] onset-below-gate t=7.1798 env=0.000087 onset=0.810684 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:18 [tracker] [s1] aubio-raw t=7.4465 onset=1.011785 env=0.000103 peak=0.000234 gain=1.000
+2025-12-08 02:53:18 [tracker] [s1] onset-below-gate t=7.4465 env=0.000103 onset=1.011785 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=7.7718 onset=1.031845 env=0.015683 peak=0.023190 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-below-env-floor t=7.7718 env=0.015683 onset=1.031845 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=7.8251 onset=0.763497 env=0.113569 peak=0.228626 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=7.8251 env=0.113569 onset=0.763497 thresh=0.006000 baseline=0.038975 gate=0.002144 envFloor=0.027282 floor=0.029117 adapt=0.038975 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=7.825 env=0.11357 baseline=0.03897 gate=0.00214 envFloor=0.02728 onset=0.763>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=7.8864 onset=0.894690 env=0.021815 peak=0.074486 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-below-env-floor t=7.8864 env=0.021815 onset=0.894690 thresh=0.006000 baseline=0.043990 gate=0.002419 envFloor=0.030793 floor=0.029117 adapt=0.043990 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=7.9584 onset=0.841985 env=0.048315 peak=0.135948 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=7.9584 env=0.048315 onset=0.841985 thresh=0.006000 baseline=0.039643 gate=0.002180 envFloor=0.027750 floor=0.029117 adapt=0.039643 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=7.958 env=0.04831 baseline=0.03964 gate=0.00218 envFloor=0.02775 onset=0.842>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.0198 onset=0.890790 env=0.006269 peak=0.021536 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-below-env-floor t=8.0198 env=0.006269 onset=0.890790 thresh=0.006000 baseline=0.035309 gate=0.001942 envFloor=0.024750 floor=0.029117 adapt=0.035309 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.0758 onset=1.415978 env=0.062773 peak=0.116126 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=8.0758 env=0.062773 onset=1.415978 thresh=0.006000 baseline=0.031415 gate=0.001728 envFloor=0.024750 floor=0.029117 adapt=0.031415 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=8.076 env=0.06277 baseline=0.03141 gate=0.00173 envFloor=0.02475 onset=1.416>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.1397 onset=0.873161 env=0.038718 peak=0.103948 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=8.1397 env=0.038718 onset=0.873161 thresh=0.006000 baseline=0.030039 gate=0.001652 envFloor=0.024750 floor=0.029117 adapt=0.030039 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=8.140 env=0.03872 baseline=0.03004 gate=0.00165 envFloor=0.02475 onset=0.873>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.2011 onset=0.648845 env=0.006400 peak=0.024582 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-below-env-floor t=8.2011 env=0.006400 onset=0.648845 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.2597 onset=0.532811 env=0.063501 peak=0.105170 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=8.2597 env=0.063501 onset=0.532811 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=8.260 env=0.06350 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.533>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.3211 onset=1.005480 env=0.040560 peak=0.095086 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=8.3211 env=0.040560 onset=1.005480 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=8.321 env=0.04056 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.005>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.3824 onset=0.714043 env=0.010440 peak=0.036698 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-below-env-floor t=8.3824 env=0.010440 onset=0.714043 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.4411 onset=1.001521 env=0.054915 peak=0.088833 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=8.4411 env=0.054915 onset=1.001521 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=8.441 env=0.05491 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.002>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.5024 onset=0.869149 env=0.044639 peak=0.084307 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=8.5024 env=0.044639 onset=0.869149 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=8.502 env=0.04464 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.869>=0.006
+2025-12-08 02:53:19 [tracker] [s1] aubio-raw t=8.5744 onset=0.852659 env=0.049762 peak=0.079378 gain=1.000
+2025-12-08 02:53:19 [tracker] [s1] onset-accepted t=8.5744 env=0.049762 onset=0.852659 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:19 [tracker] [s1] onset t=8.574 env=0.04976 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.853>=0.006
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=8.6357 onset=1.136358 env=0.037909 peak=0.075735 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-accepted t=8.6357 env=0.037909 onset=1.136358 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] onset t=8.636 env=0.03791 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.136>=0.006
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=8.7077 onset=1.006656 env=0.045339 peak=0.071467 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-accepted t=8.7077 env=0.045339 onset=1.006656 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] onset t=8.708 env=0.04534 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.007>=0.006
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=8.7690 onset=0.754473 env=0.032589 peak=0.068338 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-accepted t=8.7690 env=0.032589 onset=0.754473 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] onset t=8.769 env=0.03259 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.754>=0.006
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=8.8544 onset=0.676753 env=0.016802 peak=0.045876 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-below-env-floor t=8.8544 env=0.016802 onset=0.676753 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s2] onset t=8.886 env=0.01642 baseline=0.01690 gate=0.00169 envFloor=0.01436 onset=1.322>=0.009
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.0010 onset=0.996753 env=0.000132 peak=0.000270 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-below-gate t=9.0010 env=0.000132 onset=0.996753 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.1823 onset=1.003500 env=0.000182 peak=0.000400 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-below-gate t=9.1823 env=0.000182 onset=1.003500 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.2517 onset=1.062641 env=0.000160 peak=0.000407 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-below-gate t=9.2517 env=0.000160 onset=1.062641 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.3690 onset=0.992064 env=0.002114 peak=0.002677 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-below-env-floor t=9.3690 env=0.002114 onset=0.992064 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.4277 onset=1.191720 env=0.244606 peak=0.400657 gain=0.874
+2025-12-08 02:53:20 [tracker] [s1] onset-accepted t=9.4277 env=0.244606 onset=1.191720 thresh=0.006000 baseline=0.053709 gate=0.002954 envFloor=0.037596 floor=0.029117 adapt=0.053709 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] onset t=9.428 env=0.24461 baseline=0.05371 gate=0.00295 envFloor=0.03760 onset=1.192>=0.006
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.4890 onset=0.676383 env=0.210650 peak=0.330613 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-accepted t=9.4890 env=0.210650 onset=0.676383 thresh=0.006000 baseline=0.070325 gate=0.003868 envFloor=0.049228 floor=0.029117 adapt=0.070325 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] onset t=9.489 env=0.21065 baseline=0.07033 gate=0.00387 envFloor=0.04923 onset=0.676>=0.006
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.5476 onset=1.288555 env=0.136500 peak=0.258939 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-accepted t=9.5476 env=0.136500 onset=1.288555 thresh=0.006000 baseline=0.061305 gate=0.003372 envFloor=0.042913 floor=0.029117 adapt=0.061305 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:20 [tracker] [s1] onset t=9.548 env=0.13650 baseline=0.06130 gate=0.00337 envFloor=0.04291 onset=1.289>=0.006
+2025-12-08 02:53:20 [tracker] [s1] aubio-raw t=9.6116 onset=0.847332 env=0.016546 peak=0.058710 gain=1.000
+2025-12-08 02:53:20 [tracker] [s1] onset-below-env-floor t=9.6116 env=0.016546 onset=0.847332 thresh=0.006000 baseline=0.054035 gate=0.002972 envFloor=0.037824 floor=0.029117 adapt=0.054035 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=9.6676 onset=1.208446 env=0.089422 peak=0.175117 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=9.6676 env=0.089422 onset=1.208446 thresh=0.006000 baseline=0.045969 gate=0.002528 envFloor=0.032178 floor=0.029117 adapt=0.045969 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=9.668 env=0.08942 baseline=0.04597 gate=0.00253 envFloor=0.03218 onset=1.208>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=9.7290 onset=1.363545 env=0.115460 peak=0.167619 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=9.7290 env=0.115460 onset=1.363545 thresh=0.006000 baseline=0.042215 gate=0.002322 envFloor=0.029551 floor=0.029117 adapt=0.042215 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=9.729 env=0.11546 baseline=0.04222 gate=0.00232 envFloor=0.02955 onset=1.364>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=9.7930 onset=0.935074 env=0.004669 peak=0.011912 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-below-env-floor t=9.7930 env=0.004669 onset=0.935074 thresh=0.006000 baseline=0.036715 gate=0.002019 envFloor=0.025700 floor=0.029117 adapt=0.036715 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=9.8516 onset=0.783036 env=0.075251 peak=0.132182 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=9.8516 env=0.075251 onset=0.783036 thresh=0.006000 baseline=0.033535 gate=0.001844 envFloor=0.024750 floor=0.029117 adapt=0.033535 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=9.852 env=0.07525 baseline=0.03353 gate=0.00184 envFloor=0.02475 onset=0.783>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=9.9130 onset=0.924611 env=0.024783 peak=0.075933 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=9.9130 env=0.024783 onset=0.924611 thresh=0.006000 baseline=0.030948 gate=0.001702 envFloor=0.024750 floor=0.029117 adapt=0.030948 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=9.913 env=0.02478 baseline=0.03095 gate=0.00170 envFloor=0.02475 onset=0.925>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=9.9716 onset=1.060968 env=0.071259 peak=0.111615 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=9.9716 env=0.071259 onset=1.060968 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=9.972 env=0.07126 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.061>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.0329 onset=0.898238 env=0.056581 peak=0.102805 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=10.0329 env=0.056581 onset=0.898238 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=10.033 env=0.05658 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.898>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.1183 onset=0.596993 env=0.025184 peak=0.070827 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=10.1183 env=0.025184 onset=0.596993 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=10.118 env=0.02518 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.597>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.1769 onset=1.001620 env=0.058480 peak=0.087198 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=10.1769 env=0.058480 onset=1.001620 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=10.177 env=0.05848 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.002>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.2383 onset=1.009422 env=0.049058 peak=0.081205 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=10.2383 env=0.049058 onset=1.009422 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=10.238 env=0.04906 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.009>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.3103 onset=0.979415 env=0.047721 peak=0.076395 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=10.3103 env=0.047721 onset=0.979415 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=10.310 env=0.04772 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.979>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.3716 onset=1.003809 env=0.040580 peak=0.072567 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-accepted t=10.3716 env=0.040580 onset=1.003809 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] onset t=10.372 env=0.04058 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.004>=0.006
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.4302 onset=0.925380 env=0.016242 peak=0.022339 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-below-env-floor t=10.4302 env=0.016242 onset=0.925380 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:21 [tracker] [s1] aubio-raw t=10.4942 onset=1.292754 env=0.001434 peak=0.002777 gain=1.000
+2025-12-08 02:53:21 [tracker] [s1] onset-below-gate t=10.4942 env=0.001434 onset=1.292754 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=10.7049 onset=1.174681 env=0.000130 peak=0.000320 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-below-gate t=10.7049 env=0.000130 onset=1.174681 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=10.9395 onset=0.896482 env=0.000096 peak=0.000288 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-below-gate t=10.9395 env=0.000096 onset=0.896482 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.0515 onset=0.996384 env=0.000102 peak=0.000272 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-below-gate t=11.0515 env=0.000102 onset=0.996384 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.1155 onset=0.539070 env=0.146111 peak=0.259175 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-accepted t=11.1155 env=0.146111 onset=0.539070 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] onset t=11.116 env=0.14611 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.539>=0.006
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.1742 onset=1.474850 env=0.029026 peak=0.100066 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-accepted t=11.1742 env=0.029026 onset=1.474850 thresh=0.006000 baseline=0.041219 gate=0.002267 envFloor=0.028853 floor=0.029117 adapt=0.041219 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] onset t=11.174 env=0.02903 baseline=0.04122 gate=0.00227 envFloor=0.02885 onset=1.475>=0.006
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.2275 onset=0.763654 env=0.018361 peak=0.066653 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-below-env-floor t=11.2275 env=0.018361 onset=0.763654 thresh=0.006000 baseline=0.043172 gate=0.002374 envFloor=0.030220 floor=0.029117 adapt=0.043172 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.2995 onset=0.794182 env=0.039284 peak=0.117312 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-accepted t=11.2995 env=0.039284 onset=0.794182 thresh=0.006000 baseline=0.036899 gate=0.002029 envFloor=0.025829 floor=0.029117 adapt=0.036899 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] onset t=11.300 env=0.03928 baseline=0.03690 gate=0.00203 envFloor=0.02583 onset=0.794>=0.006
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.3608 onset=0.900807 env=0.004284 peak=0.009870 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-below-env-floor t=11.3608 env=0.004284 onset=0.900807 thresh=0.006000 baseline=0.032070 gate=0.001764 envFloor=0.024750 floor=0.029117 adapt=0.032070 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.4195 onset=0.780970 env=0.063321 peak=0.111825 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-accepted t=11.4195 env=0.063321 onset=0.780970 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] onset t=11.420 env=0.06332 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.781>=0.006
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.4782 onset=1.308598 env=0.073488 peak=0.101726 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-accepted t=11.4782 env=0.073488 onset=1.308598 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] onset t=11.478 env=0.07349 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.309>=0.006
+2025-12-08 02:53:22 [tracker] [s1] note-start t=11.478 fret=6 midi=46 vel=0.88 env=0.07349
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.5395 onset=1.057094 env=0.064333 peak=0.092650 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-accepted t=11.5395 env=0.064333 onset=1.057094 thresh=0.006000 baseline=0.058938 gate=0.003242 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.065486 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] onset t=11.540 env=0.06433 baseline=0.05894 gate=0.00324 envFloor=0.02475 onset=1.057>=0.006
+2025-12-08 02:53:22 [tracker] [s1] note-ended (new onset) t=11.540 fret=6 dur=0.061
+2025-12-08 02:53:22 [tracker] [s1] aubio-raw t=11.6115 onset=1.179234 env=0.063677 peak=0.082431 gain=1.000
+2025-12-08 02:53:22 [tracker] [s1] onset-accepted t=11.6115 env=0.063677 onset=1.179234 thresh=0.006000 baseline=0.051477 gate=0.002831 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.057197 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:22 [tracker] [s1] onset t=11.611 env=0.06368 baseline=0.05148 gate=0.00283 envFloor=0.02475 onset=1.179>=0.006
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=11.6728 onset=0.930146 env=0.048468 peak=0.074116 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=11.6728 env=0.048468 onset=0.930146 thresh=0.006000 baseline=0.045872 gate=0.002523 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.050969 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=11.673 env=0.04847 baseline=0.04587 gate=0.00252 envFloor=0.02475 onset=0.930>=0.006
+2025-12-08 02:53:23 [tracker] [s1] note-start t=11.673 fret=6 midi=46 vel=0.58 env=0.04847
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=11.7448 onset=1.495442 env=0.054806 peak=0.074661 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=11.7448 env=0.054806 onset=1.495442 thresh=0.006000 baseline=0.038099 gate=0.002095 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.042333 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=11.745 env=0.05481 baseline=0.03810 gate=0.00210 envFloor=0.02475 onset=1.495>=0.006
+2025-12-08 02:53:23 [tracker] [s1] note-ended (new onset) t=11.745 fret=6 dur=0.072
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=11.8061 onset=0.908036 env=0.039276 peak=0.063045 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=11.8061 env=0.039276 onset=0.908036 thresh=0.006000 baseline=0.033951 gate=0.001867 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.037723 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=11.806 env=0.03928 baseline=0.03395 gate=0.00187 envFloor=0.02475 onset=0.908>=0.006
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=11.8781 onset=0.999197 env=0.046911 peak=0.066794 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=11.8781 env=0.046911 onset=0.999197 thresh=0.006000 baseline=0.029653 gate=0.001631 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.032948 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=11.878 env=0.04691 baseline=0.02965 gate=0.00163 envFloor=0.02475 onset=0.999>=0.006
+2025-12-08 02:53:23 [tracker] [s1] note-start t=11.878 fret=6 midi=46 vel=0.56 env=0.04691
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=11.9395 onset=1.005968 env=0.033511 peak=0.054848 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=11.9395 env=0.033511 onset=1.005968 thresh=0.006000 baseline=0.037622 gate=0.002069 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.041803 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=11.939 env=0.03351 baseline=0.03762 gate=0.00207 envFloor=0.02475 onset=1.006>=0.006
+2025-12-08 02:53:23 [tracker] [s1] note-ended (new onset) t=11.939 fret=6 dur=0.061
+2025-12-08 02:53:23 [tracker] [s1] note-start t=11.939 fret=6 midi=46 vel=0.40 env=0.03351
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=11.9901 onset=0.801359 env=0.006527 peak=0.010458 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-below-env-floor t=11.9901 env=0.006527 onset=0.801359 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.030467 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=12.0968 onset=0.666636 env=0.030521 peak=0.048457 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=12.0968 env=0.030521 onset=0.666636 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.024931 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=12.097 env=0.03052 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.667>=0.006
+2025-12-08 02:53:23 [tracker] [s1] note-ended (new onset) t=12.097 fret=6 dur=0.157
+2025-12-08 02:53:23 [tracker] [s1] note-start t=12.097 fret=6 midi=46 vel=0.37 env=0.03052
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=12.1821 onset=1.000521 env=0.027144 peak=0.045701 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=12.1821 env=0.027144 onset=1.000521 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.025998 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=12.182 env=0.02714 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=1.001>=0.006
+2025-12-08 02:53:23 [tracker] [s1] note-ended (new onset) t=12.182 fret=6 dur=0.085
+2025-12-08 02:53:23 [tracker] [s1] aubio-raw t=12.2541 onset=0.919478 env=0.029522 peak=0.048757 gain=1.000
+2025-12-08 02:53:23 [tracker] [s1] onset-accepted t=12.2541 env=0.029522 onset=0.919478 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.022707 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:23 [tracker] [s1] onset t=12.254 env=0.02952 baseline=0.02912 gate=0.00160 envFloor=0.02475 onset=0.919>=0.006
+2025-12-08 02:53:24 [tracker] [s1] aubio-raw t=12.9581 onset=0.720445 env=0.000134 peak=0.000404 gain=1.000
+2025-12-08 02:53:24 [tracker] [s1] onset-below-gate t=12.9581 env=0.000134 onset=0.720445 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.006046 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:24 [tracker] [s2] onset t=12.979 env=0.06647 baseline=0.01690 gate=0.00169 envFloor=0.01436 onset=1.096>=0.009
+2025-12-08 02:53:24 [tracker] [s2] onset t=13.182 env=0.05453 baseline=0.02551 gate=0.00255 envFloor=0.01786 onset=1.010>=0.009
+2025-12-08 02:53:24 [tracker] [s2] note-start t=13.182 fret=5 midi=50 vel=0.65 env=0.05453
+2025-12-08 02:53:24 [tracker] [s2] onset t=13.305 env=0.04103 baseline=0.03897 gate=0.00390 envFloor=0.01464 onset=1.143>=0.009
+2025-12-08 02:53:24 [tracker] [s2] note-ended (new onset) t=13.305 fret=5 dur=0.123
+2025-12-08 02:53:24 [tracker] [s2] note-start t=13.305 fret=5 midi=50 vel=0.49 env=0.04103
+2025-12-08 02:53:24 [tracker] [s1] aubio-raw t=13.3634 onset=1.312600 env=0.000285 peak=0.000622 gain=1.000
+2025-12-08 02:53:24 [tracker] [s1] onset-below-gate t=13.3634 env=0.000285 onset=1.312600 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.002822 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:24 [tracker] [s1] aubio-raw t=13.5287 onset=0.912990 env=0.000177 peak=0.000485 gain=1.000
+2025-12-08 02:53:24 [tracker] [s1] onset-below-gate t=13.5287 env=0.000177 onset=0.912990 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.002068 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:25 [tracker] [s2] onset t=13.675 env=0.01625 baseline=0.01840 gate=0.00184 envFloor=0.01436 onset=0.587>=0.009
+2025-12-08 02:53:25 [tracker] [s2] note-ended (new onset) t=13.675 fret=5 dur=0.371
+2025-12-08 02:53:25 [tracker] [s2] note-start t=13.675 fret=5 midi=50 vel=0.19 env=0.01625
+2025-12-08 02:53:25 [tracker] [s1] aubio-raw t=13.6780 onset=0.795576 env=0.005137 peak=0.007399 gain=1.000
+2025-12-08 02:53:25 [tracker] [s1] onset-below-env-floor t=13.6780 env=0.005137 onset=0.795576 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.001562 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:25 [tracker] [s1] aubio-raw t=13.7340 onset=0.514979 env=0.011612 peak=0.017928 gain=1.000
+2025-12-08 02:53:25 [tracker] [s1] onset-below-env-floor t=13.7340 env=0.011612 onset=0.514979 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.001406 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:25 [tracker] [s1] aubio-raw t=13.7847 onset=0.998393 env=0.005799 peak=0.009205 gain=1.000
+2025-12-08 02:53:25 [tracker] [s1] onset-below-env-floor t=13.7847 env=0.005799 onset=0.998393 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.001278 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:25 [tracker] [s2] onset t=13.819 env=0.01508 baseline=0.01690 gate=0.00169 envFloor=0.01436 onset=0.997>=0.009
+2025-12-08 02:53:25 [tracker] [s2] note-ended (new onset) t=13.819 fret=5 dur=0.144
+2025-12-08 02:53:25 [tracker] [s2] note-start t=13.819 fret=7 midi=52 vel=0.18 env=0.01508
+2025-12-08 02:53:25 [tracker] [s1] aubio-raw t=14.1606 onset=0.746056 env=0.000140 peak=0.000403 gain=1.000
+2025-12-08 02:53:25 [tracker] [s1] onset-below-gate t=14.1606 env=0.000140 onset=0.746056 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000630 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:25 [tracker] [s2] release-quiet t=14.270 avgEnv=0.00948 floor=0.01005 quietFrames=8
+2025-12-08 02:53:25 [tracker] [s2] note-ended t=14.270 fret=7 dur=0.451
+2025-12-08 02:53:25 [tracker] [s1] aubio-raw t=14.3846 onset=0.897778 env=0.000139 peak=0.000337 gain=1.000
+2025-12-08 02:53:25 [tracker] [s1] onset-below-gate t=14.3846 env=0.000139 onset=0.897778 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000414 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:26 [tracker] [s3] onset t=14.654 env=0.04385 baseline=0.01285 gate=0.00167 envFloor=0.01093 onset=1.057>=0.012
+2025-12-08 02:53:26 [tracker] [s1] aubio-raw t=14.6806 onset=1.143203 env=0.000347 peak=0.000892 gain=1.000
+2025-12-08 02:53:26 [tracker] [s1] onset-below-gate t=14.6806 env=0.000347 onset=1.143203 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000237 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:26 [tracker] [s1] aubio-raw t=14.9019 onset=0.914236 env=0.000120 peak=0.000265 gain=1.000
+2025-12-08 02:53:26 [tracker] [s1] onset-below-gate t=14.9019 env=0.000120 onset=0.914236 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000156 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:26 [tracker] [s2] onset t=14.929 env=0.03584 baseline=0.01690 gate=0.00169 envFloor=0.01436 onset=0.890>=0.009
+2025-12-08 02:53:26 [tracker] [s1] aubio-raw t=14.9659 onset=0.776571 env=0.000484 peak=0.001022 gain=1.000
+2025-12-08 02:53:26 [tracker] [s1] onset-below-gate t=14.9659 env=0.000484 onset=0.776571 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000139 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:26 [tracker] [s2] onset t=15.075 env=0.04317 baseline=0.01964 gate=0.00196 envFloor=0.01436 onset=1.184>=0.009
+2025-12-08 02:53:26 [tracker] [s2] note-start t=15.075 fret=7 midi=52 vel=0.52 env=0.04317
+2025-12-08 02:53:26 [tracker] [s2] onset t=15.161 env=0.02541 baseline=0.03309 gate=0.00331 envFloor=0.01436 onset=1.162>=0.009
+2025-12-08 02:53:26 [tracker] [s2] note-ended (new onset) t=15.161 fret=7 dur=0.085
+2025-12-08 02:53:26 [tracker] [s2] note-start t=15.161 fret=7 midi=52 vel=0.30 env=0.02541
+2025-12-08 02:53:26 [tracker] [s3] onset t=15.179 env=0.05902 baseline=0.01431 gate=0.00186 envFloor=0.01093 onset=0.528>=0.012
+2025-12-08 02:53:26 [tracker] [s2] release-quiet t=15.225 avgEnv=0.00197 floor=0.01005 quietFrames=8
+2025-12-08 02:53:26 [tracker] [s2] note-ended t=15.225 fret=7 dur=0.064
+2025-12-08 02:53:26 [tracker] [s1] aubio-raw t=15.3579 onset=0.779387 env=0.000226 peak=0.000503 gain=1.000
+2025-12-08 02:53:26 [tracker] [s1] onset-below-gate t=15.3579 env=0.000226 onset=0.779387 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000066 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:26 [tracker] [s3] onset t=15.371 env=0.03459 baseline=0.02032 gate=0.00264 envFloor=0.01423 onset=0.995>=0.012
+2025-12-08 02:53:26 [tracker] [s3] note-start t=15.371 fret=5 midi=55 vel=0.42 env=0.03459
+2025-12-08 02:53:26 [tracker] [s1] aubio-raw t=15.4459 onset=1.182873 env=0.000117 peak=0.000321 gain=1.000
+2025-12-08 02:53:26 [tracker] [s1] onset-below-gate t=15.4459 env=0.000117 onset=1.182873 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000056 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:26 [tracker] [s1] aubio-raw t=15.5312 onset=0.993002 env=0.000144 peak=0.000403 gain=1.000
+2025-12-08 02:53:26 [tracker] [s1] onset-below-gate t=15.5312 env=0.000144 onset=0.993002 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000048 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:27 [tracker] [s3] onset t=15.675 env=0.01243 baseline=0.01758 gate=0.00229 envFloor=0.01093 onset=0.742>=0.012
+2025-12-08 02:53:27 [tracker] [s3] note-ended (new onset) t=15.675 fret=5 dur=0.304
+2025-12-08 02:53:27 [tracker] [s1] aubio-raw t=15.8325 onset=0.885784 env=0.000104 peak=0.000264 gain=1.000
+2025-12-08 02:53:27 [tracker] [s1] onset-below-gate t=15.8325 env=0.000104 onset=0.885784 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000027 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:27 [tracker] [s3] release-quiet t=15.857 avgEnv=0.00876 floor=0.00896 quietFrames=8
+2025-12-08 02:53:27 [tracker] [s3] note-ended t=15.857 fret=7 dur=0.181
+2025-12-08 02:53:27 [tracker] [s1] aubio-raw t=15.9258 onset=0.925893 env=0.000154 peak=0.000431 gain=1.000
+2025-12-08 02:53:27 [tracker] [s1] onset-below-gate t=15.9258 env=0.000154 onset=0.925893 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000023 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:27 [tracker] [s1] aubio-raw t=16.0752 onset=1.159105 env=0.000131 peak=0.000295 gain=1.000
+2025-12-08 02:53:27 [tracker] [s1] onset-below-gate t=16.0752 env=0.000131 onset=1.159105 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000017 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:28 [tracker] [s1] aubio-raw t=16.7711 onset=1.459265 env=0.000161 peak=0.000436 gain=1.000
+2025-12-08 02:53:28 [tracker] [s1] onset-below-gate t=16.7711 env=0.000161 onset=1.459265 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000005 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:28 [tracker] [s1] aubio-raw t=17.3097 onset=1.100764 env=0.000124 peak=0.000298 gain=1.000
+2025-12-08 02:53:28 [tracker] [s1] onset-below-gate t=17.3097 env=0.000124 onset=1.100764 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000002 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:28 [tracker] [s1] aubio-raw t=17.4751 onset=1.308810 env=0.000160 peak=0.000373 gain=1.000
+2025-12-08 02:53:28 [tracker] [s1] onset-below-gate t=17.4751 env=0.000160 onset=1.308810 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000001 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:29 [tracker] [s1] aubio-raw t=17.6804 onset=1.307139 env=0.000128 peak=0.000295 gain=1.000
+2025-12-08 02:53:29 [tracker] [s1] onset-below-gate t=17.6804 env=0.000128 onset=1.307139 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000001 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:29 [tracker] [s1] aubio-raw t=17.9844 onset=1.000320 env=0.000093 peak=0.000259 gain=1.000
+2025-12-08 02:53:29 [tracker] [s1] onset-below-gate t=17.9844 env=0.000093 onset=1.000320 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:29 [tracker] [s1] aubio-raw t=18.1577 onset=1.066445 env=0.000119 peak=0.000348 gain=1.000
+2025-12-08 02:53:29 [tracker] [s1] onset-below-gate t=18.1577 env=0.000119 onset=1.066445 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:29 [tracker] [s1] aubio-raw t=18.3817 onset=0.959648 env=0.000113 peak=0.000307 gain=1.000
+2025-12-08 02:53:29 [tracker] [s1] onset-below-gate t=18.3817 env=0.000113 onset=0.959648 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:30 [tracker] [s1] aubio-raw t=19.0803 onset=0.998386 env=0.000091 peak=0.000221 gain=1.000
+2025-12-08 02:53:30 [tracker] [s1] onset-below-gate t=19.0803 env=0.000091 onset=0.998386 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:30 [tracker] [s1] aubio-raw t=19.3069 onset=1.065247 env=0.000098 peak=0.000272 gain=1.000
+2025-12-08 02:53:30 [tracker] [s1] onset-below-gate t=19.3069 env=0.000098 onset=1.065247 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:31 [tracker] [s1] aubio-raw t=19.7122 onset=0.645262 env=0.000099 peak=0.000270 gain=1.000
+2025-12-08 02:53:31 [tracker] [s1] onset-below-gate t=19.7122 env=0.000099 onset=0.645262 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:31 [tracker] [s1] aubio-raw t=19.9362 onset=1.097635 env=0.000144 peak=0.000347 gain=1.000
+2025-12-08 02:53:31 [tracker] [s1] onset-below-gate t=19.9362 env=0.000144 onset=1.097635 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:31 [tracker] [s1] aubio-raw t=20.1815 onset=1.101673 env=0.000114 peak=0.000291 gain=1.000
+2025-12-08 02:53:31 [tracker] [s1] onset-below-gate t=20.1815 env=0.000114 onset=1.101673 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:31 [tracker] [s1] aubio-raw t=20.5815 onset=0.998265 env=0.000128 peak=0.000349 gain=1.000
+2025-12-08 02:53:31 [tracker] [s1] onset-below-gate t=20.5815 env=0.000128 onset=0.998265 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:32 [tracker] [s1] aubio-raw t=21.0588 onset=0.997975 env=0.000096 peak=0.000273 gain=1.000
+2025-12-08 02:53:32 [tracker] [s1] onset-below-gate t=21.0588 env=0.000096 onset=0.997975 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:32 [tracker] [s1] aubio-raw t=21.3095 onset=1.315669 env=0.000153 peak=0.000339 gain=1.000
+2025-12-08 02:53:32 [tracker] [s1] onset-below-gate t=21.3095 env=0.000153 onset=1.315669 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:32 [tracker] [s1] aubio-raw t=21.4721 onset=1.037653 env=0.000088 peak=0.000190 gain=1.000
+2025-12-08 02:53:32 [tracker] [s1] onset-below-gate t=21.4721 env=0.000088 onset=1.037653 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=21.6668 onset=0.997908 env=0.000087 peak=0.000207 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=21.6668 env=0.000087 onset=0.997908 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=21.7228 onset=0.540033 env=0.000085 peak=0.000218 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=21.7228 env=0.000085 onset=0.540033 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=21.9227 onset=1.155040 env=0.000123 peak=0.000313 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=21.9227 env=0.000123 onset=1.155040 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=22.0214 onset=1.128461 env=0.000114 peak=0.000300 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=22.0214 env=0.000114 onset=1.128461 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=22.0907 onset=0.938807 env=0.000124 peak=0.000332 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=22.0907 env=0.000124 onset=0.938807 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=22.2374 onset=0.829984 env=0.000079 peak=0.000302 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=22.2374 env=0.000079 onset=0.829984 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=22.3787 onset=1.298989 env=0.000103 peak=0.000260 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=22.3787 env=0.000103 onset=1.298989 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:33 [tracker] [s1] aubio-raw t=22.4907 onset=1.259763 env=0.000132 peak=0.000329 gain=1.000
+2025-12-08 02:53:33 [tracker] [s1] onset-below-gate t=22.4907 env=0.000132 onset=1.259763 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:34 [tracker] [s1] aubio-raw t=22.6534 onset=1.277461 env=0.000184 peak=0.000405 gain=1.000
+2025-12-08 02:53:34 [tracker] [s1] onset-below-gate t=22.6534 env=0.000184 onset=1.277461 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:34 [tracker] [s1] aubio-raw t=22.7894 onset=0.838640 env=0.000114 peak=0.000335 gain=1.000
+2025-12-08 02:53:34 [tracker] [s1] onset-below-gate t=22.7894 env=0.000114 onset=0.838640 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:34 [tracker] [s1] aubio-raw t=22.9840 onset=0.999448 env=0.000190 peak=0.000424 gain=1.000
+2025-12-08 02:53:34 [tracker] [s1] onset-below-gate t=22.9840 env=0.000190 onset=0.999448 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:34 [tracker] [s1] aubio-raw t=23.2267 onset=1.474452 env=0.000098 peak=0.000255 gain=1.000
+2025-12-08 02:53:34 [tracker] [s1] onset-below-gate t=23.2267 env=0.000098 onset=1.474452 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:35 [tracker] [s1] aubio-raw t=24.0373 onset=0.817919 env=0.000140 peak=0.000313 gain=1.000
+2025-12-08 02:53:35 [tracker] [s1] onset-below-gate t=24.0373 env=0.000140 onset=0.817919 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:35 [tracker] [s1] aubio-raw t=24.3839 onset=0.995655 env=0.000096 peak=0.000267 gain=1.000
+2025-12-08 02:53:35 [tracker] [s1] onset-below-gate t=24.3839 env=0.000096 onset=0.995655 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:35 [tracker] [s1] aubio-raw t=24.4666 onset=0.997703 env=0.000135 peak=0.000319 gain=1.000
+2025-12-08 02:53:35 [tracker] [s1] onset-below-gate t=24.4666 env=0.000135 onset=0.997703 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:36 [tracker] [s1] aubio-raw t=24.9145 onset=0.962492 env=0.000149 peak=0.000333 gain=1.000
+2025-12-08 02:53:36 [tracker] [s1] onset-below-gate t=24.9145 env=0.000149 onset=0.962492 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:36 [tracker] [s1] aubio-raw t=25.1838 onset=1.169557 env=0.000126 peak=0.000347 gain=1.000
+2025-12-08 02:53:36 [tracker] [s1] onset-below-gate t=25.1838 env=0.000126 onset=1.169557 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:36 [tracker] [s1] aubio-raw t=25.3785 onset=0.876749 env=0.000098 peak=0.000296 gain=1.000
+2025-12-08 02:53:36 [tracker] [s1] onset-below-gate t=25.3785 env=0.000098 onset=0.876749 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:36 [tracker] [s1] aubio-raw t=25.4638 onset=1.035119 env=0.000087 peak=0.000190 gain=1.000
+2025-12-08 02:53:36 [tracker] [s1] onset-below-gate t=25.4638 env=0.000087 onset=1.035119 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:37 [tracker] [s1] aubio-raw t=25.7678 onset=0.662738 env=0.000118 peak=0.000301 gain=1.000
+2025-12-08 02:53:37 [tracker] [s1] onset-below-gate t=25.7678 env=0.000118 onset=0.662738 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:37 [tracker] [s1] aubio-raw t=26.1598 onset=1.164083 env=0.000129 peak=0.000273 gain=1.000
+2025-12-08 02:53:37 [tracker] [s1] onset-below-gate t=26.1598 env=0.000129 onset=1.164083 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:37 [tracker] [s1] aubio-raw t=26.2798 onset=0.998630 env=0.000146 peak=0.000303 gain=1.000
+2025-12-08 02:53:37 [tracker] [s1] onset-below-gate t=26.2798 env=0.000146 onset=0.998630 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:37 [tracker] [s1] aubio-raw t=26.5144 onset=0.996885 env=0.000101 peak=0.000293 gain=1.000
+2025-12-08 02:53:37 [tracker] [s1] onset-below-gate t=26.5144 env=0.000101 onset=0.996885 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:37 [tracker] [s1] aubio-raw t=26.5971 onset=0.645985 env=0.000111 peak=0.000242 gain=1.000
+2025-12-08 02:53:37 [tracker] [s1] onset-below-gate t=26.5971 env=0.000111 onset=0.645985 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:38 [tracker] [s1] aubio-raw t=26.6877 onset=1.160093 env=0.000114 peak=0.000305 gain=1.000
+2025-12-08 02:53:38 [tracker] [s1] onset-below-gate t=26.6877 env=0.000114 onset=1.160093 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:38 [tracker] [s1] aubio-raw t=26.8131 onset=1.071716 env=0.000124 peak=0.000306 gain=1.000
+2025-12-08 02:53:38 [tracker] [s1] onset-below-gate t=26.8131 env=0.000124 onset=1.071716 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:38 [tracker] [s1] aubio-raw t=26.9757 onset=0.940895 env=0.000167 peak=0.000376 gain=1.000
+2025-12-08 02:53:38 [tracker] [s1] onset-below-gate t=26.9757 env=0.000167 onset=0.940895 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:38 [tracker] [s1] aubio-raw t=27.0264 onset=0.996785 env=0.000165 peak=0.000429 gain=1.000
+2025-12-08 02:53:38 [tracker] [s1] onset-below-gate t=27.0264 env=0.000165 onset=0.996785 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:38 [tracker] [s1] aubio-raw t=27.1544 onset=0.824179 env=0.000124 peak=0.000288 gain=1.000
+2025-12-08 02:53:38 [tracker] [s1] onset-below-gate t=27.1544 env=0.000124 onset=0.824179 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:38 [tracker] [s1] aubio-raw t=27.2770 onset=0.695600 env=0.000184 peak=0.000449 gain=1.000
+2025-12-08 02:53:38 [tracker] [s1] onset-below-gate t=27.2770 env=0.000184 onset=0.695600 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:38 [tracker] [s1] aubio-raw t=27.5543 onset=1.083163 env=0.000126 peak=0.000315 gain=1.000
+2025-12-08 02:53:38 [tracker] [s1] onset-below-gate t=27.5543 env=0.000126 onset=1.083163 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:39 [tracker] [s1] aubio-raw t=27.7730 onset=1.003250 env=0.000126 peak=0.000266 gain=1.000
+2025-12-08 02:53:39 [tracker] [s1] onset-below-gate t=27.7730 env=0.000126 onset=1.003250 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:39 [tracker] [s1] aubio-raw t=27.9730 onset=1.045487 env=0.000119 peak=0.000320 gain=1.000
+2025-12-08 02:53:39 [tracker] [s1] onset-below-gate t=27.9730 env=0.000119 onset=1.045487 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:39 [tracker] [s1] aubio-raw t=28.3436 onset=0.817087 env=0.000121 peak=0.000333 gain=1.000
+2025-12-08 02:53:39 [tracker] [s1] onset-below-gate t=28.3436 env=0.000121 onset=0.817087 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:39 [tracker] [s1] aubio-raw t=28.5089 onset=1.265651 env=0.000135 peak=0.000345 gain=1.000
+2025-12-08 02:53:39 [tracker] [s1] onset-below-gate t=28.5089 env=0.000135 onset=1.265651 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:40 [tracker] [s1] aubio-raw t=28.8502 onset=0.998146 env=0.000087 peak=0.000181 gain=1.000
+2025-12-08 02:53:40 [tracker] [s1] onset-below-gate t=28.8502 env=0.000087 onset=0.998146 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:40 [tracker] [s1] aubio-raw t=29.1116 onset=1.089246 env=0.000092 peak=0.000281 gain=1.000
+2025-12-08 02:53:40 [tracker] [s1] onset-below-gate t=29.1116 env=0.000092 onset=1.089246 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:40 [tracker] [s1] aubio-raw t=29.1649 onset=1.438705 env=0.000086 peak=0.000232 gain=1.000
+2025-12-08 02:53:40 [tracker] [s1] onset-below-gate t=29.1649 env=0.000086 onset=1.438705 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:40 [tracker] [s1] aubio-raw t=29.3089 onset=0.606836 env=0.000160 peak=0.000403 gain=1.000
+2025-12-08 02:53:40 [tracker] [s1] onset-below-gate t=29.3089 env=0.000160 onset=0.606836 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:40 [tracker] [s1] aubio-raw t=29.4262 onset=1.456419 env=0.000106 peak=0.000252 gain=1.000
+2025-12-08 02:53:40 [tracker] [s1] onset-below-gate t=29.4262 env=0.000106 onset=1.456419 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:41 [tracker] [s1] aubio-raw t=29.7942 onset=0.844314 env=0.000151 peak=0.000434 gain=1.000
+2025-12-08 02:53:41 [tracker] [s1] onset-below-gate t=29.7942 env=0.000151 onset=0.844314 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:41 [tracker] [s1] aubio-raw t=30.4955 onset=1.412547 env=0.000104 peak=0.000298 gain=1.000
+2025-12-08 02:53:41 [tracker] [s1] onset-below-gate t=30.4955 env=0.000104 onset=1.412547 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:42 [tracker] [s1] aubio-raw t=30.9194 onset=0.828328 env=0.000122 peak=0.000264 gain=1.000
+2025-12-08 02:53:42 [tracker] [s1] onset-below-gate t=30.9194 env=0.000122 onset=0.828328 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:43 [tracker] [s1] aubio-raw t=31.7540 onset=1.390204 env=0.000165 peak=0.000346 gain=1.000
+2025-12-08 02:53:43 [tracker] [s1] onset-below-gate t=31.7540 env=0.000165 onset=1.390204 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:43 [tracker] [s1] aubio-raw t=32.1807 onset=1.174171 env=0.000114 peak=0.000268 gain=1.000
+2025-12-08 02:53:43 [tracker] [s1] onset-below-gate t=32.1807 env=0.000114 onset=1.174171 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:43 [tracker] [s1] aubio-raw t=32.2633 onset=0.901732 env=0.000092 peak=0.000245 gain=1.000
+2025-12-08 02:53:43 [tracker] [s1] onset-below-gate t=32.2633 env=0.000092 onset=0.901732 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:44 [tracker] [s1] aubio-raw t=32.6260 onset=0.989732 env=0.000126 peak=0.000327 gain=1.000
+2025-12-08 02:53:44 [tracker] [s1] onset-below-gate t=32.6260 env=0.000126 onset=0.989732 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:44 [tracker] [s1] aubio-raw t=33.0686 onset=0.997954 env=0.000102 peak=0.000263 gain=1.000
+2025-12-08 02:53:44 [tracker] [s1] onset-below-gate t=33.0686 env=0.000102 onset=0.997954 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:45 [tracker] [s1] aubio-raw t=33.8286 onset=1.068024 env=0.000157 peak=0.000361 gain=1.000
+2025-12-08 02:53:45 [tracker] [s1] onset-below-gate t=33.8286 env=0.000157 onset=1.068024 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:45 [tracker] [s1] aubio-raw t=34.1832 onset=0.831977 env=0.000131 peak=0.000299 gain=1.000
+2025-12-08 02:53:45 [tracker] [s1] onset-below-gate t=34.1832 env=0.000131 onset=0.831977 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:45 [tracker] [s1] aubio-raw t=34.2979 onset=0.809701 env=0.000122 peak=0.000325 gain=1.000
+2025-12-08 02:53:45 [tracker] [s1] onset-below-gate t=34.2979 env=0.000122 onset=0.809701 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:46 [tracker] [s1] aubio-raw t=34.9191 onset=0.996008 env=0.000105 peak=0.000291 gain=1.000
+2025-12-08 02:53:46 [tracker] [s1] onset-below-gate t=34.9191 env=0.000105 onset=0.996008 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:46 [tracker] [s1] aubio-raw t=35.3164 onset=1.117011 env=0.000093 peak=0.000232 gain=1.000
+2025-12-08 02:53:46 [tracker] [s1] onset-below-gate t=35.3164 env=0.000093 onset=1.117011 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:46 [tracker] [s1] aubio-raw t=35.4764 onset=0.992092 env=0.000128 peak=0.000302 gain=1.000
+2025-12-08 02:53:46 [tracker] [s1] onset-below-gate t=35.4764 env=0.000128 onset=0.992092 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:47 [tracker] [s1] aubio-raw t=35.6711 onset=0.967049 env=0.000087 peak=0.000224 gain=1.000
+2025-12-08 02:53:47 [tracker] [s1] onset-below-gate t=35.6711 env=0.000087 onset=0.967049 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:47 [tracker] [s1] aubio-raw t=35.8017 onset=0.994653 env=0.000139 peak=0.000367 gain=1.000
+2025-12-08 02:53:47 [tracker] [s1] onset-below-gate t=35.8017 env=0.000139 onset=0.994653 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:47 [tracker] [s1] aubio-raw t=35.9857 onset=0.572955 env=0.000107 peak=0.000279 gain=1.000
+2025-12-08 02:53:47 [tracker] [s1] onset-below-gate t=35.9857 env=0.000107 onset=0.572955 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:47 [tracker] [s1] aubio-raw t=36.0897 onset=0.998343 env=0.000152 peak=0.000333 gain=1.000
+2025-12-08 02:53:47 [tracker] [s1] onset-below-gate t=36.0897 env=0.000152 onset=0.998343 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:47 [tracker] [s1] aubio-raw t=36.6017 onset=1.030623 env=0.000102 peak=0.000300 gain=1.000
+2025-12-08 02:53:47 [tracker] [s1] onset-below-gate t=36.6017 env=0.000102 onset=1.030623 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:48 [tracker] [s1] aubio-raw t=36.9350 onset=1.160410 env=0.000146 peak=0.000340 gain=1.000
+2025-12-08 02:53:48 [tracker] [s1] onset-below-gate t=36.9350 env=0.000146 onset=1.160410 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:48 [tracker] [s1] aubio-raw t=37.0177 onset=1.261224 env=0.000173 peak=0.000399 gain=1.000
+2025-12-08 02:53:48 [tracker] [s1] onset-below-gate t=37.0177 env=0.000173 onset=1.261224 thresh=0.006000 baseline=0.029117 gate=0.001601 envFloor=0.024750 floor=0.029117 adapt=0.029117 lastPeak=0.000000 calib=0.029117 baseParam=0.000180 gateRatio=0.0550 envParam=0.000450
+2025-12-08 02:53:48 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/sessionwavs/session-20251208-025311 (shutdown)

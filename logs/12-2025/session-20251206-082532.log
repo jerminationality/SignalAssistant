@@ -1,0 +1,85 @@
+# SignalAssistant session log
+# Started at 2025-12-06 08:25:32
+2025-12-06 08:25:32 [session] mode=recorded session='live/5 - 7 - 6 step' path='/home/general/SignalAssistant/sessions/live/5 - 7 - 6 step' duration=32.18 files=6
+2025-12-06 08:25:32 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-06 08:25:32 [tracker-settings] string1 midi=40 lowCut=37.08Hz highCut=445.00Hz baseline=0.000180 gateRatio=0.05500 envFloor=0.000450 sustainScale=0.580 retriggerScale=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.300
+2025-12-06 08:25:32 [tracker-settings] string2 midi=45 lowCut=55.00Hz highCut=563.20Hz baseline=0.000220 gateRatio=0.10000 envFloor=0.000550 sustainScale=0.700 retriggerScale=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.450
+2025-12-06 08:25:32 [tracker-settings] string3 midi=50 lowCut=85.16Hz highCut=693.05Hz baseline=0.000260 gateRatio=0.13000 envFloor=0.000650 sustainScale=0.820 retriggerScale=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.580
+2025-12-06 08:25:32 [tracker-settings] string4 midi=55 lowCut=127.40Hz highCut=862.39Hz baseline=0.000320 gateRatio=0.17000 envFloor=0.000780 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.700
+2025-12-06 08:25:32 [tracker-settings] string5 midi=59 lowCut=160.51Hz highCut=1086.54Hz baseline=0.000370 gateRatio=0.21000 envFloor=0.000900 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.800
+2025-12-06 08:25:32 [tracker-settings] string6 midi=64 lowCut=214.26Hz highCut=1450.36Hz baseline=0.000420 gateRatio=0.25000 envFloor=0.001050 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.900
+2025-12-06 08:25:32 [tracker] [s1] calibration reset
+2025-12-06 08:25:32 [tracker] [s2] calibration reset
+2025-12-06 08:25:32 [tracker] [s3] calibration reset
+2025-12-06 08:25:32 [tracker] [s4] calibration reset
+2025-12-06 08:25:32 [tracker] [s5] calibration reset
+2025-12-06 08:25:32 [tracker] [s6] calibration reset
+2025-12-06 08:25:32 [tracker] [s1] calibration avg=0.03043 peak=0.12374
+2025-12-06 08:25:32 [tracker] [s2] calibration avg=0.01545 peak=0.03607
+2025-12-06 08:25:32 [tracker] [s3] calibration avg=0.02029 peak=0.20107
+2025-12-06 08:25:32 [tracker] [s4] calibration avg=0.05235 peak=0.33474
+2025-12-06 08:25:32 [tracker] [s5] calibration avg=0.05969 peak=0.46666
+2025-12-06 08:25:32 [tracker] [s6] calibration avg=0.07499 peak=0.42080
+2025-12-06 08:25:37 [test-mode] play session='live/5 - 7 - 6 step' position=0.00 duration=32.18
+2025-12-06 08:25:37 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-06 08:25:37 [tracker] [s1] params baseline=0.000180 gate=0.0550 envFloor=0.000450 sustain=0.580 retrigger=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.006 aubioScale=1.20 aubioThresh=0.024 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-06 08:25:37 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-06 08:25:37 [tracker] [s2] params baseline=0.000220 gate=0.1000 envFloor=0.000550 sustain=0.700 retrigger=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.009 aubioScale=1.35 aubioThresh=0.027 onsetSilence=-85.0 pitchSilence=-90.0
+2025-12-06 08:25:37 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-06 08:25:37 [tracker] [s3] params baseline=0.000260 gate=0.1300 envFloor=0.000650 sustain=0.820 retrigger=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.012 aubioScale=1.60 aubioThresh=0.032 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-06 08:25:37 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-06 08:25:37 [tracker] [s4] params baseline=0.000320 gate=0.1700 envFloor=0.000780 sustain=1.000 retrigger=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.014 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-06 08:25:37 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-06 08:25:37 [tracker] [s5] params baseline=0.000370 gate=0.2100 envFloor=0.000900 sustain=1.000 retrigger=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.016 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-06 08:25:37 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-06 08:25:37 [tracker] [s6] params baseline=0.000420 gate=0.2500 envFloor=0.001050 sustain=1.000 retrigger=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.018 aubioScale=1.80 aubioThresh=0.036 onsetSilence=-75.0 pitchSilence=-80.0
+2025-12-06 08:25:39 [tracker] [s3] onset t=1.445 env=0.03241 baseline=0.01968 gate=0.00256 envFloor=0.01673 onset=1.156>=0.012
+2025-12-06 08:25:40 [tracker] [s5] onset t=2.320 env=0.09503 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.007>=0.016
+2025-12-06 08:25:40 [tracker] [s4] onset t=2.789 env=0.06354 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.779>=0.014
+2025-12-06 08:25:40 [tracker] [s4] onset t=2.875 env=0.04708 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=1.295>=0.014
+2025-12-06 08:25:40 [tracker] [s4] note-start t=2.875 fret=7 midi=62 vel=0.57 env=0.04708
+2025-12-06 08:25:40 [tracker] [s4] release-quiet t=3.003 avgEnv=0.03555 floor=0.05356 quietFrames=8
+2025-12-06 08:25:40 [tracker] [s4] note-ended t=3.003 fret=7 dur=0.128
+2025-12-06 08:25:41 [tracker] [s3] onset t=3.259 env=0.03021 baseline=0.01968 gate=0.00256 envFloor=0.01673 onset=1.087>=0.012
+2025-12-06 08:25:42 [tracker] [s5] onset t=4.133 env=0.11838 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.196>=0.016
+2025-12-06 08:25:42 [tracker] [s4] onset t=4.592 env=0.06899 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.595>=0.014
+2025-12-06 08:25:43 [tracker] [s3] onset t=5.072 env=0.03072 baseline=0.01968 gate=0.00256 envFloor=0.01673 onset=1.119>=0.012
+2025-12-06 08:25:43 [tracker] [s4] onset t=5.520 env=0.09298 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.513>=0.014
+2025-12-06 08:25:43 [tracker] [s5] onset t=5.936 env=0.14488 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=0.729>=0.016
+2025-12-06 08:25:44 [tracker] [s5] onset t=6.853 env=0.19911 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=0.736>=0.016
+2025-12-06 08:25:45 [tracker] [s5] onset t=7.099 env=0.08269 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=0.998>=0.016
+2025-12-06 08:25:45 [tracker] [s5] note-start t=7.099 fret=8 midi=67 vel=0.99 env=0.08269
+2025-12-06 08:25:45 [tracker] [s5] release-retrigger t=7.195 onset=1.022 gate=0.086 age=0.096
+2025-12-06 08:25:45 [tracker] [s5] note-ended t=7.195 fret=8 dur=0.096
+2025-12-06 08:25:45 [tracker] [s5] onset t=7.269 env=0.18684 baseline=0.06869 gate=0.01442 envFloor=0.05429 onset=1.330>=0.016
+2025-12-06 08:25:45 [tracker] [s4] onset t=7.760 env=0.07784 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.502>=0.014
+2025-12-06 08:25:46 [tracker] [s5] onset t=8.197 env=0.09925 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.328>=0.016
+2025-12-06 08:25:46 [tracker] [s3] onset t=8.677 env=0.03266 baseline=0.01968 gate=0.00256 envFloor=0.01673 onset=0.607>=0.012
+2025-12-06 08:25:46 [tracker] [s3] onset t=8.752 env=0.02847 baseline=0.01968 gate=0.00256 envFloor=0.01673 onset=1.492>=0.012
+2025-12-06 08:25:46 [tracker] [s3] note-start t=8.752 fret=5 midi=55 vel=0.34 env=0.02847
+2025-12-06 08:25:47 [tracker] [s3] release-quiet t=8.987 avgEnv=0.02138 floor=0.02308 quietFrames=8
+2025-12-06 08:25:47 [tracker] [s3] note-ended t=8.987 fret=5 dur=0.235
+2025-12-06 08:25:47 [tracker] [s3] onset t=9.115 env=0.01716 baseline=0.02161 gate=0.00281 envFloor=0.01673 onset=1.160>=0.012
+2025-12-06 08:25:47 [tracker] [s3] note-start t=9.115 fret=5 midi=55 vel=0.21 env=0.01716
+2025-12-06 08:25:47 [tracker] [s4] onset t=9.115 env=0.09275 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.864>=0.014
+2025-12-06 08:25:47 [tracker] [s3] release-quiet t=9.243 avgEnv=0.01387 floor=0.02308 quietFrames=8
+2025-12-06 08:25:47 [tracker] [s3] note-ended t=9.243 fret=5 dur=0.128
+2025-12-06 08:25:47 [tracker] [s5] onset t=9.541 env=0.13212 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.188>=0.016
+2025-12-06 08:25:48 [tracker] [s4] onset t=10.000 env=0.06783 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.605>=0.014
+2025-12-06 08:25:48 [tracker] [s3] onset t=10.459 env=0.03013 baseline=0.01968 gate=0.00256 envFloor=0.01673 onset=0.676>=0.012
+2025-12-06 08:25:48 [tracker] [s4] onset t=10.885 env=0.08200 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.503>=0.014
+2025-12-06 08:25:49 [tracker] [s5] onset t=11.301 env=0.13046 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.250>=0.016
+2025-12-06 08:25:49 [tracker] [s4] onset t=11.781 env=0.06205 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.825>=0.014
+2025-12-06 08:25:50 [tracker] [s5] onset t=12.197 env=0.14146 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.347>=0.016
+2025-12-06 08:25:50 [tracker] [s5] onset t=12.400 env=0.07621 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.191>=0.016
+2025-12-06 08:25:50 [tracker] [s5] note-start t=12.400 fret=8 midi=67 vel=0.91 env=0.07621
+2025-12-06 08:25:50 [tracker] [s5] release-quiet t=12.528 avgEnv=0.03117 floor=0.08400 quietFrames=8
+2025-12-06 08:25:50 [tracker] [s5] note-ended t=12.528 fret=8 dur=0.128
+2025-12-06 08:25:50 [tracker] [s5] onset t=12.667 env=0.06724 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.440>=0.016
+2025-12-06 08:25:51 [tracker] [s4] onset t=13.115 env=0.06995 baseline=0.05339 gate=0.00908 envFloor=0.04539 onset=0.981>=0.014
+2025-12-06 08:25:51 [tracker] [s5] onset t=13.552 env=0.12038 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=1.345>=0.016
+2025-12-06 08:25:51 [tracker] [s5] onset t=13.659 env=0.08394 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=0.932>=0.016
+2025-12-06 08:25:52 [tracker] [s5] onset t=14.032 env=0.09852 baseline=0.06387 gate=0.01341 envFloor=0.05429 onset=0.656>=0.016
+2025-12-06 08:25:54 [tracker] [s3] onset t=15.974 env=0.03095 baseline=0.01968 gate=0.00256 envFloor=0.01673 onset=0.714>=0.012
+2025-12-06 08:25:54 [test-mode] pause session='live/5 - 7 - 6 step' position=16.39 duration=32.18
+2025-12-06 08:25:56 [test-mode] stop session='live/5 - 7 - 6 step' position=0.00 duration=32.18

@@ -1,0 +1,23 @@
+{
+    "durationSec": 9.416,
+    "folder": "efasef",
+    "label": "efasef",
+    "sampleRate": 48000,
+    "stringMidi": [
+        40,
+        45,
+        50,
+        55,
+        59,
+        64
+    ],
+    "stringNames": [
+        "E2",
+        "A",
+        "D",
+        "G",
+        "B",
+        "E4"
+    ],
+    "timestamp": "20251207-225528"
+}

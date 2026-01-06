@@ -3,6 +3,15 @@
 #include <string>
 #include <vector>
 
+struct StringThresholds {
+  float onsetThreshold {0.f};
+  float baseline {0.f};
+  float gateThreshold {0.f};
+  float envFloor {0.f};
+  float sustainFloor {0.f};
+  float retriggerGate {0.f};
+};
+
 struct Tuning {
   // Low E (string 0) .. High E (string 5)
   std::array<int, 6> stringMidi {40, 45, 50, 55, 59, 64}; // E2 A2 D3 G3 B3 E4
@@ -59,6 +68,7 @@ public:
   std::array<float, 6> tuningDeviationCents() const;
   std::array<float, 6> calibrationGains() const;
   void setCalibrationGain(int stringIndex, float gain);
+  std::array<StringThresholds, 6> getThresholds() const;
 
 private:
   void fuseEvents(float t0); // TODO(Copilot): rules (hammer/pull/slide/bend/pm)

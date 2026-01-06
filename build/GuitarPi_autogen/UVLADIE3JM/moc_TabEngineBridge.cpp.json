@@ -1,0 +1,466 @@
+{
+    "classes": [
+        {
+            "className": "TabEngineBridge",
+            "lineNumber": 17,
+            "methods": [
+                {
+                    "access": "public",
+                    "index": 18,
+                    "name": "requestRefresh",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 19,
+                    "name": "clear",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 20,
+                    "name": "seedMockSession",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "value",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 21,
+                    "name": "setRecording",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 22,
+                    "name": "startCalibration",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 23,
+                    "name": "recalibrateString",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "enabled",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 24,
+                    "name": "setTuningModeEnabled",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "gain",
+                            "type": "double"
+                        }
+                    ],
+                    "index": 25,
+                    "name": "setCalibrationGain",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 26,
+                    "name": "updateCalibrationMultipliers",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "name": "events",
+                    "notify": "eventsChanged",
+                    "read": "events",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "name": "eventsJson",
+                    "notify": "eventsChanged",
+                    "read": "eventsJson",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 2,
+                    "name": "recording",
+                    "notify": "recordingChanged",
+                    "read": "recording",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false,
+                    "write": "setRecording"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 3,
+                    "name": "hexMeters",
+                    "notify": "hexMetersChanged",
+                    "read": "hexMeters",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 4,
+                    "name": "rawMeters",
+                    "notify": "rawMetersChanged",
+                    "read": "rawMeters",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 5,
+                    "name": "thresholds",
+                    "notify": "thresholdsChanged",
+                    "read": "thresholds",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 6,
+                    "name": "calibrationRunning",
+                    "notify": "calibrationStatusChanged",
+                    "read": "calibrationRunning",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 7,
+                    "name": "calibrationMessage",
+                    "notify": "calibrationStatusChanged",
+                    "read": "calibrationMessage",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 8,
+                    "name": "calibrationSteps",
+                    "notify": "calibrationStatusChanged",
+                    "read": "calibrationSteps",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 9,
+                    "name": "calibrationReady",
+                    "notify": "calibrationStatusChanged",
+                    "read": "calibrationReady",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 10,
+                    "name": "tuningModeEnabled",
+                    "notify": "tuningModeEnabledChanged",
+                    "read": "tuningModeEnabled",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false,
+                    "write": "setTuningModeEnabled"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 11,
+                    "name": "tuningDeviation",
+                    "notify": "tuningDeviationChanged",
+                    "read": "tuningDeviation",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 12,
+                    "name": "calibrationGains",
+                    "notify": "calibrationGainsChanged",
+                    "read": "calibrationGains",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                }
+            ],
+            "qualifiedClassName": "TabEngineBridge",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "name": "eventsChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "name": "recordingChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "velocity",
+                            "type": "float"
+                        }
+                    ],
+                    "index": 2,
+                    "name": "liveNoteTriggered",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 3,
+                    "name": "liveNoteEnded",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "envelope",
+                            "type": "float"
+                        }
+                    ],
+                    "index": 4,
+                    "name": "liveNoteEnvelopeUpdated",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 5,
+                    "name": "hexMetersChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 6,
+                    "name": "rawMetersChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 7,
+                    "name": "thresholdsChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 8,
+                    "name": "calibrationStatusChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 9,
+                    "name": "tuningModeEnabledChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 10,
+                    "name": "tuningDeviationChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 11,
+                    "name": "calibrationGainsChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "meters",
+                            "type": "std::array<float,6>"
+                        }
+                    ],
+                    "index": 12,
+                    "name": "updateLiveMeters",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 13,
+                    "name": "handleCalibrationStarted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "capturing",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 14,
+                    "name": "handleCalibrationStepChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "averages",
+                            "type": "std::array<float,6>"
+                        },
+                        {
+                            "name": "peaks",
+                            "type": "std::array<float,6>"
+                        }
+                    ],
+                    "index": 15,
+                    "name": "handleCalibrationFinished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "noiseFloor",
+                            "type": "float"
+                        }
+                    ],
+                    "index": 16,
+                    "name": "handleCalibrationBaselineFloorCaptured",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 17,
+                    "name": "handleCalibrationFadeComplete",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "TabEngineBridge.h",
+    "outputRevision": 68
+}

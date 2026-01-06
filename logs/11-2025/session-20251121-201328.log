@@ -1,0 +1,1345 @@
+# SignalAssistant session log
+# Started at 2025-11-21 20:13:28
+2025-11-21 20:13:28 [tracker] [s1] calibration reset
+2025-11-21 20:13:28 [tracker] [s2] calibration reset
+2025-11-21 20:13:28 [tracker] [s3] calibration reset
+2025-11-21 20:13:28 [tracker] [s4] calibration reset
+2025-11-21 20:13:28 [tracker] [s5] calibration reset
+2025-11-21 20:13:28 [tracker] [s6] calibration reset
+2025-11-21 20:13:28 [tracker] [s1] calibration avg=0.04947 peak=0.28740
+2025-11-21 20:13:28 [tracker] [s2] calibration avg=0.01874 peak=0.06333
+2025-11-21 20:13:28 [tracker] [s3] calibration avg=0.01507 peak=0.07776
+2025-11-21 20:13:28 [tracker] [s4] calibration avg=0.03480 peak=0.10851
+2025-11-21 20:13:28 [tracker] [s5] calibration avg=0.05597 peak=0.23850
+2025-11-21 20:13:28 [tracker] [s6] calibration avg=0.04146 peak=0.14302
+2025-11-21 20:13:29 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-11-21 20:13:29 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-11-21 20:13:29 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-11-21 20:13:29 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-11-21 20:13:29 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-11-21 20:13:29 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:29 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:30 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:31 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:32 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:33 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:34 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.023    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:35 [tracker] [s1] onset t=5.903 env=0.18076 baseline=0.05407 gate=0.00297 envFloor=0.03869 onset=1.254>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.069    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.040    A | 0.002    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.025 env=0.09114 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.975>=0.006
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.084 env=0.09605 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.452>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.033    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.145 env=0.09467 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.356>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.056    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.023    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.268 env=0.06452 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.529>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.041    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.377 env=0.06531 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.683>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.023    A | 0.002    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.484 env=0.05384 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.462>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.034    A | 0.002    D | 0.001    G | 0.001    B | 0.003    e | 0.001
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.039    A | 0.003    D | 0.002    G | 0.002    B | 0.004    e | 0.002
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.596 env=0.06244 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.148>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.025    A | 0.002    D | 0.002    G | 0.002    B | 0.006    e | 0.002
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.657 env=0.05972 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.671>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.046    A | 0.002    D | 0.002    G | 0.002    B | 0.007    e | 0.002
+2025-11-21 20:13:35 [tracker] [s1] onset t=6.767 env=0.05857 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.079>=0.006
+2025-11-21 20:13:35 [meters] Hex input RMS -> E | 0.022    A | 0.002    D | 0.001    G | 0.001    B | 0.006    e | 0.001
+2025-11-21 20:13:36 [tracker] [s1] onset t=6.828 env=0.05730 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.746>=0.006
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.024    A | 0.002    D | 0.002    G | 0.002    B | 0.007    e | 0.002
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.028    A | 0.002    D | 0.002    G | 0.002    B | 0.003    e | 0.003
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.021    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.019    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.017    A | 0.001    D | 0.001    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.030    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.004
+2025-11-21 20:13:36 [tracker] [s1] onset t=7.334 env=0.05495 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.229>=0.006
+2025-11-21 20:13:36 [tracker] [s1] note-start t=7.334 fret=3 midi=43 vel=0.66 env=0.05495
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.022    A | 0.002    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:13:36 [tracker] [s1] onset t=7.396 env=0.05342 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.209>=0.006
+2025-11-21 20:13:36 [tracker] [s1] note-ended (new onset) t=7.396 fret=3 dur=0.061
+2025-11-21 20:13:36 [tracker] [s1] note-start t=7.396 fret=3 midi=43 vel=0.64 env=0.05342
+2025-11-21 20:13:36 [tracker] [s1] release-retrigger t=7.449 onset=0.696 gate=0.055 age=0.053
+2025-11-21 20:13:36 [tracker] [s1] note-ended t=7.449 fret=3 dur=0.053
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.030    A | 0.002    D | 0.002    G | 0.004    B | 0.002    e | 0.002
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.030    A | 0.001    D | 0.002    G | 0.005    B | 0.001    e | 0.001
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.034    A | 0.001    D | 0.002    G | 0.006    B | 0.001    e | 0.001
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.027    A | 0.002    D | 0.002    G | 0.006    B | 0.002    e | 0.002
+2025-11-21 20:13:36 [meters] Hex input RMS -> E | 0.020    A | 0.002    D | 0.002    G | 0.007    B | 0.002    e | 0.002
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.017    A | 0.002    D | 0.002    G | 0.007    B | 0.002    e | 0.002
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.018    A | 0.001    D | 0.001    G | 0.006    B | 0.001    e | 0.001
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.019    A | 0.002    D | 0.002    G | 0.007    B | 0.002    e | 0.001
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.018    A | 0.002    D | 0.002    G | 0.006    B | 0.002    e | 0.002
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.015    A | 0.002    D | 0.002    G | 0.005    B | 0.002    e | 0.002
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.015    A | 0.002    D | 0.002    G | 0.004    B | 0.001    e | 0.002
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.014    A | 0.001    D | 0.002    G | 0.004    B | 0.001    e | 0.001
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.102    A | 0.006    D | 0.002    G | 0.004    B | 0.002    e | 0.004
+2025-11-21 20:13:37 [tracker] [s1] onset t=8.433 env=0.05143 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.839>=0.006
+2025-11-21 20:13:37 [tracker] [s1] note-start t=8.433 fret=2 midi=42 vel=0.62 env=0.05143
+2025-11-21 20:13:37 [tracker] [s1] release-retrigger t=8.486 onset=1.014 gate=0.072 age=0.053
+2025-11-21 20:13:37 [tracker] [s1] note-ended t=8.486 fret=2 dur=0.053
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.081    A | 0.002    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:13:37 [tracker] [s1] onset t=8.540 env=0.11650 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.069>=0.006
+2025-11-21 20:13:37 [tracker] [s1] note-start t=8.540 fret=2 midi=42 vel=1.00 env=0.11650
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.064    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:37 [tracker] [s1] release-retrigger t=8.593 onset=1.108 gate=0.069 age=0.053
+2025-11-21 20:13:37 [tracker] [s1] note-ended t=8.593 fret=2 dur=0.053
+2025-11-21 20:13:37 [tracker] [s1] onset t=8.646 env=0.11711 baseline=0.08580 gate=0.00472 envFloor=0.03869 onset=1.207>=0.006
+2025-11-21 20:13:37 [tracker] [s1] note-start t=8.646 fret=2 midi=42 vel=1.00 env=0.11711
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.079    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.002
+2025-11-21 20:13:37 [tracker] [s1] release-retrigger t=8.702 onset=0.999 gate=0.064 age=0.056
+2025-11-21 20:13:37 [tracker] [s1] note-ended t=8.702 fret=2 dur=0.056
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.032    A | 0.001    D | 0.001    G | 0.002    B | 0.001    e | 0.002
+2025-11-21 20:13:37 [tracker] [s1] onset t=8.756 env=0.07157 baseline=0.08582 gate=0.00472 envFloor=0.03869 onset=1.036>=0.006
+2025-11-21 20:13:37 [tracker] [s1] note-start t=8.756 fret=2 midi=42 vel=0.86 env=0.07157
+2025-11-21 20:13:37 [tracker] [s1] release-retrigger t=8.809 onset=1.003 gate=0.055 age=0.053
+2025-11-21 20:13:37 [tracker] [s1] note-ended t=8.809 fret=2 dur=0.053
+2025-11-21 20:13:37 [meters] Hex input RMS -> E | 0.061    A | 0.002    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [tracker] [s1] onset t=8.862 env=0.07632 baseline=0.05271 gate=0.00290 envFloor=0.03869 onset=1.092>=0.006
+2025-11-21 20:13:38 [tracker] [s1] note-start t=8.862 fret=2 midi=42 vel=0.92 env=0.07632
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.032    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [tracker] [s1] release-retrigger t=8.918 onset=0.523 gate=0.055 age=0.056
+2025-11-21 20:13:38 [tracker] [s1] note-ended t=8.918 fret=2 dur=0.056
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.044    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [tracker] [s1] onset t=8.972 env=0.05343 baseline=0.05593 gate=0.00308 envFloor=0.03869 onset=1.013>=0.006
+2025-11-21 20:13:38 [tracker] [s1] note-start t=8.972 fret=2 midi=42 vel=0.64 env=0.05343
+2025-11-21 20:13:38 [tracker] [s1] release-retrigger t=9.025 onset=1.059 gate=0.055 age=0.053
+2025-11-21 20:13:38 [tracker] [s1] note-ended t=9.025 fret=2 dur=0.053
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.044    A | 0.001    D | 0.001    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:38 [tracker] [s1] onset t=9.078 env=0.05363 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.177>=0.006
+2025-11-21 20:13:38 [tracker] [s1] note-start t=9.078 fret=2 midi=42 vel=0.64 env=0.05363
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.028    A | 0.003    D | 0.002    G | 0.002    B | 0.001    e | 0.002
+2025-11-21 20:13:38 [tracker] [s1] release-retrigger t=9.134 onset=0.624 gate=0.055 age=0.056
+2025-11-21 20:13:38 [tracker] [s1] note-ended t=9.134 fret=2 dur=0.056
+2025-11-21 20:13:38 [tracker] [s2] onset t=9.150 env=0.02651 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=0.764>=0.009
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.016    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:38 [meters] Hex input RMS -> E | 0.168    A | 0.003    D | 0.003    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:38 [tracker] [s1] onset t=9.796 env=0.19124 baseline=0.11417 gate=0.00628 envFloor=0.07992 onset=1.095>=0.006
+2025-11-21 20:13:38 [tracker] [s1] note-start t=9.796 fret=5 midi=45 vel=1.00 env=0.19124
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.171    A | 0.003    D | 0.004    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:39 [tracker] [s1] release-retrigger t=9.881 onset=0.563 gate=0.134 age=0.085
+2025-11-21 20:13:39 [tracker] [s1] note-ended t=9.881 fret=5 dur=0.085
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.119    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.083    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.063    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.048    A | 0.002    D | 0.003    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.049    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.048    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.031    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.033    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.027    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.030    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.029    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:39 [meters] Hex input RMS -> E | 0.027    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.094    A | 0.003    D | 0.003    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:40 [tracker] [s1] onset t=10.937 env=0.07073 baseline=0.04633 gate=0.00255 envFloor=0.03869 onset=1.155>=0.006
+2025-11-21 20:13:40 [tracker] [s1] note-start t=10.937 fret=7 midi=47 vel=0.85 env=0.07073
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.066    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:40 [tracker] [s1] release-retrigger t=10.993 onset=1.068 gate=0.076 age=0.056
+2025-11-21 20:13:40 [tracker] [s1] note-ended t=10.993 fret=7 dur=0.056
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.073    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:40 [tracker] [s1] onset t=11.116 env=0.06459 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.700>=0.006
+2025-11-21 20:13:40 [tracker] [s1] note-start t=11.116 fret=7 midi=47 vel=0.78 env=0.06459
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.073    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:40 [tracker] [s1] release-retrigger t=11.172 onset=1.423 gate=0.056 age=0.056
+2025-11-21 20:13:40 [tracker] [s1] note-ended t=11.172 fret=7 dur=0.056
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.044    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:40 [tracker] [s1] onset t=11.228 env=0.03985 baseline=0.04710 gate=0.00259 envFloor=0.03869 onset=0.997>=0.006
+2025-11-21 20:13:40 [tracker] [s1] note-start t=11.228 fret=7 midi=47 vel=0.48 env=0.03985
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.056    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:40 [tracker] [s1] release-retrigger t=11.292 onset=1.115 gate=0.055 age=0.064
+2025-11-21 20:13:40 [tracker] [s1] note-ended t=11.292 fret=7 dur=0.064
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.050    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:40 [tracker] [s1] onset t=11.414 env=0.04312 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.220>=0.006
+2025-11-21 20:13:40 [tracker] [s1] note-start t=11.414 fret=7 midi=47 vel=0.52 env=0.04312
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.045    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:40 [tracker] [s1] release-retrigger t=11.494 onset=1.007 gate=0.055 age=0.080
+2025-11-21 20:13:40 [tracker] [s1] note-ended t=11.494 fret=7 dur=0.080
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.042    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.036    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.031    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:40 [meters] Hex input RMS -> E | 0.029    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.025    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.022    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.021    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.025    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.022    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.021    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.003    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:41 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.087    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:13:42 [tracker] [s2] onset t=12.971 env=0.15135 baseline=0.06073 gate=0.00607 envFloor=0.04251 onset=1.082>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-start t=12.971 fret=5 midi=50 vel=1.00 env=0.15135
+2025-11-21 20:13:42 [tracker] [s2] release-retrigger t=13.022 onset=1.065 gate=0.077 age=0.051
+2025-11-21 20:13:42 [tracker] [s2] note-ended t=13.022 fret=5 dur=0.051
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.061    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.086 env=0.12035 baseline=0.10980 gate=0.01098 envFloor=0.03605 onset=1.128>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.086 fret=5 midi=50 vel=1.00 env=0.12035
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.056    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:42 [tracker] [s2] release-retrigger t=13.150 onset=0.770 gate=0.061 age=0.064
+2025-11-21 20:13:42 [tracker] [s2] note-ended t=13.150 fret=5 dur=0.064
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.074    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.275 env=0.08818 baseline=0.07588 gate=0.00759 envFloor=0.02565 onset=0.997>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.275 fret=5 midi=50 vel=1.00 env=0.08818
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.069    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.053    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:42 [tracker] [s2] release-retrigger t=13.374 onset=1.194 gate=0.041 age=0.099
+2025-11-21 20:13:42 [tracker] [s2] note-ended t=13.374 fret=5 dur=0.099
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.425 env=0.06233 baseline=0.05994 gate=0.00599 envFloor=0.01931 onset=1.107>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.425 fret=5 midi=50 vel=0.75 env=0.06233
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.046    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.486 env=0.04665 baseline=0.04999 gate=0.00500 envFloor=0.01744 onset=1.142>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-ended (new onset) t=13.486 fret=5 dur=0.061
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.486 fret=5 midi=50 vel=0.56 env=0.04665
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.048    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.561 env=0.03897 baseline=0.03648 gate=0.00365 envFloor=0.01568 onset=1.286>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-ended (new onset) t=13.561 fret=5 dur=0.075
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.561 fret=5 midi=50 vel=0.47 env=0.03897
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.001    A | 0.040    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.635 env=0.03409 baseline=0.03048 gate=0.00305 envFloor=0.01498 onset=1.095>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-ended (new onset) t=13.635 fret=5 dur=0.075
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.635 fret=5 midi=50 vel=0.41 env=0.03409
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.032    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.699 env=0.01654 baseline=0.02720 gate=0.00272 envFloor=0.01498 onset=1.004>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-ended (new onset) t=13.699 fret=5 dur=0.064
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.699 fret=5 midi=50 vel=0.20 env=0.01654
+2025-11-21 20:13:42 [meters] Hex input RMS -> E | 0.002    A | 0.034    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:42 [tracker] [s2] onset t=13.771 env=0.02766 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=1.171>=0.009
+2025-11-21 20:13:42 [tracker] [s2] note-ended (new onset) t=13.771 fret=5 dur=0.072
+2025-11-21 20:13:42 [tracker] [s2] note-start t=13.771 fret=5 midi=50 vel=0.33 env=0.02766
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.028    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:43 [tracker] [s2] onset t=13.873 env=0.02413 baseline=0.02058 gate=0.00206 envFloor=0.01498 onset=1.071>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-ended (new onset) t=13.873 fret=5 dur=0.101
+2025-11-21 20:13:43 [tracker] [s2] note-start t=13.873 fret=5 midi=50 vel=0.29 env=0.02413
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.001    A | 0.030    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:43 [tracker] [s2] onset t=13.961 env=0.02204 baseline=0.01841 gate=0.00184 envFloor=0.01498 onset=1.012>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-ended (new onset) t=13.961 fret=5 dur=0.088
+2025-11-21 20:13:43 [tracker] [s2] note-start t=13.961 fret=5 midi=50 vel=0.26 env=0.02204
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.001    A | 0.025    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:43 [tracker] [s2] onset t=14.033 env=0.02715 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=1.344>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-ended (new onset) t=14.033 fret=5 dur=0.072
+2025-11-21 20:13:43 [tracker] [s2] note-start t=14.033 fret=5 midi=50 vel=0.33 env=0.02715
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.026    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:43 [tracker] [s2] onset t=14.110 env=0.01696 baseline=0.02113 gate=0.00211 envFloor=0.01498 onset=0.621>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-ended (new onset) t=14.110 fret=5 dur=0.077
+2025-11-21 20:13:43 [tracker] [s2] note-start t=14.110 fret=5 midi=50 vel=0.20 env=0.01696
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.022    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:43 [tracker] [s2] onset t=14.171 env=0.01539 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=1.000>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-ended (new onset) t=14.171 fret=5 dur=0.061
+2025-11-21 20:13:43 [tracker] [s2] note-start t=14.171 fret=5 midi=50 vel=0.18 env=0.01539
+2025-11-21 20:13:43 [tracker] [s2] onset t=14.235 env=0.01851 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=0.725>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-ended (new onset) t=14.235 fret=5 dur=0.064
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.020    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:43 [tracker] [s2] release-retrigger t=14.321 onset=1.128 gate=0.019 age=0.085
+2025-11-21 20:13:43 [tracker] [s2] note-ended t=14.321 fret=5 dur=0.085
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.001    A | 0.021    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.001    A | 0.017    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:43 [tracker] [s2] onset t=14.473 env=0.01716 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=1.000>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-start t=14.473 fret=5 midi=50 vel=0.21 env=0.01716
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.017    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:43 [tracker] [s2] release-retrigger t=14.523 onset=1.003 gate=0.019 age=0.051
+2025-11-21 20:13:43 [tracker] [s2] note-ended t=14.523 fret=5 dur=0.051
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.018    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:43 [tracker] [s2] onset t=14.574 env=0.01534 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=0.773>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-start t=14.574 fret=5 midi=50 vel=0.18 env=0.01534
+2025-11-21 20:13:43 [tracker] [s2] release-retrigger t=14.625 onset=1.000 gate=0.019 age=0.051
+2025-11-21 20:13:43 [tracker] [s2] note-ended t=14.625 fret=5 dur=0.051
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.013    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:43 [tracker] [s2] onset t=14.683 env=0.01788 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=0.996>=0.009
+2025-11-21 20:13:43 [tracker] [s2] note-start t=14.683 fret=5 midi=50 vel=0.21 env=0.01788
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.001    A | 0.016    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:43 [tracker] [s2] release-retrigger t=14.774 onset=0.999 gate=0.019 age=0.091
+2025-11-21 20:13:43 [tracker] [s2] note-ended t=14.774 fret=5 dur=0.091
+2025-11-21 20:13:43 [meters] Hex input RMS -> E | 0.002    A | 0.012    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.015    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.015    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.001    A | 0.014    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:44 [tracker] [s2] onset t=15.083 env=0.01513 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=0.620>=0.009
+2025-11-21 20:13:44 [tracker] [s2] note-start t=15.083 fret=5 midi=50 vel=0.18 env=0.01513
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.001    A | 0.012    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.011    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [tracker] [s2] release-retrigger t=15.259 onset=0.995 gate=0.019 age=0.176
+2025-11-21 20:13:44 [tracker] [s2] note-ended t=15.259 fret=5 dur=0.176
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.011    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.012    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.001    A | 0.012    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.001    A | 0.010    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.011    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.008    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:44 [meters] Hex input RMS -> E | 0.002    A | 0.010    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.001    A | 0.011    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.004    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.004    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [tracker] [s2] onset t=16.347 env=0.09314 baseline=0.01879 gate=0.00188 envFloor=0.01498 onset=1.383>=0.009
+2025-11-21 20:13:45 [tracker] [s2] onset t=16.406 env=0.05873 baseline=0.03305 gate=0.00330 envFloor=0.02313 onset=1.073>=0.009
+2025-11-21 20:13:45 [tracker] [s2] note-start t=16.406 fret=3 midi=48 vel=0.70 env=0.05873
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.072    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [tracker] [s2] release-retrigger t=16.459 onset=1.196 gate=0.047 age=0.053
+2025-11-21 20:13:45 [tracker] [s2] note-ended t=16.459 fret=3 dur=0.053
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.038    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [tracker] [s2] onset t=16.542 env=0.02881 baseline=0.04093 gate=0.00409 envFloor=0.02171 onset=0.743>=0.009
+2025-11-21 20:13:45 [tracker] [s2] note-start t=16.542 fret=3 midi=48 vel=0.35 env=0.02881
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.051    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:45 [tracker] [s2] release-retrigger t=16.595 onset=1.238 gate=0.041 age=0.053
+2025-11-21 20:13:45 [tracker] [s2] note-ended t=16.595 fret=3 dur=0.053
+2025-11-21 20:13:45 [tracker] [s2] onset t=16.648 env=0.04166 baseline=0.02736 gate=0.00274 envFloor=0.01916 onset=1.154>=0.009
+2025-11-21 20:13:45 [tracker] [s2] note-start t=16.648 fret=3 midi=48 vel=0.50 env=0.04166
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.047    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:45 [tracker] [s2] release-retrigger t=16.702 onset=1.014 gate=0.035 age=0.053
+2025-11-21 20:13:45 [tracker] [s2] note-ended t=16.702 fret=3 dur=0.053
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.036    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:45 [tracker] [s2] onset t=16.755 env=0.04376 baseline=0.03068 gate=0.00307 envFloor=0.01641 onset=1.129>=0.009
+2025-11-21 20:13:45 [tracker] [s2] note-start t=16.755 fret=3 midi=48 vel=0.53 env=0.04376
+2025-11-21 20:13:45 [tracker] [s2] release-retrigger t=16.808 onset=0.969 gate=0.030 age=0.053
+2025-11-21 20:13:45 [tracker] [s2] note-ended t=16.808 fret=3 dur=0.053
+2025-11-21 20:13:45 [meters] Hex input RMS -> E | 0.002    A | 0.040    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.028    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:46 [tracker] [s2] onset t=16.915 env=0.03612 baseline=0.02915 gate=0.00292 envFloor=0.01498 onset=1.196>=0.009
+2025-11-21 20:13:46 [tracker] [s2] note-start t=16.915 fret=3 midi=48 vel=0.43 env=0.03612
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.001    A | 0.032    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:46 [tracker] [s2] onset t=17.006 env=0.02813 baseline=0.02741 gate=0.00274 envFloor=0.01498 onset=1.189>=0.009
+2025-11-21 20:13:46 [tracker] [s2] note-ended (new onset) t=17.006 fret=3 dur=0.091
+2025-11-21 20:13:46 [tracker] [s2] note-start t=17.006 fret=3 midi=48 vel=0.34 env=0.02813
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.024    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:13:46 [tracker] [s2] onset t=17.083 env=0.03240 baseline=0.02190 gate=0.00219 envFloor=0.01498 onset=1.181>=0.009
+2025-11-21 20:13:46 [tracker] [s2] note-ended (new onset) t=17.083 fret=3 dur=0.077
+2025-11-21 20:13:46 [tracker] [s2] note-start t=17.083 fret=3 midi=48 vel=0.39 env=0.03240
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.027    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.021    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:46 [tracker] [s2] onset t=17.219 env=0.02595 baseline=0.02258 gate=0.00226 envFloor=0.01498 onset=1.159>=0.009
+2025-11-21 20:13:46 [tracker] [s2] note-ended (new onset) t=17.219 fret=3 dur=0.136
+2025-11-21 20:13:46 [tracker] [s2] note-start t=17.219 fret=3 midi=48 vel=0.31 env=0.02595
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.023    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:46 [tracker] [s2] onset t=17.334 env=0.02322 baseline=0.01883 gate=0.00188 envFloor=0.01498 onset=1.094>=0.009
+2025-11-21 20:13:46 [tracker] [s2] note-ended (new onset) t=17.334 fret=3 dur=0.115
+2025-11-21 20:13:46 [tracker] [s2] note-start t=17.334 fret=3 midi=48 vel=0.28 env=0.02322
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.001    A | 0.019    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:46 [tracker] [s2] onset t=17.403 env=0.02281 baseline=0.01835 gate=0.00183 envFloor=0.01498 onset=0.918>=0.009
+2025-11-21 20:13:46 [tracker] [s2] note-ended (new onset) t=17.403 fret=3 dur=0.069
+2025-11-21 20:13:46 [tracker] [s2] note-start t=17.403 fret=3 midi=48 vel=0.27 env=0.02281
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.020    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.017    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.002    A | 0.018    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:46 [tracker] [s2] release-retrigger t=17.651 onset=0.878 gate=0.019 age=0.248
+2025-11-21 20:13:46 [tracker] [s2] note-ended t=17.651 fret=3 dur=0.248
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.001    A | 0.016    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:46 [meters] Hex input RMS -> E | 0.001    A | 0.016    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.015    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.014    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.014    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.001    A | 0.013    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.001    A | 0.014    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.009    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.022    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.014    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.016    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.017    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:47 [meters] Hex input RMS -> E | 0.002    A | 0.016    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.001    A | 0.015    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.002    A | 0.016    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.002    A | 0.017    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.002    A | 0.016    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:48 [tracker] [s2] onset t=19.160 env=0.01768 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=0.725>=0.009
+2025-11-21 20:13:48 [tracker] [s2] note-start t=19.160 fret=2 midi=47 vel=0.21 env=0.01768
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.001    A | 0.016    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:48 [tracker] [s2] release-retrigger t=19.230 onset=1.219 gate=0.019 age=0.069
+2025-11-21 20:13:48 [tracker] [s2] note-ended t=19.230 fret=2 dur=0.069
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.001    A | 0.015    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:48 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.018    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:49 [tracker] [s2] onset t=19.942 env=0.08539 baseline=0.03489 gate=0.00349 envFloor=0.02442 onset=0.878>=0.009
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.065    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.068    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [tracker] [s2] onset t=20.123 env=0.09843 baseline=0.05160 gate=0.00516 envFloor=0.03612 onset=0.994>=0.009
+2025-11-21 20:13:49 [tracker] [s2] note-start t=20.123 fret=2 midi=47 vel=1.00 env=0.09843
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.059    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [tracker] [s2] onset t=20.187 env=0.07567 baseline=0.07855 gate=0.00785 envFloor=0.03198 onset=1.418>=0.009
+2025-11-21 20:13:49 [tracker] [s2] note-ended (new onset) t=20.187 fret=2 dur=0.064
+2025-11-21 20:13:49 [tracker] [s2] note-start t=20.187 fret=2 midi=47 vel=0.91 env=0.07567
+2025-11-21 20:13:49 [tracker] [s2] release-retrigger t=20.243 onset=1.045 gate=0.059 age=0.056
+2025-11-21 20:13:49 [tracker] [s2] note-ended t=20.243 fret=2 dur=0.056
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.053    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.045    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.038    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.041    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.045    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [tracker] [s2] onset t=20.622 env=0.04128 baseline=0.03008 gate=0.00301 envFloor=0.01498 onset=1.122>=0.009
+2025-11-21 20:13:49 [tracker] [s2] note-start t=20.622 fret=2 midi=47 vel=0.50 env=0.04128
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.042    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:49 [tracker] [s2] onset t=20.702 env=0.02315 baseline=0.03196 gate=0.00320 envFloor=0.01498 onset=1.287>=0.009
+2025-11-21 20:13:49 [tracker] [s2] note-ended (new onset) t=20.702 fret=2 dur=0.080
+2025-11-21 20:13:49 [tracker] [s2] note-start t=20.702 fret=2 midi=47 vel=0.28 env=0.02315
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.001    A | 0.041    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:49 [tracker] [s2] release-retrigger t=20.757 onset=1.139 gate=0.027 age=0.056
+2025-11-21 20:13:49 [tracker] [s2] note-ended t=20.757 fret=2 dur=0.056
+2025-11-21 20:13:49 [meters] Hex input RMS -> E | 0.002    A | 0.035    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.002    A | 0.031    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:50 [tracker] [s2] onset t=20.904 env=0.02998 baseline=0.01762 gate=0.00176 envFloor=0.01498 onset=1.195>=0.009
+2025-11-21 20:13:50 [tracker] [s2] note-start t=20.904 fret=2 midi=47 vel=0.36 env=0.02998
+2025-11-21 20:13:50 [tracker] [s2] release-quiet t=20.968 avgEnv=0.00092 floor=0.01048 quietFrames=8
+2025-11-21 20:13:50 [tracker] [s2] note-ended t=20.968 fret=2 dur=0.064
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.004    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:50 [tracker] [s3] onset t=21.285 env=0.13688 baseline=0.03342 gate=0.00434 envFloor=0.02339 onset=1.444>=0.012
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.003    A | 0.007    D | 0.039    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.002    A | 0.003    D | 0.176    G | 0.002    B | 0.003    e | 0.002
+2025-11-21 20:13:50 [tracker] [s3] onset t=21.411 env=0.11741 baseline=0.05210 gate=0.00677 envFloor=0.03647 onset=1.078>=0.012
+2025-11-21 20:13:50 [tracker] [s3] note-start t=21.411 fret=2 midi=52 vel=1.00 env=0.11741
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.001    A | 0.003    D | 0.132    G | 0.002    B | 0.004    e | 0.001
+2025-11-21 20:13:50 [tracker] [s3] release-retrigger t=21.480 onset=1.125 gate=0.053 age=0.069
+2025-11-21 20:13:50 [tracker] [s3] note-ended t=21.480 fret=2 dur=0.069
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.005    G | 0.001    B | 0.006    e | 0.001
+2025-11-21 20:13:50 [tracker] [s3] onset t=21.549 env=0.08935 baseline=0.08143 gate=0.01059 envFloor=0.02757 onset=0.595>=0.012
+2025-11-21 20:13:50 [tracker] [s3] note-start t=21.549 fret=2 midi=52 vel=1.00 env=0.08935
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.007    G | 0.002    B | 0.006    e | 0.002
+2025-11-21 20:13:50 [tracker] [s3] onset t=21.616 env=0.08143 baseline=0.07094 gate=0.00922 envFloor=0.02461 onset=0.736>=0.012
+2025-11-21 20:13:50 [tracker] [s3] note-ended (new onset) t=21.616 fret=2 dur=0.067
+2025-11-21 20:13:50 [tracker] [s3] release-retrigger t=21.685 onset=0.837 gate=0.038 age=0.069
+2025-11-21 20:13:50 [tracker] [s3] note-ended t=21.685 fret=2 dur=0.069
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.002    A | 0.003    D | 0.089    G | 0.002    B | 0.007    e | 0.002
+2025-11-21 20:13:50 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.084    G | 0.002    B | 0.007    e | 0.002
+2025-11-21 20:13:51 [tracker] [s3] onset t=21.821 env=0.06244 baseline=0.04982 gate=0.00648 envFloor=0.01873 onset=0.837>=0.012
+2025-11-21 20:13:51 [tracker] [s3] note-start t=21.821 fret=2 midi=52 vel=0.75 env=0.06244
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.009    G | 0.001    B | 0.007    e | 0.001
+2025-11-21 20:13:51 [tracker] [s3] onset t=21.893 env=0.05699 baseline=0.04908 gate=0.00638 envFloor=0.01718 onset=1.327>=0.012
+2025-11-21 20:13:51 [tracker] [s3] note-ended (new onset) t=21.893 fret=2 dur=0.072
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.047    G | 0.001    B | 0.007    e | 0.001
+2025-11-21 20:13:51 [tracker] [s3] release-retrigger t=21.963 onset=0.730 gate=0.026 age=0.069
+2025-11-21 20:13:51 [tracker] [s3] note-ended t=21.963 fret=2 dur=0.069
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.061    G | 0.002    B | 0.007    e | 0.002
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.009    G | 0.002    B | 0.007    e | 0.002
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.021    G | 0.001    B | 0.007    e | 0.001
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.022    G | 0.001    B | 0.008    e | 0.001
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.004    B | 0.002    e | 0.001
+2025-11-21 20:13:51 [tracker] [s3] onset t=22.405 env=0.01551 baseline=0.01959 gate=0.00255 envFloor=0.01242 onset=0.580>=0.012
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.005    D | 0.083    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:51 [tracker] [s3] onset t=22.461 env=0.01618 baseline=0.02048 gate=0.00266 envFloor=0.01433 onset=0.542>=0.012
+2025-11-21 20:13:51 [tracker] [s3] note-start t=22.461 fret=3 midi=53 vel=0.19 env=0.01618
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.057    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:51 [tracker] [s3] release-retrigger t=22.512 onset=0.666 gate=0.024 age=0.051
+2025-11-21 20:13:51 [tracker] [s3] note-ended t=22.512 fret=3 dur=0.051
+2025-11-21 20:13:51 [tracker] [s3] onset t=22.563 env=0.03950 baseline=0.01797 gate=0.00234 envFloor=0.01258 onset=0.705>=0.012
+2025-11-21 20:13:51 [tracker] [s3] note-start t=22.563 fret=3 midi=53 vel=0.47 env=0.03950
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.049    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:51 [tracker] [s3] onset t=22.643 env=0.03463 baseline=0.03058 gate=0.00398 envFloor=0.01242 onset=0.722>=0.012
+2025-11-21 20:13:51 [tracker] [s3] note-ended (new onset) t=22.643 fret=3 dur=0.080
+2025-11-21 20:13:51 [tracker] [s3] note-start t=22.643 fret=3 midi=53 vel=0.42 env=0.03463
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.044    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.038    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:51 [tracker] [s3] onset t=22.765 env=0.01326 baseline=0.02475 gate=0.00322 envFloor=0.01242 onset=1.131>=0.012
+2025-11-21 20:13:51 [tracker] [s3] note-ended (new onset) t=22.765 fret=3 dur=0.123
+2025-11-21 20:13:51 [tracker] [s3] note-start t=22.765 fret=3 midi=53 vel=0.16 env=0.01326
+2025-11-21 20:13:51 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.031    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:52 [tracker] [s3] release-retrigger t=22.851 onset=0.948 gate=0.015 age=0.085
+2025-11-21 20:13:52 [tracker] [s3] note-ended t=22.851 fret=3 dur=0.085
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.025    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.020    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.017    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.014    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.005    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:52 [tracker] [s3] onset t=23.256 env=0.02612 baseline=0.01462 gate=0.00190 envFloor=0.01242 onset=0.510>=0.012
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.028    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:52 [tracker] [s3] onset t=23.363 env=0.02534 baseline=0.01462 gate=0.00190 envFloor=0.01242 onset=1.002>=0.012
+2025-11-21 20:13:52 [tracker] [s3] note-start t=23.363 fret=4 midi=54 vel=0.30 env=0.02534
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.031    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.023    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.015    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:52 [tracker] [s3] onset t=23.536 env=0.01978 baseline=0.01647 gate=0.00214 envFloor=0.01242 onset=1.267>=0.012
+2025-11-21 20:13:52 [tracker] [s3] note-ended (new onset) t=23.536 fret=4 dur=0.173
+2025-11-21 20:13:52 [tracker] [s3] note-start t=23.536 fret=4 midi=54 vel=0.24 env=0.01978
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:52 [tracker] [s3] release-retrigger t=23.656 onset=0.855 gate=0.014 age=0.120
+2025-11-21 20:13:52 [tracker] [s3] note-ended t=23.656 fret=4 dur=0.120
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.010    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:13:52 [tracker] [s3] onset t=23.763 env=0.01337 baseline=0.01462 gate=0.00190 envFloor=0.01242 onset=1.080>=0.012
+2025-11-21 20:13:52 [tracker] [s3] note-start t=23.763 fret=4 midi=54 vel=0.16 env=0.01337
+2025-11-21 20:13:52 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.014    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.019    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:53 [tracker] [s3] release-quiet t=23.859 avgEnv=0.00995 floor=0.01019 quietFrames=8
+2025-11-21 20:13:53 [tracker] [s3] note-ended t=23.859 fret=4 dur=0.096
+2025-11-21 20:13:53 [tracker] [s3] onset t=23.875 env=0.01513 baseline=0.01462 gate=0.00190 envFloor=0.01242 onset=1.432>=0.012
+2025-11-21 20:13:53 [tracker] [s3] note-start t=23.875 fret=4 midi=54 vel=0.18 env=0.01513
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.016    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:53 [tracker] [s3] release-quiet t=23.976 avgEnv=0.00986 floor=0.01019 quietFrames=8
+2025-11-21 20:13:53 [tracker] [s3] note-ended t=23.976 fret=4 dur=0.101
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.013    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.007    D | 0.132    G | 0.003    B | 0.001    e | 0.001
+2025-11-21 20:13:53 [tracker] [s3] onset t=24.096 env=0.01319 baseline=0.01651 gate=0.00215 envFloor=0.01242 onset=1.429>=0.012
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.014    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:53 [tracker] [s3] onset t=24.205 env=0.04907 baseline=0.02249 gate=0.00292 envFloor=0.01574 onset=0.892>=0.012
+2025-11-21 20:13:53 [tracker] [s3] note-start t=24.205 fret=5 midi=55 vel=0.59 env=0.04907
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.041    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:53 [tracker] [s3] onset t=24.307 env=0.03707 baseline=0.03651 gate=0.00475 envFloor=0.01340 onset=0.543>=0.012
+2025-11-21 20:13:53 [tracker] [s3] note-ended (new onset) t=24.307 fret=5 dur=0.101
+2025-11-21 20:13:53 [tracker] [s3] note-start t=24.307 fret=5 midi=55 vel=0.44 env=0.03707
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.053    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.038    G | 0.002    B | 0.002    e | 0.004
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.007    G | 0.001    B | 0.001    e | 0.004
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.022    G | 0.001    B | 0.001    e | 0.004
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.031    G | 0.002    B | 0.002    e | 0.004
+2025-11-21 20:13:53 [tracker] [s3] onset t=24.680 env=0.01743 baseline=0.01654 gate=0.00215 envFloor=0.01242 onset=1.289>=0.012
+2025-11-21 20:13:53 [tracker] [s3] note-ended (new onset) t=24.680 fret=5 dur=0.373
+2025-11-21 20:13:53 [tracker] [s3] note-start t=24.680 fret=5 midi=55 vel=0.21 env=0.01743
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.022    G | 0.002    B | 0.002    e | 0.004
+2025-11-21 20:13:53 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.011    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.013    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:13:54 [tracker] [s3] release-retrigger t=24.893 onset=1.218 gate=0.014 age=0.213
+2025-11-21 20:13:54 [tracker] [s3] note-ended t=24.893 fret=5 dur=0.213
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.015    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.002    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.003    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.053    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:54 [tracker] [s1] onset t=25.309 env=0.05563 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.213>=0.006
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.017    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:54 [tracker] [s1] onset t=25.418 env=0.04703 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.310>=0.006
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.030    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:54 [tracker] [s1] onset t=25.528 env=0.04165 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.227>=0.006
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.031    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.020    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.035    A | 0.003    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:54 [tracker] [s1] onset t=25.688 env=0.05323 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.371>=0.006
+2025-11-21 20:13:54 [meters] Hex input RMS -> E | 0.023    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.029    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:55 [tracker] [s1] onset t=25.858 env=0.04765 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.395>=0.006
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.015    A | 0.002    D | 0.002    G | 0.001    B | 0.003    e | 0.001
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.022    A | 0.002    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.025    A | 0.002    D | 0.002    G | 0.001    B | 0.003    e | 0.002
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.018    A | 0.002    D | 0.002    G | 0.002    B | 0.004    e | 0.002
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.028    A | 0.002    D | 0.002    G | 0.002    B | 0.004    e | 0.002
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.015    A | 0.002    D | 0.001    G | 0.001    B | 0.003    e | 0.001
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:55 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.003    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:56 [tracker] [s1] onset t=26.989 env=0.03923 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.334>=0.006
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.115    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:56 [tracker] [s1] onset t=27.053 env=0.12474 baseline=0.05221 gate=0.00287 envFloor=0.03869 onset=0.818>=0.006
+2025-11-21 20:13:56 [tracker] [s1] harmonic-bias t=27.053 pitch=164.98Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:56 [tracker] [s1] note-start t=27.053 fret=0 midi=40 vel=1.00 env=0.12474
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.085    A | 0.003    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:56 [tracker] [s1] onset t=27.162 env=0.10048 baseline=0.09141 gate=0.00503 envFloor=0.03869 onset=0.854>=0.006
+2025-11-21 20:13:56 [tracker] [s1] note-ended (new onset) t=27.162 fret=0 dur=0.109
+2025-11-21 20:13:56 [tracker] [s1] harmonic-bias t=27.162 pitch=164.96Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:56 [tracker] [s1] note-start t=27.162 fret=0 midi=40 vel=1.00 env=0.10048
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.056    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:56 [tracker] [s1] onset t=27.277 env=0.06964 baseline=0.07289 gate=0.00401 envFloor=0.03869 onset=0.556>=0.006
+2025-11-21 20:13:56 [tracker] [s1] note-ended (new onset) t=27.277 fret=0 dur=0.115
+2025-11-21 20:13:56 [tracker] [s1] harmonic-bias t=27.277 pitch=164.98Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:56 [tracker] [s1] note-start t=27.277 fret=0 midi=40 vel=0.84 env=0.06964
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.063    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:56 [tracker] [s1] release-retrigger t=27.341 onset=1.133 gate=0.055 age=0.064
+2025-11-21 20:13:56 [tracker] [s1] note-ended t=27.341 fret=0 dur=0.064
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.055    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:56 [tracker] [s1] onset t=27.413 env=0.04596 baseline=0.04853 gate=0.00267 envFloor=0.03869 onset=1.051>=0.006
+2025-11-21 20:13:56 [tracker] [s1] harmonic-bias t=27.413 pitch=164.91Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.054    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:56 [tracker] [s1] onset t=27.496 env=0.05327 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.009>=0.006
+2025-11-21 20:13:56 [tracker] [s1] note-ended (new onset) t=27.496 fret=0 dur=0.083
+2025-11-21 20:13:56 [tracker] [s1] harmonic-bias t=27.496 pitch=164.77Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:56 [tracker] [s1] note-start t=27.496 fret=0 midi=40 vel=0.64 env=0.05327
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.045    A | 0.002    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:56 [tracker] [s1] onset t=27.562 env=0.04664 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.377>=0.006
+2025-11-21 20:13:56 [tracker] [s1] note-ended (new onset) t=27.562 fret=0 dur=0.067
+2025-11-21 20:13:56 [tracker] [s1] harmonic-bias t=27.562 pitch=164.79Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:56 [tracker] [s1] note-start t=27.562 fret=0 midi=40 vel=0.56 env=0.04664
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.033    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:56 [tracker] [s1] release-retrigger t=27.650 onset=0.539 gate=0.055 age=0.088
+2025-11-21 20:13:56 [tracker] [s1] note-ended t=27.650 fret=0 dur=0.088
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.032    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:56 [meters] Hex input RMS -> E | 0.030    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.030    A | 0.002    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.028    A | 0.002    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.022    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.018    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.020    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.018    A | 0.001    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.094    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:57 [tracker] [s1] onset t=28.498 env=0.04275 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.458>=0.006
+2025-11-21 20:13:57 [tracker] [s1] onset t=28.557 env=0.13395 baseline=0.07375 gate=0.00406 envFloor=0.05162 onset=0.913>=0.006
+2025-11-21 20:13:57 [tracker] [s1] harmonic-bias t=28.557 pitch=165.73Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:13:57 [tracker] [s1] note-start t=28.557 fret=0 midi=40 vel=1.00 env=0.13395
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.158    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:13:57 [tracker] [s1] onset t=28.624 env=0.10636 baseline=0.10636 gate=0.00585 envFloor=0.04913 onset=0.839>=0.006
+2025-11-21 20:13:57 [tracker] [s1] note-ended (new onset) t=28.624 fret=0 dur=0.067
+2025-11-21 20:13:57 [tracker] [s1] harmonic-bias t=28.624 pitch=165.47Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:13:57 [tracker] [s1] note-start t=28.624 fret=0 midi=40 vel=1.00 env=0.10636
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.126    A | 0.003    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:57 [tracker] [s1] onset t=28.690 env=0.08219 baseline=0.08445 gate=0.00464 envFloor=0.04371 onset=0.626>=0.006
+2025-11-21 20:13:57 [tracker] [s1] note-ended (new onset) t=28.690 fret=0 dur=0.067
+2025-11-21 20:13:57 [tracker] [s1] harmonic-bias t=28.690 pitch=165.32Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:13:57 [tracker] [s1] note-start t=28.690 fret=0 midi=40 vel=0.99 env=0.08219
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.115    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:57 [tracker] [s1] onset t=28.754 env=0.10657 baseline=0.06559 gate=0.00361 envFloor=0.03869 onset=1.060>=0.006
+2025-11-21 20:13:57 [tracker] [s1] note-ended (new onset) t=28.754 fret=0 dur=0.064
+2025-11-21 20:13:57 [tracker] [s1] harmonic-bias t=28.754 pitch=165.21Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:57 [tracker] [s1] note-start t=28.754 fret=0 midi=40 vel=1.00 env=0.10657
+2025-11-21 20:13:57 [meters] Hex input RMS -> E | 0.083    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:58 [tracker] [s1] release-retrigger t=28.818 onset=1.368 gate=0.071 age=0.064
+2025-11-21 20:13:58 [tracker] [s1] note-ended t=28.818 fret=0 dur=0.064
+2025-11-21 20:13:58 [tracker] [s1] onset t=28.888 env=0.08141 baseline=0.07465 gate=0.00411 envFloor=0.03869 onset=0.740>=0.006
+2025-11-21 20:13:58 [tracker] [s1] harmonic-bias t=28.888 pitch=164.79Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:13:58 [tracker] [s1] note-start t=28.888 fret=0 midi=40 vel=0.98 env=0.08141
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.075    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:58 [tracker] [s1] release-retrigger t=28.952 onset=1.311 gate=0.055 age=0.064
+2025-11-21 20:13:58 [tracker] [s1] note-ended t=28.952 fret=0 dur=0.064
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.059    A | 0.004    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:58 [tracker] [s1] onset t=29.002 env=0.06050 baseline=0.05906 gate=0.00325 envFloor=0.03869 onset=1.387>=0.006
+2025-11-21 20:13:58 [tracker] [s1] harmonic-bias t=29.002 pitch=167.93Hz ratio=2.04 harmonic=2 midi=52->40
+2025-11-21 20:13:58 [tracker] [s1] note-start t=29.002 fret=0 midi=40 vel=0.73 env=0.06050
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.044    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:58 [tracker] [s1] release-retrigger t=29.114 onset=1.251 gate=0.055 age=0.112
+2025-11-21 20:13:58 [tracker] [s1] note-ended t=29.114 fret=0 dur=0.112
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.046    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.046    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.029    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.003    A | 0.001    D | 0.001    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:13:58 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.111    A | 0.003    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.076    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.070    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.077    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:59 [tracker] [s1] onset t=30.429 env=0.06766 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.231>=0.006
+2025-11-21 20:13:59 [tracker] [s1] note-start t=30.429 fret=7 midi=47 vel=0.81 env=0.06766
+2025-11-21 20:13:59 [tracker] [s1] release-retrigger t=30.485 onset=1.085 gate=0.055 age=0.056
+2025-11-21 20:13:59 [tracker] [s1] note-ended t=30.485 fret=7 dur=0.056
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.068    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.057    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.048    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:59 [tracker] [s1] onset t=30.679 env=0.04480 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.862>=0.006
+2025-11-21 20:13:59 [tracker] [s1] note-start t=30.679 fret=7 midi=47 vel=0.54 env=0.04480
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.034    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:13:59 [tracker] [s1] release-retrigger t=30.751 onset=1.108 gate=0.055 age=0.072
+2025-11-21 20:13:59 [tracker] [s1] note-ended t=30.751 fret=7 dur=0.072
+2025-11-21 20:13:59 [meters] Hex input RMS -> E | 0.031    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.026    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.026    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.027    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.031    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.029    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.049    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.046    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.044    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.040    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.035    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.027    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:00 [meters] Hex input RMS -> E | 0.023    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.034    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.127    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [tracker] [s1] onset t=31.941 env=0.10777 baseline=0.06076 gate=0.00334 envFloor=0.04253 onset=1.288>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-start t=31.941 fret=8 midi=48 vel=1.00 env=0.10777
+2025-11-21 20:14:01 [tracker] [s1] release-retrigger t=31.994 onset=1.099 gate=0.094 age=0.053
+2025-11-21 20:14:01 [tracker] [s1] note-ended t=31.994 fret=8 dur=0.053
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.076    A | 0.002    D | 0.001    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.047 env=0.09238 baseline=0.07937 gate=0.00437 envFloor=0.03995 onset=1.206>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.047 fret=8 midi=48 vel=1.00 env=0.09238
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.101    A | 0.003    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:01 [tracker] [s1] release-retrigger t=32.101 onset=1.048 gate=0.082 age=0.053
+2025-11-21 20:14:01 [tracker] [s1] note-ended t=32.101 fret=8 dur=0.053
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.154 env=0.07755 baseline=0.06803 gate=0.00374 envFloor=0.03869 onset=1.106>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.154 fret=8 midi=48 vel=0.93 env=0.07755
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.089    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [tracker] [s1] release-retrigger t=32.207 onset=1.093 gate=0.070 age=0.053
+2025-11-21 20:14:01 [tracker] [s1] note-ended t=32.207 fret=8 dur=0.053
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.052    A | 0.002    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.261 env=0.06440 baseline=0.05712 gate=0.00314 envFloor=0.03869 onset=1.081>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.261 fret=8 midi=48 vel=0.77 env=0.06440
+2025-11-21 20:14:01 [tracker] [s1] release-retrigger t=32.317 onset=1.254 gate=0.059 age=0.056
+2025-11-21 20:14:01 [tracker] [s1] note-ended t=32.317 fret=8 dur=0.056
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.039    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.375 env=0.08743 baseline=0.04873 gate=0.00268 envFloor=0.03869 onset=1.197>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.375 fret=8 midi=48 vel=1.00 env=0.08743
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.059    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:01 [tracker] [s1] release-retrigger t=32.429 onset=0.914 gate=0.076 age=0.053
+2025-11-21 20:14:01 [tracker] [s1] note-ended t=32.429 fret=8 dur=0.053
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.482 env=0.06960 baseline=0.06439 gate=0.00354 envFloor=0.03869 onset=1.060>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.482 fret=8 midi=48 vel=0.84 env=0.06960
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.089    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.543 env=0.06794 baseline=0.05582 gate=0.00307 envFloor=0.03869 onset=0.885>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-ended (new onset) t=32.543 fret=8 dur=0.061
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.543 fret=8 midi=48 vel=0.82 env=0.06794
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.049    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.605 env=0.06605 baseline=0.05448 gate=0.00300 envFloor=0.03869 onset=1.114>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-ended (new onset) t=32.605 fret=8 dur=0.061
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.605 fret=8 midi=48 vel=0.79 env=0.06605
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.040    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:01 [tracker] [s1] release-retrigger t=32.674 onset=0.848 gate=0.060 age=0.069
+2025-11-21 20:14:01 [tracker] [s1] note-ended t=32.674 fret=8 dur=0.069
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.095    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:01 [tracker] [s1] onset t=32.738 env=0.08124 baseline=0.04627 gate=0.00254 envFloor=0.03869 onset=0.601>=0.006
+2025-11-21 20:14:01 [tracker] [s1] note-start t=32.738 fret=8 midi=48 vel=0.97 env=0.08124
+2025-11-21 20:14:01 [tracker] [s1] release-retrigger t=32.791 onset=1.406 gate=0.069 age=0.053
+2025-11-21 20:14:01 [tracker] [s1] note-ended t=32.791 fret=8 dur=0.053
+2025-11-21 20:14:01 [meters] Hex input RMS -> E | 0.055    A | 0.002    D | 0.001    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:02 [tracker] [s1] onset t=32.877 env=0.07342 baseline=0.05634 gate=0.00310 envFloor=0.03869 onset=0.993>=0.006
+2025-11-21 20:14:02 [tracker] [s1] note-start t=32.877 fret=8 midi=48 vel=0.88 env=0.07342
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.053    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:02 [tracker] [s1] release-quiet t=32.941 avgEnv=0.00162 floor=0.02244 quietFrames=8
+2025-11-21 20:14:02 [tracker] [s1] note-ended t=32.941 fret=8 dur=0.064
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.081    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.043    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.051    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.034    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.025    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.031    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.030    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.028    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:02 [meters] Hex input RMS -> E | 0.073    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.046    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.026    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.028    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.051    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.044    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.033    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.042    A | 0.003    D | 0.002    G | 0.002    B | 0.001    e | 0.002
+2025-11-21 20:14:03 [tracker] [s1] onset t=34.333 env=0.05409 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.520>=0.006
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.051    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.049    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.055    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.041    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.047    A | 0.002    D | 0.003    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:03 [meters] Hex input RMS -> E | 0.048    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.086    A | 0.003    D | 0.002    G | 0.002    B | 0.003    e | 0.003
+2025-11-21 20:14:04 [tracker] [s1] onset t=35.239 env=0.04452 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.072>=0.006
+2025-11-21 20:14:04 [tracker] [s1] note-start t=35.239 fret=3 midi=43 vel=0.53 env=0.04452
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.077    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:04 [tracker] [s1] release-retrigger t=35.290 onset=1.076 gate=0.064 age=0.051
+2025-11-21 20:14:04 [tracker] [s1] note-ended t=35.290 fret=3 dur=0.051
+2025-11-21 20:14:04 [tracker] [s1] onset t=35.340 env=0.05675 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.016>=0.006
+2025-11-21 20:14:04 [tracker] [s1] note-start t=35.340 fret=3 midi=43 vel=0.68 env=0.05675
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.051    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.003
+2025-11-21 20:14:04 [tracker] [s1] release-retrigger t=35.391 onset=1.111 gate=0.055 age=0.051
+2025-11-21 20:14:04 [tracker] [s1] note-ended t=35.391 fret=3 dur=0.051
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.025    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.003
+2025-11-21 20:14:04 [tracker] [s1] onset t=35.514 env=0.12328 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.804>=0.006
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.058    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.064    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.004
+2025-11-21 20:14:04 [tracker] [s1] onset t=35.668 env=0.04567 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.128>=0.006
+2025-11-21 20:14:04 [tracker] [s1] note-start t=35.668 fret=3 midi=43 vel=0.55 env=0.04567
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.061    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.004
+2025-11-21 20:14:04 [tracker] [s1] release-retrigger t=35.719 onset=1.060 gate=0.055 age=0.051
+2025-11-21 20:14:04 [tracker] [s1] note-ended t=35.719 fret=3 dur=0.051
+2025-11-21 20:14:04 [meters] Hex input RMS -> E | 0.046    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.004
+2025-11-21 20:14:04 [tracker] [s1] onset t=35.770 env=0.05607 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.390>=0.006
+2025-11-21 20:14:04 [tracker] [s1] note-start t=35.770 fret=3 midi=43 vel=0.67 env=0.05607
+2025-11-21 20:14:05 [tracker] [s1] release-retrigger t=35.839 onset=0.947 gate=0.072 age=0.069
+2025-11-21 20:14:05 [tracker] [s1] note-ended t=35.839 fret=3 dur=0.069
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.107    A | 0.002    D | 0.001    G | 0.002    B | 0.001    e | 0.004
+2025-11-21 20:14:05 [tracker] [s1] onset t=35.890 env=0.03996 baseline=0.04876 gate=0.00268 envFloor=0.03869 onset=1.030>=0.006
+2025-11-21 20:14:05 [tracker] [s1] note-start t=35.890 fret=3 midi=43 vel=0.48 env=0.03996
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.078    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.004
+2025-11-21 20:14:05 [tracker] [s1] release-retrigger t=35.940 onset=1.072 gate=0.069 age=0.051
+2025-11-21 20:14:05 [tracker] [s1] note-ended t=35.940 fret=3 dur=0.051
+2025-11-21 20:14:05 [tracker] [s1] onset t=35.991 env=0.05071 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.992>=0.006
+2025-11-21 20:14:05 [tracker] [s1] note-start t=35.991 fret=3 midi=43 vel=0.61 env=0.05071
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.046    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:05 [tracker] [s1] release-retrigger t=36.042 onset=1.132 gate=0.055 age=0.051
+2025-11-21 20:14:05 [tracker] [s1] note-ended t=36.042 fret=3 dur=0.051
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.102    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.069    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.034    A | 0.002    D | 0.002    G | 0.003    B | 0.001    e | 0.001
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.004    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:05 [tracker] [s1] onset t=36.620 env=0.16963 baseline=0.05071 gate=0.00279 envFloor=0.03869 onset=1.094>=0.006
+2025-11-21 20:14:05 [tracker] [s1] note-start t=36.620 fret=2 midi=42 vel=1.00 env=0.16963
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.053    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:05 [tracker] [s1] release-retrigger t=36.674 onset=1.199 gate=0.090 age=0.053
+2025-11-21 20:14:05 [tracker] [s1] note-ended t=36.674 fret=2 dur=0.053
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.096    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:05 [tracker] [s1] onset t=36.783 env=0.06548 baseline=0.11245 gate=0.00618 envFloor=0.03869 onset=0.997>=0.006
+2025-11-21 20:14:05 [tracker] [s1] note-start t=36.783 fret=2 midi=42 vel=0.79 env=0.06548
+2025-11-21 20:14:05 [meters] Hex input RMS -> E | 0.048    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:06 [tracker] [s1] release-retrigger t=36.836 onset=1.026 gate=0.066 age=0.053
+2025-11-21 20:14:06 [tracker] [s1] note-ended t=36.836 fret=2 dur=0.053
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.032    A | 0.014    D | 0.001    G | 0.001    B | 0.001    e | 0.004
+2025-11-21 20:14:06 [tracker] [s1] onset t=36.914 env=0.13234 baseline=0.04610 gate=0.00254 envFloor=0.03869 onset=0.806>=0.006
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.075    A | 0.006    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:06 [tracker] [s1] onset t=36.970 env=0.07491 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.997>=0.006
+2025-11-21 20:14:06 [tracker] [s1] release-retrigger t=37.023 onset=1.063 gate=0.061 age=0.053
+2025-11-21 20:14:06 [tracker] [s1] note-ended t=37.023 fret=2 dur=0.053
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.049    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:06 [tracker] [s1] onset t=37.076 env=0.08831 baseline=0.05517 gate=0.00303 envFloor=0.03869 onset=1.053>=0.006
+2025-11-21 20:14:06 [tracker] [s1] note-start t=37.076 fret=2 midi=42 vel=1.00 env=0.08831
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.038    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:06 [tracker] [s1] release-retrigger t=37.130 onset=1.187 gate=0.055 age=0.053
+2025-11-21 20:14:06 [tracker] [s1] note-ended t=37.130 fret=2 dur=0.053
+2025-11-21 20:14:06 [tracker] [s1] onset t=37.188 env=0.04911 baseline=0.06439 gate=0.00354 envFloor=0.03869 onset=0.766>=0.006
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.024    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.030    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:06 [tracker] [s1] onset t=37.298 env=0.03920 baseline=0.05243 gate=0.00288 envFloor=0.03869 onset=0.996>=0.006
+2025-11-21 20:14:06 [tracker] [s1] note-start t=37.298 fret=2 midi=42 vel=0.47 env=0.03920
+2025-11-21 20:14:06 [tracker] [s1] release-retrigger t=37.351 onset=1.062 gate=0.055 age=0.053
+2025-11-21 20:14:06 [tracker] [s1] note-ended t=37.351 fret=2 dur=0.053
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.016    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.003    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.039    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:06 [meters] Hex input RMS -> E | 0.045    A | 0.002    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.053    A | 0.003    D | 0.003    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.037    A | 0.003    D | 0.003    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.058    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.057    A | 0.002    D | 0.003    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.032    A | 0.002    D | 0.003    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.035    A | 0.002    D | 0.003    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [tracker] [s1] onset t=38.303 env=0.13705 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.722>=0.006
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.097    A | 0.003    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.046    A | 0.002    D | 0.003    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:07 [tracker] [s1] onset t=38.484 env=0.05952 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.131>=0.006
+2025-11-21 20:14:07 [tracker] [s1] note-start t=38.484 fret=5 midi=45 vel=0.71 env=0.05952
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.036    A | 0.003    D | 0.003    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:14:07 [tracker] [s1] release-retrigger t=38.540 onset=0.872 gate=0.055 age=0.056
+2025-11-21 20:14:07 [tracker] [s1] note-ended t=38.540 fret=5 dur=0.056
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:07 [meters] Hex input RMS -> E | 0.003    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.088    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.053    A | 0.003    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.057    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.080    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.121    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.091    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.058    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.118    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.081    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.047    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.006    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:08 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.021    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.085    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.088    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.083    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.069    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.047    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.049    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.049    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.037    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.036    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.029    A | 0.016    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:09 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.064    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.062    A | 0.003    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.056    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.053    A | 0.007    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:10 [tracker] [s1] onset t=41.345 env=0.05522 baseline=0.05757 gate=0.00317 envFloor=0.04030 onset=0.798>=0.006
+2025-11-21 20:14:10 [tracker] [s1] note-start t=41.345 fret=7 midi=47 vel=0.66 env=0.05522
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.089    A | 0.002    D | 0.002    G | 0.002    B | 0.003    e | 0.001
+2025-11-21 20:14:10 [tracker] [s1] release-retrigger t=41.401 onset=1.101 gate=0.101 age=0.056
+2025-11-21 20:14:10 [tracker] [s1] note-ended t=41.401 fret=7 dur=0.056
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.090    A | 0.002    D | 0.002    G | 0.001    B | 0.005    e | 0.001
+2025-11-21 20:14:10 [tracker] [s1] onset t=41.508 env=0.08921 baseline=0.05112 gate=0.00281 envFloor=0.03869 onset=1.433>=0.006
+2025-11-21 20:14:10 [tracker] [s1] note-start t=41.508 fret=7 midi=47 vel=1.00 env=0.08921
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.099    A | 0.003    D | 0.002    G | 0.002    B | 0.008    e | 0.001
+2025-11-21 20:14:10 [tracker] [s1] release-retrigger t=41.564 onset=0.950 gate=0.073 age=0.056
+2025-11-21 20:14:10 [tracker] [s1] note-ended t=41.564 fret=7 dur=0.056
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.120    A | 0.003    D | 0.002    G | 0.002    B | 0.007    e | 0.002
+2025-11-21 20:14:10 [tracker] [s1] onset t=41.660 env=0.09458 baseline=0.06034 gate=0.00332 envFloor=0.03869 onset=0.894>=0.006
+2025-11-21 20:14:10 [tracker] [s1] note-start t=41.660 fret=7 midi=47 vel=1.00 env=0.09458
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.114    A | 0.002    D | 0.002    G | 0.002    B | 0.010    e | 0.002
+2025-11-21 20:14:10 [tracker] [s1] release-retrigger t=41.724 onset=1.141 gate=0.086 age=0.064
+2025-11-21 20:14:10 [tracker] [s1] note-ended t=41.724 fret=7 dur=0.064
+2025-11-21 20:14:10 [meters] Hex input RMS -> E | 0.093    A | 0.002    D | 0.002    G | 0.002    B | 0.004    e | 0.001
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.012    A | 0.002    D | 0.001    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.003    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:11 [tracker] [s1] onset t=42.159 env=0.05478 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.028>=0.006
+2025-11-21 20:14:11 [tracker] [s1] note-start t=42.159 fret=8 midi=48 vel=0.66 env=0.05478
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.060    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:11 [tracker] [s1] onset t=42.231 env=0.05408 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.297>=0.006
+2025-11-21 20:14:11 [tracker] [s1] note-ended (new onset) t=42.231 fret=8 dur=0.072
+2025-11-21 20:14:11 [tracker] [s1] note-start t=42.231 fret=8 midi=48 vel=0.65 env=0.05408
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.049    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.043    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:11 [tracker] [s1] onset t=42.377 env=0.04039 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.433>=0.006
+2025-11-21 20:14:11 [tracker] [s1] note-ended (new onset) t=42.377 fret=8 dur=0.147
+2025-11-21 20:14:11 [tracker] [s1] note-start t=42.377 fret=8 midi=48 vel=0.48 env=0.04039
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.057    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:11 [tracker] [s1] release-retrigger t=42.431 onset=0.753 gate=0.058 age=0.053
+2025-11-21 20:14:11 [tracker] [s1] note-ended t=42.431 fret=8 dur=0.053
+2025-11-21 20:14:11 [tracker] [s1] onset t=42.484 env=0.05263 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.139>=0.006
+2025-11-21 20:14:11 [tracker] [s1] note-start t=42.484 fret=8 midi=48 vel=0.63 env=0.05263
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.076    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:11 [tracker] [s1] release-retrigger t=42.537 onset=1.004 gate=0.057 age=0.053
+2025-11-21 20:14:11 [tracker] [s1] note-ended t=42.537 fret=8 dur=0.053
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.045    A | 0.001    D | 0.001    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:11 [tracker] [s1] onset t=42.615 env=0.04178 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.086>=0.006
+2025-11-21 20:14:11 [tracker] [s1] note-start t=42.615 fret=8 midi=48 vel=0.50 env=0.04178
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.055    A | 0.002    D | 0.001    G | 0.003    B | 0.002    e | 0.001
+2025-11-21 20:14:11 [tracker] [s1] release-retrigger t=42.679 onset=0.810 gate=0.072 age=0.064
+2025-11-21 20:14:11 [tracker] [s1] note-ended t=42.679 fret=8 dur=0.064
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.087    A | 0.002    D | 0.002    G | 0.004    B | 0.002    e | 0.002
+2025-11-21 20:14:11 [tracker] [s1] onset t=42.743 env=0.05768 baseline=0.06800 gate=0.00374 envFloor=0.04760 onset=0.851>=0.006
+2025-11-21 20:14:11 [tracker] [s1] note-start t=42.743 fret=8 midi=48 vel=0.69 env=0.05768
+2025-11-21 20:14:11 [meters] Hex input RMS -> E | 0.118    A | 0.002    D | 0.002    G | 0.005    B | 0.002    e | 0.002
+2025-11-21 20:14:11 [tracker] [s1] onset t=42.812 env=0.07093 baseline=0.06292 gate=0.00346 envFloor=0.04404 onset=0.838>=0.006
+2025-11-21 20:14:11 [tracker] [s1] note-ended (new onset) t=42.812 fret=8 dur=0.069
+2025-11-21 20:14:11 [tracker] [s1] note-start t=42.812 fret=8 midi=48 vel=0.85 env=0.07093
+2025-11-21 20:14:12 [tracker] [s1] onset t=42.873 env=0.05214 baseline=0.05688 gate=0.00313 envFloor=0.03883 onset=1.381>=0.006
+2025-11-21 20:14:12 [tracker] [s1] note-ended (new onset) t=42.873 fret=8 dur=0.061
+2025-11-21 20:14:12 [tracker] [s1] note-start t=42.873 fret=8 midi=48 vel=0.63 env=0.05214
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.047    A | 0.004    D | 0.004    G | 0.006    B | 0.005    e | 0.008
+2025-11-21 20:14:12 [tracker] [s1] release-quiet t=42.937 avgEnv=0.00179 floor=0.02244 quietFrames=8
+2025-11-21 20:14:12 [tracker] [s1] note-ended t=42.937 fret=8 dur=0.064
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.075    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:12 [tracker] [s1] onset t=43.132 env=0.11576 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.226>=0.006
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.102    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:12 [tracker] [s1] onset t=43.252 env=0.16410 baseline=0.07148 gate=0.00393 envFloor=0.05003 onset=1.001>=0.006
+2025-11-21 20:14:12 [tracker] [s1] note-start t=43.252 fret=9 midi=49 vel=1.00 env=0.16410
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.102    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:12 [tracker] [s1] release-retrigger t=43.303 onset=1.115 gate=0.100 age=0.051
+2025-11-21 20:14:12 [tracker] [s1] note-ended t=43.303 fret=9 dur=0.051
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.105    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.085    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:12 [tracker] [s1] onset t=43.489 env=0.07772 baseline=0.09454 gate=0.00520 envFloor=0.03869 onset=1.423>=0.006
+2025-11-21 20:14:12 [tracker] [s1] note-start t=43.489 fret=9 midi=49 vel=0.93 env=0.07772
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.075    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:12 [tracker] [s1] release-retrigger t=43.548 onset=0.924 gate=0.059 age=0.059
+2025-11-21 20:14:12 [tracker] [s1] note-ended t=43.548 fret=9 dur=0.059
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.063    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.111    A | 0.003    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:12 [tracker] [s1] onset t=43.745 env=0.13972 baseline=0.06047 gate=0.00333 envFloor=0.04233 onset=0.860>=0.006
+2025-11-21 20:14:12 [tracker] [s1] note-start t=43.745 fret=9 midi=49 vel=1.00 env=0.13972
+2025-11-21 20:14:12 [meters] Hex input RMS -> E | 0.109    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:12 [tracker] [s1] release-retrigger t=43.799 onset=0.808 gate=0.086 age=0.053
+2025-11-21 20:14:12 [tracker] [s1] note-ended t=43.799 fret=9 dur=0.053
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.043    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.192    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.148    A | 0.003    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:13 [tracker] [s1] onset t=44.201 env=0.17587 baseline=0.07436 gate=0.00409 envFloor=0.05205 onset=1.335>=0.006
+2025-11-21 20:14:13 [tracker] [s1] note-start t=44.201 fret=10 midi=50 vel=1.00 env=0.17587
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.103    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:13 [tracker] [s1] onset t=44.262 env=0.14818 baseline=0.14105 gate=0.00776 envFloor=0.04529 onset=0.745>=0.006
+2025-11-21 20:14:13 [tracker] [s1] note-ended (new onset) t=44.262 fret=10 dur=0.061
+2025-11-21 20:14:13 [tracker] [s1] note-start t=44.262 fret=10 midi=50 vel=1.00 env=0.14818
+2025-11-21 20:14:13 [tracker] [s1] release-retrigger t=44.318 onset=1.365 gate=0.075 age=0.056
+2025-11-21 20:14:13 [tracker] [s1] note-ended t=44.318 fret=10 dur=0.056
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.052    A | 0.002    D | 0.004    G | 0.002    B | 0.002    e | 0.003
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.051    A | 0.002    D | 0.004    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.041    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.045    A | 0.002    D | 0.004    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:13 [tracker] [s1] onset t=44.646 env=0.05833 baseline=0.06480 gate=0.00356 envFloor=0.03869 onset=1.208>=0.006
+2025-11-21 20:14:13 [tracker] [s1] note-start t=44.646 fret=10 midi=50 vel=0.70 env=0.05833
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.054    A | 0.002    D | 0.007    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:13 [tracker] [s1] release-retrigger t=44.710 onset=1.217 gate=0.055 age=0.064
+2025-11-21 20:14:13 [tracker] [s1] note-ended t=44.710 fret=10 dur=0.064
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.046    A | 0.002    D | 0.006    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:13 [meters] Hex input RMS -> E | 0.004    A | 0.002    D | 0.003    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.005    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:14 [tracker] [s1] onset t=44.966 env=0.12825 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.417>=0.006
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.119    A | 0.003    D | 0.005    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.020 env=0.07922 baseline=0.06826 gate=0.00375 envFloor=0.04778 onset=0.872>=0.006
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.020 pitch=157.25Hz ratio=1.91 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.020 fret=0 midi=40 vel=0.95 env=0.07922
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.130    A | 0.003    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.084 env=0.09093 baseline=0.06601 gate=0.00363 envFloor=0.04620 onset=0.896>=0.006
+2025-11-21 20:14:14 [tracker] [s1] note-ended (new onset) t=45.084 fret=0 dur=0.064
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.084 pitch=156.88Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.084 fret=0 midi=40 vel=1.00 env=0.09093
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.088    A | 0.002    D | 0.005    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.148 env=0.08983 baseline=0.07256 gate=0.00399 envFloor=0.04203 onset=1.063>=0.006
+2025-11-21 20:14:14 [tracker] [s1] note-ended (new onset) t=45.148 fret=0 dur=0.064
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.148 pitch=156.71Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.148 fret=0 midi=40 vel=1.00 env=0.08983
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.053    A | 0.005    D | 0.006    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:14 [tracker] [s1] release-retrigger t=45.212 onset=0.558 gate=0.076 age=0.064
+2025-11-21 20:14:14 [tracker] [s1] note-ended t=45.212 fret=0 dur=0.064
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.268 env=0.07978 baseline=0.06452 gate=0.00355 envFloor=0.03869 onset=0.921>=0.006
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.268 pitch=156.58Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.268 fret=0 midi=40 vel=0.96 env=0.07978
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.089    A | 0.002    D | 0.004    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.334 env=0.09198 baseline=0.06335 gate=0.00348 envFloor=0.03869 onset=0.744>=0.006
+2025-11-21 20:14:14 [tracker] [s1] note-ended (new onset) t=45.334 fret=0 dur=0.067
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.334 pitch=156.46Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.334 fret=0 midi=40 vel=1.00 env=0.09198
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.084    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.398 env=0.08409 baseline=0.07340 gate=0.00404 envFloor=0.03869 onset=1.119>=0.006
+2025-11-21 20:14:14 [tracker] [s1] note-ended (new onset) t=45.398 fret=0 dur=0.064
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.398 pitch=156.43Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.398 fret=0 midi=40 vel=1.00 env=0.08409
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.071    A | 0.003    D | 0.005    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:14 [tracker] [s1] release-retrigger t=45.454 onset=1.113 gate=0.066 age=0.056
+2025-11-21 20:14:14 [tracker] [s1] note-ended t=45.454 fret=0 dur=0.056
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.076    A | 0.002    D | 0.004    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.548 env=0.05450 baseline=0.05716 gate=0.00314 envFloor=0.03869 onset=0.965>=0.006
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.548 pitch=156.47Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.548 fret=0 midi=40 vel=0.65 env=0.05450
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.077    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:14 [tracker] [s1] onset t=45.609 env=0.08190 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.932>=0.006
+2025-11-21 20:14:14 [tracker] [s1] note-ended (new onset) t=45.609 fret=0 dur=0.061
+2025-11-21 20:14:14 [tracker] [s1] harmonic-bias t=45.609 pitch=156.28Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:14 [tracker] [s1] note-start t=45.609 fret=0 midi=40 vel=0.98 env=0.08190
+2025-11-21 20:14:14 [tracker] [s1] release-quiet t=45.673 avgEnv=0.00128 floor=0.02244 quietFrames=8
+2025-11-21 20:14:14 [tracker] [s1] note-ended t=45.673 fret=0 dur=0.064
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.003    A | 0.002    D | 0.004    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:14 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.004    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.004    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:15 [tracker] [s1] onset t=45.860 env=0.09196 baseline=0.04601 gate=0.00253 envFloor=0.03869 onset=1.481>=0.006
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.106    A | 0.002    D | 0.003    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:15 [tracker] [s1] onset t=45.977 env=0.12385 baseline=0.06676 gate=0.00367 envFloor=0.04673 onset=1.482>=0.006
+2025-11-21 20:14:15 [tracker] [s1] note-start t=45.977 fret=0 midi=40 vel=1.00 env=0.12385
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.111    A | 0.002    D | 0.004    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:15 [tracker] [s1] onset t=46.046 env=0.05923 baseline=0.09784 gate=0.00538 envFloor=0.04061 onset=0.652>=0.006
+2025-11-21 20:14:15 [tracker] [s1] note-ended (new onset) t=46.046 fret=0 dur=0.069
+2025-11-21 20:14:15 [tracker] [s1] harmonic-bias t=46.046 pitch=165.92Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:15 [tracker] [s1] note-start t=46.046 fret=0 midi=40 vel=0.71 env=0.05923
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.056    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:15 [tracker] [s1] onset t=46.116 env=0.10386 baseline=0.04823 gate=0.00265 envFloor=0.03869 onset=0.597>=0.006
+2025-11-21 20:14:15 [tracker] [s1] note-ended (new onset) t=46.116 fret=0 dur=0.069
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.106    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.073    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:15 [tracker] [s1] onset t=46.268 env=0.11003 baseline=0.04849 gate=0.00267 envFloor=0.03869 onset=0.943>=0.006
+2025-11-21 20:14:15 [tracker] [s1] harmonic-bias t=46.268 pitch=165.70Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:15 [tracker] [s1] note-start t=46.268 fret=0 midi=40 vel=1.00 env=0.11003
+2025-11-21 20:14:15 [tracker] [s1] release-retrigger t=46.318 onset=0.802 gate=0.064 age=0.051
+2025-11-21 20:14:15 [tracker] [s1] note-ended t=46.318 fret=0 dur=0.051
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.039    A | 0.001    D | 0.003    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:15 [tracker] [s1] onset t=46.385 env=0.16530 baseline=0.07943 gate=0.00437 envFloor=0.04859 onset=1.160>=0.006
+2025-11-21 20:14:15 [tracker] [s1] harmonic-bias t=46.385 pitch=166.13Hz ratio=2.02 harmonic=2 midi=52->40
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.102    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:15 [tracker] [s1] release-retrigger t=46.436 onset=0.999 gate=0.103 age=0.051
+2025-11-21 20:14:15 [tracker] [s1] note-ended t=46.436 fret=0 dur=0.051
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.109    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:15 [tracker] [s1] onset t=46.500 env=0.12316 baseline=0.11993 gate=0.00660 envFloor=0.04162 onset=1.452>=0.006
+2025-11-21 20:14:15 [tracker] [s1] note-start t=46.500 fret=0 midi=40 vel=1.00 env=0.12316
+2025-11-21 20:14:15 [tracker] [s1] release-quiet t=46.564 avgEnv=0.00081 floor=0.02244 quietFrames=8
+2025-11-21 20:14:15 [tracker] [s1] note-ended t=46.564 fret=0 dur=0.064
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.072    A | 0.003    D | 0.002    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:15 [tracker] [s1] onset t=46.734 env=0.14864 baseline=0.07131 gate=0.00392 envFloor=0.03869 onset=0.584>=0.006
+2025-11-21 20:14:15 [tracker] [s1] onset t=46.801 env=0.12261 baseline=0.07610 gate=0.00419 envFloor=0.05327 onset=1.479>=0.006
+2025-11-21 20:14:15 [tracker] [s1] harmonic-bias t=46.801 pitch=165.36Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:15 [tracker] [s1] note-start t=46.801 fret=0 midi=40 vel=1.00 env=0.12261
+2025-11-21 20:14:15 [meters] Hex input RMS -> E | 0.139    A | 0.003    D | 0.003    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:16 [tracker] [s1] onset t=46.862 env=0.14587 baseline=0.09834 gate=0.00541 envFloor=0.05035 onset=1.337>=0.006
+2025-11-21 20:14:16 [tracker] [s1] note-ended (new onset) t=46.862 fret=0 dur=0.061
+2025-11-21 20:14:16 [tracker] [s1] harmonic-bias t=46.862 pitch=165.26Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:16 [tracker] [s1] note-start t=46.862 fret=0 midi=40 vel=1.00 env=0.14587
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.130    A | 0.003    D | 0.003    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:16 [tracker] [s1] onset t=46.934 env=0.09740 baseline=0.11467 gate=0.00631 envFloor=0.04431 onset=1.108>=0.006
+2025-11-21 20:14:16 [tracker] [s1] note-ended (new onset) t=46.934 fret=0 dur=0.072
+2025-11-21 20:14:16 [tracker] [s1] harmonic-bias t=46.934 pitch=165.22Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:14:16 [tracker] [s1] note-start t=46.934 fret=0 midi=40 vel=1.00 env=0.09740
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.051    A | 0.009    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:16 [tracker] [s1] release-retrigger t=46.998 onset=1.445 gate=0.071 age=0.064
+2025-11-21 20:14:16 [tracker] [s1] note-ended t=46.998 fret=0 dur=0.064
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.071    A | 0.003    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:16 [tracker] [s1] onset t=47.116 env=0.07342 baseline=0.06234 gate=0.00343 envFloor=0.03869 onset=0.783>=0.006
+2025-11-21 20:14:16 [tracker] [s1] harmonic-bias t=47.116 pitch=164.93Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:14:16 [tracker] [s1] note-start t=47.116 fret=0 midi=40 vel=0.88 env=0.07342
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.072    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:16 [tracker] [s1] onset t=47.185 env=0.05113 baseline=0.05800 gate=0.00319 envFloor=0.03869 onset=1.457>=0.006
+2025-11-21 20:14:16 [tracker] [s1] note-ended (new onset) t=47.185 fret=0 dur=0.069
+2025-11-21 20:14:16 [tracker] [s1] harmonic-bias t=47.185 pitch=166.54Hz ratio=2.02 harmonic=2 midi=52->40
+2025-11-21 20:14:16 [tracker] [s1] note-start t=47.185 fret=0 midi=40 vel=0.61 env=0.05113
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.094    A | 0.003    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:16 [tracker] [s1] release-retrigger t=47.241 onset=0.808 gate=0.083 age=0.056
+2025-11-21 20:14:16 [tracker] [s1] note-ended t=47.241 fret=0 dur=0.056
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.115    A | 0.002    D | 0.002    G | 0.003    B | 0.002    e | 0.002
+2025-11-21 20:14:16 [tracker] [s1] onset t=47.292 env=0.11154 baseline=0.05488 gate=0.00302 envFloor=0.03869 onset=1.470>=0.006
+2025-11-21 20:14:16 [tracker] [s1] harmonic-bias t=47.292 pitch=165.13Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:14:16 [tracker] [s1] note-start t=47.292 fret=0 midi=40 vel=1.00 env=0.11154
+2025-11-21 20:14:16 [tracker] [s1] onset t=47.361 env=0.07389 baseline=0.08812 gate=0.00485 envFloor=0.03869 onset=0.923>=0.006
+2025-11-21 20:14:16 [tracker] [s1] note-ended (new onset) t=47.361 fret=0 dur=0.069
+2025-11-21 20:14:16 [tracker] [s1] harmonic-bias t=47.361 pitch=164.80Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:14:16 [tracker] [s1] note-start t=47.361 fret=0 midi=40 vel=0.89 env=0.07389
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.091    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:16 [tracker] [s1] release-quiet t=47.425 avgEnv=0.00198 floor=0.02244 quietFrames=8
+2025-11-21 20:14:16 [tracker] [s1] note-ended t=47.425 fret=0 dur=0.064
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.136    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:16 [tracker] [s1] onset t=47.662 env=0.14022 baseline=0.07435 gate=0.00409 envFloor=0.05204 onset=1.146>=0.006
+2025-11-21 20:14:16 [tracker] [s1] note-start t=47.662 fret=13 midi=53 vel=1.00 env=0.14022
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.142    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:16 [tracker] [s1] onset t=47.753 env=0.13224 baseline=0.10642 gate=0.00585 envFloor=0.04451 onset=0.614>=0.006
+2025-11-21 20:14:16 [tracker] [s1] note-ended (new onset) t=47.753 fret=13 dur=0.091
+2025-11-21 20:14:16 [meters] Hex input RMS -> E | 0.086    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.001
+2025-11-21 20:14:16 [tracker] [s1] release-retrigger t=47.806 onset=0.832 gate=0.079 age=0.053
+2025-11-21 20:14:16 [tracker] [s1] note-ended t=47.806 fret=13 dur=0.053
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.095    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:17 [tracker] [s1] onset t=47.857 env=0.04513 baseline=0.09788 gate=0.00538 envFloor=0.03869 onset=1.367>=0.006
+2025-11-21 20:14:17 [tracker] [s1] note-start t=47.857 fret=13 midi=53 vel=0.54 env=0.04513
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.086    A | 0.002    D | 0.002    G | 0.002    B | 0.001    e | 0.001
+2025-11-21 20:14:17 [tracker] [s1] onset t=47.929 env=0.08518 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=0.965>=0.006
+2025-11-21 20:14:17 [tracker] [s1] note-ended (new onset) t=47.929 fret=13 dur=0.072
+2025-11-21 20:14:17 [tracker] [s1] note-start t=47.929 fret=13 midi=53 vel=1.00 env=0.08518
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.076    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:17 [tracker] [s1] onset t=48.012 env=0.04970 baseline=0.06563 gate=0.00361 envFloor=0.03869 onset=1.016>=0.006
+2025-11-21 20:14:17 [tracker] [s1] note-ended (new onset) t=48.012 fret=13 dur=0.083
+2025-11-21 20:14:17 [tracker] [s1] note-start t=48.012 fret=13 midi=53 vel=0.60 env=0.04970
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.166    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:17 [tracker] [s1] release-retrigger t=48.086 onset=0.827 gate=0.099 age=0.075
+2025-11-21 20:14:17 [tracker] [s1] note-ended t=48.086 fret=13 dur=0.075
+2025-11-21 20:14:17 [tracker] [s1] onset t=48.156 env=0.09943 baseline=0.06638 gate=0.00365 envFloor=0.04646 onset=1.231>=0.006
+2025-11-21 20:14:17 [tracker] [s1] note-start t=48.156 fret=13 midi=53 vel=1.00 env=0.09943
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.111    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:17 [tracker] [s1] release-retrigger t=48.230 onset=1.019 gate=0.080 age=0.075
+2025-11-21 20:14:17 [tracker] [s1] note-ended t=48.230 fret=13 dur=0.075
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.011    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.171    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:17 [tracker] [s1] onset t=48.515 env=0.15186 baseline=0.07454 gate=0.00410 envFloor=0.05218 onset=0.812>=0.006
+2025-11-21 20:14:17 [tracker] [s1] harmonic-bias t=48.515 pitch=165.23Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:17 [tracker] [s1] note-start t=48.515 fret=0 midi=40 vel=1.00 env=0.15186
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.125    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:17 [tracker] [s1] onset t=48.585 env=0.08718 baseline=0.11998 gate=0.00660 envFloor=0.04660 onset=0.737>=0.006
+2025-11-21 20:14:17 [tracker] [s1] note-ended (new onset) t=48.585 fret=0 dur=0.069
+2025-11-21 20:14:17 [tracker] [s1] harmonic-bias t=48.585 pitch=165.19Hz ratio=2.00 harmonic=2 midi=52->40
+2025-11-21 20:14:17 [tracker] [s1] note-start t=48.585 fret=0 midi=40 vel=1.00 env=0.08718
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.096    A | 0.015    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:17 [tracker] [s1] release-retrigger t=48.657 onset=1.425 gate=0.087 age=0.072
+2025-11-21 20:14:17 [tracker] [s1] note-ended t=48.657 fret=0 dur=0.072
+2025-11-21 20:14:17 [tracker] [s1] onset t=48.718 env=0.07492 baseline=0.06634 gate=0.00365 envFloor=0.04644 onset=1.110>=0.006
+2025-11-21 20:14:17 [tracker] [s1] harmonic-bias t=48.718 pitch=165.33Hz ratio=2.01 harmonic=2 midi=51->40
+2025-11-21 20:14:17 [tracker] [s1] note-start t=48.718 fret=0 midi=40 vel=0.90 env=0.07492
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.139    A | 0.004    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:17 [tracker] [s1] onset t=48.782 env=0.14644 baseline=0.06573 gate=0.00362 envFloor=0.04601 onset=1.189>=0.006
+2025-11-21 20:14:17 [tracker] [s1] note-ended (new onset) t=48.782 fret=0 dur=0.064
+2025-11-21 20:14:17 [tracker] [s1] harmonic-bias t=48.782 pitch=165.30Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:17 [tracker] [s1] note-start t=48.782 fret=0 midi=40 vel=1.00 env=0.14644
+2025-11-21 20:14:17 [meters] Hex input RMS -> E | 0.087    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [tracker] [s1] onset t=48.851 env=0.04304 baseline=0.11569 gate=0.00636 envFloor=0.03942 onset=0.795>=0.006
+2025-11-21 20:14:18 [tracker] [s1] note-ended (new onset) t=48.851 fret=0 dur=0.069
+2025-11-21 20:14:18 [tracker] [s1] harmonic-bias t=48.851 pitch=165.29Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:18 [tracker] [s1] note-start t=48.851 fret=0 midi=40 vel=0.52 env=0.04304
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.044    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [tracker] [s1] release-retrigger t=48.905 onset=1.105 gate=0.080 age=0.053
+2025-11-21 20:14:18 [tracker] [s1] note-ended t=48.905 fret=0 dur=0.053
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.101    A | 0.002    D | 0.002    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:18 [tracker] [s1] onset t=48.979 env=0.06719 baseline=0.05151 gate=0.00283 envFloor=0.03869 onset=1.242>=0.006
+2025-11-21 20:14:18 [tracker] [s1] harmonic-bias t=48.979 pitch=165.30Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:18 [tracker] [s1] note-start t=48.979 fret=0 midi=40 vel=0.81 env=0.06719
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.072    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:14:18 [tracker] [s1] release-retrigger t=49.091 onset=0.655 gate=0.060 age=0.112
+2025-11-21 20:14:18 [tracker] [s1] note-ended t=49.091 fret=0 dur=0.112
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.003    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [tracker] [s1] onset t=49.283 env=0.14892 baseline=0.04551 gate=0.00250 envFloor=0.03869 onset=1.474>=0.006
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.124    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [tracker] [s1] onset t=49.350 env=0.07437 baseline=0.06908 gate=0.00380 envFloor=0.04835 onset=1.004>=0.006
+2025-11-21 20:14:18 [tracker] [s1] harmonic-bias t=49.350 pitch=156.38Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:18 [tracker] [s1] note-start t=49.350 fret=0 midi=40 vel=0.89 env=0.07437
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.139    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:18 [tracker] [s1] onset t=49.414 env=0.06644 baseline=0.06541 gate=0.00360 envFloor=0.04579 onset=0.943>=0.006
+2025-11-21 20:14:18 [tracker] [s1] note-ended (new onset) t=49.414 fret=0 dur=0.064
+2025-11-21 20:14:18 [tracker] [s1] harmonic-bias t=49.414 pitch=156.29Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:18 [tracker] [s1] note-start t=49.414 fret=0 midi=40 vel=0.80 env=0.06644
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.105    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [tracker] [s1] release-retrigger t=49.483 onset=1.141 gate=0.089 age=0.069
+2025-11-21 20:14:18 [tracker] [s1] note-ended t=49.483 fret=0 dur=0.069
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.130    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [tracker] [s1] onset t=49.550 env=0.08092 baseline=0.05878 gate=0.00323 envFloor=0.04115 onset=1.003>=0.006
+2025-11-21 20:14:18 [tracker] [s1] harmonic-bias t=49.550 pitch=156.23Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:18 [tracker] [s1] note-start t=49.550 fret=0 midi=40 vel=0.97 env=0.08092
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.079    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:18 [tracker] [s1] onset t=49.611 env=0.09759 baseline=0.06490 gate=0.00357 envFloor=0.03892 onset=0.999>=0.006
+2025-11-21 20:14:18 [tracker] [s1] note-ended (new onset) t=49.611 fret=0 dur=0.061
+2025-11-21 20:14:18 [tracker] [s1] harmonic-bias t=49.611 pitch=156.13Hz ratio=1.89 harmonic=2 midi=51->40
+2025-11-21 20:14:18 [tracker] [s1] note-start t=49.611 fret=0 midi=40 vel=1.00 env=0.09759
+2025-11-21 20:14:18 [tracker] [s1] release-retrigger t=49.662 onset=0.810 gate=0.080 age=0.051
+2025-11-21 20:14:18 [tracker] [s1] note-ended t=49.662 fret=0 dur=0.051
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.095    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:18 [meters] Hex input RMS -> E | 0.145    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:18 [tracker] [s1] onset t=49.801 env=0.14941 baseline=0.07365 gate=0.00405 envFloor=0.05156 onset=1.128>=0.006
+2025-11-21 20:14:18 [tracker] [s1] harmonic-bias t=49.801 pitch=156.44Hz ratio=1.90 harmonic=2 midi=51->40
+2025-11-21 20:14:18 [tracker] [s1] note-start t=49.801 fret=0 midi=40 vel=1.00 env=0.14941
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.113    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [tracker] [s1] onset t=49.878 env=0.10049 baseline=0.11628 gate=0.00640 envFloor=0.04611 onset=1.193>=0.006
+2025-11-21 20:14:19 [tracker] [s1] note-ended (new onset) t=49.878 fret=0 dur=0.077
+2025-11-21 20:14:19 [tracker] [s1] harmonic-bias t=49.878 pitch=156.01Hz ratio=1.89 harmonic=2 midi=51->40
+2025-11-21 20:14:19 [tracker] [s1] note-start t=49.878 fret=0 midi=40 vel=1.00 env=0.10049
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.015    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [tracker] [s1] release-quiet t=49.942 avgEnv=0.00162 floor=0.02412 quietFrames=8
+2025-11-21 20:14:19 [tracker] [s1] note-ended t=49.942 fret=0 dur=0.064
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.160    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:19 [tracker] [s1] onset t=50.195 env=0.12067 baseline=0.06964 gate=0.00383 envFloor=0.04875 onset=0.886>=0.006
+2025-11-21 20:14:19 [tracker] [s1] harmonic-bias t=50.195 pitch=165.31Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:19 [tracker] [s1] note-start t=50.195 fret=0 midi=40 vel=1.00 env=0.12067
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.111    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [tracker] [s1] release-retrigger t=50.259 onset=0.578 gate=0.097 age=0.064
+2025-11-21 20:14:19 [tracker] [s1] note-ended t=50.259 fret=0 dur=0.064
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.128    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [tracker] [s1] onset t=50.326 env=0.04916 baseline=0.08495 gate=0.00467 envFloor=0.03869 onset=1.405>=0.006
+2025-11-21 20:14:19 [tracker] [s1] note-start t=50.326 fret=0 midi=40 vel=0.59 env=0.04916
+2025-11-21 20:14:19 [tracker] [s1] release-retrigger t=50.401 onset=1.205 gate=0.120 age=0.075
+2025-11-21 20:14:19 [tracker] [s1] note-ended t=50.401 fret=0 dur=0.075
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.150    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.001
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.103    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.022    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [tracker] [s1] onset t=50.619 env=0.20684 baseline=0.10997 gate=0.00605 envFloor=0.07698 onset=1.287>=0.006
+2025-11-21 20:14:19 [tracker] [s1] harmonic-bias t=50.619 pitch=166.32Hz ratio=2.02 harmonic=2 midi=52->40
+2025-11-21 20:14:19 [tracker] [s1] note-start t=50.619 fret=0 midi=40 vel=1.00 env=0.20684
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.202    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [tracker] [s1] onset t=50.705 env=0.21383 baseline=0.15857 gate=0.00872 envFloor=0.06753 onset=0.991>=0.006
+2025-11-21 20:14:19 [tracker] [s1] note-ended (new onset) t=50.705 fret=0 dur=0.085
+2025-11-21 20:14:19 [tracker] [s1] harmonic-bias t=50.705 pitch=166.22Hz ratio=2.02 harmonic=2 midi=52->40
+2025-11-21 20:14:19 [tracker] [s1] note-start t=50.705 fret=0 midi=40 vel=1.00 env=0.21383
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.177    A | 0.003    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:19 [tracker] [s1] onset t=50.766 env=0.08153 baseline=0.17149 gate=0.00943 envFloor=0.05464 onset=0.936>=0.006
+2025-11-21 20:14:19 [tracker] [s1] note-ended (new onset) t=50.766 fret=0 dur=0.061
+2025-11-21 20:14:19 [tracker] [s1] harmonic-bias t=50.766 pitch=165.30Hz ratio=2.01 harmonic=2 midi=52->40
+2025-11-21 20:14:19 [tracker] [s1] note-start t=50.766 fret=0 midi=40 vel=0.98 env=0.08153
+2025-11-21 20:14:19 [meters] Hex input RMS -> E | 0.009    A | 0.003    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:20 [tracker] [s1] release-retrigger t=50.819 onset=0.777 gate=0.071 age=0.053
+2025-11-21 20:14:20 [tracker] [s1] note-ended t=50.819 fret=0 dur=0.053
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.001    B | 0.002    e | 0.002
+2025-11-21 20:14:20 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.001    A | 0.002    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:21 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.002    A | 0.001    D | 0.002    G | 0.001    B | 0.001    e | 0.002
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.002    A | 0.002    D | 0.002    G | 0.002    B | 0.002    e | 0.002
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001
+2025-11-21 20:14:22 [meters] Hex input RMS -> E | 0.001    A | 0.001    D | 0.001    G | 0.001    B | 0.001    e | 0.001

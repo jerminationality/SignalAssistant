@@ -1,0 +1,12 @@
+-I
+/home/general/SignalAssistant/build
+-I
+/usr/lib/aarch64-linux-gnu/qt6/qml
+--resource
+/home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc
+--resource
+/home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc
+--resource
+/home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
+--module
+GuitarPi

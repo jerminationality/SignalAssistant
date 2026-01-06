@@ -178,6 +178,7 @@ void HexJackClient::connectCalibration(TabEngineBridge* bridge) {
     QObject::connect(this, &HexJackClient::calibrationStarted, bridge, &TabEngineBridge::handleCalibrationStarted, Qt::QueuedConnection);
     QObject::connect(this, &HexJackClient::calibrationStepChanged, bridge, &TabEngineBridge::handleCalibrationStepChanged, Qt::QueuedConnection);
     QObject::connect(this, &HexJackClient::calibrationFinished, bridge, &TabEngineBridge::handleCalibrationFinished, Qt::QueuedConnection);
+    QObject::connect(this, &HexJackClient::calibrationBaselineFloorCaptured, bridge, &TabEngineBridge::handleCalibrationBaselineFloorCaptured, Qt::QueuedConnection);
 }
 
 void HexJackClient::requestCalibration(int stringIndex) {
@@ -302,16 +303,41 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
         self->m_detectionMeters[static_cast<std::size_t>(s)].store(level, std::memory_order_relaxed);
     }
 
+    // Calculate RAW meters (before calibration gain)
+    for (int s = 0; s < 6; ++s) {
+        jack_port_t* port = self->m_inputs[static_cast<std::size_t>(s)];
+        if (!port) {
+            self->m_rawMeters[static_cast<std::size_t>(s)].store(0.0f, std::memory_order_relaxed);
+            continue;
+        }
+        auto* rawBuf = static_cast<jack_default_audio_sample_t*>(jack_port_get_buffer(port, nframes));
+        float rawLevel = rawBuf ? computeLevel(rawBuf, nframes) : 0.0f;
+        const float prevRaw = self->m_rawMeters[static_cast<std::size_t>(s)].load(std::memory_order_relaxed);
+        const float mix = (s == 0) ? 0.35f : (s == 1 ? 0.45f : 1.0f);
+        if (mix < 1.0f) {
+            rawLevel = prevRaw * (1.0f - mix) + rawLevel * mix;
+        }
+        self->m_rawMeters[static_cast<std::size_t>(s)].store(rawLevel, std::memory_order_relaxed);
+    }
+
     const int pendingTarget = self->m_pendingCalibrationTarget.exchange(-2, std::memory_order_acq_rel);
     if (pendingTarget != -2)
         self->handleCalibrationRequest(pendingTarget);
 
-    float levelSnapshot[6] {};
-    for (int s = 0; s < 6; ++s)
-        levelSnapshot[s] = self->m_detectionMeters[static_cast<std::size_t>(s)].load(std::memory_order_relaxed);
-
-    if (self->m_calibrationState.active)
-        self->advanceCalibration(levelSnapshot, nframes);
+    // Compute raw levels for calibration (before gain applied)
+    float rawLevelSnapshot[6] {};
+    if (self->m_calibrationState.active) {
+        for (int s = 0; s < 6; ++s) {
+            jack_port_t* port = self->m_inputs[static_cast<std::size_t>(s)];
+            if (!port) {
+                rawLevelSnapshot[s] = 0.0f;
+                continue;
+            }
+            auto* rawBuf = static_cast<jack_default_audio_sample_t*>(jack_port_get_buffer(port, nframes));
+            rawLevelSnapshot[s] = rawBuf ? computeLevel(rawBuf, nframes) : 0.0f;
+        }
+        self->advanceCalibration(rawLevelSnapshot, nframes);
+    }
 
     const float sr = static_cast<float>(self->m_currentSampleRate.load(std::memory_order_acquire));
     
@@ -368,15 +394,25 @@ void HexJackClient::emitMeters() {
     if (m_meterLogTimer.elapsed() >= 50) {
         m_meterLogTimer.restart();
         static const std::array<const char*, 6> kStringNames {"E", "A", "D", "G", "B", "e"};
+        
+        // Get raw meters
+        std::array<float, 6> rawSnapshot {};
+        for (int s = 0; s < 6; ++s)
+            rawSnapshot[static_cast<std::size_t>(s)] = m_rawMeters[static_cast<std::size_t>(s)].load();
+        
+        // Log both raw and calibrated RMS
         QStringList parts;
         parts.reserve(6);
         for (int s = 0; s < 6; ++s) {
             const char* name = kStringNames[static_cast<std::size_t>(s)];
-            parts.push_back(QString::asprintf("%s | %.3f", name, snapshot[static_cast<std::size_t>(s)]));
+            parts.push_back(QString::asprintf("%s: raw=%.5f cal=%.5f", 
+                name, 
+                rawSnapshot[static_cast<std::size_t>(s)],
+                snapshot[static_cast<std::size_t>(s)]));
         }
-        const QString logLine = QStringLiteral("Hex input RMS -> %1").arg(parts.join(QStringLiteral("    ")));
+        const QString logLine = QStringLiteral("RMS -> %1").arg(parts.join(QStringLiteral(" | ")));
         qInfo().noquote() << logLine;
-        SessionLogger::instance().log("meters", logLine.toStdString());
+        SessionLogger::instance().log("rms-meters", logLine.toStdString());
     }
 }
 
@@ -496,11 +532,21 @@ void HexJackClient::handleCalibrationRequest(int targetString) {
     state.active = true;
     state.capturing = false;
     state.partial = (targetString >= 0 && targetString < 6);
-    state.sequenceCount = state.partial ? 1 : 6;
-    for (int i = 0; i < state.sequenceCount; ++i)
-        state.sequence[static_cast<std::size_t>(i)] = state.partial ? targetString : i;
+    
+    // For full calibration, start with noise floor capture (currentString = -1)
+    // For partial (single string), skip noise phase
+    if (state.partial) {
+        state.sequenceCount = 1;
+        state.sequence[0] = targetString;
+        state.currentString = targetString;
+    } else {
+        state.sequenceCount = 7;  // noise + 6 strings
+        state.sequence[0] = -1;  // -1 = noise floor phase
+        for (int i = 0; i < 6; ++i)
+            state.sequence[static_cast<std::size_t>(i + 1)] = i;
+        state.currentString = -1;  // Start with noise phase
+    }
     state.sequenceIndex = 0;
-    state.currentString = state.sequence[0];
     state.framesRemaining = 0;
     state.captureFramesPerString = std::max(1, static_cast<int>(currentSr * kCalibrationCaptureSecPerString));
     state.updated.fill(false);
@@ -516,13 +562,16 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
     if (!state.active)
         return;
 
-    if (state.currentString < 0 || state.currentString >= 6) {
+    // currentString == -1 means noise floor capture phase
+    const bool noisePhase = (state.currentString == -1);
+    
+    if (!noisePhase && (state.currentString < 0 || state.currentString >= 6)) {
         state.active = false;
         announceCalibrationStep(-1, false);
         return;
     }
 
-    const int idx = state.currentString;
+    const int idx = noisePhase ? 0 : state.currentString;
     if (!state.capturing) {
         const float level = std::max(0.f, levels[idx]);
         if (level >= kCalibrationTriggerLevel) {
@@ -549,6 +598,15 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
     state.capturing = false;
     state.framesRemaining = 0;
     state.updated[slot] = true;
+
+    // Emit noise floor if we just finished the noise phase
+    if (noisePhase && state.samples[slot] > 0) {
+        const float avgNoise = static_cast<float>(state.sumRms[slot] / static_cast<double>(state.samples[slot]));
+        QMetaObject::invokeMethod(this, [this, avgNoise]() {
+            emit calibrationBaselineFloorCaptured(avgNoise);
+        }, Qt::QueuedConnection);
+    }
+
     state.sequenceIndex += 1;
 
     if (state.sequenceIndex >= state.sequenceCount) {

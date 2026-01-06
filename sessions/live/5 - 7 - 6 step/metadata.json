@@ -1,0 +1,23 @@
+{
+    "durationSec": 32.181333333333335,
+    "folder": "5 - 7 - 6 step",
+    "label": "5 - 7 - 6 step",
+    "sampleRate": 48000,
+    "stringMidi": [
+        40,
+        45,
+        50,
+        55,
+        59,
+        64
+    ],
+    "stringNames": [
+        "E2",
+        "A",
+        "D",
+        "G",
+        "B",
+        "E4"
+    ],
+    "timestamp": "20251206-063048"
+}

@@ -1,0 +1,23 @@
+{
+    "durationSec": 123.64533333333334,
+    "folder": "Scales _ Riff",
+    "label": "Scales / Riff",
+    "sampleRate": 48000,
+    "stringMidi": [
+        40,
+        45,
+        50,
+        55,
+        59,
+        64
+    ],
+    "stringNames": [
+        "E2",
+        "A",
+        "D",
+        "G",
+        "B",
+        "E4"
+    ],
+    "timestamp": "20251128-062225"
+}

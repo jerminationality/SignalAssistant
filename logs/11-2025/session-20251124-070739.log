@@ -1,0 +1,21 @@
+# SignalAssistant session log
+# Started at 2025-11-24 07:07:39
+2025-11-24 07:07:39 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-11-24 07:07:39 [tracker-settings] string1 midi=40 lowCut=37.08Hz highCut=445.00Hz baseline=0.000180 gateRatio=0.05500 envFloor=0.000450 sustainScale=0.580 retriggerScale=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.300
+2025-11-24 07:07:39 [tracker-settings] string2 midi=45 lowCut=55.00Hz highCut=563.20Hz baseline=0.000220 gateRatio=0.10000 envFloor=0.000550 sustainScale=0.700 retriggerScale=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.450
+2025-11-24 07:07:39 [tracker] [s2] calibration reset
+2025-11-24 07:07:39 [tracker] [s4] calibration reset
+2025-11-24 07:07:39 [tracker] [s5] calibration reset
+2025-11-24 07:07:39 [tracker] [s6] calibration reset
+2025-11-24 07:07:39 [tracker] [s1] calibration avg=0.00681 peak=0.01023
+2025-11-24 07:07:39 [tracker] [s2] calibration avg=0.00985 peak=0.02604
+2025-11-24 07:07:39 [tracker] [s3] calibration avg=0.01634 peak=0.09024
+2025-11-24 07:07:39 [tracker] [s4] calibration avg=0.00197 peak=0.01001
+2025-11-24 07:07:39 [tracker] [s5] calibration avg=0.01157 peak=0.09657
+2025-11-24 07:07:39 [tracker] [s6] calibration avg=0.00432 peak=0.20712
+2025-11-24 07:07:39 [tracker] [s1] configure sr=48000.0 hop=128 fft=1024 low=37.1 high=445.0
+2025-11-24 07:07:39 [tracker] [s2] configure sr=48000.0 hop=128 fft=1024 low=55.0 high=563.2
+2025-11-24 07:07:39 [tracker] [s3] configure sr=48000.0 hop=128 fft=1024 low=85.2 high=693.0
+2025-11-24 07:07:39 [tracker] [s4] configure sr=48000.0 hop=128 fft=1024 low=127.4 high=862.4
+2025-11-24 07:07:39 [tracker] [s5] configure sr=48000.0 hop=128 fft=512 low=160.5 high=1086.5
+2025-11-24 07:07:39 [tracker] [s6] configure sr=48000.0 hop=128 fft=512 low=214.3 high=1450.4

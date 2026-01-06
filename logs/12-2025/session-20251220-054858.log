@@ -1,0 +1,30 @@
+# SignalAssistant session log
+# Started at 2025-12-20 05:48:58
+2025-12-20 05:48:58 [session] mode=live session='' path='' duration=0.00 files=0
+2025-12-20 05:48:58 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-20 05:48:58 [tracker-settings] string1 midi=40 lowCut=6386.53Hz highCut=52740.41Hz baseline=0.000180 gateRatio=0.05500 envFloor=0.000450 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.400 onsetScale=0.007
+2025-12-20 05:48:58 [tracker-settings] string2 midi=45 lowCut=11275.00Hz highCut=94600.00Hz baseline=0.000220 gateRatio=0.10000 envFloor=0.000550 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.012
+2025-12-20 05:48:58 [tracker-settings] string3 midi=50 lowCut=20189.45Hz highCut=170325.56Hz baseline=0.000260 gateRatio=0.13000 envFloor=0.000650 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.019
+2025-12-20 05:48:58 [tracker-settings] string4 midi=55 lowCut=36749.57Hz highCut=301836.47Hz baseline=0.000320 gateRatio=0.17000 envFloor=0.000780 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.440 onsetScale=0.025
+2025-12-20 05:48:58 [tracker-settings] string5 midi=59 lowCut=58648.64Hz highCut=479066.81Hz baseline=0.000370 gateRatio=0.21000 envFloor=0.000900 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=0.029
+2025-12-20 05:48:58 [tracker-settings] string6 midi=64 lowCut=104656.75Hz highCut=857031.69Hz baseline=0.000420 gateRatio=0.25000 envFloor=0.001050 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=0.032
+2025-12-20 05:48:58 [tracker] [s1] calibration reset target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s2] calibration reset target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s3] calibration reset target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s4] calibration reset target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s5] calibration reset target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s6] calibration reset target=0.00180 gain=1.000
+2025-12-20 05:48:58 [calibration] Loading calibration profile multipliers into parameters
+2025-12-20 05:48:58 [calibration] String 1: setting multiplier to 6.340
+2025-12-20 05:48:58 [calibration] String 2: setting multiplier to 8.000
+2025-12-20 05:48:58 [calibration] String 3: setting multiplier to 8.000
+2025-12-20 05:48:58 [calibration] String 4: setting multiplier to 8.000
+2025-12-20 05:48:58 [calibration] String 5: setting multiplier to 8.000
+2025-12-20 05:48:58 [calibration] String 6: setting multiplier to 8.000
+2025-12-20 05:48:58 [tracker] [s1] calibration avg=0.03937 target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s2] calibration avg=0.01560 target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s3] calibration avg=0.00661 target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s4] calibration avg=0.00473 target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s5] calibration avg=0.00699 target=0.00180 gain=1.000
+2025-12-20 05:48:58 [tracker] [s6] calibration avg=0.02247 target=0.00180 gain=1.000
+# Session closed at 2025-12-20 05:49:10

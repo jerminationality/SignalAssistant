@@ -1,0 +1,21 @@
+# SignalAssistant session log
+# Started at 2025-11-24 04:58:59
+2025-11-24 04:58:59 [session] mode=live session='' path='' duration=0.00
+2025-11-24 04:59:00 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-11-24 04:59:00 [tracker-settings] string1 midi=40 lowCut=37.08Hz highCut=445.00Hz baseline=0.000180 gateRatio=0.05500 envFloor=0.000450 sustainScale=0.580 retriggerScale=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.300
+2025-11-24 04:59:00 [tracker-settings] string2 midi=45 lowCut=55.00Hz highCut=563.20Hz baseline=0.000220 gateRatio=0.10000 envFloor=0.000550 sustainScale=0.700 retriggerScale=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.450
+2025-11-24 04:59:00 [tracker-settings] string3 midi=50 lowCut=85.16Hz highCut=693.05Hz baseline=0.000260 gateRatio=0.13000 envFloor=0.000650 sustainScale=0.820 retriggerScale=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.580
+2025-11-24 04:59:00 [tracker-settings] string4 midi=55 lowCut=127.40Hz highCut=862.39Hz baseline=0.000320 gateRatio=0.17000 envFloor=0.000780 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.700
+2025-11-24 04:59:00 [tracker-settings] string5 midi=59 lowCut=160.51Hz highCut=1086.54Hz baseline=0.000370 gateRatio=0.21000 envFloor=0.000900 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.800
+2025-11-24 04:59:00 [tracker-settings] string6 midi=64 lowCut=214.26Hz highCut=1450.36Hz baseline=0.000420 gateRatio=0.25000 envFloor=0.001050 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.900
+2025-11-24 04:59:00 [tracker] [s1] calibration reset
+2025-11-24 04:59:00 [tracker] [s2] calibration reset
+2025-11-24 04:59:00 [tracker] [s4] calibration reset
+2025-11-24 04:59:00 [tracker] [s5] calibration reset
+2025-11-24 04:59:00 [tracker] [s6] calibration reset
+2025-11-24 04:59:00 [tracker] [s1] calibration avg=0.00681 peak=0.01023
+2025-11-24 04:59:00 [tracker] [s2] calibration avg=0.00985 peak=0.02604
+2025-11-24 04:59:00 [tracker] [s3] calibration avg=0.01634 peak=0.09024
+2025-11-24 04:59:00 [tracker] [s4] calibration avg=0.00197 peak=0.01001
+2025-11-24 04:59:00 [tracker] [s5] calibration avg=0.01157 peak=0.09657
+2025-11-24 04:59:00 [tracker] [s6] calibration avg=0.00432 peak=0.20712

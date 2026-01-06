@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="/qt/qml/GuitarPi">/home/general/SignalAssistant/build/GuitarPi</file>
+
+  </qresource>
+</RCC>

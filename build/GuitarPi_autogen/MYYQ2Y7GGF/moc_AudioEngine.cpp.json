@@ -1,0 +1,18 @@
+{
+    "classes": [
+        {
+            "className": "AudioEngine",
+            "lineNumber": 4,
+            "object": true,
+            "qualifiedClassName": "AudioEngine",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "AudioEngine.h",
+    "outputRevision": 68
+}

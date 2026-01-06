@@ -1,0 +1,47 @@
+# SignalAssistant session log
+# Started at 2025-12-29 14:22:34
+2025-12-29 14:22:34 [session] mode=live session='' path='' duration=0.00 files=0
+2025-12-29 14:22:34 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-29 14:22:34 [tracker-settings] string1 midi=40 lowCut=77.50Hz highCut=135.00Hz baseline=0.001000 gateRatio=0.05500 envFloor=0.001500 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.250 onsetScale=0.360
+2025-12-29 14:22:34 [tracker-settings] string2 midi=45 lowCut=102.50Hz highCut=215.00Hz baseline=0.001200 gateRatio=0.10000 envFloor=0.001800 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.610
+2025-12-29 14:22:34 [tracker-settings] string3 midi=50 lowCut=137.50Hz highCut=290.00Hz baseline=0.001400 gateRatio=0.13000 envFloor=0.002100 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.930
+2025-12-29 14:22:34 [tracker-settings] string4 midi=55 lowCut=187.50Hz highCut=385.00Hz baseline=0.001600 gateRatio=0.17000 envFloor=0.002400 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.440 onsetScale=1.260
+2025-12-29 14:22:34 [tracker-settings] string5 midi=59 lowCut=237.50Hz highCut=485.00Hz baseline=0.001800 gateRatio=0.21000 envFloor=0.002700 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=1.440
+2025-12-29 14:22:34 [tracker-settings] string6 midi=64 lowCut=317.50Hz highCut=650.00Hz baseline=0.002000 gateRatio=0.25000 envFloor=0.003000 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=1.620
+2025-12-29 14:22:34 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2025-12-29 14:22:34 [calibration] Calibration profile derived from tuning state
+2025-12-29 14:22:35 [filter-config] String 1: lowCutMult=75.00 highCutMult=135.00 -> lowCut=75.00 highCut=135.00
+2025-12-29 14:22:35 [filter] Low E AGGRESSIVE LPF: 150Hz, LP[0.000095,0.000190,0.000095,-1.972234,0.972614]
+2025-12-29 14:22:35 [raw-input] LOW E RAW INPUT: n=128 zc=73 zcFreq=13687.5Hz samples=[0.00037,-0.00419,0.01563,-0.01228,0.00347]
+2025-12-29 14:22:35 [aubio-input] LOW E aubio buffer: hop=128 peak=0.01801 rms=0.00819 zc=73 zcFreq=13687.5Hz filtered=0 samples=[0.00037,-0.00419,0.01563,-0.01228,0.00347]
+2025-12-29 14:22:35 [raw-input] LOW E RAW INPUT: n=128 zc=59 zcFreq=11062.5Hz samples=[0.00877,-0.01035,0.00256,-0.00596,-0.00618]
+2025-12-29 14:22:35 [aubio-input] LOW E aubio buffer: hop=128 peak=0.01893 rms=0.00882 zc=59 zcFreq=11062.5Hz filtered=0 samples=[0.00877,-0.01035,0.00256,-0.00596,-0.00618]
+2025-12-29 14:22:35 [raw-input] LOW E RAW INPUT: n=128 zc=71 zcFreq=13312.5Hz samples=[0.00440,-0.00401,-0.00750,-0.00720,0.00857]
+2025-12-29 14:22:35 [aubio-input] LOW E aubio buffer: hop=128 peak=0.01710 rms=0.00812 zc=71 zcFreq=13312.5Hz filtered=0 samples=[0.00440,-0.00401,-0.00750,-0.00720,0.00857]
+2025-12-29 14:22:35 [aubio-input] LOW E aubio buffer: hop=128 peak=0.02151 rms=0.00776 zc=76 zcFreq=14250.0Hz filtered=0 samples=[-0.00479,-0.00131,0.01318,-0.00632,0.00687]
+2025-12-29 14:22:35 [aubio-input] LOW E aubio buffer: hop=128 peak=0.02051 rms=0.00816 zc=62 zcFreq=11625.0Hz filtered=0 samples=[0.01962,-0.00961,0.00568,0.00530,-0.00119]
+2025-12-29 14:22:43 [detection]      S3 Rejected Note (env=0.0007 < floor=0.0014)
+2025-12-29 14:23:19 [detection]      S3 Rejected Note (env=0.0004 < floor=0.0014)
+2025-12-29 14:23:28 [detection]      S3 Rejected Note (env=0.0007 < floor=0.0014)
+2025-12-29 14:23:46 [detection]      S3 Rejected Note (env=0.0005 < floor=0.0014)
+2025-12-29 14:24:15 [detection]      S3 Rejected Note (env=0.0005 < floor=0.0014)
+2025-12-29 14:24:19 [detection]      S3 Rejected Note (env=0.0005 < floor=0.0014)
+2025-12-29 14:24:54 [detection]      S3 Rejected Note (env=0.0007 < floor=0.0014)
+2025-12-29 14:24:56 [detection]      S3 Rejected Note (env=0.0006 < floor=0.0014)
+2025-12-29 14:25:06 [detection]      S3 Rejected Note (env=0.0005 < floor=0.0014)
+2025-12-29 14:25:28 [detection]      S3 Rejected Note (env=0.0005 < floor=0.0014)
+2025-12-29 14:25:30 [detection]      S5 Rejected Note (env=0.0003 < gate=0.0004)
+2025-12-29 14:26:01 [detection]      S3 Rejected Note (env=0.0005 < floor=0.0014)
+2025-12-29 14:26:10 [detection]      S4 Rejected Note (env=0.0006 < floor=0.0016)
+2025-12-29 14:26:30 [detection]      S3 Rejected Note (env=0.0005 < floor=0.0014)
+2025-12-29 14:26:52 [detection]      S3 Rejected Note (env=0.0004 < floor=0.0014)
+2025-12-29 14:26:53 [detection]      S3 Rejected Note (env=0.0007 < floor=0.0014)
+2025-12-29 14:27:03 [detection]      S3 Rejected Note (env=0.0008 < floor=0.0014)
+2025-12-29 14:27:21 [detection]      S3 Rejected Note (env=0.0004 < floor=0.0014)
+2025-12-29 14:27:27 [detection]      S3 Rejected Note (env=0.0004 < floor=0.0014)
+2025-12-29 14:27:34 [detection]      S3 Rejected Note (env=0.0009 < floor=0.0014)
+2025-12-29 14:27:48 [detection]      S3 Rejected Note (env=0.0006 < floor=0.0014)
+2025-12-29 14:27:49 [detection]      S3 Rejected Note (env=0.0008 < floor=0.0014)
+2025-12-29 14:27:52 [detection]      S3 Rejected Note (env=0.0010 < floor=0.0014)
+2025-12-29 14:28:04 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/12-2025/sessionwavs/session-20251229-142234 (shutdown)
+# Session closed at 2025-12-29 14:28:04

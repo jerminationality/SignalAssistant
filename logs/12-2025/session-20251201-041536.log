@@ -1,0 +1,497 @@
+# SignalAssistant session log
+# Started at 2025-12-01 04:15:36
+2025-12-01 04:15:36 [session] mode=recorded session='live/Test2' path='/home/general/SignalAssistant/sessions/live/Test2' duration=53.29 files=6
+2025-12-01 04:15:36 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-01 04:15:36 [tracker-settings] string1 midi=40 lowCut=37.08Hz highCut=445.00Hz baseline=0.000180 gateRatio=0.05500 envFloor=0.000450 sustainScale=0.580 retriggerScale=1.400 peakRelease=0.120 pitchTol=0.400 onsetScale=0.300
+2025-12-01 04:15:36 [tracker-settings] string2 midi=45 lowCut=55.00Hz highCut=563.20Hz baseline=0.000220 gateRatio=0.10000 envFloor=0.000550 sustainScale=0.700 retriggerScale=1.250 peakRelease=0.130 pitchTol=0.400 onsetScale=0.450
+2025-12-01 04:15:36 [tracker-settings] string3 midi=50 lowCut=85.16Hz highCut=693.05Hz baseline=0.000260 gateRatio=0.13000 envFloor=0.000650 sustainScale=0.820 retriggerScale=1.100 peakRelease=0.140 pitchTol=0.450 onsetScale=0.580
+2025-12-01 04:15:36 [tracker-settings] string4 midi=55 lowCut=127.40Hz highCut=862.39Hz baseline=0.000320 gateRatio=0.17000 envFloor=0.000780 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.160 pitchTol=0.440 onsetScale=0.700
+2025-12-01 04:15:36 [tracker-settings] string5 midi=59 lowCut=160.51Hz highCut=1086.54Hz baseline=0.000370 gateRatio=0.21000 envFloor=0.000900 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.180 pitchTol=0.500 onsetScale=0.800
+2025-12-01 04:15:36 [tracker-settings] string6 midi=64 lowCut=214.26Hz highCut=1450.36Hz baseline=0.000420 gateRatio=0.25000 envFloor=0.001050 sustainScale=1.000 retriggerScale=1.000 peakRelease=0.200 pitchTol=0.550 onsetScale=0.900
+2025-12-01 04:15:36 [tracker] [s1] calibration reset
+2025-12-01 04:15:36 [tracker] [s2] calibration reset
+2025-12-01 04:15:36 [tracker] [s3] calibration reset
+2025-12-01 04:15:36 [tracker] [s4] calibration reset
+2025-12-01 04:15:36 [tracker] [s5] calibration reset
+2025-12-01 04:15:36 [tracker] [s6] calibration reset
+2025-12-01 04:15:36 [tracker] [s1] calibration avg=0.00681 peak=0.01023
+2025-12-01 04:15:36 [tracker] [s2] calibration avg=0.00985 peak=0.02604
+2025-12-01 04:15:36 [tracker] [s3] calibration avg=0.01634 peak=0.09024
+2025-12-01 04:15:36 [tracker] [s4] calibration avg=0.00197 peak=0.01001
+2025-12-01 04:15:36 [tracker] [s5] calibration avg=0.01157 peak=0.09657
+2025-12-01 04:15:36 [tracker] [s6] calibration avg=0.00432 peak=0.20712
+2025-12-01 04:15:40 [test-mode] play session='live/Test2' position=0.00 duration=53.29
+2025-12-01 04:15:40 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:40 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:40 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:40 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:40 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:40 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:41 [tracker] [s2] onset t=1.691 env=0.07589 baseline=0.02274 gate=0.00227 envFloor=0.01592 onset=1.362>=0.009
+2025-12-01 04:15:41 [tracker] [s1] onset t=1.701 env=0.09017 baseline=0.03551 gate=0.00195 envFloor=0.02485 onset=0.566>=0.006
+2025-12-01 04:15:41 [tracker] [s2] onset t=1.787 env=0.06540 baseline=0.03079 gate=0.00308 envFloor=0.02155 onset=1.253>=0.009
+2025-12-01 04:15:41 [tracker] [s2] note-start t=1.787 fret=7 midi=52 vel=0.78 env=0.06540
+2025-12-01 04:15:41 [tracker] [s3] onset t=1.787 env=0.02652 baseline=0.01607 gate=0.00209 envFloor=0.01347 onset=1.395>=0.012
+2025-12-01 04:15:41 [tracker] [s3] note-start t=1.787 fret=7 midi=57 vel=0.32 env=0.02652
+2025-12-01 04:15:42 [tracker] [s3] onset t=1.883 env=0.01437 baseline=0.02281 gate=0.00297 envFloor=0.01347 onset=1.353>=0.012
+2025-12-01 04:15:42 [tracker] [s3] note-ended (new onset) t=1.883 fret=7 dur=0.096
+2025-12-01 04:15:42 [tracker] [s3] note-start t=1.883 fret=7 midi=57 vel=0.17 env=0.01437
+2025-12-01 04:15:42 [tracker] [s1] onset t=2.011 env=0.02777 baseline=0.03525 gate=0.00194 envFloor=0.02468 onset=1.463>=0.006
+2025-12-01 04:15:42 [tracker] [s1] note-start t=2.011 fret=5 midi=45 vel=0.33 env=0.02777
+2025-12-01 04:15:42 [tracker] [s2] onset t=2.021 env=0.03147 baseline=0.05271 gate=0.00527 envFloor=0.02092 onset=0.985>=0.009
+2025-12-01 04:15:42 [tracker] [s2] note-ended (new onset) t=2.021 fret=7 dur=0.235
+2025-12-01 04:15:42 [tracker] [s2] note-start t=2.021 fret=7 midi=52 vel=0.38 env=0.03147
+2025-12-01 04:15:42 [tracker] [s3] onset t=2.021 env=0.04260 baseline=0.01827 gate=0.00237 envFloor=0.01347 onset=1.257>=0.012
+2025-12-01 04:15:42 [tracker] [s3] note-ended (new onset) t=2.021 fret=7 dur=0.139
+2025-12-01 04:15:42 [tracker] [s2] onset t=2.107 env=0.02853 baseline=0.02721 gate=0.00272 envFloor=0.01865 onset=1.159>=0.009
+2025-12-01 04:15:42 [tracker] [s2] note-ended (new onset) t=2.107 fret=7 dur=0.085
+2025-12-01 04:15:42 [tracker] [s2] note-start t=2.107 fret=7 midi=52 vel=0.34 env=0.02853
+2025-12-01 04:15:42 [tracker] [s3] onset t=2.117 env=0.03770 baseline=0.01980 gate=0.00257 envFloor=0.01386 onset=1.013>=0.012
+2025-12-01 04:15:42 [tracker] [s3] note-start t=2.117 fret=7 midi=57 vel=0.45 env=0.03770
+2025-12-01 04:15:42 [tracker] [s1] release-retrigger t=2.341 onset=1.199 gate=0.032 age=0.331
+2025-12-01 04:15:42 [tracker] [s1] note-ended t=2.341 fret=5 dur=0.331
+2025-12-01 04:15:42 [tracker] [s2] release-retrigger t=2.341 onset=0.891 gate=0.027 age=0.235
+2025-12-01 04:15:42 [tracker] [s2] note-ended t=2.341 fret=7 dur=0.235
+2025-12-01 04:15:42 [tracker] [s3] release-retrigger t=2.341 onset=0.916 gate=0.020 age=0.224
+2025-12-01 04:15:42 [tracker] [s3] note-ended t=2.341 fret=7 dur=0.224
+2025-12-01 04:15:43 [tracker] [s1] onset t=2.949 env=0.05638 baseline=0.02724 gate=0.00150 envFloor=0.01907 onset=1.197>=0.006
+2025-12-01 04:15:43 [tracker] [s2] onset t=2.960 env=0.07250 baseline=0.02684 gate=0.00268 envFloor=0.01879 onset=1.212>=0.009
+2025-12-01 04:15:43 [tracker] [s6] onset t=2.960 env=0.01014 baseline=0.00475 gate=0.00119 envFloor=0.00404 onset=0.705>=0.018
+2025-12-01 04:15:43 [tracker] [s3] onset t=2.971 env=0.10761 baseline=0.03237 gate=0.00421 envFloor=0.02266 onset=0.665>=0.012
+2025-12-01 04:15:43 [tracker] [s5] onset t=2.971 env=0.02258 baseline=0.01598 gate=0.00336 envFloor=0.01119 onset=1.334>=0.016
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.056 env=0.07599 baseline=0.03856 gate=0.00501 envFloor=0.02699 onset=0.966>=0.012
+2025-12-01 04:15:43 [tracker] [s3] note-start t=3.056 fret=7 midi=57 vel=0.91 env=0.07599
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.195 env=0.04679 baseline=0.02917 gate=0.00292 envFloor=0.02042 onset=1.053>=0.009
+2025-12-01 04:15:43 [tracker] [s2] note-start t=3.195 fret=7 midi=52 vel=0.56 env=0.04679
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.269 env=0.13445 baseline=0.04633 gate=0.00255 envFloor=0.03243 onset=1.296>=0.006
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.280 env=0.12087 baseline=0.04830 gate=0.00483 envFloor=0.03381 onset=0.986>=0.009
+2025-12-01 04:15:43 [tracker] [s2] note-ended (new onset) t=3.280 fret=7 dur=0.085
+2025-12-01 04:15:43 [tracker] [s2] note-start t=3.280 fret=7 midi=52 vel=1.00 env=0.12087
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.280 env=0.02811 baseline=0.06155 gate=0.00800 envFloor=0.02617 onset=1.387>=0.012
+2025-12-01 04:15:43 [tracker] [s3] note-ended (new onset) t=3.280 fret=7 dur=0.224
+2025-12-01 04:15:43 [tracker] [s3] note-start t=3.280 fret=7 midi=57 vel=0.34 env=0.02811
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.376 env=0.02590 baseline=0.03162 gate=0.00411 envFloor=0.02213 onset=1.103>=0.012
+2025-12-01 04:15:43 [tracker] [s3] note-ended (new onset) t=3.376 fret=7 dur=0.096
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.387 env=0.08990 baseline=0.04847 gate=0.00267 envFloor=0.03393 onset=1.150>=0.006
+2025-12-01 04:15:43 [tracker] [s1] note-start t=3.387 fret=5 midi=45 vel=1.00 env=0.08990
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.408 env=0.09510 baseline=0.10243 gate=0.01024 envFloor=0.03993 onset=1.220>=0.009
+2025-12-01 04:15:43 [tracker] [s2] note-ended (new onset) t=3.408 fret=7 dur=0.128
+2025-12-01 04:15:43 [tracker] [s2] note-start t=3.408 fret=7 midi=52 vel=1.00 env=0.09510
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] release-retrigger t=3.429 onset=4.000 gate=0.036 age=0.053
+2025-12-01 04:15:43 [tracker] [s3] note-ended t=3.429 fret=7 dur=0.053
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.440 env=0.02817 baseline=0.02868 gate=0.00373 envFloor=0.02008 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.451 env=0.07854 baseline=0.07852 gate=0.00432 envFloor=0.03277 onset=4.000>=0.006
+2025-12-01 04:15:43 [tracker] [s1] note-ended (new onset) t=3.451 fret=5 dur=0.064
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.451 env=0.02715 baseline=0.02823 gate=0.00367 envFloor=0.01976 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.461 env=0.08066 baseline=0.07812 gate=0.00430 envFloor=0.03263 onset=4.000>=0.006
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] release-retrigger t=3.461 onset=4.000 gate=0.078 age=0.053
+2025-12-01 04:15:43 [tracker] [s2] note-ended t=3.461 fret=7 dur=0.053
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.472 env=0.08467 baseline=0.08305 gate=0.00831 envFloor=0.03903 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.472 env=0.02883 baseline=0.02742 gate=0.00357 envFloor=0.01920 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.483 env=0.06644 baseline=0.07734 gate=0.00425 envFloor=0.03209 onset=4.000>=0.006
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.483 env=0.06723 baseline=0.08264 gate=0.00826 envFloor=0.03856 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.483 env=0.02715 baseline=0.02701 gate=0.00351 envFloor=0.01891 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.493 env=0.06575 baseline=0.07696 gate=0.00423 envFloor=0.03182 onset=4.000>=0.006
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.493 env=0.04460 baseline=0.08222 gate=0.00822 envFloor=0.03788 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.493 env=0.02753 baseline=0.02661 gate=0.00346 envFloor=0.01863 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.504 env=0.06152 baseline=0.07657 gate=0.00421 envFloor=0.03151 onset=4.000>=0.007
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.504 env=0.04889 baseline=0.08181 gate=0.00818 envFloor=0.03725 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.504 env=0.02793 baseline=0.02623 gate=0.00341 envFloor=0.01836 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.515 env=0.05159 baseline=0.07619 gate=0.00419 envFloor=0.03111 onset=4.000>=0.007
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.515 env=0.04232 baseline=0.08140 gate=0.00814 envFloor=0.03658 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.515 env=0.02790 baseline=0.02586 gate=0.00336 envFloor=0.01810 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.525 env=0.03382 baseline=0.07581 gate=0.00417 envFloor=0.03053 onset=4.000>=0.007
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.525 env=0.02470 baseline=0.02546 gate=0.00331 envFloor=0.01782 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.536 env=0.02396 baseline=0.02505 gate=0.00326 envFloor=0.01754 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.547 env=0.01738 baseline=0.02456 gate=0.00319 envFloor=0.01719 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.579 env=0.11833 baseline=0.07393 gate=0.00407 envFloor=0.02980 onset=4.000>=0.010
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s4] onset t=3.579 env=0.00534 baseline=0.00547 gate=0.00093 envFloor=0.00383 onset=4.000>=0.014
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s6] onset t=3.579 env=0.01253 baseline=0.00475 gate=0.00119 envFloor=0.00404 onset=4.000>=0.018
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.589 env=0.07426 baseline=0.07356 gate=0.00405 envFloor=0.02968 onset=4.000>=0.010
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.739 env=0.03458 baseline=0.06858 gate=0.00377 envFloor=0.02040 onset=4.000>=0.015
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.749 env=0.26255 baseline=0.06823 gate=0.00375 envFloor=0.03112 onset=4.000>=0.015
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.749 env=0.08041 baseline=0.07290 gate=0.00729 envFloor=0.02164 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.760 env=0.17659 baseline=0.07254 gate=0.00725 envFloor=0.02766 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:43 [tracker] [s3] onset t=3.760 env=0.04788 baseline=0.01946 gate=0.00253 envFloor=0.01347 onset=4.000>=0.012
+2025-12-01 04:15:43 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:43 [tracker] [s4] onset t=3.760 env=0.00396 baseline=0.00351 gate=0.00060 envFloor=0.00246 onset=4.000>=0.014
+2025-12-01 04:15:43 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:43 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:43 [tracker] [s6] onset t=3.760 env=0.01506 baseline=0.00475 gate=0.00119 envFloor=0.00404 onset=4.000>=0.018
+2025-12-01 04:15:43 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:43 [tracker] [s1] onset t=3.771 env=0.09961 baseline=0.06755 gate=0.00372 envFloor=0.03244 onset=4.000>=0.015
+2025-12-01 04:15:43 [tracker] [s2] onset t=3.771 env=0.08404 baseline=0.07218 gate=0.00722 envFloor=0.02793 onset=4.000>=0.009
+2025-12-01 04:15:43 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:44 [tracker] [s3] onset t=3.771 env=0.04513 baseline=0.01937 gate=0.00252 envFloor=0.01347 onset=4.000>=0.012
+2025-12-01 04:15:44 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:44 [tracker] [s4] onset t=3.771 env=0.00256 baseline=0.00344 gate=0.00059 envFloor=0.00241 onset=4.000>=0.014
+2025-12-01 04:15:44 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:44 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:44 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:44 [tracker] [s1] onset t=3.781 env=0.10236 baseline=0.06722 gate=0.00370 envFloor=0.03295 onset=4.000>=0.015
+2025-12-01 04:15:44 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:44 [tracker] [s2] onset t=3.781 env=0.08201 baseline=0.07181 gate=0.00718 envFloor=0.02804 onset=4.000>=0.009
+2025-12-01 04:15:44 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:44 [tracker] [s1] onset t=3.803 env=0.10555 baseline=0.06654 gate=0.00366 envFloor=0.03396 onset=4.000>=0.015
+2025-12-01 04:15:44 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:44 [tracker] [s2] onset t=3.803 env=0.06853 baseline=0.07110 gate=0.00711 envFloor=0.02778 onset=4.000>=0.009
+2025-12-01 04:15:44 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:44 [tracker] [s3] onset t=3.803 env=0.04140 baseline=0.01908 gate=0.00248 envFloor=0.01347 onset=4.000>=0.012
+2025-12-01 04:15:44 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:44 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:44 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:44 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:44 [tracker] [s1] onset t=3.813 env=0.10425 baseline=0.06621 gate=0.00364 envFloor=0.03434 onset=4.000>=0.015
+2025-12-01 04:15:44 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:44 [tracker] [s2] onset t=3.813 env=0.07525 baseline=0.07074 gate=0.00707 envFloor=0.02773 onset=4.000>=0.009
+2025-12-01 04:15:44 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:44 [tracker] [s2] onset t=3.835 env=0.07496 baseline=0.07004 gate=0.00700 envFloor=0.02745 onset=4.000>=0.009
+2025-12-01 04:15:44 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:44 [tracker] [s3] onset t=3.835 env=0.03735 baseline=0.01895 gate=0.00246 envFloor=0.01347 onset=4.000>=0.012
+2025-12-01 04:15:44 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:44 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:44 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:44 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:44 [tracker] [s1] onset t=3.845 env=0.09767 baseline=0.06522 gate=0.00359 envFloor=0.03535 onset=4.000>=0.016
+2025-12-01 04:15:44 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:44 [tracker] [s2] onset t=3.845 env=0.05731 baseline=0.06969 gate=0.00697 envFloor=0.02723 onset=4.000>=0.009
+2025-12-01 04:15:44 [tracker] [s1] configure sr=48000.0 hop=512 fft=4096 low=37.1 high=445.0
+2025-12-01 04:15:44 [tracker] [s1] onset t=3.931 env=0.09172 baseline=0.06266 gate=0.00345 envFloor=0.03615 onset=4.000>=0.016
+2025-12-01 04:15:44 [tracker] [s2] configure sr=48000.0 hop=512 fft=4096 low=55.0 high=563.2
+2025-12-01 04:15:44 [tracker] [s2] onset t=3.931 env=0.06998 baseline=0.06695 gate=0.00669 envFloor=0.02641 onset=4.000>=0.009
+2025-12-01 04:15:44 [tracker] [s3] configure sr=48000.0 hop=512 fft=4096 low=85.2 high=693.0
+2025-12-01 04:15:44 [tracker] [s3] onset t=3.931 env=0.03068 baseline=0.01863 gate=0.00242 envFloor=0.01347 onset=4.000>=0.012
+2025-12-01 04:15:44 [tracker] [s4] configure sr=48000.0 hop=512 fft=4096 low=127.4 high=862.4
+2025-12-01 04:15:44 [tracker] [s5] configure sr=48000.0 hop=512 fft=2048 low=160.5 high=1086.5
+2025-12-01 04:15:44 [tracker] [s6] configure sr=48000.0 hop=512 fft=2048 low=214.3 high=1450.4
+2025-12-01 04:15:44 [tracker] [s2] onset t=4.048 env=0.05002 baseline=0.06336 gate=0.00634 envFloor=0.02513 onset=1.011>=0.009
+2025-12-01 04:15:44 [tracker] [s2] note-start t=4.048 fret=5 midi=50 vel=0.60 env=0.05002
+2025-12-01 04:15:44 [tracker] [s3] onset t=4.048 env=0.03067 baseline=0.01764 gate=0.00229 envFloor=0.01347 onset=1.195>=0.012
+2025-12-01 04:15:44 [tracker] [s3] note-start t=4.048 fret=5 midi=55 vel=0.37 env=0.03067
+2025-12-01 04:15:44 [tracker] [s1] onset t=4.069 env=0.08073 baseline=0.05871 gate=0.00323 envFloor=0.03377 onset=0.893>=0.016
+2025-12-01 04:15:44 [tracker] [s1] note-start t=4.069 fret=3 midi=43 vel=0.97 env=0.08073
+2025-12-01 04:15:44 [tracker] [s1] onset t=4.240 env=0.08598 baseline=0.06706 gate=0.00369 envFloor=0.03595 onset=1.203>=0.016
+2025-12-01 04:15:44 [tracker] [s1] note-ended (new onset) t=4.240 fret=3 dur=0.171
+2025-12-01 04:15:44 [tracker] [s1] note-start t=4.240 fret=3 midi=43 vel=1.00 env=0.08598
+2025-12-01 04:15:44 [tracker] [s2] onset t=4.251 env=0.05631 baseline=0.04093 gate=0.00409 envFloor=0.02434 onset=0.697>=0.009
+2025-12-01 04:15:44 [tracker] [s2] note-ended (new onset) t=4.251 fret=5 dur=0.203
+2025-12-01 04:15:44 [tracker] [s2] note-start t=4.251 fret=5 midi=50 vel=0.68 env=0.05631
+2025-12-01 04:15:44 [tracker] [s3] onset t=4.251 env=0.04634 baseline=0.02510 gate=0.00326 envFloor=0.01419 onset=1.382>=0.012
+2025-12-01 04:15:44 [tracker] [s3] note-ended (new onset) t=4.251 fret=5 dur=0.203
+2025-12-01 04:15:44 [tracker] [s3] note-start t=4.251 fret=5 midi=55 vel=0.56 env=0.04634
+2025-12-01 04:15:44 [tracker] [s1] onset t=4.347 env=0.06701 baseline=0.07360 gate=0.00405 envFloor=0.03228 onset=1.315>=0.016
+2025-12-01 04:15:44 [tracker] [s1] note-ended (new onset) t=4.347 fret=3 dur=0.107
+2025-12-01 04:15:44 [tracker] [s3] onset t=4.347 env=0.04344 baseline=0.03987 gate=0.00518 envFloor=0.01517 onset=0.549>=0.012
+2025-12-01 04:15:44 [tracker] [s3] note-ended (new onset) t=4.347 fret=5 dur=0.096
+2025-12-01 04:15:44 [tracker] [s2] onset t=4.368 env=0.05362 baseline=0.04796 gate=0.00480 envFloor=0.02264 onset=0.648>=0.009
+2025-12-01 04:15:44 [tracker] [s2] note-ended (new onset) t=4.368 fret=5 dur=0.117
+2025-12-01 04:15:44 [tracker] [s3] onset t=4.411 env=0.03927 baseline=0.03869 gate=0.00503 envFloor=0.01492 onset=1.022>=0.012
+2025-12-01 04:15:44 [tracker] [s3] note-start t=4.411 fret=5 midi=55 vel=0.47 env=0.03927
+2025-12-01 04:15:44 [tracker] [s2] onset t=4.475 env=0.05104 baseline=0.04562 gate=0.00456 envFloor=0.02133 onset=0.878>=0.009
+2025-12-01 04:15:44 [tracker] [s2] note-start t=4.475 fret=7 midi=52 vel=0.61 env=0.05104
+2025-12-01 04:15:44 [tracker] [s1] onset t=4.560 env=0.04515 baseline=0.06658 gate=0.00366 envFloor=0.02498 onset=0.614>=0.016
+2025-12-01 04:15:44 [tracker] [s1] note-start t=4.560 fret=5 midi=45 vel=0.54 env=0.04515
+2025-12-01 04:15:44 [tracker] [s2] onset t=4.560 env=0.08715 baseline=0.04413 gate=0.00441 envFloor=0.02677 onset=1.194>=0.009
+2025-12-01 04:15:44 [tracker] [s2] note-ended (new onset) t=4.560 fret=7 dur=0.085
+2025-12-01 04:15:44 [tracker] [s3] onset t=4.560 env=0.05513 baseline=0.03295 gate=0.00428 envFloor=0.02052 onset=1.460>=0.012
+2025-12-01 04:15:44 [tracker] [s3] note-ended (new onset) t=4.560 fret=5 dur=0.149
+2025-12-01 04:15:44 [tracker] [s3] note-start t=4.560 fret=7 midi=57 vel=0.66 env=0.05513
+2025-12-01 04:15:44 [tracker] [s5] onset t=4.571 env=0.04302 baseline=0.01238 gate=0.00260 envFloor=0.01053 onset=1.298>=0.016
+2025-12-01 04:15:44 [tracker] [s3] onset t=4.667 env=0.04348 baseline=0.04719 gate=0.00614 envFloor=0.01951 onset=1.255>=0.012
+2025-12-01 04:15:44 [tracker] [s3] note-ended (new onset) t=4.667 fret=7 dur=0.107
+2025-12-01 04:15:44 [tracker] [s3] note-start t=4.667 fret=7 midi=57 vel=0.52 env=0.04348
+2025-12-01 04:15:45 [tracker] [s2] onset t=4.816 env=0.03877 baseline=0.03913 gate=0.00391 envFloor=0.02475 onset=0.752>=0.009
+2025-12-01 04:15:45 [tracker] [s2] note-start t=4.816 fret=7 midi=52 vel=0.47 env=0.03877
+2025-12-01 04:15:45 [tracker] [s3] release-retrigger t=4.859 onset=0.937 gate=0.028 age=0.192
+2025-12-01 04:15:45 [tracker] [s3] note-ended t=4.859 fret=7 dur=0.192
+2025-12-01 04:15:45 [tracker] [s1] release-retrigger t=4.869 onset=1.320 gate=0.038 age=0.309
+2025-12-01 04:15:45 [tracker] [s1] note-ended t=4.869 fret=5 dur=0.309
+2025-12-01 04:15:45 [tracker] [s2] release-retrigger t=4.901 onset=0.670 gate=0.041 age=0.085
+2025-12-01 04:15:45 [tracker] [s2] note-ended t=4.901 fret=7 dur=0.085
+2025-12-01 04:15:45 [tracker] [s1] onset t=5.669 env=0.01676 baseline=0.02413 gate=0.00133 envFloor=0.00806 onset=0.637>=0.016
+2025-12-01 04:15:46 [tracker] [s1] onset t=5.787 env=0.14439 baseline=0.04540 gate=0.00250 envFloor=0.03178 onset=1.386>=0.016
+2025-12-01 04:15:46 [tracker] [s2] onset t=5.797 env=0.10563 baseline=0.03534 gate=0.00353 envFloor=0.02474 onset=1.177>=0.009
+2025-12-01 04:15:46 [tracker] [s3] onset t=5.797 env=0.04163 baseline=0.02300 gate=0.00299 envFloor=0.01347 onset=1.368>=0.012
+2025-12-01 04:15:46 [tracker] [s1] onset t=5.851 env=0.13849 baseline=0.06211 gate=0.00342 envFloor=0.04348 onset=1.167>=0.016
+2025-12-01 04:15:46 [tracker] [s1] note-start t=5.851 fret=8 midi=48 vel=1.00 env=0.13849
+2025-12-01 04:15:46 [tracker] [s3] onset t=5.893 env=0.02953 baseline=0.02199 gate=0.00286 envFloor=0.01347 onset=1.044>=0.012
+2025-12-01 04:15:46 [tracker] [s3] note-start t=5.893 fret=10 midi=60 vel=0.35 env=0.02953
+2025-12-01 04:15:46 [tracker] [s1] onset t=5.936 env=0.12363 baseline=0.11974 gate=0.00659 envFloor=0.04365 onset=1.153>=0.016
+2025-12-01 04:15:46 [tracker] [s1] note-ended (new onset) t=5.936 fret=8 dur=0.085
+2025-12-01 04:15:46 [tracker] [s1] note-start t=5.936 fret=8 midi=48 vel=1.00 env=0.12363
+2025-12-01 04:15:46 [tracker] [s1] onset t=6.032 env=0.06802 baseline=0.10636 gate=0.00585 envFloor=0.04101 onset=0.606>=0.016
+2025-12-01 04:15:46 [tracker] [s1] note-ended (new onset) t=6.032 fret=8 dur=0.096
+2025-12-01 04:15:46 [tracker] [s1] note-start t=6.032 fret=8 midi=48 vel=0.82 env=0.06802
+2025-12-01 04:15:46 [tracker] [s3] onset t=6.075 env=0.01573 baseline=0.02441 gate=0.00317 envFloor=0.01347 onset=1.317>=0.012
+2025-12-01 04:15:46 [tracker] [s3] note-ended (new onset) t=6.075 fret=10 dur=0.181
+2025-12-01 04:15:46 [tracker] [s3] note-start t=6.075 fret=10 midi=60 vel=0.19 env=0.01573
+2025-12-01 04:15:46 [tracker] [s6] onset t=6.181 env=0.01540 baseline=0.00475 gate=0.00119 envFloor=0.00404 onset=1.115>=0.018
+2025-12-01 04:15:46 [tracker] [s2] onset t=6.203 env=0.06022 baseline=0.02898 gate=0.00290 envFloor=0.02028 onset=1.187>=0.009
+2025-12-01 04:15:46 [tracker] [s3] onset t=6.235 env=0.02391 baseline=0.02035 gate=0.00265 envFloor=0.01425 onset=1.374>=0.012
+2025-12-01 04:15:46 [tracker] [s3] note-ended (new onset) t=6.235 fret=10 dur=0.160
+2025-12-01 04:15:46 [tracker] [s3] onset t=6.320 env=0.02239 baseline=0.01844 gate=0.00240 envFloor=0.01347 onset=1.240>=0.012
+2025-12-01 04:15:46 [tracker] [s3] note-start t=6.320 fret=10 midi=60 vel=0.27 env=0.02239
+2025-12-01 04:15:46 [tracker] [s1] onset t=6.331 env=0.04570 baseline=0.05320 gate=0.00293 envFloor=0.02342 onset=1.206>=0.016
+2025-12-01 04:15:46 [tracker] [s1] note-ended (new onset) t=6.331 fret=8 dur=0.299
+2025-12-01 04:15:46 [tracker] [s1] note-start t=6.331 fret=8 midi=48 vel=0.55 env=0.04570
+2025-12-01 04:15:46 [tracker] [s2] onset t=6.331 env=0.01908 baseline=0.02530 gate=0.00253 envFloor=0.01771 onset=1.215>=0.009
+2025-12-01 04:15:46 [tracker] [s2] note-start t=6.331 fret=10 midi=55 vel=0.23 env=0.01908
+2025-12-01 04:15:46 [tracker] [s2] onset t=6.555 env=0.01325 baseline=0.01728 gate=0.00173 envFloor=0.01210 onset=0.607>=0.009
+2025-12-01 04:15:46 [tracker] [s2] note-ended (new onset) t=6.555 fret=10 dur=0.224
+2025-12-01 04:15:46 [tracker] [s2] note-start t=6.555 fret=10 midi=55 vel=0.16 env=0.01325
+2025-12-01 04:15:46 [tracker] [s1] onset t=6.565 env=0.02974 baseline=0.03684 gate=0.00203 envFloor=0.01816 onset=0.673>=0.016
+2025-12-01 04:15:46 [tracker] [s1] note-ended (new onset) t=6.565 fret=8 dur=0.235
+2025-12-01 04:15:46 [tracker] [s1] note-start t=6.565 fret=8 midi=48 vel=0.36 env=0.02974
+2025-12-01 04:15:46 [tracker] [s3] release-retrigger t=6.565 onset=1.443 gate=0.016 age=0.245
+2025-12-01 04:15:46 [tracker] [s3] note-ended t=6.565 fret=10 dur=0.245
+2025-12-01 04:15:46 [tracker] [s2] release-retrigger t=6.672 onset=0.831 gate=0.019 age=0.117
+2025-12-01 04:15:46 [tracker] [s2] note-ended t=6.672 fret=10 dur=0.117
+2025-12-01 04:15:47 [tracker] [s1] onset t=6.725 env=0.01915 baseline=0.02482 gate=0.00137 envFloor=0.01562 onset=0.537>=0.016
+2025-12-01 04:15:47 [tracker] [s1] note-ended (new onset) t=6.725 fret=8 dur=0.160
+2025-12-01 04:15:47 [tracker] [s4] onset t=6.747 env=0.02189 baseline=0.01757 gate=0.00299 envFloor=0.01230 onset=0.889>=0.014
+2025-12-01 04:15:47 [tracker] [s5] onset t=6.747 env=0.08197 baseline=0.02865 gate=0.00602 envFloor=0.02006 onset=1.237>=0.016
+2025-12-01 04:15:47 [tracker] [s1] onset t=6.811 env=0.01500 baseline=0.02385 gate=0.00131 envFloor=0.01339 onset=1.003>=0.016
+2025-12-01 04:15:47 [tracker] [s1] note-start t=6.811 fret=6 midi=46 vel=0.18 env=0.01500
+2025-12-01 04:15:47 [tracker] [s5] onset t=6.821 env=0.05533 baseline=0.03121 gate=0.00655 envFloor=0.02184 onset=1.054>=0.016
+2025-12-01 04:15:47 [tracker] [s5] note-start t=6.821 fret=5 midi=64 vel=0.66 env=0.05533
+2025-12-01 04:15:47 [tracker] [s5] release-quiet t=6.949 avgEnv=0.00407 floor=0.02334 quietFrames=8
+2025-12-01 04:15:47 [tracker] [s5] note-ended t=6.949 fret=5 dur=0.128
+2025-12-01 04:15:47 [tracker] [s1] onset t=7.024 env=0.06155 baseline=0.02948 gate=0.00162 envFloor=0.02064 onset=1.017>=0.016
+2025-12-01 04:15:47 [tracker] [s1] note-ended (new onset) t=7.024 fret=6 dur=0.213
+2025-12-01 04:15:47 [tracker] [s2] onset t=7.024 env=0.04100 baseline=0.01645 gate=0.00165 envFloor=0.01152 onset=0.657>=0.009
+2025-12-01 04:15:47 [tracker] [s1] onset t=7.184 env=0.03987 baseline=0.02864 gate=0.00158 envFloor=0.02005 onset=0.518>=0.016
+2025-12-01 04:15:47 [tracker] [s1] note-start t=7.184 fret=5 midi=45 vel=0.48 env=0.03987
+2025-12-01 04:15:47 [tracker] [s1] release-retrigger t=7.419 onset=1.447 gate=0.028 age=0.235
+2025-12-01 04:15:47 [tracker] [s1] note-ended t=7.419 fret=5 dur=0.235
+2025-12-01 04:15:47 [tracker] [s6] onset t=7.440 env=0.06264 baseline=0.01317 gate=0.00329 envFloor=0.00922 onset=1.163>=0.018
+2025-12-01 04:15:47 [tracker] [s3] onset t=7.461 env=0.14905 baseline=0.04208 gate=0.00547 envFloor=0.02945 onset=1.331>=0.012
+2025-12-01 04:15:47 [tracker] [s4] onset t=7.472 env=0.01679 baseline=0.01262 gate=0.00215 envFloor=0.00884 onset=1.096>=0.014
+2025-12-01 04:15:47 [tracker] [s6] onset t=7.504 env=0.04470 baseline=0.02312 gate=0.00578 envFloor=0.01619 onset=0.982>=0.018
+2025-12-01 04:15:47 [tracker] [s6] note-start t=7.504 fret=5 midi=69 vel=0.54 env=0.04470
+2025-12-01 04:15:47 [tracker] [s3] onset t=7.557 env=0.13484 baseline=0.06287 gate=0.00817 envFloor=0.04401 onset=0.898>=0.012
+2025-12-01 04:15:47 [tracker] [s3] note-start t=7.557 fret=7 midi=57 vel=1.00 env=0.13484
+2025-12-01 04:15:47 [tracker] [s3] onset t=7.621 env=0.10111 baseline=0.11776 gate=0.01531 envFloor=0.04296 onset=1.006>=0.012
+2025-12-01 04:15:47 [tracker] [s3] note-ended (new onset) t=7.621 fret=7 dur=0.064
+2025-12-01 04:15:47 [tracker] [s3] note-start t=7.621 fret=7 midi=57 vel=1.00 env=0.10111
+2025-12-01 04:15:47 [tracker] [s6] release-quiet t=7.632 avgEnv=0.00048 floor=0.04142 quietFrames=8
+2025-12-01 04:15:47 [tracker] [s6] note-ended t=7.632 fret=5 dur=0.128
+2025-12-01 04:15:47 [tracker] [s3] release-retrigger t=7.675 onset=0.915 gate=0.072 age=0.053
+2025-12-01 04:15:47 [tracker] [s3] note-ended t=7.675 fret=7 dur=0.053
+2025-12-01 04:15:47 [tracker] [s4] onset t=7.696 env=0.00669 baseline=0.00847 gate=0.00144 envFloor=0.00593 onset=0.934>=0.014
+2025-12-01 04:15:48 [tracker] [s4] onset t=7.771 env=0.00657 baseline=0.00746 gate=0.00127 envFloor=0.00522 onset=0.649>=0.014
+2025-12-01 04:15:48 [tracker] [s4] note-start t=7.771 fret=9 midi=64 vel=0.08 env=0.00657
+2025-12-01 04:15:48 [tracker] [s4] onset t=7.845 env=0.00579 baseline=0.00654 gate=0.00111 envFloor=0.00458 onset=0.966>=0.014
+2025-12-01 04:15:48 [tracker] [s4] note-ended (new onset) t=7.845 fret=9 dur=0.075
+2025-12-01 04:15:48 [tracker] [s2] onset t=7.920 env=0.04171 baseline=0.00926 gate=0.00093 envFloor=0.00787 onset=0.793>=0.009
+2025-12-01 04:15:48 [tracker] [s2] note-start t=7.920 fret=13 midi=58 vel=0.50 env=0.04171
+2025-12-01 04:15:48 [tracker] [s1] onset t=7.952 env=0.05820 baseline=0.02501 gate=0.00138 envFloor=0.01748 onset=1.308>=0.016
+2025-12-01 04:15:48 [tracker] [s1] onset t=8.059 env=0.03043 baseline=0.02379 gate=0.00131 envFloor=0.01599 onset=1.137>=0.016
+2025-12-01 04:15:48 [tracker] [s1] note-start t=8.059 fret=5 midi=45 vel=0.37 env=0.03043
+2025-12-01 04:15:48 [tracker] [s2] release-retrigger t=8.059 onset=1.181 gate=0.021 age=0.139
+2025-12-01 04:15:48 [tracker] [s2] note-ended t=8.059 fret=13 dur=0.139
+2025-12-01 04:15:48 [tracker] [s1] onset t=8.240 env=0.09929 baseline=0.04171 gate=0.00229 envFloor=0.02920 onset=1.435>=0.016
+2025-12-01 04:15:48 [tracker] [s1] note-ended (new onset) t=8.240 fret=5 dur=0.181
+2025-12-01 04:15:48 [tracker] [s2] onset t=8.251 env=0.09107 baseline=0.03214 gate=0.00321 envFloor=0.02135 onset=1.286>=0.009
+2025-12-01 04:15:48 [tracker] [s3] onset t=8.261 env=0.06066 baseline=0.06736 gate=0.00876 envFloor=0.01855 onset=0.643>=0.012
+2025-12-01 04:15:48 [tracker] [s3] onset t=8.347 env=0.04456 baseline=0.06471 gate=0.00841 envFloor=0.01851 onset=1.047>=0.012
+2025-12-01 04:15:48 [tracker] [s3] note-start t=8.347 fret=7 midi=57 vel=0.53 env=0.04456
+2025-12-01 04:15:48 [tracker] [s1] onset t=8.400 env=0.06677 baseline=0.04422 gate=0.00243 envFloor=0.03095 onset=0.668>=0.016
+2025-12-01 04:15:48 [tracker] [s1] note-start t=8.400 fret=5 midi=45 vel=0.80 env=0.06677
+2025-12-01 04:15:48 [tracker] [s2] onset t=8.411 env=0.06823 baseline=0.03839 gate=0.00384 envFloor=0.02688 onset=0.632>=0.009
+2025-12-01 04:15:48 [tracker] [s2] note-start t=8.411 fret=7 midi=52 vel=0.82 env=0.06823
+2025-12-01 04:15:48 [tracker] [s2] onset t=8.475 env=0.04687 baseline=0.05958 gate=0.00596 envFloor=0.02593 onset=0.737>=0.009
+2025-12-01 04:15:48 [tracker] [s2] note-ended (new onset) t=8.475 fret=7 dur=0.064
+2025-12-01 04:15:48 [tracker] [s2] note-start t=8.475 fret=7 midi=52 vel=0.56 env=0.04687
+2025-12-01 04:15:48 [tracker] [s3] release-retrigger t=8.507 onset=0.954 gate=0.027 age=0.160
+2025-12-01 04:15:48 [tracker] [s3] note-ended t=8.507 fret=7 dur=0.160
+2025-12-01 04:15:48 [tracker] [s4] onset t=8.517 env=0.00551 baseline=0.00416 gate=0.00071 envFloor=0.00171 onset=0.701>=0.014
+2025-12-01 04:15:48 [tracker] [s6] onset t=8.549 env=0.01615 baseline=0.02462 gate=0.00615 envFloor=0.00404 onset=1.320>=0.018
+2025-12-01 04:15:48 [tracker] [s2] release-retrigger t=8.581 onset=0.955 gate=0.056 age=0.107
+2025-12-01 04:15:48 [tracker] [s2] note-ended t=8.581 fret=7 dur=0.107
+2025-12-01 04:15:49 [tracker] [s6] onset t=8.688 env=0.09600 baseline=0.02643 gate=0.00661 envFloor=0.01850 onset=1.136>=0.018
+2025-12-01 04:15:49 [tracker] [s1] onset t=8.699 env=0.07175 baseline=0.05223 gate=0.00287 envFloor=0.02552 onset=1.493>=0.016
+2025-12-01 04:15:49 [tracker] [s1] note-ended (new onset) t=8.699 fret=5 dur=0.299
+2025-12-01 04:15:49 [tracker] [s5] onset t=8.699 env=0.07000 baseline=0.02653 gate=0.00557 envFloor=0.01857 onset=1.265>=0.016
+2025-12-01 04:15:49 [tracker] [s3] onset t=8.731 env=0.14573 baseline=0.04589 gate=0.00597 envFloor=0.03212 onset=0.739>=0.012
+2025-12-01 04:15:49 [tracker] [s2] onset t=8.741 env=0.12217 baseline=0.04772 gate=0.00477 envFloor=0.03340 onset=0.564>=0.009
+2025-12-01 04:15:49 [tracker] [s1] onset t=8.869 env=0.07450 baseline=0.04820 gate=0.00265 envFloor=0.03060 onset=1.058>=0.016
+2025-12-01 04:15:49 [tracker] [s1] note-start t=8.869 fret=3 midi=43 vel=0.89 env=0.07450
+2025-12-01 04:15:49 [tracker] [s3] onset t=8.869 env=0.12690 baseline=0.06059 gate=0.00788 envFloor=0.04241 onset=1.409>=0.012
+2025-12-01 04:15:49 [tracker] [s3] note-start t=8.869 fret=5 midi=55 vel=1.00 env=0.12690
+2025-12-01 04:15:49 [tracker] [s2] onset t=9.008 env=0.08303 baseline=0.04803 gate=0.00480 envFloor=0.03362 onset=0.930>=0.009
+2025-12-01 04:15:49 [tracker] [s2] note-start t=9.008 fret=5 midi=50 vel=1.00 env=0.08303
+2025-12-01 04:15:49 [tracker] [s1] onset t=9.072 env=0.06472 baseline=0.06096 gate=0.00335 envFloor=0.02799 onset=1.041>=0.016
+2025-12-01 04:15:49 [tracker] [s1] note-ended (new onset) t=9.072 fret=3 dur=0.203
+2025-12-01 04:15:49 [tracker] [s1] note-start t=9.072 fret=3 midi=43 vel=0.78 env=0.06472
+2025-12-01 04:15:49 [tracker] [s2] onset t=9.093 env=0.04894 baseline=0.07179 gate=0.00718 envFloor=0.03159 onset=1.298>=0.009
+2025-12-01 04:15:49 [tracker] [s2] note-ended (new onset) t=9.093 fret=5 dur=0.085
+2025-12-01 04:15:49 [tracker] [s2] note-start t=9.093 fret=5 midi=50 vel=0.59 env=0.04894
+2025-12-01 04:15:49 [tracker] [s3] onset t=9.093 env=0.09520 baseline=0.10280 gate=0.01336 envFloor=0.03924 onset=0.729>=0.012
+2025-12-01 04:15:49 [tracker] [s3] note-ended (new onset) t=9.093 fret=5 dur=0.224
+2025-12-01 04:15:49 [tracker] [s3] note-start t=9.093 fret=5 midi=55 vel=1.00 env=0.09520
+2025-12-01 04:15:49 [tracker] [s6] onset t=9.168 env=0.00813 baseline=0.01841 gate=0.00460 envFloor=0.00805 onset=1.473>=0.018
+2025-12-01 04:15:49 [tracker] [s3] release-retrigger t=9.189 onset=1.360 gate=0.063 age=0.096
+2025-12-01 04:15:49 [tracker] [s3] note-ended t=9.189 fret=5 dur=0.096
+2025-12-01 04:15:49 [tracker] [s2] release-retrigger t=9.200 onset=0.559 gate=0.053 age=0.107
+2025-12-01 04:15:49 [tracker] [s2] note-ended t=9.200 fret=5 dur=0.107
+2025-12-01 04:15:49 [tracker] [s6] onset t=9.285 env=0.01644 baseline=0.02139 gate=0.00535 envFloor=0.01497 onset=1.278>=0.018
+2025-12-01 04:15:49 [tracker] [s5] onset t=9.296 env=0.02446 baseline=0.02640 gate=0.00554 envFloor=0.01848 onset=1.100>=0.016
+2025-12-01 04:15:49 [tracker] [s1] release-quiet t=9.371 avgEnv=0.00368 floor=0.01184 quietFrames=8
+2025-12-01 04:15:49 [tracker] [s1] note-ended t=9.371 fret=3 dur=0.299
+2025-12-01 04:15:49 [tracker] [s1] onset t=9.488 env=0.09554 baseline=0.04790 gate=0.00263 envFloor=0.02820 onset=1.008>=0.016
+2025-12-01 04:15:49 [tracker] [s2] onset t=9.488 env=0.03031 baseline=0.03659 gate=0.00366 envFloor=0.01656 onset=1.412>=0.009
+2025-12-01 04:15:49 [tracker] [s3] onset t=9.499 env=0.04300 baseline=0.07082 gate=0.00921 envFloor=0.01759 onset=1.404>=0.012
+2025-12-01 04:15:49 [tracker] [s1] onset t=9.595 env=0.07329 baseline=0.04556 gate=0.00251 envFloor=0.02855 onset=1.070>=0.016
+2025-12-01 04:15:49 [tracker] [s1] note-start t=9.595 fret=0 midi=40 vel=0.88 env=0.07329

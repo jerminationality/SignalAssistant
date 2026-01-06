@@ -1,0 +1,3 @@
+ 
+
+rename CoreComponent.qml to just Component.qml and CoreAccordian.qml to Accordian.qml and update all references accordingly

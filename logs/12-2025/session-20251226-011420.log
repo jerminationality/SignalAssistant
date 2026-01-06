@@ -1,0 +1,25 @@
+# SignalAssistant session log
+# Started at 2025-12-26 01:14:20
+2025-12-26 01:14:20 [session] mode=recorded session='20251226-010649 S1 F0 F1' path='/home/general/SignalAssistant/sessions/live/20251226-010649 S1 F0 F1' duration=10.60 files=6
+2025-12-26 01:14:20 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-26 01:14:20 [tracker-settings] string1 midi=40 lowCut=77.50Hz highCut=160.00Hz baseline=0.001000 gateRatio=0.05500 envFloor=0.001500 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.400 onsetScale=0.360
+2025-12-26 01:14:20 [tracker-settings] string2 midi=45 lowCut=102.50Hz highCut=215.00Hz baseline=0.001200 gateRatio=0.10000 envFloor=0.001800 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.610
+2025-12-26 01:14:20 [tracker-settings] string3 midi=50 lowCut=137.50Hz highCut=290.00Hz baseline=0.001400 gateRatio=0.13000 envFloor=0.002100 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.930
+2025-12-26 01:14:20 [tracker-settings] string5 midi=59 lowCut=237.50Hz highCut=485.00Hz baseline=0.001800 gateRatio=0.21000 envFloor=0.002700 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=1.440
+2025-12-26 01:14:20 [tracker-settings] string6 midi=64 lowCut=317.50Hz highCut=650.00Hz baseline=0.002000 gateRatio=0.25000 envFloor=0.003000 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=1.620
+2025-12-26 01:14:20 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2025-12-26 01:14:20 [calibration] Calibration profile derived from tuning state
+2025-12-26 01:14:24 [test-mode] play session='20251226-010649 S1 F0 F1' position=0.00 duration=10.60
+2025-12-26 01:14:25 [detection]      S1F6 ON (onset=0.998 env=0.0719)
+2025-12-26 01:14:27 [detection]      S1F6 OFF (sharp-drop: 0.0077 -> 0.0010)
+2025-12-26 01:14:28 [detection]      S2F4 ON (onset=0.590 env=0.0054)
+2025-12-26 01:14:29 [detection]      S2F4 OFF (sustained-quiet: avgEnv=0.0006 < floor=0.0018)
+2025-12-26 01:14:30 [detection]      S1F2 ON (onset=0.746 env=0.3617)
+2025-12-26 01:14:30 [detection]      S2F0 ON (onset=1.174 env=0.0086)
+2025-12-26 01:14:30 [detection]      S1F2 OFF (retrigger: onset=1.045 ratio=2.71)
+2025-12-26 01:14:30 [detection]      S1F2 ON (onset=1.316 env=0.2265)
+2025-12-26 01:14:32 [detection]      S2F0 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0018)
+2025-12-26 01:14:32 [detection]      S1F2 OFF (sharp-drop: 0.0129 -> 0.0010)
+2025-12-26 01:14:32 [test-mode] stop session='20251226-010649 S1 F0 F1' position=0.00 duration=10.60
+2025-12-26 01:14:33 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/sessionwavs/session-20251226-011420 (shutdown)
+# Session closed at 2025-12-26 01:14:33

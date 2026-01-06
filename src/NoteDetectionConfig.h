@@ -10,7 +10,6 @@ struct NoteDetectionParameterSet {
     std::array<float, 6> gateRatio {};
     std::array<float, 6> sustainFloorScale {};
     std::array<float, 6> retriggerGateScale {};
-    std::array<float, 6> peakReleaseRatio {};
     std::array<float, 6> pitchTolerance {};
     std::array<float, 6> targetRms {};
     std::array<float, 6> calibrationGainMultiplier {};
@@ -30,7 +29,6 @@ enum class NoteParameter {
     GateRatio,
     SustainFloorScale,
     RetriggerGateScale,
-    PeakReleaseRatio,
     PitchTolerance,
     TargetRms,
     CalibrationGainMultiplier,
@@ -52,6 +50,9 @@ struct ParameterDescriptor {
     float maxValue;
     float step;
     bool useDecibels;
+    bool perStringMinMax = false;
+    std::array<float, 6> perStringMin {};
+    std::array<float, 6> perStringMax {};
 };
 
 const std::array<ParameterDescriptor, 15>& parameterDescriptors();

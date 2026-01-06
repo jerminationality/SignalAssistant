@@ -117,6 +117,26 @@ std::array<float, 6> TabEngine::tuningDeviationCents() const {
   return deviations;
 }
 
+std::array<float, 6> TabEngine::calibrationGains() const {
+  std::array<float, 6> gains{};
+  for (int s = 0; s < 6; ++s) {
+    const auto* tracker = _trkPtrs[static_cast<std::size_t>(s)];
+    if (tracker)
+      gains[static_cast<std::size_t>(s)] = tracker->calibrationGain();
+    else
+      gains[static_cast<std::size_t>(s)] = 1.f;
+  }
+  return gains;
+}
+
+void TabEngine::setCalibrationGain(int stringIndex, float gain) {
+  if (stringIndex < 0 || stringIndex >= 6)
+    return;
+  auto* tracker = _trkPtrs[static_cast<std::size_t>(stringIndex)];
+  if (tracker)
+    tracker->setCalibrationGain(gain);
+}
+
 std::string TabEngine::toJson(bool onlyFinished) const {
   std::ostringstream oss;
   oss << "[";
@@ -137,4 +157,14 @@ std::string TabEngine::toJson(bool onlyFinished) const {
   }
   oss << "]";
   return oss.str();
+}
+
+std::array<StringThresholds, 6> TabEngine::getThresholds() const {
+  std::array<StringThresholds, 6> result;
+  for (std::size_t i = 0; i < _trkPtrs.size(); ++i) {
+    if (_trkPtrs[i]) {
+      result[i] = _trkPtrs[i]->getThresholds();
+    }
+  }
+  return result;
 }

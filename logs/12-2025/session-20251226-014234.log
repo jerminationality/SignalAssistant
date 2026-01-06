@@ -1,0 +1,85 @@
+# SignalAssistant session log
+# Started at 2025-12-26 01:42:34
+2025-12-26 01:42:34 [session] mode=recorded session='20251226-013301 012' path='/home/general/SignalAssistant/sessions/live/20251226-013301 012' duration=8.39 files=6
+2025-12-26 01:42:34 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2025-12-26 01:42:34 [tracker-settings] string1 midi=40 lowCut=77.50Hz highCut=135.00Hz baseline=0.001000 gateRatio=0.05500 envFloor=0.001500 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.400 onsetScale=0.360
+2025-12-26 01:42:34 [tracker-settings] string2 midi=45 lowCut=102.50Hz highCut=215.00Hz baseline=0.001200 gateRatio=0.10000 envFloor=0.001800 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.610
+2025-12-26 01:42:34 [tracker-settings] string3 midi=50 lowCut=137.50Hz highCut=290.00Hz baseline=0.001400 gateRatio=0.13000 envFloor=0.002100 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.930
+2025-12-26 01:42:34 [tracker-settings] string4 midi=55 lowCut=187.50Hz highCut=385.00Hz baseline=0.001600 gateRatio=0.17000 envFloor=0.002400 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.440 onsetScale=1.260
+2025-12-26 01:42:34 [tracker-settings] string5 midi=59 lowCut=237.50Hz highCut=485.00Hz baseline=0.001800 gateRatio=0.21000 envFloor=0.002700 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=1.440
+2025-12-26 01:42:34 [tracker-settings] string6 midi=64 lowCut=317.50Hz highCut=650.00Hz baseline=0.002000 gateRatio=0.25000 envFloor=0.003000 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=1.620
+2025-12-26 01:42:34 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2025-12-26 01:42:34 [calibration] Calibration profile derived from tuning state
+2025-12-26 01:42:42 [test-mode] play session='20251226-013301 012' position=0.00 duration=8.39
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch unstable (126.33Hz midi=51)
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch=114.91 midi=-1 (no pitch or midi)
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch=113.92 midi=-1 (no pitch or midi)
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch=112.86 midi=-1 (no pitch or midi)
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch unstable (115.74Hz midi=46)
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch unstable (119.76Hz midi=46)
+2025-12-26 01:42:43 [detection] LOW E REJECT: pitch unstable (117.76Hz midi=47)
+2025-12-26 01:42:44 [detection]      S1F6 ON (onset=0.946 env=0.0673)
+2025-12-26 01:42:44 [detection]      S1F6 OFF (sharp-drop: 0.0118 -> 0.0010)
+2025-12-26 01:42:45 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2025-12-26 01:42:45 [detection]      S5F3 ON (onset=1.059 env=0.0168)
+2025-12-26 01:42:45 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.2692 onset=1.212
+2025-12-26 01:42:45 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:42:45 [detection]      S1F2 ON (onset=1.212 env=0.2692)
+2025-12-26 01:42:45 [detection]      S1F2 OFF (retrigger: onset=0.593 ratio=1.43)
+2025-12-26 01:42:45 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.1390 onset=1.365
+2025-12-26 01:42:45 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:42:45 [detection]      S1F2 ON (onset=1.365 env=0.1390)
+2025-12-26 01:42:46 [detection]      S1F2 OFF (retrigger: onset=0.997 ratio=1.45)
+2025-12-26 01:42:46 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.0719 onset=1.247
+2025-12-26 01:42:46 [detection]      S1F2 ON (onset=1.247 env=0.0719)
+2025-12-26 01:42:46 [detection]      S1F2 OFF (sharp-drop: 0.0512 -> 0.0010)
+2025-12-26 01:42:46 [detection]      S5F3 OFF (sustained-quiet: avgEnv=0.0008 < floor=0.0018)
+2025-12-26 01:42:47 [detection] LOW E REJECT: pitch=93.93 midi=-1 (no pitch or midi)
+2025-12-26 01:42:47 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.1978 onset=1.137
+2025-12-26 01:42:47 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:42:47 [detection]      S1F2 ON (onset=1.137 env=0.1978)
+2025-12-26 01:42:47 [detection]      S2F0 ON (onset=0.926 env=0.0064)
+2025-12-26 01:42:47 [detection]      S1F2 OFF (retrigger: onset=1.000 ratio=1.51)
+2025-12-26 01:42:47 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.0472 onset=0.997
+2025-12-26 01:42:47 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:42:47 [detection]      S1F2 ON (onset=0.997 env=0.0472)
+2025-12-26 01:42:50 [detection]      S2F0 OFF (sustained-quiet: avgEnv=0.0017 < floor=0.0018)
+2025-12-26 01:42:51 [detection]      S1F2 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0010)
+2025-12-26 01:43:20 [test-mode] play session='20251226-013301 012' position=0.00 duration=8.39
+2025-12-26 01:43:20 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2025-12-26 01:43:20 [detection] LOW E REJECT: pitch unstable (126.33Hz midi=51)
+2025-12-26 01:43:21 [detection] LOW E REJECT: pitch=114.91 midi=-1 (no pitch or midi)
+2025-12-26 01:43:21 [detection] LOW E REJECT: pitch=113.92 midi=-1 (no pitch or midi)
+2025-12-26 01:43:21 [detection] LOW E REJECT: pitch=112.86 midi=-1 (no pitch or midi)
+2025-12-26 01:43:21 [detection] LOW E REJECT: pitch unstable (115.74Hz midi=46)
+2025-12-26 01:43:21 [detection] LOW E REJECT: pitch unstable (119.76Hz midi=46)
+2025-12-26 01:43:21 [detection] LOW E REJECT: pitch unstable (117.76Hz midi=47)
+2025-12-26 01:43:21 [detection]      S1F6 ON (onset=0.946 env=0.0673)
+2025-12-26 01:43:22 [detection]      S1F6 OFF (sharp-drop: 0.0118 -> 0.0010)
+2025-12-26 01:43:22 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2025-12-26 01:43:22 [detection]      S5F3 ON (onset=1.059 env=0.0168)
+2025-12-26 01:43:22 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.2692 onset=1.212
+2025-12-26 01:43:22 [detection]      S1F2 ON (onset=1.212 env=0.2692)
+2025-12-26 01:43:23 [detection]      S1F2 OFF (retrigger: onset=0.593 ratio=1.43)
+2025-12-26 01:43:23 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.1390 onset=1.365
+2025-12-26 01:43:23 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:43:23 [detection]      S1F2 ON (onset=1.365 env=0.1390)
+2025-12-26 01:43:23 [detection]      S1F2 OFF (retrigger: onset=0.997 ratio=1.45)
+2025-12-26 01:43:24 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.0719 onset=1.247
+2025-12-26 01:43:24 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:43:24 [detection]      S1F2 OFF (sharp-drop: 0.0512 -> 0.0010)
+2025-12-26 01:43:24 [detection]      S5F3 OFF (sustained-quiet: avgEnv=0.0008 < floor=0.0018)
+2025-12-26 01:43:24 [detection] LOW E REJECT: pitch=93.93 midi=-1 (no pitch or midi)
+2025-12-26 01:43:24 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.1978 onset=1.137
+2025-12-26 01:43:24 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:43:24 [detection]      S1F2 ON (onset=1.137 env=0.1978)
+2025-12-26 01:43:25 [detection]      S2F0 ON (onset=0.926 env=0.0064)
+2025-12-26 01:43:25 [detection]      S1F2 OFF (retrigger: onset=1.000 ratio=1.51)
+2025-12-26 01:43:25 [detection] LOW E ONSET: fret=2 pitch=93.93Hz midi=42 stable=1 env=0.0472 onset=0.997
+2025-12-26 01:43:25 [detection] LOW E ACCEPTED: detectedHz=93.93 expectedHz=92.50 midi=42(should be 42) fret=2
+2025-12-26 01:43:25 [detection]      S1F2 ON (onset=0.997 env=0.0472)
+2025-12-26 01:43:27 [detection]      S2F0 OFF (sustained-quiet: avgEnv=0.0017 < floor=0.0018)
+2025-12-26 01:43:28 [detection]      S1F2 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0010)
+2025-12-26 01:44:19 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/sessionwavs/session-20251226-014234 (shutdown)
+# Session closed at 2025-12-26 01:44:19

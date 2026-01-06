@@ -1,0 +1,293 @@
+# SignalAssistant session log
+# Started at 2026-01-02 02:46:15
+2026-01-02 02:46:15 [session] mode=live session='' path='' duration=0.00 files=0
+2026-01-02 02:46:15 [tracker-settings] TrackerConfig onsetThreshold=0.02000 minNoteDurSec=0.045 hopSec=0.010 slideDelta=120.0 bendDelta=35.0
+2026-01-02 02:46:15 [tracker-settings] string1 midi=40 lowCut=77.50Hz highCut=135.00Hz baseline=0.001000 gateRatio=0.05500 envFloor=0.001500 sustainScale=0.580 retriggerScale=1.400 pitchTol=0.250 onsetScale=0.360
+2026-01-02 02:46:15 [tracker-settings] string2 midi=45 lowCut=102.50Hz highCut=215.00Hz baseline=0.001200 gateRatio=0.10000 envFloor=0.001800 sustainScale=0.700 retriggerScale=1.250 pitchTol=0.400 onsetScale=0.610
+2026-01-02 02:46:15 [tracker-settings] string3 midi=50 lowCut=137.50Hz highCut=290.00Hz baseline=0.001400 gateRatio=0.13000 envFloor=0.002100 sustainScale=0.820 retriggerScale=1.100 pitchTol=0.450 onsetScale=0.930
+2026-01-02 02:46:15 [tracker-settings] string4 midi=55 lowCut=187.50Hz highCut=385.00Hz baseline=0.001600 gateRatio=0.17000 envFloor=0.002400 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.440 onsetScale=1.260
+2026-01-02 02:46:15 [tracker-settings] string5 midi=59 lowCut=237.50Hz highCut=485.00Hz baseline=0.001800 gateRatio=0.21000 envFloor=0.002700 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.500 onsetScale=1.440
+2026-01-02 02:46:15 [tracker-settings] string6 midi=64 lowCut=317.50Hz highCut=650.00Hz baseline=0.002000 gateRatio=0.25000 envFloor=0.003000 sustainScale=1.000 retriggerScale=1.000 pitchTol=0.550 onsetScale=1.620
+2026-01-02 02:46:15 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2026-01-02 02:46:15 [calibration] Calibration profile derived from tuning state
+2026-01-02 02:46:15 [filter-config] String 1: lowCutMult=75.00 highCutMult=135.00 -> lowCut=75.00 highCut=135.00
+2026-01-02 02:46:15 [filter] Low E AGGRESSIVE LPF: 150Hz, LP[0.000095,0.000190,0.000095,-1.972234,0.972614]
+2026-01-02 02:46:15 [raw-input] LOW E RAW INPUT: n=128 zc=94 zcFreq=17625.0Hz samples=[-0.00036,0.00045,0.01556,-0.01447,0.01366]
+2026-01-02 02:46:15 [aubio-input] LOW E aubio buffer: hop=128 peak=0.00077 rms=0.00056 zc=1 zcFreq=187.5Hz filtered=1 samples=[-0.00000,-0.00000,0.00000,0.00000,0.00001]
+2026-01-02 02:46:15 [raw-input] LOW E RAW INPUT: n=128 zc=75 zcFreq=14062.5Hz samples=[0.00635,-0.00432,0.01292,-0.01020,0.00701]
+2026-01-02 02:46:15 [aubio-input] LOW E aubio buffer: hop=128 peak=0.00291 rms=0.00175 zc=0 zcFreq=0.0Hz filtered=1 samples=[0.00070,0.00070,0.00070,0.00070,0.00070]
+2026-01-02 02:46:15 [raw-input] LOW E RAW INPUT: n=128 zc=77 zcFreq=14437.5Hz samples=[0.02087,-0.00397,0.01231,0.00230,-0.00222]
+2026-01-02 02:46:15 [aubio-input] LOW E aubio buffer: hop=128 peak=0.00438 rms=0.00389 zc=0 zcFreq=0.0Hz filtered=1 samples=[0.00293,0.00295,0.00297,0.00300,0.00302]
+2026-01-02 02:46:15 [aubio-input] LOW E aubio buffer: hop=128 peak=0.00440 rms=0.00360 zc=0 zcFreq=0.0Hz filtered=1 samples=[0.00438,0.00438,0.00438,0.00438,0.00438]
+2026-01-02 02:46:15 [aubio-input] LOW E aubio buffer: hop=128 peak=0.00250 rms=0.00126 zc=1 zcFreq=187.5Hz filtered=1 samples=[0.00160,0.00156,0.00153,0.00149,0.00146]
+2026-01-02 02:46:19 [detection]      S5F3 Rejected Note (onset=1.14 > thresh=0.10; env=0.0004 < floor=0.0018)
+2026-01-02 02:46:19 [detection]      S6F6 Rejected Note (onset=1.08 > thresh=0.10; env=0.0002 < gate=0.0005)
+2026-01-02 02:46:19 [detection]      S2F0 Rejected Note (onset=1.05 > thresh=0.10; env=0.0006 < floor=0.0012)
+2026-01-02 02:46:19 [detection]      S4F0 Rejected Note (onset=1.18 > thresh=0.10; env=0.0005 < floor=0.0016)
+2026-01-02 02:46:19 [detection]      S3F0 Rejected Note (onset=0.52 > thresh=0.10; env=0.0006 < floor=0.0014)
+2026-01-02 02:46:19 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:21 [detection]      S6F13 ON (onset=1.067 env=0.0045)
+2026-01-02 02:46:21 [detection]      S6F13 OFF (sustained-quiet: avgEnv=0.0004 < floor=0.0020)
+2026-01-02 02:46:26 [detection]      S6F0 Rejected Note (onset=1.20 > thresh=0.10; env=0.0006 < floor=0.0020)
+2026-01-02 02:46:26 [detection]      S2F-1 Rejected Note (onset=1.32 > thresh=0.10; env=0.0005 < floor=0.0012)
+2026-01-02 02:46:26 [detection]      S3F-1 Rejected Note (onset=1.34 > thresh=0.10; env=0.0003 < floor=0.0014)
+2026-01-02 02:46:26 [detection]      S4F-1 Rejected Note (onset=1.17 > thresh=0.10; env=0.0003 < floor=0.0016)
+2026-01-02 02:46:26 [detection]      S5F3 Rejected Note (onset=0.60 > thresh=0.10; env=0.0002 < gate=0.0004)
+2026-01-02 02:46:33 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:33 [detection] LOW E ONSET: fret=0 pitch=81.67Hz midi=40 stable=1 env=0.1771 onset=1.166
+2026-01-02 02:46:33 [detection] LOW E ACCEPTED: detectedHz=81.67 expectedHz=82.41 midi=40(should be 40) fret=0
+2026-01-02 02:46:33 [detection]      S1F0 ON (onset=1.166 env=0.1771)
+2026-01-02 02:46:33 [detection]      S2F8 ON (onset=1.285 env=0.0050)
+2026-01-02 02:46:34 [detection]      S2F8 OFF (sustained-quiet: avgEnv=0.0009 < floor=0.0018)
+2026-01-02 02:46:34 [detection]      S1F0 OFF (sharp-drop: 0.0365 -> 0.0008)
+2026-01-02 02:46:35 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:36 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:36 [detection] LOW E ONSET: fret=0 pitch=81.55Hz midi=40 stable=1 env=0.0245 onset=0.643
+2026-01-02 02:46:36 [detection] LOW E ACCEPTED: detectedHz=81.55 expectedHz=82.41 midi=40(should be 40) fret=0
+2026-01-02 02:46:36 [detection]      S1F0 ON (onset=0.643 env=0.0245)
+2026-01-02 02:46:36 [detection]      S2F7 ON (onset=1.000 env=0.0077)
+2026-01-02 02:46:36 [detection]      S5F0 ON (onset=1.165 env=0.0103)
+2026-01-02 02:46:37 [detection]      S2F7 OFF (sustained-quiet: avgEnv=0.0013 < floor=0.0018)
+2026-01-02 02:46:37 [detection]      S1F0 OFF (sharp-drop: 0.0045 -> 0.0006)
+2026-01-02 02:46:37 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:37 [detection] LOW E ONSET: fret=1 pitch=87.57Hz midi=41 stable=1 env=0.0241 onset=1.001
+2026-01-02 02:46:37 [detection] LOW E ACCEPTED: detectedHz=87.57 expectedHz=87.31 midi=41(should be 41) fret=1
+2026-01-02 02:46:37 [detection]      S1F1 ON (onset=1.001 env=0.0241)
+2026-01-02 02:46:37 [detection]      S3F19 ON (onset=1.201 env=0.0024)
+2026-01-02 02:46:38 [detection]      S3F19 OFF (sustained-quiet: avgEnv=0.0006 < floor=0.0014)
+2026-01-02 02:46:38 [detection]      S1F1 OFF (sharp-drop: 0.0058 -> 0.0007)
+2026-01-02 02:46:38 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:38 [detection]      S5F0 OFF (sustained-quiet: avgEnv=0.0011 < floor=0.0018)
+2026-01-02 02:46:39 [detection] LOW E ONSET: fret=2 pitch=91.62Hz midi=42 stable=1 env=0.0236 onset=0.878
+2026-01-02 02:46:39 [detection] LOW E ACCEPTED: detectedHz=91.62 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:39 [detection]      S1F2 ON (onset=0.878 env=0.0236)
+2026-01-02 02:46:39 [detection]      S1F2 OFF (sharp-drop: 0.0188 -> 0.0009)
+2026-01-02 02:46:39 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:39 [detection] LOW E ONSET: fret=2 pitch=92.52Hz midi=42 stable=1 env=0.0282 onset=0.923
+2026-01-02 02:46:39 [detection] LOW E ACCEPTED: detectedHz=92.52 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:39 [detection]      S1F2 ON (onset=0.923 env=0.0282)
+2026-01-02 02:46:40 [detection]      S1F2 OFF (sharp-drop: 0.0100 -> 0.0009)
+2026-01-02 02:46:40 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:40 [detection]      S2F4 ON (onset=1.389 env=0.1121)
+2026-01-02 02:46:40 [detection]      S6F2 ON (onset=0.967 env=0.0096)
+2026-01-02 02:46:41 [detection]      S3F4 ON (onset=0.836 env=0.0412)
+2026-01-02 02:46:41 [detection] LOW E ONSET: fret=2 pitch=91.90Hz midi=42 stable=1 env=0.0308 onset=0.991
+2026-01-02 02:46:41 [detection] LOW E ACCEPTED: detectedHz=91.90 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:41 [detection]      S1F2 ON (onset=0.991 env=0.0308)
+2026-01-02 02:46:41 [detection]      S3F4 OFF (sharp-drop: 0.0217 -> 0.0012)
+2026-01-02 02:46:41 [detection]      S2F4 OFF (sharp-drop: 0.0247 -> 0.0014)
+2026-01-02 02:46:41 [detection]      S6F2 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0020)
+2026-01-02 02:46:41 [detection]      S1F2 OFF (sharp-drop: 0.0137 -> 0.0010)
+2026-01-02 02:46:42 [detection]      S6F1 ON (onset=0.986 env=0.0549)
+2026-01-02 02:46:42 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:42 [detection]      S2F4 ON (onset=0.819 env=0.1976)
+2026-01-02 02:46:42 [detection] LOW E ONSET: fret=2 pitch=92.51Hz midi=42 stable=1 env=0.1772 onset=0.996
+2026-01-02 02:46:42 [detection] LOW E ACCEPTED: detectedHz=92.51 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:42 [detection]      S1F2 ON (onset=0.996 env=0.1772)
+2026-01-02 02:46:42 [detection]      S3F4 ON (onset=0.701 env=0.1310)
+2026-01-02 02:46:42 [detection]      S5F1 ON (onset=0.998 env=0.0136)
+2026-01-02 02:46:42 [detection]      S4F0 ON (onset=1.086 env=0.0041)
+2026-01-02 02:46:42 [detection]      S3F4 OFF (retrigger: onset=1.063 ratio=1.74)
+2026-01-02 02:46:42 [detection]      S2F4 OFF (retrigger: onset=0.593 ratio=2.33)
+2026-01-02 02:46:42 [detection]      S2F4 ON (onset=0.529 env=0.2474)
+2026-01-02 02:46:42 [detection]      S5F1 OFF (sharp-drop: 0.0086 -> 0.0013)
+2026-01-02 02:46:42 [detection]      S6F1 OFF (sharp-drop: 0.0255 -> 0.0017)
+2026-01-02 02:46:42 [detection]      S3F4 ON (onset=0.997 env=0.0750)
+2026-01-02 02:46:42 [detection]      S6F2 ON (onset=0.987 env=0.0245)
+2026-01-02 02:46:43 [detection]      S3F4 OFF (sharp-drop: 0.0411 -> 0.0011)
+2026-01-02 02:46:43 [detection]      S6F2 OFF (sharp-drop: 0.0225 -> 0.0020)
+2026-01-02 02:46:43 [detection]      S4F0 OFF (sustained-quiet: avgEnv=0.0004 < floor=0.0016)
+2026-01-02 02:46:43 [detection]      S2F4 OFF (sharp-drop: 0.0686 -> 0.0018)
+2026-01-02 02:46:43 [detection]      S1F2 OFF (sharp-drop: 0.0311 -> 0.0010)
+2026-01-02 02:46:43 [detection]      S5F1 ON (onset=0.875 env=0.0078)
+2026-01-02 02:46:43 [detection]      S6F0 ON (onset=0.717 env=0.0225)
+2026-01-02 02:46:43 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:43 [detection]      S5F1 OFF (retrigger: onset=0.515 ratio=5.64)
+2026-01-02 02:46:43 [detection]      S2F4 ON (onset=1.167 env=0.1916)
+2026-01-02 02:46:43 [detection]      S3F4 ON (onset=0.512 env=0.1305)
+2026-01-02 02:46:43 [detection]      S6F0 OFF (sharp-drop: 0.0153 -> 0.0020)
+2026-01-02 02:46:44 [detection]      S4F0 ON (onset=1.090 env=0.0043)
+2026-01-02 02:46:44 [detection]      S6F2 ON (onset=1.005 env=0.0116)
+2026-01-02 02:46:44 [detection]      S6F2 OFF (sustained-quiet: avgEnv=0.0013 < floor=0.0020)
+2026-01-02 02:46:44 [detection]      S5F0 ON (onset=1.185 env=0.0044)
+2026-01-02 02:46:44 [detection] LOW E ONSET: fret=2 pitch=90.60Hz midi=42 stable=1 env=0.0241 onset=1.393
+2026-01-02 02:46:44 [detection] LOW E ACCEPTED: detectedHz=90.60 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:44 [detection]      S1F2 ON (onset=1.393 env=0.0241)
+2026-01-02 02:46:44 [detection]      S3F4 OFF (sharp-drop: 0.0204 -> 0.0014)
+2026-01-02 02:46:44 [detection]      S4F0 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0016)
+2026-01-02 02:46:44 [detection]      S5F0 OFF (sustained-quiet: avgEnv=0.0004 < floor=0.0018)
+2026-01-02 02:46:44 [detection]      S2F4 OFF (sharp-drop: 0.0277 -> 0.0015)
+2026-01-02 02:46:44 [detection]      S1F2 OFF (sharp-drop: 0.0205 -> 0.0009)
+2026-01-02 02:46:45 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:45 [detection]      S2F4 ON (onset=1.267 env=0.1485)
+2026-01-02 02:46:45 [detection] LOW E ONSET: fret=2 pitch=93.05Hz midi=42 stable=1 env=0.0255 onset=0.930
+2026-01-02 02:46:45 [detection] LOW E ACCEPTED: detectedHz=93.05 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:45 [detection]      S1F2 ON (onset=0.930 env=0.0255)
+2026-01-02 02:46:46 [detection]      S4F11 ON (onset=0.725 env=0.0047)
+2026-01-02 02:46:46 [detection]      S3F4 ON (onset=0.659 env=0.1555)
+2026-01-02 02:46:46 [detection]      S5F2 ON (onset=0.633 env=0.0056)
+2026-01-02 02:46:46 [detection]      S4F11 OFF (sustained-quiet: avgEnv=0.0015 < floor=0.0016)
+2026-01-02 02:46:46 [detection]      S5F2 OFF (sustained-quiet: avgEnv=0.0009 < floor=0.0018)
+2026-01-02 02:46:47 [detection]      S3F4 OFF (sharp-drop: 0.0087 -> 0.0012)
+2026-01-02 02:46:47 [detection]      S2F4 OFF (sustained-quiet: avgEnv=0.0009 < floor=0.0018)
+2026-01-02 02:46:47 [detection]      S1F2 OFF (sustained-quiet: avgEnv=0.0006 < floor=0.0010)
+2026-01-02 02:46:48 [detection]      S2F10 ON (onset=0.894 env=0.0021)
+2026-01-02 02:46:48 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:48 [detection]      S3F4 ON (onset=0.767 env=0.0740)
+2026-01-02 02:46:48 [detection] LOW E ONSET: fret=2 pitch=92.90Hz midi=42 stable=1 env=0.0408 onset=1.003
+2026-01-02 02:46:48 [detection]      S1F2 ON (onset=1.003 env=0.0408)
+2026-01-02 02:46:48 [detection]      S2F10 OFF (retrigger: onset=0.625 ratio=2.53)
+2026-01-02 02:46:48 [detection]      S4F0 ON (onset=0.777 env=0.0034)
+2026-01-02 02:46:48 [detection]      S2F4 ON (onset=0.548 env=0.0937)
+2026-01-02 02:46:48 [detection]      S1F2 OFF (retrigger: onset=0.518 ratio=5.43)
+2026-01-02 02:46:48 [detection] LOW E ONSET: fret=2 pitch=92.49Hz midi=42 stable=1 env=0.2596 onset=1.315
+2026-01-02 02:46:48 [detection]      S1F2 ON (onset=1.315 env=0.2596)
+2026-01-02 02:46:49 [detection]      S4F0 OFF (sustained-quiet: avgEnv=0.0015 < floor=0.0016)
+2026-01-02 02:46:50 [detection]      S6F2 ON (onset=0.822 env=0.0074)
+2026-01-02 02:46:50 [detection]      S5F-1 Rejected Note (onset=0.52 > thresh=0.10; env=0.0008 < floor=0.0018)
+2026-01-02 02:46:50 [detection]      S6F2 OFF (sustained-quiet: avgEnv=0.0014 < floor=0.0020)
+2026-01-02 02:46:50 [detection]      S2F4 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0018)
+2026-01-02 02:46:50 [detection]      S3F4 OFF (sustained-quiet: avgEnv=0.0008 < floor=0.0014)
+2026-01-02 02:46:50 [detection]      S1F2 OFF (sharp-drop: 0.0077 -> 0.0008)
+2026-01-02 02:46:50 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:51 [detection] LOW E ONSET: fret=2 pitch=91.74Hz midi=42 stable=1 env=0.0238 onset=1.209
+2026-01-02 02:46:51 [detection] LOW E ACCEPTED: detectedHz=91.74 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:51 [detection]      S1F2 ON (onset=1.209 env=0.0238)
+2026-01-02 02:46:52 [detection]      S1F2 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0010)
+2026-01-02 02:46:53 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:54 [detection] LOW E ONSET: fret=1 pitch=89.56Hz midi=41 stable=1 env=0.0055 onset=1.086
+2026-01-02 02:46:54 [detection] LOW E ACCEPTED: detectedHz=89.56 expectedHz=87.31 midi=41(should be 41) fret=1
+2026-01-02 02:46:54 [detection]      S1F1 ON (onset=1.086 env=0.0055)
+2026-01-02 02:46:54 [detection]      S1F1 OFF (sharp-drop: 0.0043 -> 0.0006)
+2026-01-02 02:46:59 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:46:59 [detection] LOW E ONSET: fret=2 pitch=92.16Hz midi=42 stable=1 env=0.0320 onset=0.914
+2026-01-02 02:46:59 [detection] LOW E ACCEPTED: detectedHz=92.16 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:46:59 [detection]      S1F2 ON (onset=0.914 env=0.0320)
+2026-01-02 02:47:00 [detection]      S1F2 OFF (retrigger: onset=0.896 ratio=2.18)
+2026-01-02 02:47:00 [detection] LOW E ONSET: fret=2 pitch=91.45Hz midi=42 stable=1 env=0.0534 onset=1.380
+2026-01-02 02:47:00 [detection] LOW E ACCEPTED: detectedHz=91.45 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:47:00 [detection]      S1F2 ON (onset=1.380 env=0.0534)
+2026-01-02 02:47:00 [detection]      S1F2 OFF (sharp-drop: 0.0431 -> 0.0008)
+2026-01-02 02:47:01 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:01 [detection] LOW E ONSET: fret=2 pitch=91.74Hz midi=42 stable=1 env=0.1083 onset=0.593
+2026-01-02 02:47:01 [detection] LOW E ACCEPTED: detectedHz=91.74 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:47:01 [detection]      S1F2 ON (onset=0.593 env=0.1083)
+2026-01-02 02:47:01 [detection]      S1F2 OFF (sharp-drop: 0.0873 -> 0.0009)
+2026-01-02 02:47:02 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:02 [detection]      S6F2 ON (onset=1.002 env=0.0050)
+2026-01-02 02:47:02 [detection] LOW E ONSET: fret=2 pitch=92.74Hz midi=42 stable=1 env=0.4475 onset=0.964
+2026-01-02 02:47:02 [detection] LOW E ACCEPTED: detectedHz=92.74 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:47:02 [detection]      S1F2 ON (onset=0.964 env=0.4475)
+2026-01-02 02:47:02 [detection]      S1F2 OFF (retrigger: onset=0.511 ratio=1.72)
+2026-01-02 02:47:02 [detection]      S6F2 OFF (sustained-quiet: avgEnv=0.0012 < floor=0.0020)
+2026-01-02 02:47:02 [detection] LOW E ONSET: fret=2 pitch=92.87Hz midi=42 stable=1 env=0.2860 onset=0.523
+2026-01-02 02:47:02 [detection] LOW E ACCEPTED: detectedHz=92.87 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:47:02 [detection]      S1F2 ON (onset=0.523 env=0.2860)
+2026-01-02 02:47:02 [detection]      S1F2 OFF (sharp-drop: 0.2215 -> 0.0009)
+2026-01-02 02:47:03 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:03 [detection]      S2F0 ON (onset=0.808 env=0.0084)
+2026-01-02 02:47:03 [detection] LOW E ONSET: fret=2 pitch=93.38Hz midi=42 stable=1 env=0.3262 onset=0.798
+2026-01-02 02:47:03 [detection] LOW E ACCEPTED: detectedHz=93.38 expectedHz=92.50 midi=42(should be 42) fret=2
+2026-01-02 02:47:03 [detection]      S1F2 ON (onset=0.798 env=0.3262)
+2026-01-02 02:47:04 [detection]      S2F0 OFF (sustained-quiet: avgEnv=0.0014 < floor=0.0018)
+2026-01-02 02:47:04 [detection]      S1F2 OFF (sharp-drop: 0.0296 -> 0.0009)
+2026-01-02 02:47:18 [detection]      S5F0 ON (onset=1.457 env=0.0048)
+2026-01-02 02:47:20 [detection]      S5F0 OFF (sustained-quiet: avgEnv=0.0017 < floor=0.0018)
+2026-01-02 02:47:24 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:24 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:25 [detection] LOW E ONSET: fret=1 pitch=87.46Hz midi=41 stable=1 env=0.0580 onset=0.538
+2026-01-02 02:47:25 [detection] LOW E ACCEPTED: detectedHz=87.46 expectedHz=87.31 midi=41(should be 41) fret=1
+2026-01-02 02:47:25 [detection]      S1F1 ON (onset=0.538 env=0.0580)
+2026-01-02 02:47:25 [detection]      S2F0 ON (onset=0.896 env=0.0013)
+2026-01-02 02:47:25 [detection]      S2F0 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0018)
+2026-01-02 02:47:25 [detection]      S1F1 OFF (sharp-drop: 0.0241 -> 0.0008)
+2026-01-02 02:47:26 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:27 [detection]      S5F0 ON (onset=0.996 env=0.0126)
+2026-01-02 02:47:27 [detection]      S2F7 ON (onset=1.208 env=0.0040)
+2026-01-02 02:47:27 [detection] LOW E ONSET: fret=0 pitch=81.14Hz midi=40 stable=1 env=0.0775 onset=0.625
+2026-01-02 02:47:27 [detection] LOW E ACCEPTED: detectedHz=81.14 expectedHz=82.41 midi=40(should be 40) fret=0
+2026-01-02 02:47:27 [detection]      S1F0 ON (onset=0.625 env=0.0775)
+2026-01-02 02:47:27 [detection]      S2F7 OFF (sustained-quiet: avgEnv=0.0009 < floor=0.0018)
+2026-01-02 02:47:27 [detection]      S5F0 OFF (sustained-quiet: avgEnv=0.0004 < floor=0.0018)
+2026-01-02 02:47:28 [detection]      S1F0 OFF (sharp-drop: 0.0481 -> 0.0010)
+2026-01-02 02:47:29 [detection]      S5F0 ON (onset=1.033 env=0.0040)
+2026-01-02 02:47:29 [detection] LOW E ONSET: fret=0 pitch=80.88Hz midi=40 stable=1 env=0.0205 onset=1.339
+2026-01-02 02:47:29 [detection] LOW E ACCEPTED: detectedHz=80.88 expectedHz=82.41 midi=40(should be 40) fret=0
+2026-01-02 02:47:29 [detection]      S1F0 ON (onset=1.339 env=0.0205)
+2026-01-02 02:47:29 [detection]      S5F0 OFF (sustained-quiet: avgEnv=0.0013 < floor=0.0018)
+2026-01-02 02:47:31 [detection]      S1F0 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0010)
+2026-01-02 02:47:31 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:32 [detection]      S2F7 ON (onset=1.470 env=0.0031)
+2026-01-02 02:47:33 [detection]      S2F7 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0018)
+2026-01-02 02:47:34 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:34 [detection]      S2F7 ON (onset=1.434 env=0.0027)
+2026-01-02 02:47:34 [detection] LOW E ONSET: fret=0 pitch=81.10Hz midi=40 stable=1 env=0.0189 onset=0.812
+2026-01-02 02:47:34 [detection] LOW E ACCEPTED: detectedHz=81.10 expectedHz=82.41 midi=40(should be 40) fret=0
+2026-01-02 02:47:34 [detection]      S1F0 ON (onset=0.812 env=0.0189)
+2026-01-02 02:47:35 [detection]      S2F7 OFF (sustained-quiet: avgEnv=0.0007 < floor=0.0018)
+2026-01-02 02:47:35 [detection]      S1F0 OFF (sharp-drop: 0.0033 -> 0.0004)
+2026-01-02 02:47:47 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:47 [detection] LOW E ONSET: fret=0 pitch=85.71Hz midi=40 stable=0 env=0.0270 onset=0.798
+2026-01-02 02:47:47 [detection] LOW E REJECT: pitch unstable (85.71Hz midi=40)
+2026-01-02 02:47:50 [detection]      S5F0 Rejected Note (onset=1.15 > thresh=0.10; env=0.0003 < gate=0.0004)
+2026-01-02 02:47:50 [detection]      S6F0 Rejected Note (onset=1.21 > thresh=0.10; env=0.0003 < gate=0.0005)
+2026-01-02 02:47:50 [detection]      S2F-1 Rejected Note (onset=1.10 > thresh=0.10; env=0.0004 < floor=0.0012)
+2026-01-02 02:47:50 [detection]      S3F0 Rejected Note (onset=1.07 > thresh=0.10; env=0.0004 < floor=0.0014)
+2026-01-02 02:47:50 [detection]      S4F0 Rejected Note (onset=1.15 > thresh=0.10; env=0.0002 < gate=0.0003)
+2026-01-02 02:47:50 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:47:59 [detection]      S5F0 Rejected Note (onset=1.30 > thresh=0.10; env=0.0004 < gate=0.0004)
+2026-01-02 02:49:14 [detection]      S5F0 Rejected Note (onset=0.89 > thresh=0.10; env=0.0003 < gate=0.0004)
+2026-01-02 02:49:16 [detection]      S5F0 Rejected Note (onset=1.46 > thresh=0.10; env=0.0003 < gate=0.0004)
+2026-01-02 02:49:16 [detection]      S6F0 Rejected Note (onset=1.44 > thresh=0.10; env=0.0003 < gate=0.0005)
+2026-01-02 02:49:16 [detection]      S2F0 Rejected Note (onset=0.54 > thresh=0.10; env=0.0004 < floor=0.0012)
+2026-01-02 02:49:16 [detection]      S3F0 Rejected Note (onset=0.53 > thresh=0.10; env=0.0002 < floor=0.0014)
+2026-01-02 02:49:16 [detection]      S4F0 Rejected Note (onset=0.54 > thresh=0.10; env=0.0003 < floor=0.0016)
+2026-01-02 02:50:01 [detection]      S5F1 Rejected Note (onset=0.83 > thresh=0.10; env=0.0002 < gate=0.0004)
+2026-01-02 02:50:01 [detection]      S6F0 Rejected Note (onset=0.81 > thresh=0.10; env=0.0003 < gate=0.0005)
+2026-01-02 02:50:01 [detection]      S3F0 Rejected Note (onset=0.77 > thresh=0.10; env=0.0003 < floor=0.0014)
+2026-01-02 02:50:01 [detection]      S4F0 Rejected Note (onset=0.77 > thresh=0.10; env=0.0003 < floor=0.0016)
+2026-01-02 02:50:40 [detection]      S5F0 Rejected Note (onset=1.01 > thresh=0.10; env=0.0002 < gate=0.0004)
+2026-01-02 02:50:40 [detection]      S6F0 Rejected Note (onset=1.08 > thresh=0.10; env=0.0002 < gate=0.0005)
+2026-01-02 02:50:40 [detection]      S2F0 Rejected Note (onset=0.76 > thresh=0.10; env=0.0003 < floor=0.0012)
+2026-01-02 02:50:40 [detection]      S3F0 Rejected Note (onset=0.71 > thresh=0.10; env=0.0004 < floor=0.0014)
+2026-01-02 02:50:40 [detection]      S4F0 Rejected Note (onset=0.86 > thresh=0.10; env=0.0004 < floor=0.0016)
+2026-01-02 02:50:40 [detection] LOW E ONSET: fret=0 pitch=-1.00Hz midi=40 stable=0 env=0.0082 onset=0.978
+2026-01-02 02:50:40 [detection] LOW E REJECT: pitch=-1.00 midi=40 (no pitch or midi)
+2026-01-02 02:52:37 [detection]      S6F0 ON (onset=1.068 env=0.0035)
+2026-01-02 02:52:38 [detection] LOW E ONSET: fret=0 pitch=-1.00Hz midi=40 stable=0 env=0.0093 onset=1.232
+2026-01-02 02:52:38 [detection] LOW E REJECT: pitch=-1.00 midi=40 (no pitch or midi)
+2026-01-02 02:52:38 [detection]      S6F0 OFF (sustained-quiet: avgEnv=0.0005 < floor=0.0020)
+2026-01-02 02:52:42 [detection]      S3F6 Rejected Note (onset=1.00 > thresh=0.10; env=0.0005 < floor=0.0014)
+2026-01-02 02:52:44 [detection]      S5F16 Rejected Note (onset=0.88 > thresh=0.10; env=0.0018 < floor=0.0018)
+2026-01-02 02:52:44 [detection]      S5F0 ON (onset=0.659 env=0.0063)
+2026-01-02 02:52:44 [detection]      S6F12 ON (onset=0.507 env=0.0047)
+2026-01-02 02:52:44 [detection]      S6F12 OFF (sustained-quiet: avgEnv=0.0011 < floor=0.0020)
+2026-01-02 02:52:45 [detection]      S5F0 OFF (sustained-quiet: avgEnv=0.0014 < floor=0.0018)
+2026-01-02 02:52:45 [detection]      S4F7 ON (onset=1.076 env=0.0048)
+2026-01-02 02:52:45 [detection]      S3F-1 Rejected Note (onset=1.37 > thresh=0.10; env=0.0009 < floor=0.0014)
+2026-01-02 02:52:45 [detection]      S5F0 Rejected Note (onset=0.89 > thresh=0.10; env=0.0008 < floor=0.0018)
+2026-01-02 02:52:45 [detection]      S6F2 Rejected Note (onset=0.67 > thresh=0.10; env=0.0007 < floor=0.0020)
+2026-01-02 02:52:45 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:52:45 [detection]      S4F7 OFF (sustained-quiet: avgEnv=0.0003 < floor=0.0016)
+2026-01-02 02:52:45 [detection]      S3F0 Rejected Note (onset=0.91 > thresh=0.10; env=0.0003 < floor=0.0014)
+2026-01-02 02:52:51 [detection]      S3F-1 Rejected Note (onset=1.49 > thresh=0.10; env=0.0005 < floor=0.0014)
+2026-01-02 02:52:51 [detection]      S4F-1 Rejected Note (onset=1.42 > thresh=0.10; env=0.0003 < floor=0.0016)
+2026-01-02 02:52:51 [detection]      S5F2 Rejected Note (onset=0.66 > thresh=0.10; env=0.0004 < gate=0.0004)
+2026-01-02 02:52:51 [detection]      S6F1 Rejected Note (onset=0.60 > thresh=0.10; env=0.0004 < gate=0.0005)
+2026-01-02 02:52:51 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:52:51 [detection] LOW E REJECT: pitch=-1.00 midi=-1 (no pitch or midi)
+2026-01-02 02:52:51 [detection]      S6F0 Rejected Note (onset=0.98 > thresh=0.10; env=0.0003 < gate=0.0005)
+2026-01-02 02:52:51 [detection]      S2F0 Rejected Note (onset=1.23 > thresh=0.10; env=0.0002 < floor=0.0012)
+2026-01-02 02:53:02 [detection]      S4F9 ON (onset=1.062 env=0.0050)
+2026-01-02 02:53:03 [detection]      S4F9 OFF (sustained-quiet: avgEnv=0.0010 < floor=0.0016)
+2026-01-02 02:53:04 [detection]      S5F0 Rejected Note (onset=1.13 > thresh=0.10; env=0.0006 < floor=0.0018)
+2026-01-02 02:53:04 [detection]      S4F1 Rejected Note (onset=1.00 > thresh=0.10; env=0.0005 < floor=0.0016)
+2026-01-02 02:53:04 [detection]      S2F0 Rejected Note (onset=0.95 > thresh=0.10; env=0.0006 < floor=0.0012)
+2026-01-02 02:53:04 [detection]      S6F0 Rejected Note (onset=1.00 > thresh=0.10; env=0.0007 < floor=0.0020)
+2026-01-02 02:58:26 [detection]      S5F0 Rejected Note (onset=1.45 > thresh=0.10; env=0.0004 < gate=0.0004)
+2026-01-02 02:58:26 [detection]      S6F0 Rejected Note (onset=1.43 > thresh=0.10; env=0.0002 < gate=0.0005)
+2026-01-02 02:58:34 [detection]      S5F0 Rejected Note (onset=0.88 > thresh=0.10; env=0.0003 < gate=0.0004)
+2026-01-02 02:58:34 [detection]      S6F0 Rejected Note (onset=0.89 > thresh=0.10; env=0.0002 < gate=0.0005)
+2026-01-02 02:58:34 [detection]      S3F0 Rejected Note (onset=0.99 > thresh=0.10; env=0.0004 < floor=0.0014)
+2026-01-02 02:58:37 [sessionwavs] wrote 6 wav files to /home/general/SignalAssistant/logs/01-2026/sessionwavs/session-20260102-024615 (shutdown)
+# Session closed at 2026-01-02 02:58:37

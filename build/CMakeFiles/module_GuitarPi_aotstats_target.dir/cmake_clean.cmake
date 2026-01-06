@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  ".rcc/qmlcache/GuitarPi_qml/Main_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.aotstats"
+  ".rcc/qmlcache/module_GuitarPi.aotstats"
+  "CMakeFiles/module_GuitarPi_aotstats_target"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/module_GuitarPi_aotstats_target.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

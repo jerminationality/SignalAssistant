@@ -41,11 +41,9 @@ QJsonObject serializeParameterSetJson(const NoteDetectionParameterSet& set) {
     obj.insert("gateRatio", toJson(set.gateRatio));
     obj.insert("sustainFloorScale", toJson(set.sustainFloorScale));
     obj.insert("retriggerGateScale", toJson(set.retriggerGateScale));
-    obj.insert("peakReleaseRatio", toJson(set.peakReleaseRatio));
     obj.insert("pitchTolerance", toJson(set.pitchTolerance));
     obj.insert("targetRms", toJson(set.targetRms));
-    // calibrationGainMultiplier is not saved to tuning settings
-    // It is ONLY managed by the calibration profile
+    obj.insert("calibrationGainMultiplier", toJson(set.calibrationGainMultiplier));
     obj.insert("lowCutMultiplier", toJson(set.lowCutMultiplier));
     obj.insert("highCutMultiplier", toJson(set.highCutMultiplier));
     obj.insert("aubioThresholdScale", toJson(set.aubioThresholdScale));
@@ -78,12 +76,10 @@ QVariantList buildCategories() {
             NoteParameter::EnvelopeFloor,
             NoteParameter::GateRatio,
             NoteParameter::SustainFloorScale,
-            NoteParameter::RetriggerGateScale,
-            NoteParameter::PeakReleaseRatio
+            NoteParameter::RetriggerGateScale
         }},
         {"pitch", "Pitch Tracking", {
             NoteParameter::PitchTolerance,
-            NoteParameter::AubioThresholdScale,
             NoteParameter::OnsetSilenceDb,
             NoteParameter::PitchSilenceDb
         }},
@@ -108,6 +104,19 @@ QVariantList buildCategories() {
                 item["max"] = desc->maxValue;
                 item["step"] = desc->step;
                 item["useDb"] = desc->useDecibels;
+                
+                // Add per-string min/max if available
+                if (desc->perStringMinMax) {
+                    QVariantList perStringMin;
+                    QVariantList perStringMax;
+                    for (int i = 0; i < 6; ++i) {
+                        perStringMin.append(desc->perStringMin[i]);
+                        perStringMax.append(desc->perStringMax[i]);
+                    }
+                    item["perStringMin"] = perStringMin;
+                    item["perStringMax"] = perStringMax;
+                }
+                
                 params.append(item);
             }
         }
@@ -245,22 +254,9 @@ void DetectionTuningController::deleteState(const QString& name) {
 }
 
 void DetectionTuningController::loadFromDisk() {
-    // Save calibration multipliers before loading tuning settings
-    std::array<float, 6> savedMultipliers;
-    for (int s = 0; s < 6; ++s) {
-        savedMultipliers[static_cast<std::size_t>(s)] = 
-            NoteDetectionStore::instance().currentValueFromKey("calibrationGainMultiplier", s);
-    }
-    
     NoteDetectionParameterSet committed = makeDefaultNoteDetectionParameters();
     if (readParameterSet(commitPath(), committed)) {
         NoteDetectionStore::instance().applyCommittedSnapshot(committed);
-    }
-    
-    // Restore calibration multipliers - they should only come from calibration profile
-    for (int s = 0; s < 6; ++s) {
-        NoteDetectionStore::instance().setValueFromKey("calibrationGainMultiplier", s, 
-                                                       savedMultipliers[static_cast<std::size_t>(s)]);
     }
 
     std::map<std::string, NoteDetectionParameterSet> states;
@@ -273,12 +269,13 @@ void DetectionTuningController::loadFromDisk() {
                 NoteDetectionParameterSet set = makeDefaultNoteDetectionParameters();
                 const QJsonObject obj = it.value().toObject();
                 fromJson(obj.value("onsetThresholdScale"), set.onsetThresholdScale);
-                fromJson(obj.value("baselineFloor"), set.baselineFloor);
+                // baselineFloor is not loaded from tuning settings
+                // It is ONLY set by the calibration profile in TabEngineBridge::handleCalibrationBaselineFloorCaptured()
+                // Keep default values (will be overwritten by calibration profile)
                 fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
                 fromJson(obj.value("gateRatio"), set.gateRatio);
                 fromJson(obj.value("sustainFloorScale"), set.sustainFloorScale);
                 fromJson(obj.value("retriggerGateScale"), set.retriggerGateScale);
-                fromJson(obj.value("peakReleaseRatio"), set.peakReleaseRatio);
                 fromJson(obj.value("pitchTolerance"), set.pitchTolerance);
                 if (obj.contains("targetRms")) {
                     fromJson(obj.value("targetRms"), set.targetRms);
@@ -289,9 +286,6 @@ void DetectionTuningController::loadFromDisk() {
                     for (size_t i = 0; i < 6; ++i)
                         set.targetRms[i] = 0.0018f * legacyLift[i];
                 }
-                // calibrationGainMultiplier is not loaded from tuning settings
-                // It is ONLY set by the calibration profile in TabEngineBridge::loadPersistentCalibration()
-                // Keep default values (will be overwritten by calibration profile)
                 fromJson(obj.value("lowCutMultiplier"), set.lowCutMultiplier);
                 fromJson(obj.value("highCutMultiplier"), set.highCutMultiplier);
                 fromJson(obj.value("aubioThresholdScale"), set.aubioThresholdScale);
@@ -324,12 +318,11 @@ void DetectionTuningController::loadSnapshotsFromDirectory(std::map<std::string,
         const QJsonObject obj = doc.object();
         NoteDetectionParameterSet set = makeDefaultNoteDetectionParameters();
         fromJson(obj.value("onsetThresholdScale"), set.onsetThresholdScale);
-        fromJson(obj.value("baselineFloor"), set.baselineFloor);
+        // baselineFloor is not loaded - only from calibration
         fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
         fromJson(obj.value("gateRatio"), set.gateRatio);
         fromJson(obj.value("sustainFloorScale"), set.sustainFloorScale);
         fromJson(obj.value("retriggerGateScale"), set.retriggerGateScale);
-        fromJson(obj.value("peakReleaseRatio"), set.peakReleaseRatio);
         fromJson(obj.value("pitchTolerance"), set.pitchTolerance);
         if (obj.contains("targetRms")) {
             fromJson(obj.value("targetRms"), set.targetRms);
@@ -479,12 +472,11 @@ bool DetectionTuningController::readParameterSet(const QString& path, NoteDetect
     const QJsonObject obj = doc.object();
     NoteDetectionParameterSet set = outSet;
     fromJson(obj.value("onsetThresholdScale"), set.onsetThresholdScale);
-    fromJson(obj.value("baselineFloor"), set.baselineFloor);
+    // baselineFloor is not loaded - only from calibration
     fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
     fromJson(obj.value("gateRatio"), set.gateRatio);
     fromJson(obj.value("sustainFloorScale"), set.sustainFloorScale);
     fromJson(obj.value("retriggerGateScale"), set.retriggerGateScale);
-    fromJson(obj.value("peakReleaseRatio"), set.peakReleaseRatio);
     fromJson(obj.value("pitchTolerance"), set.pitchTolerance);
     if (obj.contains("targetRms")) {
         fromJson(obj.value("targetRms"), set.targetRms);
