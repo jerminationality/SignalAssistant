@@ -2,7 +2,6 @@
 #include <vector>
 #include <string>
 #include "TabEngine.h"
-#include "StringTracker.h"
 #include "util.h"
 
 // Simple functional test for the TabEngine module.

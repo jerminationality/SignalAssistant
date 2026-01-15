@@ -1,0 +1,3 @@
+- Create Thread Usage meters similar to the hex input gain meters for each thread being utilized, namely the three recently designated to audio, cqt, and ui. 
+- Have minimally formatted labels and percentage readouts underneath each bar meter (AUDIO, CQT, and UI) using some sort of console style font. 
+- Place the meters 

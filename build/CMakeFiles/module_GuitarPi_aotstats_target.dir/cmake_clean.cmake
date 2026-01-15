@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   ".rcc/qmlcache/GuitarPi_qml/Main_qml.cpp"
   ".rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.aotstats"
+  ".rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp"
+  ".rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats"
   ".rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp"
   ".rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.aotstats"
   ".rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp"

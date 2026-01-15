@@ -85,6 +85,7 @@ CMakeFiles/GuitarPi_copy_qml: .qt/GuitarPi_qml.txt
 .qt/GuitarPi_qml.txt: /home/general/SignalAssistant/qml/components/TestModeOverlay.qml
 .qt/GuitarPi_qml.txt: /home/general/SignalAssistant/qml/components/RecordingOverlay.qml
 .qt/GuitarPi_qml.txt: /home/general/SignalAssistant/qml/components/TuningPanel.qml
+.qt/GuitarPi_qml.txt: /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Copying GuitarPi qml sources into build dir"
 	/usr/bin/cmake -DFILES_INFO_PATH=/home/general/SignalAssistant/build/.qt/GuitarPi_qml.cmake -P /usr/lib/aarch64-linux-gnu/cmake/Qt6Qml/Qt6QmlCopyFiles.cmake
 

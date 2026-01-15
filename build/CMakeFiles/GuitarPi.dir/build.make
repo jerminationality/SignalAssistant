@@ -335,6 +335,20 @@ GuitarPi/GuitarPi.qmltypes: guitarpi_qmltyperegistrations.cpp
 .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.aotstats: .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.aotstats
 
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: /usr/lib/qt6/libexec/qmlcachegen
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: .qt/rcc/qmake_GuitarPi.qrc
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0.qrc
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: GuitarPi/GuitarPi.qmltypes
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: GuitarPi/qmldir
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Generating .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats"
+	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
+	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/BatchedFretboardBinOverlay.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
+
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp
+	@$(CMAKE_COMMAND) -E touch_nocreate .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats
+
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/Main.qml
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/pages/HomePage.qml
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/pages/RigPage.qml
@@ -351,8 +365,11 @@ GuitarPi/GuitarPi.qmltypes: guitarpi_qmltyperegistrations.cpp
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/components/TestModeOverlay.qml
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/components/RecordingOverlay.qml
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/components/TuningPanel.qml
+.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/Map.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/Screen.svg
+.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/Fret\ Cells.svg
+.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/BinOverlay.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Frets.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Neck.png
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Neck.svg
@@ -361,18 +378,21 @@ GuitarPi/GuitarPi.qmltypes: guitarpi_qmltyperegistrations.cpp
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Strings.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/TabCaptureLabel.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/TabGrid.svg
+.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/binInlays.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/opaqueOverlayMarker.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/overlayMarker.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/TabPage/tabPage.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/ampsClosed.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/ampsOpen.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/bgFill.png
+.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/bgFillMask.png
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/blueBgFIll.png
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/cabsClosed.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/cabsOpen.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/chevron.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/component.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/icons/coreIcon.svg
+.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/icons/heatmap-grid.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/icons/lucide-pause.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/icons/lucide-play.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/icons/lucide-repeat.svg
@@ -398,7 +418,7 @@ GuitarPi/GuitarPi.qmltypes: guitarpi_qmltyperegistrations.cpp
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /home/general/SignalAssistant/qml/assets/tabBox.svg
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: .qt/rcc/GuitarPi_raw_qml_0.qrc
 .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp: /usr/lib/qt6/libexec/rcc
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Running rcc for resource GuitarPi_raw_qml_0"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Running rcc for resource GuitarPi_raw_qml_0"
 	/usr/lib/qt6/libexec/rcc --output /home/general/SignalAssistant/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp --name GuitarPi_raw_qml_0 /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc
 
 .qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp: GuitarPi/qml/qmldir
@@ -406,22 +426,22 @@ GuitarPi/GuitarPi.qmltypes: guitarpi_qmltyperegistrations.cpp
 .qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp: GuitarPi/qml/components/qmldir
 .qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp: /usr/lib/qt6/libexec/rcc
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Running rcc for resource GuitarPi_raw_qml_0_extra_qmldirs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Running rcc for resource GuitarPi_raw_qml_0_extra_qmldirs"
 	/usr/lib/qt6/libexec/rcc --output /home/general/SignalAssistant/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp --name GuitarPi_raw_qml_0_extra_qmldirs /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 
 GuitarPi_autogen/timestamp: /usr/lib/qt6/libexec/moc
 GuitarPi_autogen/timestamp: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Automatic MOC for target GuitarPi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Automatic MOC for target GuitarPi"
 	/usr/bin/cmake -E cmake_autogen /home/general/SignalAssistant/build/CMakeFiles/GuitarPi_autogen.dir/AutogenInfo.json ""
 	/usr/bin/cmake -E touch /home/general/SignalAssistant/build/GuitarPi_autogen/timestamp
 
 meta_types/GuitarPi_json_file_list.txt: /usr/lib/qt6/libexec/cmake_automoc_parser
 meta_types/GuitarPi_json_file_list.txt: GuitarPi_autogen/timestamp
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Running AUTOMOC file extraction for target GuitarPi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Running AUTOMOC file extraction for target GuitarPi"
 	/usr/lib/qt6/libexec/cmake_automoc_parser --cmake-autogen-cache-file /home/general/SignalAssistant/build/CMakeFiles/GuitarPi_autogen.dir/ParseCache.txt --cmake-autogen-info-file /home/general/SignalAssistant/build/CMakeFiles/GuitarPi_autogen.dir/AutogenInfo.json --output-file-path /home/general/SignalAssistant/build/meta_types/GuitarPi_json_file_list.txt --timestamp-file-path /home/general/SignalAssistant/build/meta_types/GuitarPi_json_file_list.txt.timestamp --cmake-autogen-include-dir-path /home/general/SignalAssistant/build/GuitarPi_autogen/include
 
 meta_types/qt6guitarpi_metatypes.json: meta_types/qt6guitarpi_metatypes.json.gen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Generating meta_types/qt6guitarpi_metatypes.json"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Generating meta_types/qt6guitarpi_metatypes.json"
 	/usr/bin/cmake -E true
 
 CMakeFiles/GuitarPi.dir/codegen:
@@ -430,7 +450,7 @@ CMakeFiles/GuitarPi.dir/codegen:
 CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o: GuitarPi_autogen/mocs_compilation.cpp
 CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o -MF CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.o -c /home/general/SignalAssistant/build/GuitarPi_autogen/mocs_compilation.cpp
 
 CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.i: cmake_force
@@ -444,7 +464,7 @@ CMakeFiles/GuitarPi.dir/GuitarPi_autogen/mocs_compilation.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/main.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/main.cpp.o: /home/general/SignalAssistant/src/main.cpp
 CMakeFiles/GuitarPi.dir/src/main.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/GuitarPi.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/GuitarPi.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/main.cpp.o -MF CMakeFiles/GuitarPi.dir/src/main.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/main.cpp.o -c /home/general/SignalAssistant/src/main.cpp
 
 CMakeFiles/GuitarPi.dir/src/main.cpp.i: cmake_force
@@ -458,7 +478,7 @@ CMakeFiles/GuitarPi.dir/src/main.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/AppController.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/AppController.cpp.o: /home/general/SignalAssistant/src/AppController.cpp
 CMakeFiles/GuitarPi.dir/src/AppController.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/GuitarPi.dir/src/AppController.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/GuitarPi.dir/src/AppController.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/AppController.cpp.o -MF CMakeFiles/GuitarPi.dir/src/AppController.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/AppController.cpp.o -c /home/general/SignalAssistant/src/AppController.cpp
 
 CMakeFiles/GuitarPi.dir/src/AppController.cpp.i: cmake_force
@@ -472,7 +492,7 @@ CMakeFiles/GuitarPi.dir/src/AppController.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o: /home/general/SignalAssistant/src/DetectionTuningController.cpp
 CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o -MF CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o -c /home/general/SignalAssistant/src/DetectionTuningController.cpp
 
 CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.i: cmake_force
@@ -486,7 +506,7 @@ CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o: /home/general/SignalAssistant/src/RecordedSessionPlayer.cpp
 CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o -MF CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o -c /home/general/SignalAssistant/src/RecordedSessionPlayer.cpp
 
 CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.i: cmake_force
@@ -500,7 +520,7 @@ CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: /home/general/SignalAssistant/src/TabEngineBridge.cpp
 CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o -MF CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o -c /home/general/SignalAssistant/src/TabEngineBridge.cpp
 
 CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.i: cmake_force
@@ -511,10 +531,24 @@ CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/TabEngineBridge.cpp -o CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.s
 
+CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
+CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o: /home/general/SignalAssistant/src/FretboardProvider.cpp
+CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o -MF CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o -c /home/general/SignalAssistant/src/FretboardProvider.cpp
+
+CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/src/FretboardProvider.cpp > CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.i
+
+CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/FretboardProvider.cpp -o CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.s
+
 CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o: /home/general/SignalAssistant/src/audio/AudioEngine.cpp
 CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o -MF CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o -c /home/general/SignalAssistant/src/audio/AudioEngine.cpp
 
 CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.i: cmake_force
@@ -528,7 +562,7 @@ CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o: /home/general/SignalAssistant/src/audio/CarlaClient.cpp
 CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o -MF CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o -c /home/general/SignalAssistant/src/audio/CarlaClient.cpp
 
 CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.i: cmake_force
@@ -542,7 +576,7 @@ CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o: /home/general/SignalAssistant/src/audio/HexJackClient.cpp
 CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o -MF CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o -c /home/general/SignalAssistant/src/audio/HexJackClient.cpp
 
 CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.i: cmake_force
@@ -556,7 +590,7 @@ CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o: /home/general/SignalAssistant/src/audio/JackMonitorSink.cpp
 CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o -MF CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o -c /home/general/SignalAssistant/src/audio/JackMonitorSink.cpp
 
 CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.i: cmake_force
@@ -567,10 +601,24 @@ CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/audio/JackMonitorSink.cpp -o CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.s
 
+CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
+CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o: /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp
+CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o -MF CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o.d -o CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o -c /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp
+
+CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp > CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.i
+
+CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp -o CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.s
+
 CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o: guitarpi_qmltyperegistrations.cpp
 CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o -MF CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o.d -o CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o -c /home/general/SignalAssistant/build/guitarpi_qmltyperegistrations.cpp
 
 CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.i: cmake_force
@@ -584,7 +632,7 @@ CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o: .qt/rcc/qrc_qmake_GuitarPi.cpp
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o -c /home/general/SignalAssistant/build/.qt/rcc/qrc_qmake_GuitarPi.cpp
 
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.i: cmake_force
@@ -598,7 +646,7 @@ CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o: .rcc/qmlcache/GuitarPi_qmlcache_loader.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.i: cmake_force
@@ -612,7 +660,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.s: cmak
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.i: cmake_force
@@ -626,7 +674,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.s: cmake_f
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.i: cmake_force
@@ -640,7 +688,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.i: cmake_force
@@ -654,7 +702,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.s
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.i: cmake_force
@@ -668,7 +716,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.i: cmake_force
@@ -682,7 +730,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.s
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.i: cmake_force
@@ -696,7 +744,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.i: cmake_force
@@ -710,7 +758,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordio
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.i: cmake_force
@@ -724,7 +772,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponen
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.i: cmake_force
@@ -738,7 +786,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qm
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.i: cmake_force
@@ -752,7 +800,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.i: cmake_force
@@ -766,7 +814,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.i: cmake_force
@@ -780,7 +828,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIco
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.i: cmake_force
@@ -794,7 +842,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.i: cmake_force
@@ -808,7 +856,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOver
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.i: cmake_force
@@ -822,7 +870,7 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOve
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp
 
 CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.i: cmake_force
@@ -833,10 +881,24 @@ CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.s
 
+CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
+CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp
+CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o -c /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp
+
+CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp > CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.i
+
+CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp -o CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.s
+
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o: .qt/rcc/qrc_GuitarPi_raw_qml_0.cpp
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o -c /home/general/SignalAssistant/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp
 
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.i: cmake_force
@@ -850,7 +912,7 @@ CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.s: cmake_force
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o: CMakeFiles/GuitarPi.dir/flags.make
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o: .qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o: CMakeFiles/GuitarPi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o -MF CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o.d -o CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o -c /home/general/SignalAssistant/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp
 
 CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.i: cmake_force
@@ -869,10 +931,12 @@ GuitarPi_OBJECTS = \
 "CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o" \
 "CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o" \
 "CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o" \
+"CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o" \
 "CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o" \
 "CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o" \
 "CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o" \
 "CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o" \
+"CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o" \
 "CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o" \
 "CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o" \
 "CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o" \
@@ -892,6 +956,7 @@ GuitarPi_OBJECTS = \
 "CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o" \
 "CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o" \
 "CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o" \
+"CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o" \
 "CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o" \
 "CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o"
 
@@ -904,10 +969,12 @@ bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/AppController.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/RecordedSessionPlayer.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o
+bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/audio/CarlaClient.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/audio/HexJackClient.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/audio/JackMonitorSink.cpp.o
+bin/GuitarPi: CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/guitarpi_qmltyperegistrations.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_qmake_GuitarPi.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qmlcache_loader.cpp.o
@@ -927,6 +994,7 @@ bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/component
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.o
+bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp.o
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/build.make
@@ -948,7 +1016,7 @@ bin/GuitarPi: /usr/lib/aarch64-linux-gnu/libOpenGL.so
 bin/GuitarPi: /usr/lib/aarch64-linux-gnu/libQt6Core.so.6.8.2
 bin/GuitarPi: /usr/lib/aarch64-linux-gnu/libsndfile.so
 bin/GuitarPi: CMakeFiles/GuitarPi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Linking CXX executable bin/GuitarPi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Linking CXX executable bin/GuitarPi"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GuitarPi.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -964,6 +1032,8 @@ CMakeFiles/GuitarPi.dir/depend: .qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp
 CMakeFiles/GuitarPi.dir/depend: .qt/rcc/qrc_qmake_GuitarPi.cpp
 CMakeFiles/GuitarPi.dir/depend: .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp
 CMakeFiles/GuitarPi.dir/depend: .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.aotstats
+CMakeFiles/GuitarPi.dir/depend: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp
+CMakeFiles/GuitarPi.dir/depend: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats
 CMakeFiles/GuitarPi.dir/depend: .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp
 CMakeFiles/GuitarPi.dir/depend: .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.aotstats
 CMakeFiles/GuitarPi.dir/depend: .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp

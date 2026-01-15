@@ -157,12 +157,12 @@ CMakeFiles/TabPagePreview.dir/all: CMakeFiles/TabPagePreview_autogen_timestamp_d
 CMakeFiles/TabPagePreview.dir/all: CMakeFiles/TabPagePreview_autogen.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=59,60,61,62,63,64,65,66,67,68,69 "Built target TabPagePreview"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=58,59,60,61,62,63,64,65,66,67,68,69 "Built target TabPagePreview"
 .PHONY : CMakeFiles/TabPagePreview.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/TabPagePreview.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 21
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 23
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/TabPagePreview.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/TabPagePreview.dir/rule
@@ -175,7 +175,7 @@ TabPagePreview: CMakeFiles/TabPagePreview.dir/rule
 CMakeFiles/TabPagePreview.dir/codegen: CMakeFiles/TabPagePreview_qmlimportscan.dir/all
 CMakeFiles/TabPagePreview.dir/codegen: CMakeFiles/TabPagePreview_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=59,60,61,62,63,64,65,66,67,68,69 "Finished codegen for target TabPagePreview"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=58,59,60,61,62,63,64,65,66,67,68,69 "Finished codegen for target TabPagePreview"
 .PHONY : CMakeFiles/TabPagePreview.dir/codegen
 
 # clean rule for target.
@@ -190,12 +190,12 @@ CMakeFiles/TabPagePreview.dir/clean:
 CMakeFiles/GuitarPi_qmltyperegistration.dir/all: CMakeFiles/GuitarPi_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_qmltyperegistration.dir/build.make CMakeFiles/GuitarPi_qmltyperegistration.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_qmltyperegistration.dir/build.make CMakeFiles/GuitarPi_qmltyperegistration.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=54,55,56,57,58 "Built target GuitarPi_qmltyperegistration"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=54,55,56,57 "Built target GuitarPi_qmltyperegistration"
 .PHONY : CMakeFiles/GuitarPi_qmltyperegistration.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/GuitarPi_qmltyperegistration.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GuitarPi_qmltyperegistration.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/GuitarPi_qmltyperegistration.dir/rule
@@ -207,7 +207,7 @@ GuitarPi_qmltyperegistration: CMakeFiles/GuitarPi_qmltyperegistration.dir/rule
 # codegen rule for target.
 CMakeFiles/GuitarPi_qmltyperegistration.dir/codegen: CMakeFiles/GuitarPi_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_qmltyperegistration.dir/build.make CMakeFiles/GuitarPi_qmltyperegistration.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=54,55,56,57,58 "Finished codegen for target GuitarPi_qmltyperegistration"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=54,55,56,57 "Finished codegen for target GuitarPi_qmltyperegistration"
 .PHONY : CMakeFiles/GuitarPi_qmltyperegistration.dir/codegen
 
 # clean rule for target.
@@ -227,7 +227,7 @@ CMakeFiles/all_qmltyperegistrations.dir/all: CMakeFiles/GuitarPi_qmltyperegistra
 
 # Build rule for subdir invocation for target.
 CMakeFiles/all_qmltyperegistrations.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/all_qmltyperegistrations.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/all_qmltyperegistrations.dir/rule
@@ -259,7 +259,7 @@ CMakeFiles/GuitarPi_qmllint.dir/all: CMakeFiles/all_qmltyperegistrations.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/GuitarPi_qmllint.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GuitarPi_qmllint.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/GuitarPi_qmllint.dir/rule
@@ -291,7 +291,7 @@ CMakeFiles/GuitarPi_qmllint_json.dir/all: CMakeFiles/all_qmltyperegistrations.di
 
 # Build rule for subdir invocation for target.
 CMakeFiles/GuitarPi_qmllint_json.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GuitarPi_qmllint_json.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/GuitarPi_qmllint_json.dir/rule
@@ -323,7 +323,7 @@ CMakeFiles/GuitarPi_qmllint_module.dir/all: CMakeFiles/all_qmltyperegistrations.
 
 # Build rule for subdir invocation for target.
 CMakeFiles/GuitarPi_qmllint_module.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GuitarPi_qmllint_module.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/GuitarPi_qmllint_module.dir/rule
@@ -355,7 +355,7 @@ CMakeFiles/all_qmllint.dir/all: CMakeFiles/GuitarPi_qmllint.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/all_qmllint.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/all_qmllint.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/all_qmllint.dir/rule
@@ -387,7 +387,7 @@ CMakeFiles/all_qmllint_json.dir/all: CMakeFiles/GuitarPi_qmllint_json.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/all_qmllint_json.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/all_qmllint_json.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/all_qmllint_json.dir/rule
@@ -419,7 +419,7 @@ CMakeFiles/all_qmllint_module.dir/all: CMakeFiles/GuitarPi_qmllint_module.dir/al
 
 # Build rule for subdir invocation for target.
 CMakeFiles/all_qmllint_module.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/all_qmllint_module.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/all_qmllint_module.dir/rule
@@ -478,12 +478,12 @@ CMakeFiles/GuitarPi_copy_qml.dir/clean:
 CMakeFiles/GuitarPi_copy_res.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_copy_res.dir/build.make CMakeFiles/GuitarPi_copy_res.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_copy_res.dir/build.make CMakeFiles/GuitarPi_copy_res.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=53 "Built target GuitarPi_copy_res"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Built target GuitarPi_copy_res"
 .PHONY : CMakeFiles/GuitarPi_copy_res.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/GuitarPi_copy_res.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GuitarPi_copy_res.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/GuitarPi_copy_res.dir/rule
@@ -495,7 +495,7 @@ GuitarPi_copy_res: CMakeFiles/GuitarPi_copy_res.dir/rule
 # codegen rule for target.
 CMakeFiles/GuitarPi_copy_res.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_copy_res.dir/build.make CMakeFiles/GuitarPi_copy_res.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=53 "Finished codegen for target GuitarPi_copy_res"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Finished codegen for target GuitarPi_copy_res"
 .PHONY : CMakeFiles/GuitarPi_copy_res.dir/codegen
 
 # clean rule for target.
@@ -511,7 +511,7 @@ CMakeFiles/guitarpi_tab.dir/all: CMakeFiles/guitarpi_tab_autogen_timestamp_deps.
 CMakeFiles/guitarpi_tab.dir/all: CMakeFiles/guitarpi_tab_autogen.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=72,73,74,75,76,77,78,79 "Built target guitarpi_tab"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=72,73,74,75,76,77,78,79,80 "Built target guitarpi_tab"
 .PHONY : CMakeFiles/guitarpi_tab.dir/all
 
 # Build rule for subdir invocation for target.
@@ -528,7 +528,7 @@ guitarpi_tab: CMakeFiles/guitarpi_tab.dir/rule
 # codegen rule for target.
 CMakeFiles/guitarpi_tab.dir/codegen: CMakeFiles/guitarpi_tab_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=72,73,74,75,76,77,78,79 "Finished codegen for target guitarpi_tab"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=72,73,74,75,76,77,78,79,80 "Finished codegen for target guitarpi_tab"
 .PHONY : CMakeFiles/guitarpi_tab.dir/codegen
 
 # clean rule for target.
@@ -583,7 +583,7 @@ CMakeFiles/module_GuitarPi_aotstats_target.dir/all: CMakeFiles/GuitarPi_autogen_
 
 # Build rule for subdir invocation for target.
 CMakeFiles/module_GuitarPi_aotstats_target.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 31
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 30
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/module_GuitarPi_aotstats_target.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/module_GuitarPi_aotstats_target.dir/rule
@@ -612,12 +612,12 @@ CMakeFiles/all_aotstats.dir/all: CMakeFiles/module_GuitarPi_aotstats_target.dir/
 CMakeFiles/all_aotstats.dir/all: CMakeFiles/GuitarPi_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/all_aotstats.dir/build.make CMakeFiles/all_aotstats.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/all_aotstats.dir/build.make CMakeFiles/all_aotstats.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=71 "Built target all_aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Built target all_aotstats"
 .PHONY : CMakeFiles/all_aotstats.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/all_aotstats.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 32
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 30
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/all_aotstats.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/all_aotstats.dir/rule
@@ -630,7 +630,7 @@ all_aotstats: CMakeFiles/all_aotstats.dir/rule
 CMakeFiles/all_aotstats.dir/codegen: CMakeFiles/module_GuitarPi_aotstats_target.dir/all
 CMakeFiles/all_aotstats.dir/codegen: CMakeFiles/GuitarPi_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/all_aotstats.dir/build.make CMakeFiles/all_aotstats.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=71 "Finished codegen for target all_aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Finished codegen for target all_aotstats"
 .PHONY : CMakeFiles/all_aotstats.dir/codegen
 
 # clean rule for target.
@@ -645,12 +645,12 @@ CMakeFiles/all_aotstats.dir/clean:
 CMakeFiles/GuitarPi_qmlimportscan.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_qmlimportscan.dir/build.make CMakeFiles/GuitarPi_qmlimportscan.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_qmlimportscan.dir/build.make CMakeFiles/GuitarPi_qmlimportscan.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Built target GuitarPi_qmlimportscan"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=53 "Built target GuitarPi_qmlimportscan"
 .PHONY : CMakeFiles/GuitarPi_qmlimportscan.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/GuitarPi_qmlimportscan.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/GuitarPi_qmlimportscan.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/GuitarPi_qmlimportscan.dir/rule
@@ -662,7 +662,7 @@ GuitarPi_qmlimportscan: CMakeFiles/GuitarPi_qmlimportscan.dir/rule
 # codegen rule for target.
 CMakeFiles/GuitarPi_qmlimportscan.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi_qmlimportscan.dir/build.make CMakeFiles/GuitarPi_qmlimportscan.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Finished codegen for target GuitarPi_qmlimportscan"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=53 "Finished codegen for target GuitarPi_qmlimportscan"
 .PHONY : CMakeFiles/GuitarPi_qmlimportscan.dir/codegen
 
 # clean rule for target.
@@ -677,7 +677,7 @@ CMakeFiles/GuitarPi_qmlimportscan.dir/clean:
 CMakeFiles/TabPagePreview_qmlimportscan.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview_qmlimportscan.dir/build.make CMakeFiles/TabPagePreview_qmlimportscan.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview_qmlimportscan.dir/build.make CMakeFiles/TabPagePreview_qmlimportscan.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=70 "Built target TabPagePreview_qmlimportscan"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=71 "Built target TabPagePreview_qmlimportscan"
 .PHONY : CMakeFiles/TabPagePreview_qmlimportscan.dir/all
 
 # Build rule for subdir invocation for target.
@@ -694,7 +694,7 @@ TabPagePreview_qmlimportscan: CMakeFiles/TabPagePreview_qmlimportscan.dir/rule
 # codegen rule for target.
 CMakeFiles/TabPagePreview_qmlimportscan.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview_qmlimportscan.dir/build.make CMakeFiles/TabPagePreview_qmlimportscan.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=70 "Finished codegen for target TabPagePreview_qmlimportscan"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=71 "Finished codegen for target TabPagePreview_qmlimportscan"
 .PHONY : CMakeFiles/TabPagePreview_qmlimportscan.dir/codegen
 
 # clean rule for target.
@@ -809,12 +809,12 @@ CMakeFiles/TabPagePreview_autogen_timestamp_deps.dir/clean:
 CMakeFiles/TabPagePreview_autogen.dir/all: CMakeFiles/TabPagePreview_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview_autogen.dir/build.make CMakeFiles/TabPagePreview_autogen.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview_autogen.dir/build.make CMakeFiles/TabPagePreview_autogen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Built target TabPagePreview_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=70 "Built target TabPagePreview_autogen"
 .PHONY : CMakeFiles/TabPagePreview_autogen.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/TabPagePreview_autogen.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/TabPagePreview_autogen.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/TabPagePreview_autogen.dir/rule
@@ -826,7 +826,7 @@ TabPagePreview_autogen: CMakeFiles/TabPagePreview_autogen.dir/rule
 # codegen rule for target.
 CMakeFiles/TabPagePreview_autogen.dir/codegen: CMakeFiles/TabPagePreview_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview_autogen.dir/build.make CMakeFiles/TabPagePreview_autogen.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Finished codegen for target TabPagePreview_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=70 "Finished codegen for target TabPagePreview_autogen"
 .PHONY : CMakeFiles/TabPagePreview_autogen.dir/codegen
 
 # clean rule for target.
@@ -873,12 +873,12 @@ CMakeFiles/guitarpi_tab_autogen_timestamp_deps.dir/clean:
 CMakeFiles/guitarpi_tab_autogen.dir/all: CMakeFiles/guitarpi_tab_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab_autogen.dir/build.make CMakeFiles/guitarpi_tab_autogen.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab_autogen.dir/build.make CMakeFiles/guitarpi_tab_autogen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=80 "Built target guitarpi_tab_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Built target guitarpi_tab_autogen"
 .PHONY : CMakeFiles/guitarpi_tab_autogen.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/guitarpi_tab_autogen.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/guitarpi_tab_autogen.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/general/SignalAssistant/build/CMakeFiles 0
 .PHONY : CMakeFiles/guitarpi_tab_autogen.dir/rule
@@ -890,7 +890,7 @@ guitarpi_tab_autogen: CMakeFiles/guitarpi_tab_autogen.dir/rule
 # codegen rule for target.
 CMakeFiles/guitarpi_tab_autogen.dir/codegen: CMakeFiles/guitarpi_tab_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab_autogen.dir/build.make CMakeFiles/guitarpi_tab_autogen.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=80 "Finished codegen for target guitarpi_tab_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num= "Finished codegen for target guitarpi_tab_autogen"
 .PHONY : CMakeFiles/guitarpi_tab_autogen.dir/codegen
 
 # clean rule for target.

@@ -20,3 +20,4 @@
 /qt/qml/GuitarPi/qml/components/TestModeOverlay.qml
 /qt/qml/GuitarPi/qml/components/RecordingOverlay.qml
 /qt/qml/GuitarPi/qml/components/TuningPanel.qml
+/qt/qml/GuitarPi/qml/components/BatchedFretboardBinOverlay.qml

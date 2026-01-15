@@ -10,10 +10,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "" "guitarpi_tab_autogen/timestamp" "custom" "guitarpi_tab_autogen/deps"
   "/home/general/SignalAssistant/build/guitarpi_tab_autogen/mocs_compilation.cpp" "CMakeFiles/guitarpi_tab.dir/guitarpi_tab_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/guitarpi_tab_autogen/mocs_compilation.cpp.o.d"
+  "/home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp" "CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o.d"
+  "/home/general/SignalAssistant/src/HeatmapLogger.cpp" "CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o.d"
   "/home/general/SignalAssistant/src/NoteDetectionConfig.cpp" "CMakeFiles/guitarpi_tab.dir/src/NoteDetectionConfig.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/NoteDetectionConfig.cpp.o.d"
   "/home/general/SignalAssistant/src/NoteDetectionStore.cpp" "CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.o.d"
   "/home/general/SignalAssistant/src/SessionLogger.cpp" "CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o.d"
-  "/home/general/SignalAssistant/src/StringTracker.cpp" "CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o.d"
   "/home/general/SignalAssistant/src/TabEngine.cpp" "CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.o.d"
   "/home/general/SignalAssistant/src/util.cpp" "CMakeFiles/guitarpi_tab.dir/src/util.cpp.o" "gcc" "CMakeFiles/guitarpi_tab.dir/src/util.cpp.o.d"
   )

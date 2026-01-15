@@ -1,11 +1,21 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import "../components"
 
 Item {
     id: root
     implicitWidth: 1280
     implicitHeight: 720
+
+    // Bin overlay heatmap toggle
+    property bool binOverlayEnabled: false
+    
+    // Heatmap magnitude text meters toggle (shows live values over each bin cell)
+    property bool showHeatmapMagnitudeText: false
+    
+    // Heatmap logging toggle (logs magnitude values and UI draw states to logs/heatmaplog)
+    property bool heatmapLoggingEnabled: false
 
     property var bridge: (typeof AppController !== "undefined" && AppController)
                          ? AppController.tabBridge
@@ -63,26 +73,56 @@ Item {
             return 0;
         if (index < 0 || index >= bridge.tuningDeviation.length)
             return 0;
-        return Number(bridge.tuningDeviation[index]);
+        var dev = Number(bridge.tuningDeviation[index]);
+        if (bridge.tuningModeEnabled && Math.abs(dev) > 0.01) {
+            console.log("tuning-deviation", "string", index, "cents", dev.toFixed(2));
+        }
+        return dev;
     }
 
     function tuningColorFromDeviation(cents) {
-        var absCents = Math.min(36, Math.abs(cents));
-        // Use a tighter range for green (faster fade from green)
-        // Green window is now ~6 cents instead of 12 cents
-        var ratio = Math.min(1, absCents / 18);
-        // Apply exponential curve to make green even tighter
-        ratio = ratio * ratio; // Square it to make it fade faster
-        var startR = 0.337;
-        var startG = 0.835;
-        var startB = 0.431;
-        var endR = 0.867;
-        var endG = 0.243;
-        var endB = 0.262;
-        var r = startR + (endR - startR) * ratio;
-        var g = startG + (endG - startG) * ratio;
-        var b = startB + (endB - startB) * ratio;
-        return Qt.rgba(r, g, b, 1);
+        var absCents = Math.abs(cents);
+        
+        // Color gradient based on cents deviation:
+        // 0-3 cents: solid green (in tune)
+        // 3-20 cents: fade from green through yellow to red
+        // 20+ cents: solid red (out of tune)
+        
+        var green = {r: 0.337, g: 0.835, b: 0.431};   // #56d56e
+        var yellow = {r: 1.0, g: 0.843, b: 0.302};    // #ffd84d
+        var red = {r: 0.867, g: 0.243, b: 0.262};     // #dd3e43
+        
+        if (absCents <= 3) {
+            // Solid green - in tune
+            return Qt.rgba(green.r, green.g, green.b, 1);
+        } else if (absCents <= 20) {
+            // Interpolate from green through yellow to red (3-20 cents range)
+            // Map 3-20 cents to 0-1 ratio
+            var ratio = (absCents - 3) / 17.0;
+            
+            if (ratio <= 0.5) {
+                // Green to yellow (3-11.5 cents)
+                var r1 = ratio * 2.0;
+                return Qt.rgba(
+                    green.r + (yellow.r - green.r) * r1,
+                    green.g + (yellow.g - green.g) * r1,
+                    green.b + (yellow.b - green.b) * r1,
+                    1
+                );
+            } else {
+                // Yellow to red (11.5-20 cents)
+                var r2 = (ratio - 0.5) * 2.0;
+                return Qt.rgba(
+                    yellow.r + (red.r - yellow.r) * r2,
+                    yellow.g + (red.g - yellow.g) * r2,
+                    yellow.b + (red.b - yellow.b) * r2,
+                    1
+                );
+            }
+        } else {
+            // Solid red - out of tune
+            return Qt.rgba(red.r, red.g, red.b, 1);
+        }
     }
 
     function getActiveTuningString() {
@@ -109,11 +149,8 @@ Item {
             var deviation = tuningDeviationAt(index);
             
             // Show color only for the currently active string
-            // If no string is active or current deviation is 0, show gray
             if (activeString >= 0 && activeString === index) {
-                return tuningColorFromDeviation(deviation);
-            } else if (activeString === -1 && Math.abs(deviation) > 0.1) {
-                // Fallback: if no clear active string but this one has deviation, show it
+                // Always show tuning color for active string, regardless of deviation value
                 return tuningColorFromDeviation(deviation);
             }
             // All other strings show neutral gray
@@ -569,6 +606,7 @@ Item {
 
                 Image {
                     id: fretsImage
+                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/Frets.svg"
                     sourceSize.width: neckSection.baseFretWidth
                     sourceSize.height: 165
@@ -584,6 +622,7 @@ Item {
 
                 Image {
                     id: neckImage
+                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/Neck.png"
                     sourceSize.width: neckSection.baseNeckWidth
                     sourceSize.height: neckSection.baseNeckHeight
@@ -601,6 +640,7 @@ Item {
 
                 Image {
                     id: stringsImage
+                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/Strings.svg"
                     sourceSize.width: neckSection.baseStringsWidth
                     sourceSize.height: neckSection.baseStringHeight
@@ -617,6 +657,7 @@ Item {
 
                 Image {
                     id: stringLabels
+                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/StringLabels.svg"
                     sourceSize.height: neckSection.baseNeckHeight
                     height: neckSection.baseNeckHeight
@@ -642,6 +683,8 @@ Item {
                     id: liveNoteRepeater
                     model: liveNoteModel
                     delegate: Rectangle {
+                        // Hide when bin overlay is active (heatmap replaces note overlay)
+                        visible: !root.binOverlayEnabled
                         width: 44
                         height: 18
                         radius: 6
@@ -890,14 +933,6 @@ Item {
                     font.pixelSize: 8
                 }
                 Label {
-                    text: "Onset"
-                    width: 45
-                    font.pixelSize: 8
-                    color: "#7d8694"
-                    font.family: "Monospace"
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Label {
                     text: "Baseline"
                     width: 45
                     font.pixelSize: 8
@@ -929,14 +964,6 @@ Item {
                     font.family: "Monospace"
                     horizontalAlignment: Text.AlignHCenter
                 }
-                Label {
-                    text: "Retrig"
-                    width: 45
-                    font.pixelSize: 8
-                    color: "#7d8694"
-                    font.family: "Monospace"
-                    horizontalAlignment: Text.AlignHCenter
-                }
             }
             
             Repeater {
@@ -953,14 +980,6 @@ Item {
                         font.pixelSize: 9
                         color: "#94a3b8"
                         width: 10
-                    }
-                    Label {
-                        text: (thresholdData && typeof thresholdData.onsetThreshold === 'number') ? thresholdData.onsetThreshold.toFixed(4) : "-.----"
-                        width: 45
-                        font.family: "Monospace"
-                        font.pixelSize: 9
-                        color: "#cbd5e1"
-                        horizontalAlignment: Text.AlignHCenter
                     }
                     Label {
                         text: (thresholdData && typeof thresholdData.baseline === 'number') ? thresholdData.baseline.toFixed(4) : "-.----"
@@ -988,14 +1007,6 @@ Item {
                     }
                     Label {
                         text: (thresholdData && typeof thresholdData.sustainFloor === 'number') ? thresholdData.sustainFloor.toFixed(4) : "-.----"
-                        width: 45
-                        font.family: "Monospace"
-                        font.pixelSize: 9
-                        color: "#cbd5e1"
-                        horizontalAlignment: Text.AlignHCenter
-                    }
-                    Label {
-                        text: (thresholdData && typeof thresholdData.retriggerGate === 'number') ? thresholdData.retriggerGate.toFixed(4) : "-.----"
                         width: 45
                         font.family: "Monospace"
                         font.pixelSize: 9
@@ -1063,6 +1074,9 @@ Item {
                                 delegate: Item {
                                     width: 26
                                     height: indicatorColumn.implicitHeight
+                                    // Reactive properties for tuning mode - accessing these forces binding updates
+                                    readonly property var tuningDev: bridge ? bridge.tuningDeviation : []
+                                    readonly property var hexMeterLevels: bridge ? bridge.hexMeters : []
                                     Column {
                                         id: indicatorColumn
                                         spacing: 2
@@ -1071,14 +1085,19 @@ Item {
                                             width: 20
                                             height: 20
                                             radius: width / 2
-                                            color: tuningCircleColor(Number(modelData), index)
+                                            // Reference parent's reactive properties to trigger re-evaluation
+                                            color: {
+                                                var _ = parent.parent.tuningDev;
+                                                var __ = parent.parent.hexMeterLevels;
+                                                return tuningCircleColor(Number(modelData), index);
+                                            }
                                             border.color: Number(modelData) >= 2 ? "#fefefe" : "#b0b3bb"
                                             border.width: 1
                                             opacity: Number(modelData) === 0 ? 0.7 : 1
                                             
                                             Behavior on color {
                                                 ColorAnimation {
-                                                    duration: 2000
+                                                    duration: bridge && bridge.tuningModeEnabled ? 80 : 2000
                                                     easing.type: Easing.InOutQuad
                                                 }
                                             }
@@ -1106,11 +1125,10 @@ Item {
                             height: 1
                         }
                         ToolButton {
-                            id: tuningToggle
+                            id: tunerToggle
                             checkable: true
                             implicitWidth: 40
                             implicitHeight: 40
-                            anchors.verticalCenter: calibrationButton.verticalCenter
                             enabled: !(bridge && bridge.calibrationRunning)
                             background: Rectangle {
                                 anchors.fill: parent
@@ -1122,7 +1140,7 @@ Item {
                                 width: 28
                                 height: 28
                                 fillMode: Image.PreserveAspectFit
-                                opacity: tuningToggle.checked ? 1.0 : 0.12 
+                                opacity: tunerToggle.checked ? 1.0 : 0.12 
                             }
                             onClicked: if (bridge) bridge.setTuningModeEnabled(!bridge.tuningModeEnabled)
                             Component.onCompleted: {
@@ -1131,11 +1149,13 @@ Item {
                             }
                             Connections {
                                 target: bridge
-                                onTuningModeEnabledChanged: if (bridge) checked = bridge.tuningModeEnabled
+                                function onTuningModeEnabledChanged() {
+                                    if (bridge) tunerToggle.checked = bridge.tuningModeEnabled
+                                }
                             }
                         }
                         ToolButton {
-                            id: tuningPanelButton
+                            id: tuningPanelToggle
                             checkable: true
                             implicitWidth: 44
                             implicitHeight: 44
@@ -1145,9 +1165,9 @@ Item {
                                 var w = ApplicationWindow.window
                                     if (w && typeof w.tuningPanelVisible !== 'undefined') {
                                         checked = Qt.binding(function() { return w.tuningPanelVisible })
-                                        console.log("qml", "tuning-panel-button", "connected to main window")
+                                        console.log("qml", "tuning-panel-toggle", "connected to main window")
                                     } else {
-                                        console.log("qml", "tuning-panel-button", "failed to find main window")
+                                        console.log("qml", "tuning-panel-toggle", "failed to find main window")
                                     }
                                 }
                                 background: Rectangle {
@@ -1160,13 +1180,40 @@ Item {
                                 width: 28
                                 height: 28
                                 fillMode: Image.PreserveAspectFit
-                                opacity: tuningPanelButton.checked ? 1.0 : 0.12
+                                opacity: tuningPanelToggle.checked ? 1.0 : 0.12
                             }
                             onClicked: {
                                 var w = ApplicationWindow.window
                                 if (w && typeof w.tuningPanelVisible !== 'undefined') {
                                     w.tuningPanelVisible = !w.tuningPanelVisible
                                 }
+                            }
+                        }
+                        // Bin Overlay Heatmap Toggle
+                        ToolButton {
+                            id: binOverlayToggle
+                            checkable: true
+                            checked: root.binOverlayEnabled
+                            implicitWidth: 44
+                            implicitHeight: 44
+                            y: -4
+                            ToolTip.visible: hovered
+                            ToolTip.text: "Toggle CQT Bin Heatmap Overlay"
+                            ToolTip.delay: 500
+                            background: Rectangle {
+                                anchors.fill: parent
+                                color: "transparent"
+                            }
+                            contentItem: Image {
+                                anchors.centerIn: parent
+                                source: Qt.resolvedUrl("../assets/icons/heatmap-grid.svg")
+                                width: 28
+                                height: 28
+                                fillMode: Image.PreserveAspectFit
+                                opacity: binOverlayToggle.checked ? 1.0 : 0.12
+                            }
+                            onClicked: {
+                                root.binOverlayEnabled = !root.binOverlayEnabled
                             }
                         }
                     }
@@ -1190,6 +1237,9 @@ Item {
             }
         }
         function onLiveNoteTriggered(stringIndex, fretIndex, velocity) {
+            // Skip note overlay processing when bin overlay (heatmap) is active
+            if (root.binOverlayEnabled)
+                return;
             if (stringIndex === undefined || fretIndex === undefined)
                 return;
             if (!neckSection)
@@ -1199,6 +1249,9 @@ Item {
             neckSection.addLiveNoteOverlay(stringIndex, fretIndex, velocity);
         }
         function onLiveNoteEnded(stringIndex, fretIndex) {
+            // Skip note overlay processing when bin overlay (heatmap) is active
+            if (root.binOverlayEnabled)
+                return;
             if (stringIndex === undefined || fretIndex === undefined)
                 return;
             if (!neckSection)
@@ -1208,6 +1261,9 @@ Item {
             neckSection.removeLiveNoteOverlay(stringIndex, fretIndex);
         }
         function onLiveNoteEnvelopeUpdated(stringIndex, envelope) {
+            // Skip envelope updates when bin overlay (heatmap) is active
+            if (root.binOverlayEnabled)
+                return;
             if (stringIndex === undefined || envelope === undefined)
                 return;
             if (!neckSection)
@@ -1270,5 +1326,282 @@ Item {
     Component.onDestruction: {
         if (bridge)
             bridge.setRecording(false);
+    }
+
+    // Bin Overlay Heatmap - shows live CQT magnitude per fret/string
+    // Absolute positioning at root level (28, 478) - independent of fretboard display
+    Item {
+        id: binOverlayContainer
+        visible: root.binOverlayEnabled
+        
+        // Absolute position and size matching Fret Cells.svg (1216x127)
+        // Y offset accounts for toggle row above (-30px)
+        x: 28
+        y: 448
+        width: 1216
+        height: 157  // 30px toggle row + 127px heatmap
+        z: 100  // Above everything else
+        
+        // Toggle row for "Show magnitude values"
+        Row {
+            id: magnitudeToggleRow
+            x: 0
+            y: 0
+            height: 28
+            spacing: 8
+            z: 200  // Above everything
+            
+            // Debug background to see the row
+            Rectangle {
+                anchors.fill: parent
+                color: "#222222"
+                opacity: 0.8
+                z: -1
+            }
+            
+            ToolButton {
+                id: magnitudeTextToggle
+                checkable: true
+                checked: root.showHeatmapMagnitudeText
+                implicitWidth: 24
+                implicitHeight: 24
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                    border.color: magnitudeTextToggle.checked ? "#F59452" : "#3d3d3d"
+                    border.width: 1
+                    radius: 4
+                }
+                contentItem: Rectangle {
+                    anchors.centerIn: parent
+                    width: 12
+                    height: 12
+                    radius: 2
+                    color: magnitudeTextToggle.checked ? "#F59452" : "transparent"
+                }
+                onClicked: {
+                    console.log("[TOGGLE] Magnitude toggle clicked, was=" + root.showHeatmapMagnitudeText)
+                    root.showHeatmapMagnitudeText = !root.showHeatmapMagnitudeText
+                    console.log("[TOGGLE] Now=" + root.showHeatmapMagnitudeText)
+                }
+            }
+            
+            Text {
+                text: "Show magnitude values"
+                color: magnitudeTextToggle.checked ? "#F59452" : "#8a8a8a"
+                font.pixelSize: 13
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+        
+        // Clear live notes when overlay becomes visible
+        onVisibleChanged: {
+            if (visible && neckSection) {
+                neckSection.clearLiveNotes();
+                // Request initial paint
+                binOverlay.canvas.requestPaint();
+            }
+        }
+        
+        // Heatmap container with clipping
+        Item {
+            id: heatmapArea
+            x: 0
+            y: 30
+            width: 1216
+            height: 127
+            clip: true
+        
+            Image {
+                source: Qt.resolvedUrl("../assets/TabPage/binInlays.svg")
+                x: 211.25 + 32  // F3 column (211.25) + 32px offset
+                y: 50
+                z: 50  // Below the interactive overlay but above background
+            }
+        
+            BatchedFretboardBinOverlay {
+                id: binOverlay
+                opacity: 0.85
+            
+                // Fill container - canvas uses SVG coords directly (1216x127)
+                anchors.fill: parent
+            
+                // Toggle for text magnitude meters (default off for performance)
+                showMagnitudeText: root.showHeatmapMagnitudeText
+            
+                // Magnitude provider for text meters - returns {magnitude, threshold}
+                magnitudeProvider: function(s1to6, f0to24) {
+                    if (!bridge) return null
+                    var stringIndex = s1to6 - 1
+                    return {
+                        magnitude: bridge.getBinMagnitude(stringIndex, f0to24),
+                        threshold: bridge.getBinThreshold(stringIndex, f0to24)
+                    }
+                }
+            
+                // Color provider: GHOSTING LOGIC - Pre-Threshold Visualization
+            // Raw CQT magnitudes: noise floor ~0.01, active input 0.1-0.3+
+            // Thresholds (Linear Growth): ~0.13-0.18 for F0 bins
+            colorProvider: function(s1to6, f0to24, binId) {
+                if (!bridge) {
+                    return "#181818";
+                }
+                
+                // BatchedFretboardBinOverlay uses s1to6 (1-based)
+                // Visual layout: s1 at bottom (Y=105), s6 at top (Y=0)
+                // Guitar standard: Low E at bottom, High E at top
+                // Data array: 0=low E, 5=high E
+                // So s1 (bottom) should map to low E (index 0): stringIndex = s1to6 - 1
+                var stringIndex = s1to6 - 1;
+                
+                // O(1) lookup via Q_INVOKABLE
+                var magnitude = bridge.getBinMagnitude(stringIndex, f0to24);
+                var threshold = bridge.getBinThreshold(stringIndex, f0to24);
+                
+                // DEBUG: (Disabled) Log magnitude values
+                // if (stringIndex === 0 && (f0to24 === 12 || f0to24 === 19) && magnitude > 0.001) {
+                //     console.log("BIN S:" + stringIndex + " F:" + f0to24 + " Mag:" + magnitude.toFixed(4) + " Thresh:" + threshold.toFixed(4));
+                // }
+                
+                // =========================================================
+                // GHOSTING LOGIC: PRE-THRESHOLD VISUALIZATION
+                // =========================================================
+                
+                // 1. NOISE FLOOR GATE (Hard cutoff at 0.01)
+                //    Hides electrical hum / handling noise
+                if (magnitude < 0.01) {
+                    return "#181818"; // Pure Black - below noise floor
+                }
+                
+                // 2. INTENSITY CALCULATION
+                //    intensity = magnitude / (threshold * 1.5)
+                //    At Mag 0.05, Thresh 0.15 → Intensity 0.22 (22%)
+                //    At Mag 0.15 (threshold)  → Intensity 0.66 (66%)
+                var safeThreshold = Math.max(threshold, 0.05);
+                var intensity = magnitude / (safeThreshold * 1.5);
+                intensity = Math.min(intensity, 1.0);  // Clamp to 1.0 max
+                
+                // 3. DYNAMIC ALPHA BLENDING
+                //    Active Note (above threshold): Full intensity green
+                //    Ghost Energy (below threshold): Faint, misty glow (50% alpha)
+                var alpha;
+                if (magnitude >= threshold) {
+                    // ACTIVE NOTE: High visibility
+                    alpha = intensity;
+                } else {
+                    // GHOST ENERGY: Faint pulsing glow
+                    alpha = intensity * 0.5;
+                }
+                
+                // Color: #37C38B (R=0.216, G=0.765, B=0.545)
+                // Result: 0.00-0.01 = Black, 0.01-0.14 = Ghost, 0.15+ = Solid Green
+                return Qt.rgba(0.216, 0.765, 0.545, alpha);
+            }
+            
+            // Winner-takes-all helper: Find the fret with highest magnitude above threshold per string
+            // Returns object with winning fret index per string: { 0: 5, 1: 12, ... } or { 0: -1 } if none
+            property var winningFrets: ({})
+            
+            function updateWinningFrets() {
+                if (!bridge) {
+                    winningFrets = {}
+                    return
+                }
+                
+                var winners = {}
+                for (var s = 0; s < 6; s++) {
+                    var maxMag = -1
+                    var winnerFret = -1
+                    
+                    for (var f = 0; f <= 24; f++) {
+                        var mag = bridge.getBinMagnitude(s, f)
+                        var thresh = bridge.getBinThreshold(s, f)
+                        
+                        // Only consider bins above threshold
+                        if (mag >= thresh && thresh > 0.01) {
+                            if (mag > maxMag) {
+                                maxMag = mag
+                                winnerFret = f
+                            }
+                        }
+                    }
+                    winners[s] = winnerFret
+                }
+                winningFrets = winners
+            }
+            
+            // Stroke provider: 0.5px stroke, #3d3d3d default, 3px #F59452 for winner bin only
+            strokeProvider: function(s1to6, f0to24, binId) {
+                if (!bridge) {
+                    return { color: "#3d3d3d", width: 0.5 };
+                }
+                
+                var stringIndex = s1to6 - 1;
+                
+                // Check if this bin is the winner for its string
+                if (winningFrets[stringIndex] === f0to24) {
+                    return { color: "#F59452", width: 3.0 };
+                }
+                return { color: "#3d3d3d", width: 0.5 };
+            }
+            
+            onBinClicked: (binId, s, f, x, y) => {
+                // Could show tooltip or detailed info here
+            }
+            
+            // C++ magnitude gate triggers repaint only when meaningful changes occur
+            Connections {
+                target: bridge
+                function onBinMagnitudesChanged() {
+                    // Update winner-takes-all cache before rendering
+                    binOverlay.updateWinningFrets();
+                    
+                    // Bump colorRevision to invalidate colorFor() cache
+                    binOverlay.colorRevision++;
+                    
+                    // Log note-off events for debugging overlay persistence
+                    var noteOffEvents = [];
+                    for (var s = 0; s < 6; s++) {
+                        for (var f = 0; f <= 24; f++) {
+                            var magnitude = bridge.getBinMagnitude(s, f);
+                            var threshold = bridge.getBinThreshold(s, f);
+                            // Detect bins that just dropped below threshold
+                            if (magnitude < threshold && magnitude > 0.01 && magnitude < 0.1) {
+                                noteOffEvents.push("S" + s + "F" + f + ":" + magnitude.toFixed(3));
+                            }
+                        }
+                    }
+                    if (noteOffEvents.length > 0 && noteOffEvents.length < 20) {
+                        console.log("[QML-NOTE-OFF] Bins below threshold: " + noteOffEvents.join(", "));
+                    }
+                    
+                    // Log UI draw states if heatmap logging is enabled
+                    if (root.heatmapLoggingEnabled && bridge) {
+                        bridge.logHeatmapUIBatchStart();
+                        // Log the computed UI states for all bins that will be drawn
+                        for (var s2 = 0; s2 < 6; s2++) {
+                            for (var f2 = 0; f2 <= 24; f2++) {
+                                var mag2 = bridge.getBinMagnitude(s2, f2);
+                                var thresh2 = bridge.getBinThreshold(s2, f2);
+                                
+                                // Only log significant values (same gate as render)
+                                if (mag2 >= 0.01) {
+                                    var safeThreshold = Math.max(thresh2, 0.05);
+                                    var intensity = Math.min(mag2 / (safeThreshold * 1.5), 1.0);
+                                    var alpha = (mag2 >= thresh2) ? intensity : intensity * 0.5;
+                                    var isAboveThreshold = (mag2 >= thresh2 && thresh2 > 0.01);
+                                    bridge.logHeatmapUIEntry(s2, f2, mag2, thresh2, intensity, alpha, isAboveThreshold);
+                                }
+                            }
+                        }
+                        bridge.logHeatmapUIBatchEnd();
+                    }
+                    
+                    // Direct requestPaint - C++ gate ensures we're not flooding
+                    binOverlay.canvas.requestPaint();
+                }
+            }
+        }
+        }  // Close heatmapArea
     }
 }

@@ -338,7 +338,7 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/general/SignalAssistant/build/tab_module_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/general/SignalAssistant/build/tab_module_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "BUILD_TAB_MODULE_TEST" ],
+	"MOC_DEFINITIONS" : [ "BUILD_TAB_MODULE_TEST", "HAVE_ARM_NEON=1" ],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -385,6 +385,7 @@
 		"/home/general/SignalAssistant/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp",
 		"/home/general/SignalAssistant/build/.qt/rcc/qrc_qmake_GuitarPi.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp",
+		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp",

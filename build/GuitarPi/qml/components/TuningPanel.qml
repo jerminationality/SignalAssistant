@@ -94,6 +94,17 @@ FocusScope {
         }
     }
 
+    Connections {
+        target: bridge
+        function onCalibrationGainsChanged() {
+            root.requestSyncAll()
+        }
+        function onCalibrationParametersUpdated() {
+            console.log("qml", "TuningPanel", "calibration-complete-sync")
+            root.requestSyncAll()
+        }
+    }
+
     Dialog {
         id: snapshotDialog
         parent: root

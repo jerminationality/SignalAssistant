@@ -249,13 +249,13 @@ GuitarPi_IS_TOP_LEVEL:STATIC=ON
 GuitarPi_SOURCE_DIR:STATIC=/home/general/SignalAssistant
 
 //Path to a file.
-OPENGL_EGL_INCLUDE_DIR:PATH=OPENGL_EGL_INCLUDE_DIR-NOTFOUND
+OPENGL_EGL_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a file.
-OPENGL_GLES2_INCLUDE_DIR:PATH=OPENGL_GLES2_INCLUDE_DIR-NOTFOUND
+OPENGL_GLES2_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a file.
-OPENGL_GLES3_INCLUDE_DIR:PATH=OPENGL_GLES3_INCLUDE_DIR-NOTFOUND
+OPENGL_GLES3_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a file.
 OPENGL_GLU_INCLUDE_DIR:PATH=/usr/include
@@ -267,13 +267,13 @@ OPENGL_GLX_INCLUDE_DIR:PATH=/usr/include
 OPENGL_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-OPENGL_egl_LIBRARY:FILEPATH=OPENGL_egl_LIBRARY-NOTFOUND
+OPENGL_egl_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/libEGL.so
 
 //Path to a library.
-OPENGL_gles2_LIBRARY:FILEPATH=OPENGL_gles2_LIBRARY-NOTFOUND
+OPENGL_gles2_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/libGLESv2.so
 
 //Path to a library.
-OPENGL_gles3_LIBRARY:FILEPATH=OPENGL_gles3_LIBRARY-NOTFOUND
+OPENGL_gles3_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/libGLESv2.so
 
 //Path to a library.
 OPENGL_glu_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/libGLU.so

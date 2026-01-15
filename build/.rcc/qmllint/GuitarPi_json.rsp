@@ -25,5 +25,6 @@
 /home/general/SignalAssistant/qml/components/TestModeOverlay.qml
 /home/general/SignalAssistant/qml/components/RecordingOverlay.qml
 /home/general/SignalAssistant/qml/components/TuningPanel.qml
+/home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
 --json
 /home/general/SignalAssistant/build/GuitarPi_qmllint.json

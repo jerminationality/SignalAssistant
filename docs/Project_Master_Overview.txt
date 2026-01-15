@@ -1,0 +1,38 @@
+# PROJECT: HEX-MONO PITCH-TO-MIDI ENGINE (EXPANDED)
+# PLATFORM: Raspberry Pi 5 (ARM Cortex-A76)
+# INPUT: 6-Channel Hexaphonic Pickup @ 44.1kHz
+# =================================================
+
+1. CORE SYSTEM ARCHITECTURE (Three-Tier Threading)
+- Tier 1: Audio I/O (Core 0). Real-time Jack callbacks, Butterworth Filtering, Ring Buffer pushing.
+- Tier 2: CQT Worker (Core 1/2). Asynchronous CQT math, Peak Picking, and MIDI logic.
+- Tier 3: UI/MIDI (Core 3). OpenGL/EGL Fretboard rendering and ALSA/Jack MIDI output.
+- Inter-thread communication: Lock-free Ring Buffers (Audio -> CQT) and Atomic variables (CQT -> UI).
+
+2. SIGNAL CHAIN SPECS (Per String)
+- Buffer/Hop: 4096 Sample Window with a 512 Sample Hop (triggered worker).
+- Pre-Filter: 2nd-Order Butterworth Band-Pass filters to isolate string "lanes" and kill crosstalk.
+- Transform: Constant-Q Transform (CQT) with 36 bins per octave for high chromatic resolution.
+- Calibration: Magnitude-based 1-to-1 system (Normalization Target = 0.25 Mag).
+
+3. DETECTION & HYSTERESIS LOGIC
+- Approach: Monophonic Global Maximum (only the loudest bin per channel triggers a note).
+- Thresholds: envFloor (0.15) for Note-On; gateRatio (0.5) for Note-Off hysteresis.
+- Cross-String Rejection: Winner-Take-All logic to suppress mechanical bleed between hex segments.
+
+4. REACTIVE UI LOGIC
+- Sustain/Decay: Fret opacity is an EMA-smoothed map of current_mag / 0.25.
+- Attack Glint: Instant brightness spike (Alpha = 1.0) on flux triggers with exponential decay.
+
+5. PLANNED FEATURES & ARTICULATION PIPELINE
+- ML Articulation Engine: Parallel Classifier (Random Forest or CNN) to detect:
+    * Pick vs. Fingerstyle vs. Slap.
+    * Pick position (Bridge vs. Neck based on harmonic spectral tilt).
+    * Palm Muting (High-frequency damping detection).
+- Polyphonic Pitch Bend: Sub-bin interpolation (Parabolic or Phase-Vocoder) for 1:1 string bending.
+- Intelligent MIDI Mapping: Automatic MPE (Multidimensional Polyphonic Expression) support.
+- Performance Debugger: Real-time on-screen visualization of CQT magnitudes and CPU core delta times.
+
+6. OPTIMIZATION REQUIREMENTS
+- NEON SIMD: Mandatory vectorization for all complex math and filter biquads.
+- Thread Affinity: Hard-pinning threads to Pi 5 cores to eliminate context-switching jitter.

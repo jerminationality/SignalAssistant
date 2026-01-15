@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -39,6 +40,7 @@ struct CalibrationProfile {
   std::array<float, 6> avgRms {0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
   std::array<float, 6> peakRms {0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
   std::array<float, 6> multipliers {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+  std::array<float, 6> spatialWeight {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};  // Crosstalk fairness weight
   bool valid = false;
 };
 
@@ -50,7 +52,9 @@ struct FrameFeatures {
   float envelopeRms = 0.f;
 };
 
-class StringTracker; // fwd
+class CQTNoteDetector;
+struct DetectionParams;
+struct GuitarFrame;
 
 class TabEngine {
 public:
@@ -78,5 +82,13 @@ private:
   CalibrationProfile _calibration;
   std::vector<NoteEvent> _events;
   std::vector<int> _activeIdx; // per-string active event index or -1
-  std::vector<StringTracker*> _trkPtrs; // owned
+  std::unique_ptr<CQTNoteDetector> _cqtDetector;
+  
+  // CQT state tracking
+  struct StringCQTState {
+    float lastPitchHz = -1.0f;
+    float lastRms = 0.0f;
+    int lastFret = -1;
+  };
+  std::array<StringCQTState, 6> _cqtStates;
 };

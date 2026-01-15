@@ -33,22 +33,32 @@ void fromJson(const QJsonValue& value, std::array<float, 6>& arr) {
         arr[static_cast<std::size_t>(i)] = static_cast<float>(json[i].toDouble());
 }
 
+QJsonArray toJson(const std::array<int, 6>& arr) {
+    QJsonArray json;
+    for (int v : arr)
+        json.append(v);
+    return json;
+}
+
+void fromJson(const QJsonValue& value, std::array<int, 6>& arr) {
+    const QJsonArray json = value.toArray();
+    if (json.size() != 6)
+        return;
+    for (int i = 0; i < 6; ++i)
+        arr[static_cast<std::size_t>(i)] = json[i].toInt();
+}
+
 QJsonObject serializeParameterSetJson(const NoteDetectionParameterSet& set) {
     QJsonObject obj;
-    obj.insert("onsetThresholdScale", toJson(set.onsetThresholdScale));
     obj.insert("baselineFloor", toJson(set.baselineFloor));
     obj.insert("envelopeFloor", toJson(set.envelopeFloor));
     obj.insert("gateRatio", toJson(set.gateRatio));
-    obj.insert("sustainFloorScale", toJson(set.sustainFloorScale));
-    obj.insert("retriggerGateScale", toJson(set.retriggerGateScale));
-    obj.insert("pitchTolerance", toJson(set.pitchTolerance));
     obj.insert("targetRms", toJson(set.targetRms));
     obj.insert("calibrationGainMultiplier", toJson(set.calibrationGainMultiplier));
-    obj.insert("lowCutMultiplier", toJson(set.lowCutMultiplier));
-    obj.insert("highCutMultiplier", toJson(set.highCutMultiplier));
-    obj.insert("aubioThresholdScale", toJson(set.aubioThresholdScale));
-    obj.insert("onsetSilenceDb", toJson(set.onsetSilenceDb));
-    obj.insert("pitchSilenceDb", toJson(set.pitchSilenceDb));
+    obj.insert("spatialWeight", toJson(set.spatialWeight));
+    obj.insert("confirmationFrames", toJson(set.confirmationFrames));
+    obj.insert("fluxSensitivity", toJson(set.fluxSensitivity));
+    obj.insert("slopeDecay", toJson(set.slopeDecay));
     return obj;
 }
 
@@ -69,25 +79,19 @@ QVariantList buildCategories() {
         std::initializer_list<NoteParameter> params;
     };
 
-    const std::array<CategoryDef, 3> kCategoryDefs = {{
-        {"envelope", "Envelope & Gate", {
-            NoteParameter::OnsetThresholdScale,
+    // CQT parameters organized by category
+    const std::array<CategoryDef, 2> kCategoryDefs = {{
+        {"envelope", "Detection Thresholds", {
             NoteParameter::BaselineFloor,
             NoteParameter::EnvelopeFloor,
             NoteParameter::GateRatio,
-            NoteParameter::SustainFloorScale,
-            NoteParameter::RetriggerGateScale
+            NoteParameter::FluxSensitivity,
+            NoteParameter::SlopeDecay
         }},
-        {"pitch", "Pitch Tracking", {
-            NoteParameter::PitchTolerance,
-            NoteParameter::OnsetSilenceDb,
-            NoteParameter::PitchSilenceDb
-        }},
-        {"filters", "Calibration & Filters", {
+        {"calibration", "Calibration & Stability", {
             NoteParameter::TargetRms,
             NoteParameter::CalibrationGainMultiplier,
-            NoteParameter::LowCutMultiplier,
-            NoteParameter::HighCutMultiplier
+            NoteParameter::ConfirmationFrames
         }}
     }};
 
@@ -268,29 +272,17 @@ void DetectionTuningController::loadFromDisk() {
             for (auto it = root.begin(); it != root.end(); ++it) {
                 NoteDetectionParameterSet set = makeDefaultNoteDetectionParameters();
                 const QJsonObject obj = it.value().toObject();
-                fromJson(obj.value("onsetThresholdScale"), set.onsetThresholdScale);
                 // baselineFloor is not loaded from tuning settings
                 // It is ONLY set by the calibration profile in TabEngineBridge::handleCalibrationBaselineFloorCaptured()
                 // Keep default values (will be overwritten by calibration profile)
                 fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
                 fromJson(obj.value("gateRatio"), set.gateRatio);
-                fromJson(obj.value("sustainFloorScale"), set.sustainFloorScale);
-                fromJson(obj.value("retriggerGateScale"), set.retriggerGateScale);
-                fromJson(obj.value("pitchTolerance"), set.pitchTolerance);
-                if (obj.contains("targetRms")) {
-                    fromJson(obj.value("targetRms"), set.targetRms);
-                } else if (obj.contains("calibrationLift")) {
-                    // Legacy: convert calibrationLift to targetRms
-                    std::array<float, 6> legacyLift;
-                    fromJson(obj.value("calibrationLift"), legacyLift);
-                    for (size_t i = 0; i < 6; ++i)
-                        set.targetRms[i] = 0.0018f * legacyLift[i];
-                }
-                fromJson(obj.value("lowCutMultiplier"), set.lowCutMultiplier);
-                fromJson(obj.value("highCutMultiplier"), set.highCutMultiplier);
-                fromJson(obj.value("aubioThresholdScale"), set.aubioThresholdScale);
-                fromJson(obj.value("onsetSilenceDb"), set.onsetSilenceDb);
-                fromJson(obj.value("pitchSilenceDb"), set.pitchSilenceDb);
+                fromJson(obj.value("targetRms"), set.targetRms);
+                fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
+                fromJson(obj.value("spatialWeight"), set.spatialWeight);
+                fromJson(obj.value("confirmationFrames"), set.confirmationFrames);
+                fromJson(obj.value("fluxSensitivity"), set.fluxSensitivity);
+                fromJson(obj.value("slopeDecay"), set.slopeDecay);
                 states[it.key().toStdString()] = set;
             }
         }
@@ -317,33 +309,15 @@ void DetectionTuningController::loadSnapshotsFromDirectory(std::map<std::string,
             continue;
         const QJsonObject obj = doc.object();
         NoteDetectionParameterSet set = makeDefaultNoteDetectionParameters();
-        fromJson(obj.value("onsetThresholdScale"), set.onsetThresholdScale);
         // baselineFloor is not loaded - only from calibration
         fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
         fromJson(obj.value("gateRatio"), set.gateRatio);
-        fromJson(obj.value("sustainFloorScale"), set.sustainFloorScale);
-        fromJson(obj.value("retriggerGateScale"), set.retriggerGateScale);
-        fromJson(obj.value("pitchTolerance"), set.pitchTolerance);
-        if (obj.contains("targetRms")) {
-            fromJson(obj.value("targetRms"), set.targetRms);
-        } else if (obj.contains("calibrationLift")) {
-            // Legacy: convert calibrationLift to targetRms
-            std::array<float, 6> legacyLift;
-            fromJson(obj.value("calibrationLift"), legacyLift);
-            for (size_t i = 0; i < 6; ++i)
-                set.targetRms[i] = 0.0018f * legacyLift[i];
-        }
-        if (obj.contains("calibrationGainMultiplier")) {
-            fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
-        } else {
-            for (size_t i = 0; i < 6; ++i)
-                set.calibrationGainMultiplier[i] = 1.0f;
-        }
-        fromJson(obj.value("lowCutMultiplier"), set.lowCutMultiplier);
-        fromJson(obj.value("highCutMultiplier"), set.highCutMultiplier);
-        fromJson(obj.value("aubioThresholdScale"), set.aubioThresholdScale);
-        fromJson(obj.value("onsetSilenceDb"), set.onsetSilenceDb);
-        fromJson(obj.value("pitchSilenceDb"), set.pitchSilenceDb);
+        fromJson(obj.value("targetRms"), set.targetRms);
+        fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
+        fromJson(obj.value("spatialWeight"), set.spatialWeight);
+        fromJson(obj.value("confirmationFrames"), set.confirmationFrames);
+        fromJson(obj.value("fluxSensitivity"), set.fluxSensitivity);
+        fromJson(obj.value("slopeDecay"), set.slopeDecay);
         const QString label = obj.value(QStringLiteral("label")).toString(QFileInfo(fileName).completeBaseName());
         states[label.toStdString()] = set;
     }
@@ -471,33 +445,15 @@ bool DetectionTuningController::readParameterSet(const QString& path, NoteDetect
         return false;
     const QJsonObject obj = doc.object();
     NoteDetectionParameterSet set = outSet;
-    fromJson(obj.value("onsetThresholdScale"), set.onsetThresholdScale);
     // baselineFloor is not loaded - only from calibration
     fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
     fromJson(obj.value("gateRatio"), set.gateRatio);
-    fromJson(obj.value("sustainFloorScale"), set.sustainFloorScale);
-    fromJson(obj.value("retriggerGateScale"), set.retriggerGateScale);
-    fromJson(obj.value("pitchTolerance"), set.pitchTolerance);
-    if (obj.contains("targetRms")) {
-        fromJson(obj.value("targetRms"), set.targetRms);
-    } else if (obj.contains("calibrationLift")) {
-        // Legacy: convert calibrationLift to targetRms
-        std::array<float, 6> legacyLift;
-        fromJson(obj.value("calibrationLift"), legacyLift);
-        for (size_t i = 0; i < 6; ++i)
-            set.targetRms[i] = 0.0018f * legacyLift[i];
-    }
-    if (obj.contains("calibrationGainMultiplier")) {
-        fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
-    } else {
-        for (size_t i = 0; i < 6; ++i)
-            set.calibrationGainMultiplier[i] = 1.0f;
-    }
-    fromJson(obj.value("lowCutMultiplier"), set.lowCutMultiplier);
-    fromJson(obj.value("highCutMultiplier"), set.highCutMultiplier);
-    fromJson(obj.value("aubioThresholdScale"), set.aubioThresholdScale);
-    fromJson(obj.value("onsetSilenceDb"), set.onsetSilenceDb);
-    fromJson(obj.value("pitchSilenceDb"), set.pitchSilenceDb);
+    fromJson(obj.value("targetRms"), set.targetRms);
+    fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
+    fromJson(obj.value("spatialWeight"), set.spatialWeight);
+    fromJson(obj.value("confirmationFrames"), set.confirmationFrames);
+    fromJson(obj.value("fluxSensitivity"), set.fluxSensitivity);
+    fromJson(obj.value("slopeDecay"), set.slopeDecay);
     outSet = set;
     return true;
 }

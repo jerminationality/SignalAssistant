@@ -644,6 +644,30 @@ build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.s
 .PHONY : build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.s
 
+build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.o: build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o
+.PHONY : build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.o
+
+# target to build an object file
+build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o
+.PHONY : build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.o
+
+build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.i: build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.i
+.PHONY : build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.i
+
+# target to preprocess a source file
+build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.i
+.PHONY : build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.i
+
+build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.s: build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.s
+.PHONY : build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.s
+
+# target to generate assembly for a file
+build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.s
+.PHONY : build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.s
+
 build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.o: build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.o
 .PHONY : build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.o
 
@@ -1103,6 +1127,30 @@ src/AppController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/AppController.cpp.s
 .PHONY : src/AppController.cpp.s
 
+src/CQT/CQTNoteDetector.o: src/CQT/CQTNoteDetector.cpp.o
+.PHONY : src/CQT/CQTNoteDetector.o
+
+# target to build an object file
+src/CQT/CQTNoteDetector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o
+.PHONY : src/CQT/CQTNoteDetector.cpp.o
+
+src/CQT/CQTNoteDetector.i: src/CQT/CQTNoteDetector.cpp.i
+.PHONY : src/CQT/CQTNoteDetector.i
+
+# target to preprocess a source file
+src/CQT/CQTNoteDetector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.i
+.PHONY : src/CQT/CQTNoteDetector.cpp.i
+
+src/CQT/CQTNoteDetector.s: src/CQT/CQTNoteDetector.cpp.s
+.PHONY : src/CQT/CQTNoteDetector.s
+
+# target to generate assembly for a file
+src/CQT/CQTNoteDetector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.s
+.PHONY : src/CQT/CQTNoteDetector.cpp.s
+
 src/DetectionTuningController.o: src/DetectionTuningController.cpp.o
 .PHONY : src/DetectionTuningController.o
 
@@ -1129,6 +1177,57 @@ src/DetectionTuningController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/DetectionTuningController.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/DetectionTuningController.cpp.s
 .PHONY : src/DetectionTuningController.cpp.s
+
+src/FretboardProvider.o: src/FretboardProvider.cpp.o
+.PHONY : src/FretboardProvider.o
+
+# target to build an object file
+src/FretboardProvider.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o
+.PHONY : src/FretboardProvider.cpp.o
+
+src/FretboardProvider.i: src/FretboardProvider.cpp.i
+.PHONY : src/FretboardProvider.i
+
+# target to preprocess a source file
+src/FretboardProvider.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.i
+.PHONY : src/FretboardProvider.cpp.i
+
+src/FretboardProvider.s: src/FretboardProvider.cpp.s
+.PHONY : src/FretboardProvider.s
+
+# target to generate assembly for a file
+src/FretboardProvider.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/FretboardProvider.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.s
+.PHONY : src/FretboardProvider.cpp.s
+
+src/HeatmapLogger.o: src/HeatmapLogger.cpp.o
+.PHONY : src/HeatmapLogger.o
+
+# target to build an object file
+src/HeatmapLogger.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o
+.PHONY : src/HeatmapLogger.cpp.o
+
+src/HeatmapLogger.i: src/HeatmapLogger.cpp.i
+.PHONY : src/HeatmapLogger.i
+
+# target to preprocess a source file
+src/HeatmapLogger.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.i
+.PHONY : src/HeatmapLogger.cpp.i
+
+src/HeatmapLogger.s: src/HeatmapLogger.cpp.s
+.PHONY : src/HeatmapLogger.s
+
+# target to generate assembly for a file
+src/HeatmapLogger.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.s
+.PHONY : src/HeatmapLogger.cpp.s
 
 src/NoteDetectionConfig.o: src/NoteDetectionConfig.cpp.o
 .PHONY : src/NoteDetectionConfig.o
@@ -1228,30 +1327,6 @@ src/SessionLogger.s: src/SessionLogger.cpp.s
 src/SessionLogger.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.s
 .PHONY : src/SessionLogger.cpp.s
-
-src/StringTracker.o: src/StringTracker.cpp.o
-.PHONY : src/StringTracker.o
-
-# target to build an object file
-src/StringTracker.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o
-.PHONY : src/StringTracker.cpp.o
-
-src/StringTracker.i: src/StringTracker.cpp.i
-.PHONY : src/StringTracker.i
-
-# target to preprocess a source file
-src/StringTracker.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.i
-.PHONY : src/StringTracker.cpp.i
-
-src/StringTracker.s: src/StringTracker.cpp.s
-.PHONY : src/StringTracker.s
-
-# target to generate assembly for a file
-src/StringTracker.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/guitarpi_tab.dir/build.make CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.s
-.PHONY : src/StringTracker.cpp.s
 
 src/TabEngine.o: src/TabEngine.cpp.o
 .PHONY : src/TabEngine.o
@@ -1354,6 +1429,33 @@ src/audio/AudioEngine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/audio/AudioEngine.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.s
 .PHONY : src/audio/AudioEngine.cpp.s
+
+src/audio/CQTWorkerThread.o: src/audio/CQTWorkerThread.cpp.o
+.PHONY : src/audio/CQTWorkerThread.o
+
+# target to build an object file
+src/audio/CQTWorkerThread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o
+.PHONY : src/audio/CQTWorkerThread.cpp.o
+
+src/audio/CQTWorkerThread.i: src/audio/CQTWorkerThread.cpp.i
+.PHONY : src/audio/CQTWorkerThread.i
+
+# target to preprocess a source file
+src/audio/CQTWorkerThread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.i
+.PHONY : src/audio/CQTWorkerThread.cpp.i
+
+src/audio/CQTWorkerThread.s: src/audio/CQTWorkerThread.cpp.s
+.PHONY : src/audio/CQTWorkerThread.s
+
+# target to generate assembly for a file
+src/audio/CQTWorkerThread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GuitarPi.dir/build.make CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TabPagePreview.dir/build.make CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.s
+.PHONY : src/audio/CQTWorkerThread.cpp.s
 
 src/audio/CarlaClient.o: src/audio/CarlaClient.cpp.o
 .PHONY : src/audio/CarlaClient.o
@@ -1588,6 +1690,9 @@ help:
 	@echo "... build/.rcc/qmlcache/GuitarPi_qml/Main_qml.o"
 	@echo "... build/.rcc/qmlcache/GuitarPi_qml/Main_qml.i"
 	@echo "... build/.rcc/qmlcache/GuitarPi_qml/Main_qml.s"
+	@echo "... build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.o"
+	@echo "... build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.i"
+	@echo "... build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.s"
 	@echo "... build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.o"
 	@echo "... build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.i"
 	@echo "... build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.s"
@@ -1645,9 +1750,18 @@ help:
 	@echo "... src/AppController.o"
 	@echo "... src/AppController.i"
 	@echo "... src/AppController.s"
+	@echo "... src/CQT/CQTNoteDetector.o"
+	@echo "... src/CQT/CQTNoteDetector.i"
+	@echo "... src/CQT/CQTNoteDetector.s"
 	@echo "... src/DetectionTuningController.o"
 	@echo "... src/DetectionTuningController.i"
 	@echo "... src/DetectionTuningController.s"
+	@echo "... src/FretboardProvider.o"
+	@echo "... src/FretboardProvider.i"
+	@echo "... src/FretboardProvider.s"
+	@echo "... src/HeatmapLogger.o"
+	@echo "... src/HeatmapLogger.i"
+	@echo "... src/HeatmapLogger.s"
 	@echo "... src/NoteDetectionConfig.o"
 	@echo "... src/NoteDetectionConfig.i"
 	@echo "... src/NoteDetectionConfig.s"
@@ -1660,9 +1774,6 @@ help:
 	@echo "... src/SessionLogger.o"
 	@echo "... src/SessionLogger.i"
 	@echo "... src/SessionLogger.s"
-	@echo "... src/StringTracker.o"
-	@echo "... src/StringTracker.i"
-	@echo "... src/StringTracker.s"
 	@echo "... src/TabEngine.o"
 	@echo "... src/TabEngine.i"
 	@echo "... src/TabEngine.s"
@@ -1675,6 +1786,9 @@ help:
 	@echo "... src/audio/AudioEngine.o"
 	@echo "... src/audio/AudioEngine.i"
 	@echo "... src/audio/AudioEngine.s"
+	@echo "... src/audio/CQTWorkerThread.o"
+	@echo "... src/audio/CQTWorkerThread.i"
+	@echo "... src/audio/CQTWorkerThread.s"
 	@echo "... src/audio/CarlaClient.o"
 	@echo "... src/audio/CarlaClient.i"
 	@echo "... src/audio/CarlaClient.s"

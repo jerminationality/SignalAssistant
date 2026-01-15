@@ -5,6 +5,27 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 
+# =============================================================================
+# ARM NEON SIMD Optimization (Raspberry Pi 5 / Cortex-A76)
+# =============================================================================
+# Enable NEON instructions for 4-wide floating-point operations
+# Pi 5's Cortex-A76 supports advanced NEON for 4x speedup on vector math
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|arm64|ARM64")
+    message(STATUS "ARM64 detected - enabling NEON SIMD optimizations")
+    # NEON is enabled by default on aarch64, but we want aggressive vectorization
+    set(NEON_FLAGS "-march=armv8.2-a+fp16+simd -ftree-vectorize -ffast-math")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${NEON_FLAGS}")
+    add_compile_definitions(HAVE_ARM_NEON=1)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm")
+    message(STATUS "ARM32 detected - enabling NEON SIMD optimizations")
+    set(NEON_FLAGS "-mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -ffast-math")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${NEON_FLAGS}")
+    add_compile_definitions(HAVE_ARM_NEON=1)
+else()
+    message(STATUS "Non-ARM platform - using standard optimizations")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ftree-vectorize -ffast-math")
+endif()
+
 find_package(Qt6 6.5 COMPONENTS Quick QuickControls2 Qml Multimedia REQUIRED)
 find_package(PkgConfig QUIET)
 find_package(Threads REQUIRED)
@@ -47,10 +68,12 @@ qt_add_executable(GuitarPi
     src/DetectionTuningController.cpp
     src/RecordedSessionPlayer.cpp
     src/TabEngineBridge.cpp
+    src/FretboardProvider.cpp
     src/audio/AudioEngine.cpp
     src/audio/CarlaClient.cpp
     src/audio/HexJackClient.cpp
     src/audio/JackMonitorSink.cpp
+    src/audio/CQTWorkerThread.cpp
 )
 
 qt_add_executable(TabPagePreview
@@ -59,10 +82,12 @@ qt_add_executable(TabPagePreview
     src/DetectionTuningController.cpp
     src/RecordedSessionPlayer.cpp
     src/TabEngineBridge.cpp
+    src/FretboardProvider.cpp
     src/audio/AudioEngine.cpp
     src/audio/CarlaClient.cpp
     src/audio/HexJackClient.cpp
     src/audio/JackMonitorSink.cpp
+    src/audio/CQTWorkerThread.cpp
 )
 
 file(GLOB_RECURSE GUITARPI_QML_ASSETS CONFIGURE_DEPENDS
@@ -89,6 +114,7 @@ qt_add_qml_module(GuitarPi
         qml/components/TestModeOverlay.qml
         qml/components/RecordingOverlay.qml
         qml/components/TuningPanel.qml
+        qml/components/BatchedFretboardBinOverlay.qml
     RESOURCES
         ${GUITARPI_QML_ASSETS}
 )
@@ -96,16 +122,18 @@ qt_add_qml_module(GuitarPi
 add_library(guitarpi_tab
     src/TabEngine.cpp
     src/TabEngine.h
-    src/StringTracker.cpp
-    src/StringTracker.h
     src/util.cpp
     src/util.h
     src/SessionLogger.cpp
     src/SessionLogger.h
+    src/HeatmapLogger.cpp
+    src/HeatmapLogger.h
     src/NoteDetectionConfig.cpp
     src/NoteDetectionConfig.h
     src/NoteDetectionStore.cpp
     src/NoteDetectionStore.h
+    src/CQT/CQTNoteDetector.cpp
+    src/CQT/CQTNoteDetector.h
 )
 
 target_include_directories(guitarpi_tab

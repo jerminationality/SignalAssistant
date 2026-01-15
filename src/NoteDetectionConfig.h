@@ -4,39 +4,29 @@
 #include <string>
 
 struct NoteDetectionParameterSet {
-    std::array<float, 6> onsetThresholdScale {};
     std::array<float, 6> baselineFloor {};
     std::array<float, 6> envelopeFloor {};
     std::array<float, 6> gateRatio {};
-    std::array<float, 6> sustainFloorScale {};
-    std::array<float, 6> retriggerGateScale {};
-    std::array<float, 6> pitchTolerance {};
     std::array<float, 6> targetRms {};
-    std::array<float, 6> calibrationGainMultiplier {};
-    std::array<float, 6> lowCutMultiplier {};
-    std::array<float, 6> highCutMultiplier {};
-    std::array<float, 6> aubioThresholdScale {};
-    std::array<float, 6> onsetSilenceDb {};
-    std::array<float, 6> pitchSilenceDb {};
+    std::array<float, 6> calibrationGainMultiplier {}; // Maps to preAmpGain
+    std::array<float, 6> spatialWeight {};             // Calibration-fixed crosstalk weight
+    std::array<int, 6> confirmationFrames {};          // Stability frames (1-5)
+    std::array<float, 6> fluxSensitivity {};           // Spectral flux retrigger threshold (0.05-0.50)
+    std::array<float, 6> slopeDecay {};                // Energy slope decay per fret (0.0-0.025)
 };
 
 NoteDetectionParameterSet makeDefaultNoteDetectionParameters();
 
 enum class NoteParameter {
-    OnsetThresholdScale,
     BaselineFloor,
     EnvelopeFloor,
     GateRatio,
-    SustainFloorScale,
-    RetriggerGateScale,
-    PitchTolerance,
     TargetRms,
     CalibrationGainMultiplier,
-    LowCutMultiplier,
-    HighCutMultiplier,
-    AubioThresholdScale,
-    OnsetSilenceDb,
-    PitchSilenceDb
+    SpatialWeight,
+    ConfirmationFrames,
+    FluxSensitivity,
+    SlopeDecay
 };
 
 inline constexpr int kNumStrings = 6;
@@ -55,6 +45,6 @@ struct ParameterDescriptor {
     std::array<float, 6> perStringMax {};
 };
 
-const std::array<ParameterDescriptor, 15>& parameterDescriptors();
+const std::array<ParameterDescriptor, 9>& parameterDescriptors();
 
 std::string defaultStringLabel(int stringIndex);

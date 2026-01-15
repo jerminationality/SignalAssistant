@@ -83,6 +83,7 @@ CMakeFiles/GuitarPi_qmllint_module: /home/general/SignalAssistant/qml/components
 CMakeFiles/GuitarPi_qmllint_module: /home/general/SignalAssistant/qml/components/TestModeOverlay.qml
 CMakeFiles/GuitarPi_qmllint_module: /home/general/SignalAssistant/qml/components/RecordingOverlay.qml
 CMakeFiles/GuitarPi_qmllint_module: /home/general/SignalAssistant/qml/components/TuningPanel.qml
+CMakeFiles/GuitarPi_qmllint_module: /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
 CMakeFiles/GuitarPi_qmllint_module: .rcc/qmllint/GuitarPi_module.rsp
 	cd /home/general/SignalAssistant && /usr/lib/qt6/bin/qmllint @/home/general/SignalAssistant/build/.rcc/qmllint/GuitarPi_module.rsp
 

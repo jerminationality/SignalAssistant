@@ -1,0 +1,94 @@
+# SIGNAL CHAIN REQUIREMENTS: PRE-CQT FILTERING
+# ===========================================
+
+1. OBJECTIVE: 
+Apply per-string Butterworth Band-Pass Filters to isolate the 
+fundamental frequency range and suppress mechanical crosstalk.
+
+2. DSP ORDER:
+   [Raw Input] -> [Band-Pass Filter] -> [RMS/CQT Logic]
+
+3. FILTER SPECIFICATIONS (2nd-Order Butterworth, 44.1kHz):
+   - String 6 (Low E): 75 Hz  to 800 Hz
+   - String 5 (A):     100 Hz to 1,000 Hz
+   - String 4 (D):     140 Hz to 1,400 Hz
+   - String 3 (G):     185 Hz to 2,000 Hz
+   - String 2 (B):     235 Hz to 2,800 Hz
+   - String 1 (High E):315 Hz to 4,000 Hz
+
+4. KEY LOGIC: 
+Filter first, THEN run calibration. This ensures the 1-to-1 magnitude 
+target (0.25) is based on clean, string-specific energy.
+
+
+EXAMPLE IMPLEMENTATION
+
+/**
+ * BIQUAD BUTTERWORTH 2ND-ORDER IMPLEMENTATION
+ * Sample Rate: 44100 Hz | Structure: Direct Form II Transposed
+ */
+
+#include <cmath>
+
+struct BiquadCoeffs {
+    double b0, b1, b2, a1, a2;
+};
+
+// Biquad structure for real-time sample processing
+class BiquadFilter {
+private:
+    double z1 = 0.0, z2 = 0.0;
+    BiquadCoeffs c;
+
+public:
+    void setCoefficients(BiquadCoeffs newCoeffs) {
+        c = newCoeffs;
+    }
+
+    void reset() {
+        z1 = z2 = 0.0;
+    }
+
+    // Process a single sample through the filter
+    inline double process(double in) {
+        double out = in * c.b0 + z1;
+        z1 = in * c.b1 + z2 - c.a1 * out;
+        z2 = in * c.b2 - c.a2 * out;
+        return out;
+    }
+};
+
+// Coefficient generator for Copilot/Developer
+BiquadCoeffs calculateButterworth(double freq, double sampleRate, bool isHighPass) {
+    BiquadCoeffs coeffs;
+    const double Q = 0.70710678118; // Standard Butterworth flatness
+    double omega = 2.0 * M_PI * freq / sampleRate;
+    double sn = std::sin(omega);
+    double cs = std::cos(omega);
+    double alpha = sn / (2.0 * Q);
+
+    double b0, b1, b2, a0, a1, a2;
+
+    if (isHighPass) {
+        b0 = (1.0 + cs) / 2.0;
+        b1 = -(1.0 + cs);
+        b2 = (1.0 + cs) / 2.0;
+    } else { 
+        b0 = (1.0 - cs) / 2.0;
+        b1 = 1.0 - cs;
+        b2 = (1.0 - cs) / 2.0;
+    }
+
+    a0 = 1.0 + alpha;
+    a1 = -2.0 * cs;
+    a2 = 1.0 - alpha;
+
+    // Normalize coefficients by a0
+    coeffs.b0 = b0 / a0;
+    coeffs.b1 = b1 / a0;
+    coeffs.b2 = b2 / a0;
+    coeffs.a1 = a1 / a0;
+    coeffs.a2 = a2 / a0;
+
+    return coeffs;
+}

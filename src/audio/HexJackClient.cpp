@@ -21,9 +21,10 @@
 namespace {
 constexpr int kTabCaptureBaseChannel = 3;
 constexpr const char* kHexClientName = "guitarpi_hex";
-constexpr const char* kDefaultJackCommand = "JACK_NO_AUDIO_RESERVATION=1 jackd -R -P70 -d alsa -d hw:2,0 -p128 -n3 -r48000 -s~";
+constexpr const char* kDefaultJackCommand = "JACK_NO_AUDIO_RESERVATION=1 jackd -R -P70 -d alsa -d hw:2,0 -p256 -n3 -r44100 -s~";
 constexpr float kCalibrationCaptureSecPerString = 1.25f;
-constexpr float kCalibrationTriggerLevel = 0.008f;
+constexpr float kCalibrationNoiseFloorSec = 2.0f;  // 2 seconds of silence for noise floor capture
+constexpr float kCalibrationTriggerLevel = 0.02f;  // Raised from 0.008f to reduce false triggers
 
 float computeLevel(const jack_default_audio_sample_t* buffer, jack_nframes_t frames) {
     if (!buffer || frames == 0)
@@ -106,6 +107,13 @@ bool HexJackClient::start() {
     m_currentBufferSize.store(static_cast<int>(jack_get_buffer_size(m_client)));
     m_currentSampleRate.store(static_cast<int>(jack_get_sample_rate(m_client)));
 
+    // Pre-allocate calibrated buffers to avoid allocations in audio callback
+    const std::size_t maxBufferSize = static_cast<std::size_t>(jack_get_buffer_size(m_client));
+    for (auto& buf : m_calibratedBuffers) {
+        buf.reserve(maxBufferSize);
+        buf.resize(maxBufferSize);
+    }
+
     const int pendingFrames = m_pendingBufferSize.load();
     if (pendingFrames > 0 && pendingFrames != m_currentBufferSize.load()) {
         jack_set_buffer_size(m_client, static_cast<jack_nframes_t>(pendingFrames));
@@ -117,7 +125,9 @@ bool HexJackClient::start() {
         return false;
     }
 
+    qInfo() << "HexJackClient: JACK client activated";
     connectSystemPorts();
+    qInfo() << "HexJackClient: System ports connected";
 
     m_meterPump = std::make_unique<MeterPump>(this);
 
@@ -281,10 +291,13 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
         if (!src) continue;
 
         auto& buf = self->m_calibratedBuffers[static_cast<std::size_t>(s)];
-        buf.resize(nframes);
+        // Buffer is pre-allocated in bufferSizeCallback - no resize needed
+        // Just ensure we don't write beyond the buffer
+        const std::size_t bufSize = buf.size();
+        const std::size_t framesToCopy = std::min(static_cast<std::size_t>(nframes), bufSize);
         
         const float mult = multipliers[static_cast<std::size_t>(s)];
-        for (jack_nframes_t i = 0; i < nframes; ++i) {
+        for (std::size_t i = 0; i < framesToCopy; ++i) {
             buf[i] = src[i] * mult;
         }
         
@@ -341,7 +354,29 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
 
     const float sr = static_cast<float>(self->m_currentSampleRate.load(std::memory_order_acquire));
     
-    // Now both processing and monitor see calibrated audio
+    // =========================================================================
+    // TIER 1 -> TIER 2: Push calibrated audio to ring buffer
+    // This is the ONLY communication from audio thread to CQT worker
+    // NO heavy processing here - just copy samples to lock-free buffer
+    // =========================================================================
+    {
+        audio::AudioFrame frame;
+        for (jack_nframes_t i = 0; i < nframes; ++i) {
+            for (int s = 0; s < 6; ++s) {
+                frame.samples[s] = channels[s] ? channels[s][i] : 0.0f;
+            }
+            // Push to ring buffer - if full, we drop samples (XRun protection)
+            self->m_audioRingBuffer.push(frame);
+        }
+        
+        // Notify CQT worker thread that audio is available
+        if (self->m_bridge) {
+            self->m_bridge->notifyCQTWorker();
+        }
+    }
+    
+    // Legacy path: still call processLiveAudioBlock for session recording and event dispatch
+    // With SessionLogger disabled, this should be fast enough for real-time
     if (self->m_bridge) {
         self->m_bridge->processLiveAudioBlock(channels.data(), static_cast<int>(nframes), sr);
     }
@@ -356,6 +391,13 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
 int HexJackClient::bufferSizeCallback(jack_nframes_t nframes, void* arg) {
     auto* self = static_cast<HexJackClient*>(arg);
     self->m_currentBufferSize.store(static_cast<int>(nframes));
+    
+    // Pre-allocate calibrated buffers for new buffer size (avoid allocations in process callback)
+    const std::size_t size = static_cast<std::size_t>(nframes);
+    for (auto& buf : self->m_calibratedBuffers) {
+        buf.resize(size);
+    }
+    
     QMetaObject::invokeMethod(self, [self]() { emit self->bufferConfigChanged(self->sampleRate(), self->bufferSize()); }, Qt::QueuedConnection);
     return 0;
 }
@@ -539,22 +581,33 @@ void HexJackClient::handleCalibrationRequest(int targetString) {
         state.sequenceCount = 1;
         state.sequence[0] = targetString;
         state.currentString = targetString;
+        state.framesRemaining = 0;  // Wait for trigger
     } else {
         state.sequenceCount = 7;  // noise + 6 strings
         state.sequence[0] = -1;  // -1 = noise floor phase
         for (int i = 0; i < 6; ++i)
             state.sequence[static_cast<std::size_t>(i + 1)] = i;
         state.currentString = -1;  // Start with noise phase
+        // Noise floor phase starts capturing immediately (2 seconds of silence)
+        state.capturing = true;
+        state.framesRemaining = std::max(1, static_cast<int>(currentSr * kCalibrationNoiseFloorSec));
     }
     state.sequenceIndex = 0;
-    state.framesRemaining = 0;
     state.captureFramesPerString = std::max(1, static_cast<int>(currentSr * kCalibrationCaptureSecPerString));
     state.updated.fill(false);
     state.sumRms.fill(0.0);
     state.samples.fill(0);
     state.peakRms.fill(0.0f);
+    state.noiseFloorSum = 0.0;
+    state.noiseFloorSamples = 0;
     QMetaObject::invokeMethod(this, [this]() { emit calibrationStarted(); }, Qt::QueuedConnection);
-    announceCalibrationStep(state.currentString, false);
+    // For noise phase (currentString = -1), announce with capturing=true
+    // TabEngineBridge handles -1 specially to show grey circles
+    if (!state.partial) {
+        announceCalibrationStep(-1, true);  // Noise phase: grey circles
+    } else {
+        announceCalibrationStep(state.currentString, false);  // Single string: yellow ready
+    }
 }
 
 void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) {
@@ -562,7 +615,7 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
     if (!state.active)
         return;
 
-    // currentString == -1 means noise floor capture phase
+    // currentString == -1 means noise floor capture phase (automatic, no trigger needed)
     const bool noisePhase = (state.currentString == -1);
     
     if (!noisePhase && (state.currentString < 0 || state.currentString >= 6)) {
@@ -571,7 +624,51 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
         return;
     }
 
-    const int idx = noisePhase ? 0 : state.currentString;
+    // Noise floor phase: capture average of ALL 6 channels during silence
+    if (noisePhase) {
+        if (!state.capturing) {
+            // Should never happen - noise phase starts capturing immediately
+            state.capturing = true;
+        }
+        
+        // Accumulate RMS from all 6 channels during noise floor phase
+        double sumAll = 0.0;
+        for (int s = 0; s < 6; ++s) {
+            sumAll += std::max(0.f, levels[s]);
+        }
+        const double avgLevel = sumAll / 6.0;
+        state.noiseFloorSum += avgLevel;
+        state.noiseFloorSamples += 1;
+        state.framesRemaining -= static_cast<int>(nframes);
+        
+        if (state.framesRemaining > 0)
+            return;
+        
+        // Noise floor capture complete
+        state.capturing = false;
+        const float avgNoise = (state.noiseFloorSamples > 0)
+            ? static_cast<float>(state.noiseFloorSum / static_cast<double>(state.noiseFloorSamples))
+            : 0.f;
+        
+        QMetaObject::invokeMethod(this, [this, avgNoise]() {
+            emit calibrationBaselineFloorCaptured(avgNoise);
+        }, Qt::QueuedConnection);
+        
+        // Advance to next step (first string)
+        state.sequenceIndex += 1;
+        if (state.sequenceIndex >= state.sequenceCount) {
+            state.active = false;
+            announceCalibrationStep(-1, false);
+            return;
+        }
+        state.currentString = state.sequence[static_cast<std::size_t>(state.sequenceIndex)];
+        state.framesRemaining = 0;
+        announceCalibrationStep(state.currentString, false);
+        return;
+    }
+
+    // String capture phase: wait for trigger, then capture
+    const int idx = state.currentString;
     if (!state.capturing) {
         const float level = std::max(0.f, levels[idx]);
         if (level >= kCalibrationTriggerLevel) {
@@ -599,19 +696,14 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
     state.framesRemaining = 0;
     state.updated[slot] = true;
 
-    // Emit noise floor if we just finished the noise phase
-    if (noisePhase && state.samples[slot] > 0) {
-        const float avgNoise = static_cast<float>(state.sumRms[slot] / static_cast<double>(state.samples[slot]));
-        QMetaObject::invokeMethod(this, [this, avgNoise]() {
-            emit calibrationBaselineFloorCaptured(avgNoise);
-        }, Qt::QueuedConnection);
-    }
-
     state.sequenceIndex += 1;
 
     if (state.sequenceIndex >= state.sequenceCount) {
+        // All strings captured - finalize calibration
+        qDebug() << "HexJackClient: Calibration complete, sequenceIndex=" << state.sequenceIndex 
+                 << "sequenceCount=" << state.sequenceCount;
         state.active = false;
-        announceCalibrationStep(-1, false);
+        announceCalibrationStep(-1, false);  // Signal completion (turns final string green)
 
         std::array<float, 6> averages {};
         std::array<float, 6> peaks {};
@@ -636,6 +728,9 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
         return;
     }
 
+    // Announce next string ready (this also turns previous string green in TabEngineBridge)
     state.currentString = state.sequence[static_cast<std::size_t>(state.sequenceIndex)];
+    qDebug() << "HexJackClient: Moving to next string, sequenceIndex=" << state.sequenceIndex 
+             << "currentString=" << state.currentString;
     announceCalibrationStep(state.currentString, false);
 }

@@ -1,0 +1,5 @@
+# SignalAssistant session log
+# Started at 2026-01-11 05:44:09
+2026-01-11 05:44:09 [session] mode=live session='' path='' duration=0.00 files=0
+2026-01-11 05:44:09 [calibration] Loaded avgRms/peakRms from legacy calibration file
+2026-01-11 05:44:09 [calibration] Calibration profile derived from tuning state

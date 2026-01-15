@@ -337,6 +337,18 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/general/SignalAssistant/src/CQT/CQTNoteDetector.h",
+			"Mu",
+			"GAZK6NHNS2/moc_CQTNoteDetector.cpp",
+			null
+		],
+		[
+			"/home/general/SignalAssistant/src/HeatmapLogger.h",
+			"Mu",
+			"UVLADIE3JM/moc_HeatmapLogger.cpp",
+			null
+		],
+		[
 			"/home/general/SignalAssistant/src/NoteDetectionConfig.h",
 			"Mu",
 			"UVLADIE3JM/moc_NoteDetectionConfig.cpp",
@@ -355,12 +367,6 @@
 			null
 		],
 		[
-			"/home/general/SignalAssistant/src/StringTracker.h",
-			"Mu",
-			"UVLADIE3JM/moc_StringTracker.cpp",
-			null
-		],
-		[
 			"/home/general/SignalAssistant/src/TabEngine.h",
 			"Mu",
 			"UVLADIE3JM/moc_TabEngine.cpp",
@@ -376,7 +382,7 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/general/SignalAssistant/build/guitarpi_tab_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/general/SignalAssistant/build/guitarpi_tab_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "HAVE_AUBIO=1" ],
+	"MOC_DEFINITIONS" : [ "HAVE_ARM_NEON=1", "HAVE_AUBIO=1" ],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -424,6 +430,7 @@
 		"/home/general/SignalAssistant/build/.qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp",
 		"/home/general/SignalAssistant/build/.qt/rcc/qrc_qmake_GuitarPi.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/Main_qml.cpp",
+		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp",
 		"/home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp",
@@ -455,6 +462,12 @@
 	"SOURCES" : 
 	[
 		[
+			"/home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp",
+			"Mu",
+			null
+		],
+		[ "/home/general/SignalAssistant/src/HeatmapLogger.cpp", "Mu", null ],
+		[
 			"/home/general/SignalAssistant/src/NoteDetectionConfig.cpp",
 			"Mu",
 			null
@@ -465,7 +478,6 @@
 			null
 		],
 		[ "/home/general/SignalAssistant/src/SessionLogger.cpp", "Mu", null ],
-		[ "/home/general/SignalAssistant/src/StringTracker.cpp", "Mu", null ],
 		[ "/home/general/SignalAssistant/src/TabEngine.cpp", "Mu", null ],
 		[ "/home/general/SignalAssistant/src/util.cpp", "Mu", null ]
 	],

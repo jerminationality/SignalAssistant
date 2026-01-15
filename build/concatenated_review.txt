@@ -1,0 +1,214 @@
+=== qml/components/BatchedFretboardBinOverlay.qml ===
+
+import QtQuick
+
+Item {
+    id: overlay
+
+    // Preserve SVG coordinate system (viewBox 0 0 1216 127) - matches Fret Cells.svg
+    width: 1216
+    height: 127
+    
+    // Expose canvas for external requestPaint() calls
+    property alias canvas: canvas
+
+    // Defaults (match SVG)
+    property color defaultFill: "#222222"
+    property color defaultStroke: "#585858"
+    property real defaultStrokeW: 0.5
+    property real binH: 20.5
+
+    // If set, used to compute colors on-demand:
+    // function(s1to6, f0to24, binId) -> color/string
+    property var colorProvider: null
+    
+    // If set, used to compute stroke color on-demand:
+    // function(s1to6, f0to24, binId) -> { color: string, width: real }
+    property var strokeProvider: null
+
+    // Internal color overrides (fast set per bin)
+    // Key: "bin_s{1..6}_f{0..24}" -> color string / Qt.rgba / QColor
+    property var colorOverrides: ({})
+    property int colorRevision: 0  // bump to force bindings to re-evaluate
+
+    // SVG string Y positions (s1 high e .. s6 low E)
+    readonly property var stringY: [
+        105.25, // s1
+        84.25,  // s2
+        63.25,  // s3
+        42.25,  // s4
+        21.25,  // s5
+        0.25    // s6
+    ]
+
+    // SVG fret X positions and widths (F0..F24)
+    readonly property var fretX: [
+        1.25, 38.25, 128.25, 211.25, 289.25, 363.25, 433.25, 499.25, 562.25,
+        620.25, 676.25, 728.25, 777.25, 824.25, 868.25, 909.25, 948.75,
+        985.75, 1020.75, 1053.75, 1085.25, 1114.75, 1142.25, 1168.25, 1192.75
+    ]
+    readonly property var fretW: [
+        34.5, 89.5, 81.5, 76.5, 72.5, 68.5, 64.5, 61.5, 56.5, 54.5,
+        50.5, 47.5, 45.5, 42.5, 39.5, 38.0, 35.5, 33.5, 31.5, 30.0,
+        28.0, 26.0, 24.5, 23.0, 23.0
+    ]
+
+    signal binClicked(string binId, int stringIndex1to6, int fretIndex0to24, real localX, real localY)
+    signal binPressed(string binId, int stringIndex1to6, int fretIndex0to24, real localX, real localY)
+    signal binReleased(string binId, int stringIndex1to6, int fretIndex0to24, real localX, realY)
+
+    function binIdFor(s1to6, f0to24) {
+        return "bin_s" + s1to6 + "_f" + f0to24
+    }
+
+    // Binding-safe color getter (depends on colorRevision to re-evaluate)
+    function colorFor(s1to6, f0to24) {
+        colorRevision // dependency hook
+        const id = binIdFor(s1to6, f0to24)
+
+        // 1) explicit override wins
+        const ov = colorOverrides[id]
+        if (ov !== undefined && ov !== null) return ov
+
+        // 2) provider fallback
+        if (colorProvider) return colorProvider(s1to6, f0to24, id)
+
+        // 3) default
+        return defaultFill
+    }
+
+    // Fast API to set colors (override map) and force redraw
+    function setBinColorById(binId, color) {
+        const next = Object.assign({}, colorOverrides)
+        next[binId] = color
+        colorOverrides = next
+        colorRevision++
+    }
+
+    function clearBinColorById(binId) {
+        const next = Object.assign({}, colorOverrides)
+        delete next[binId]
+        colorOverrides = next
+        colorRevision++
+    }
+
+    function clearAllOverrides() {
+        colorOverrides = ({})
+        colorRevision++
+    }
+
+    // Compute (string,fret) from a point in overlay local coords.
+    // Returns { valid: bool, s: int, f: int, id: string }
+    function hitTest(localX, localY) {
+        // Find string (rows). stringY are top edges.
+        let s = -1
+        for (let i = 0; i < 6; i++) {
+            const y0 = stringY[i]
+            const y1 = y0 + binH
+            if (localY >= y0 && localY <= y1) {
+                s = i + 1 // 1..6
+                break
+            }
+        }
+        if (s === -1) return { valid: false }
+
+        // Find fret (columns)
+        let f = -1
+        for (let j = 0; j < 25; j++) {
+            const x0 = fretX[j]
+            const x1 = x0 + fretW[j]
+            if (localX >= x0 && localX <= x1) {
+                f = j
+                break
+            }
+        }
+        if (f === -1) return { valid: false }
+
+        return { valid: true, s: s, f: f, id: binIdFor(s, f) }
+    }
+
+    // ---- Rendering via Canvas ----
+    Canvas {
+        id: canvas
+        anchors.fill: parent
+        
+        // Use immediate rendering (Threaded/FBO can crash on Pi5)
+        renderStrategy: Canvas.Immediate
+        
+        property int paintCount: 0
+        
+        onPaint: {
+            paintCount++
+            var ctx = getContext("2d")
+            ctx.clearRect(0, 0, width, height)
+            
+            // Draw all 150 bins (6 strings x 25 frets)
+            // Uses SVG coordinates directly since container is 1216x127
+            for (var s = 1; s <= 6; s++) {
+                var y = overlay.stringY[s - 1]
+                
+                for (var f = 0; f < 25; f++) {
+                    var x = overlay.fretX[f]
+                    var w = overlay.fretW[f]
+                    var h = overlay.binH
+                    var binId = overlay.binIdFor(s, f)
+                    
+                    // 1. Fill rectangle with color
+                    var fillColor = overlay.colorFor(s, f)
+                    ctx.fillStyle = fillColor
+                    ctx.fillRect(x, y, w, h)
+                    
+                    // 2. Stroke rectangle
+                    if (overlay.strokeProvider) {
+                        var strokeInfo = overlay.strokeProvider(s, f, binId)
+                        if (strokeInfo && strokeInfo.color) {
+                            ctx.strokeStyle = strokeInfo.color
+                            ctx.lineWidth = strokeInfo.width || 0.5
+                            ctx.strokeRect(x, y, w, h)
+                        }
+                    } else {
+                        // Default stroke
+                        ctx.strokeStyle = "#3d3d3d"
+                        ctx.lineWidth = 0.5
+                        ctx.strokeRect(x, y, w, h)
+                    }
+                }
+            }
+        }
+    }
+
+    // ---- Interaction: one handler ----
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+
+        onPressed: (mouse) => {
+            const h = overlay.hitTest(mouse.x, mouse.y)
+            if (h.valid) overlay.binPressed(h.id, h.s, h.f, mouse.x, mouse.y)
+        }
+        onReleased: (mouse) => {
+            const h = overlay.hitTest(mouse.x, mouse.y)
+            if (h.valid) overlay.binReleased(h.id, h.s, h.f, mouse.x, mouse.y)
+        }
+        onClicked: (mouse) => {
+            const h = overlay.hitTest(mouse.x, mouse.y)
+            if (h.valid) overlay.binClicked(h.id, h.s, h.f, mouse.x, mouse.y)
+        }
+    }
+}
+
+=== qml/pages/TabPage.qml ===
+
+<full file contents included above in read buffer>
+
+=== src/TabEngineBridge.cpp ===
+
+<full file contents included above in read buffer>
+
+=== src/CQT/CQTNoteDetector.cpp ===
+
+<full file contents included above in read buffer>
+
+=== src/audio/CQTWorkerThread.cpp ===
+
+<full file contents included above in read buffer>

@@ -5,8 +5,11 @@ GuitarPi_autogen/timestamp: \
 	/home/general/SignalAssistant/build/GuitarPi_autogen/moc_predefs.h \
 	/home/general/SignalAssistant/src/AppController.cpp \
 	/home/general/SignalAssistant/src/AppController.h \
+	/home/general/SignalAssistant/src/CQT/CQTNoteDetector.h \
 	/home/general/SignalAssistant/src/DetectionTuningController.cpp \
 	/home/general/SignalAssistant/src/DetectionTuningController.h \
+	/home/general/SignalAssistant/src/FretboardProvider.cpp \
+	/home/general/SignalAssistant/src/FretboardProvider.h \
 	/home/general/SignalAssistant/src/NoteDetectionConfig.h \
 	/home/general/SignalAssistant/src/NoteDetectionStore.h \
 	/home/general/SignalAssistant/src/RecordedSessionPlayer.cpp \
@@ -15,8 +18,12 @@ GuitarPi_autogen/timestamp: \
 	/home/general/SignalAssistant/src/TabEngine.h \
 	/home/general/SignalAssistant/src/TabEngineBridge.cpp \
 	/home/general/SignalAssistant/src/TabEngineBridge.h \
+	/home/general/SignalAssistant/src/audio/AtomicNoteState.h \
 	/home/general/SignalAssistant/src/audio/AudioEngine.cpp \
 	/home/general/SignalAssistant/src/audio/AudioEngine.h \
+	/home/general/SignalAssistant/src/audio/ButterworthFilter.h \
+	/home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp \
+	/home/general/SignalAssistant/src/audio/CQTWorkerThread.h \
 	/home/general/SignalAssistant/src/audio/CarlaClient.cpp \
 	/home/general/SignalAssistant/src/audio/CarlaClient.h \
 	/home/general/SignalAssistant/src/audio/HexAudioClient.h \
@@ -24,6 +31,8 @@ GuitarPi_autogen/timestamp: \
 	/home/general/SignalAssistant/src/audio/HexJackClient.h \
 	/home/general/SignalAssistant/src/audio/JackMonitorSink.cpp \
 	/home/general/SignalAssistant/src/audio/JackMonitorSink.h \
+	/home/general/SignalAssistant/src/audio/LockFreeRingBuffer.h \
+	/home/general/SignalAssistant/src/audio/ThreadPriority.h \
 	/home/general/SignalAssistant/src/main.cpp \
 	/usr/include/aarch64-linux-gnu/bits/atomic_wide_counter.h \
 	/usr/include/aarch64-linux-gnu/bits/byteswap.h \
@@ -117,6 +126,7 @@ GuitarPi_autogen/timestamp: \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QDeadlineTimer \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QElapsedTimer \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QList \
+	/usr/include/aarch64-linux-gnu/qt6/QtCore/QMap \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QMetaType \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QMutex \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QObject \
@@ -125,6 +135,7 @@ GuitarPi_autogen/timestamp: \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QTimer \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QVariant \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QVariantList \
+	/usr/include/aarch64-linux-gnu/qt6/QtCore/QVariantMap \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/QWaitCondition \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/q20functional.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/q20memory.h \
@@ -241,11 +252,16 @@ GuitarPi_autogen/timestamp: \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qutf8stringview.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qvariant.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qvariantlist.h \
+	/usr/include/aarch64-linux-gnu/qt6/QtCore/qvariantmap.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qvarlengtharray.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qversiontagging.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qwaitcondition.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qxptype_traits.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtCore/qyieldcpu.h \
+	/usr/include/aarch64-linux-gnu/qt6/QtGui/QColor \
+	/usr/include/aarch64-linux-gnu/qt6/QtGui/qcolor.h \
+	/usr/include/aarch64-linux-gnu/qt6/QtGui/qrgb.h \
+	/usr/include/aarch64-linux-gnu/qt6/QtGui/qrgba64.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtGui/qtgui-config.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtGui/qtguiexports.h \
 	/usr/include/aarch64-linux-gnu/qt6/QtGui/qtguiglobal.h \

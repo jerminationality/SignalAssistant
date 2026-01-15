@@ -2,23 +2,127 @@
     "classes": [
         {
             "className": "TabEngineBridge",
-            "lineNumber": 17,
+            "lineNumber": 23,
             "methods": [
                 {
                     "access": "public",
-                    "index": 18,
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 22,
+                    "name": "getBinMagnitude",
+                    "returnType": "qreal"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 23,
+                    "name": "getBinThreshold",
+                    "returnType": "qreal"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "enabled",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 24,
+                    "name": "setHeatmapEnabled",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 25,
+                    "name": "logHeatmapUIBatchStart",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "magnitude",
+                            "type": "qreal"
+                        },
+                        {
+                            "name": "threshold",
+                            "type": "qreal"
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "qreal"
+                        },
+                        {
+                            "name": "alpha",
+                            "type": "qreal"
+                        },
+                        {
+                            "name": "isAboveThreshold",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 26,
+                    "name": "logHeatmapUIEntry",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 27,
+                    "name": "logHeatmapUIBatchEnd",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "enabled",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 28,
+                    "name": "setHeatmapLoggingEnabled",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 29,
                     "name": "requestRefresh",
                     "returnType": "void"
                 },
                 {
                     "access": "public",
-                    "index": 19,
+                    "index": 30,
                     "name": "clear",
                     "returnType": "void"
                 },
                 {
                     "access": "public",
-                    "index": 20,
+                    "index": 31,
                     "name": "seedMockSession",
                     "returnType": "void"
                 },
@@ -30,13 +134,13 @@
                             "type": "bool"
                         }
                     ],
-                    "index": 21,
+                    "index": 32,
                     "name": "setRecording",
                     "returnType": "void"
                 },
                 {
                     "access": "public",
-                    "index": 22,
+                    "index": 33,
                     "name": "startCalibration",
                     "returnType": "void"
                 },
@@ -48,7 +152,7 @@
                             "type": "int"
                         }
                     ],
-                    "index": 23,
+                    "index": 34,
                     "name": "recalibrateString",
                     "returnType": "void"
                 },
@@ -60,7 +164,7 @@
                             "type": "bool"
                         }
                     ],
-                    "index": 24,
+                    "index": 35,
                     "name": "setTuningModeEnabled",
                     "returnType": "void"
                 },
@@ -76,13 +180,13 @@
                             "type": "double"
                         }
                     ],
-                    "index": 25,
+                    "index": 36,
                     "name": "setCalibrationGain",
                     "returnType": "void"
                 },
                 {
                     "access": "public",
-                    "index": 26,
+                    "index": 37,
                     "name": "updateCalibrationMultipliers",
                     "returnType": "void"
                 }
@@ -272,6 +376,35 @@
                     "stored": true,
                     "type": "QVariantList",
                     "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 13,
+                    "name": "binMagnitudeRevision",
+                    "notify": "binMagnitudesChanged",
+                    "read": "binMagnitudeRevision",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 14,
+                    "name": "heatmapEnabled",
+                    "notify": "heatmapEnabledChanged",
+                    "read": "heatmapEnabled",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false,
+                    "write": "setHeatmapEnabled"
                 }
             ],
             "qualifiedClassName": "TabEngineBridge",
@@ -381,6 +514,36 @@
                     "index": 11,
                     "name": "calibrationGainsChanged",
                     "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 12,
+                    "name": "calibrationParametersUpdated",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 13,
+                    "name": "binMagnitudesChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "batchUpdates",
+                            "type": "QVariantMap"
+                        }
+                    ],
+                    "index": 14,
+                    "name": "binColorBatchChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 15,
+                    "name": "heatmapEnabledChanged",
+                    "returnType": "void"
                 }
             ],
             "slots": [
@@ -392,13 +555,13 @@
                             "type": "std::array<float,6>"
                         }
                     ],
-                    "index": 12,
+                    "index": 16,
                     "name": "updateLiveMeters",
                     "returnType": "void"
                 },
                 {
                     "access": "public",
-                    "index": 13,
+                    "index": 17,
                     "name": "handleCalibrationStarted",
                     "returnType": "void"
                 },
@@ -414,7 +577,7 @@
                             "type": "bool"
                         }
                     ],
-                    "index": 14,
+                    "index": 18,
                     "name": "handleCalibrationStepChanged",
                     "returnType": "void"
                 },
@@ -430,7 +593,7 @@
                             "type": "std::array<float,6>"
                         }
                     ],
-                    "index": 15,
+                    "index": 19,
                     "name": "handleCalibrationFinished",
                     "returnType": "void"
                 },
@@ -442,13 +605,13 @@
                             "type": "float"
                         }
                     ],
-                    "index": 16,
+                    "index": 20,
                     "name": "handleCalibrationBaselineFloorCaptured",
                     "returnType": "void"
                 },
                 {
                     "access": "public",
-                    "index": 17,
+                    "index": 21,
                     "name": "handleCalibrationFadeComplete",
                     "returnType": "void"
                 }

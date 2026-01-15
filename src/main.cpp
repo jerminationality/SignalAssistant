@@ -21,6 +21,7 @@
 #include <mutex>
 #include <sstream>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "AppController.h"
@@ -174,8 +175,25 @@ private:
     static void handleSignal(int sig) {
         if (sig != SIGINT)
             return;
-        if (s_app)
+        if (s_app) {
+            // Try graceful shutdown first via event loop
             QMetaObject::invokeMethod(s_app, &QCoreApplication::quit, Qt::QueuedConnection);
+            
+            // If Ctrl+C is pressed again within 2 seconds, force exit
+            static std::atomic<bool> firstSignal{true};
+            if (firstSignal.exchange(false)) {
+                // Start watchdog thread for forced exit
+                std::thread([]() {
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
+                    std::cerr << "\nForced exit after second Ctrl+C or timeout\n" << std::flush;
+                    std::_Exit(1);
+                }).detach();
+            } else {
+                // Second Ctrl+C - force immediate exit
+                std::cerr << "\nForced exit\n" << std::flush;
+                std::_Exit(1);
+            }
+        }
     }
 
     static inline std::atomic<bool> g_handlerInstalled {false};

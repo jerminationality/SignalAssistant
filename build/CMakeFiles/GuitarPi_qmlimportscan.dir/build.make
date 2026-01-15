@@ -88,6 +88,7 @@ CMakeFiles/GuitarPi_qmlimportscan: .qt/qml_imports/GuitarPi_build.cmake
 .qt/qml_imports/GuitarPi_build.cmake: /home/general/SignalAssistant/qml/components/TestModeOverlay.qml
 .qt/qml_imports/GuitarPi_build.cmake: /home/general/SignalAssistant/qml/components/RecordingOverlay.qml
 .qt/qml_imports/GuitarPi_build.cmake: /home/general/SignalAssistant/qml/components/TuningPanel.qml
+.qt/qml_imports/GuitarPi_build.cmake: /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running qmlimportscanner for GuitarPi"
 	cd /home/general/SignalAssistant && /usr/lib/qt6/libexec/qmlimportscanner @/home/general/SignalAssistant/build/.qt/qml_imports/GuitarPi_build.rsp
 

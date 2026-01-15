@@ -296,6 +296,7 @@
 #define __ARM_PCS_AAPCS64 1
 #define __SIG_ATOMIC_MAX__ 0x7fffffff
 #define __INT64_MAX__ 0x7fffffffffffffffL
+#define HAVE_ARM_NEON 1
 #define __INT_LEAST64_WIDTH__ 64
 #define __GCC_ATOMIC_WCHAR_T_LOCK_FREE 2
 #define __STDC_IEC_60559_BFP__ 201404L

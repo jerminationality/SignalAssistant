@@ -2,7 +2,7 @@
     "classes": [
         {
             "className": "HexJackClient",
-            "lineNumber": 27,
+            "lineNumber": 29,
             "object": true,
             "qualifiedClassName": "HexJackClient",
             "signals": [

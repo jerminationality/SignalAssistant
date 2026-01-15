@@ -4,28 +4,39 @@
 #include <cstdio>
 #include <cstdarg>
 
+// ============================================================================
+// PRE-CALCULATED THRESHOLD SCALING TABLE (Linear Growth Model)
+// ============================================================================
+// This table stores (Base_Multiplier + (0.35 * (Fret / 24))) for all 150 notes.
+// It eliminates division and complex math in the high-speed audio thread.
+// Note-OFF threshold = Note-ON threshold * 0.5 (50% hysteresis)
+// ============================================================================
+const float THRESHOLD_SCALING_TABLE[6][25] = {
+    // S0 (Low E) - Base 0.52 -> Max 0.87
+    {0.520f, 0.535f, 0.549f, 0.564f, 0.578f, 0.593f, 0.608f, 0.622f, 0.637f, 0.651f, 0.666f, 0.680f, 0.695f, 0.710f, 0.724f, 0.739f, 0.753f, 0.768f, 0.783f, 0.797f, 0.812f, 0.826f, 0.841f, 0.855f, 0.870f},
+    // S1 (A) - Base 0.56 -> Max 0.91
+    {0.560f, 0.575f, 0.589f, 0.604f, 0.618f, 0.633f, 0.648f, 0.662f, 0.677f, 0.691f, 0.706f, 0.720f, 0.735f, 0.750f, 0.764f, 0.779f, 0.793f, 0.808f, 0.823f, 0.837f, 0.852f, 0.866f, 0.881f, 0.895f, 0.910f},
+    // S2 (D) - Base 0.60 -> Max 0.95
+    {0.600f, 0.615f, 0.629f, 0.644f, 0.658f, 0.673f, 0.688f, 0.702f, 0.717f, 0.731f, 0.746f, 0.760f, 0.775f, 0.790f, 0.804f, 0.819f, 0.833f, 0.848f, 0.863f, 0.877f, 0.892f, 0.906f, 0.921f, 0.935f, 0.950f},
+    // S3 (G) - Base 0.64 -> Max 0.99
+    {0.640f, 0.655f, 0.669f, 0.684f, 0.698f, 0.713f, 0.728f, 0.742f, 0.757f, 0.771f, 0.786f, 0.800f, 0.815f, 0.830f, 0.844f, 0.859f, 0.873f, 0.888f, 0.903f, 0.917f, 0.932f, 0.946f, 0.961f, 0.975f, 0.990f},
+    // S4 (B) - Base 0.68 -> Max 1.03
+    {0.680f, 0.695f, 0.709f, 0.724f, 0.738f, 0.753f, 0.768f, 0.782f, 0.797f, 0.811f, 0.826f, 0.840f, 0.855f, 0.870f, 0.884f, 0.899f, 0.913f, 0.928f, 0.943f, 0.957f, 0.972f, 0.986f, 1.001f, 1.015f, 1.030f},
+    // S5 (High E) - Base 0.72 -> Max 1.07
+    {0.720f, 0.735f, 0.749f, 0.764f, 0.778f, 0.793f, 0.808f, 0.822f, 0.837f, 0.851f, 0.866f, 0.880f, 0.895f, 0.910f, 0.924f, 0.939f, 0.953f, 0.968f, 0.983f, 0.997f, 1.012f, 1.026f, 1.041f, 1.055f, 1.070f}
+};
+
+// Note-OFF hysteresis multiplier (50% of Note-ON threshold)
+constexpr float NOTE_OFF_HYSTERESIS = 0.5f;
+
 namespace {
 
 void logStoreLookup(const char* stage, const std::string& key, int stringIdx, const float* value = nullptr) {
-    std::fprintf(stderr,
-                 "store %s key=%s string=%d",
-                 stage,
-                 key.c_str(),
-                 stringIdx);
-    if (value)
-        std::fprintf(stderr, " value=%.6f", static_cast<double>(*value));
-    std::fprintf(stderr, "\n");
-    std::fflush(stderr);
+    // Logging disabled for performance
 }
 
 void logStoreDetail(const char* fmt, ...) {
-    std::fprintf(stderr, "store ");
-    va_list args;
-    va_start(args, fmt);
-    std::vfprintf(stderr, fmt, args);
-    va_end(args);
-    std::fprintf(stderr, "\n");
-    std::fflush(stderr);
+    // Logging disabled for performance
 }
 
 }
@@ -35,20 +46,15 @@ void NoteDetectionParameterSetAtomic::store(const NoteDetectionParameterSet& sou
         for (std::size_t i = 0; i < destArr.size(); ++i)
             destArr[i].store(srcArr[i], std::memory_order_release);
     };
-    transfer(onsetThresholdScale, source.onsetThresholdScale);
     transfer(baselineFloor, source.baselineFloor);
     transfer(envelopeFloor, source.envelopeFloor);
     transfer(gateRatio, source.gateRatio);
-    transfer(sustainFloorScale, source.sustainFloorScale);
-    transfer(retriggerGateScale, source.retriggerGateScale);
-    transfer(pitchTolerance, source.pitchTolerance);
     transfer(targetRms, source.targetRms);
     transfer(calibrationGainMultiplier, source.calibrationGainMultiplier);
-    transfer(lowCutMultiplier, source.lowCutMultiplier);
-    transfer(highCutMultiplier, source.highCutMultiplier);
-    transfer(aubioThresholdScale, source.aubioThresholdScale);
-    transfer(onsetSilenceDb, source.onsetSilenceDb);
-    transfer(pitchSilenceDb, source.pitchSilenceDb);
+    transfer(spatialWeight, source.spatialWeight);
+    transfer(confirmationFrames, source.confirmationFrames);
+    transfer(fluxSensitivity, source.fluxSensitivity);
+    transfer(slopeDecay, source.slopeDecay);
 }
 
 NoteDetectionStore& NoteDetectionStore::instance() {
@@ -64,34 +70,23 @@ NoteDetectionStore::NoteDetectionStore() {
 }
 
 float* NoteDetectionStore::access(NoteDetectionParameterSet& set, NoteParameter id, int stringIdx) {
-    logStoreDetail("access-enter param=%d string=%d", static_cast<int>(id), stringIdx);
     if (stringIdx < 0 || stringIdx >= kNumStrings) {
-        logStoreDetail("access-string-out-of-range param=%d string=%d", static_cast<int>(id), stringIdx);
         return nullptr;
     }
 
     float* result = nullptr;
     switch (id) {
-        case NoteParameter::OnsetThresholdScale: result = &set.onsetThresholdScale[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::BaselineFloor: result = &set.baselineFloor[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::EnvelopeFloor: result = &set.envelopeFloor[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::GateRatio: result = &set.gateRatio[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::SustainFloorScale: result = &set.sustainFloorScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::RetriggerGateScale: result = &set.retriggerGateScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::PitchTolerance: result = &set.pitchTolerance[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::TargetRms: result = &set.targetRms[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::CalibrationGainMultiplier: result = &set.calibrationGainMultiplier[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::LowCutMultiplier: result = &set.lowCutMultiplier[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::HighCutMultiplier: result = &set.highCutMultiplier[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::AubioThresholdScale: result = &set.aubioThresholdScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::OnsetSilenceDb: result = &set.onsetSilenceDb[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::PitchSilenceDb: result = &set.pitchSilenceDb[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::SpatialWeight: result = &set.spatialWeight[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::FluxSensitivity: result = &set.fluxSensitivity[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::SlopeDecay: result = &set.slopeDecay[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::ConfirmationFrames: return nullptr; // int type, handled separately
     }
 
-    if (!result)
-        logStoreDetail("access-null param=%d string=%d", static_cast<int>(id), stringIdx);
-    else
-        logStoreDetail("access-success param=%d string=%d value=%.6f", static_cast<int>(id), stringIdx, static_cast<double>(*result));
     return result;
 }
 
@@ -107,32 +102,21 @@ float NoteDetectionStore::activeValue(NoteParameter id, int stringIdx) const {
         return arr[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire);
     };
     switch (id) {
-        case NoteParameter::OnsetThresholdScale: return fetch(m_active.onsetThresholdScale);
         case NoteParameter::BaselineFloor: return fetch(m_active.baselineFloor);
         case NoteParameter::EnvelopeFloor: return fetch(m_active.envelopeFloor);
         case NoteParameter::GateRatio: return fetch(m_active.gateRatio);
-        case NoteParameter::SustainFloorScale: return fetch(m_active.sustainFloorScale);
-        case NoteParameter::RetriggerGateScale: return fetch(m_active.retriggerGateScale);
-        case NoteParameter::PitchTolerance: return fetch(m_active.pitchTolerance);
         case NoteParameter::TargetRms: return fetch(m_active.targetRms);
         case NoteParameter::CalibrationGainMultiplier: return fetch(m_active.calibrationGainMultiplier);
-        case NoteParameter::LowCutMultiplier: return fetch(m_active.lowCutMultiplier);
-        case NoteParameter::HighCutMultiplier: return fetch(m_active.highCutMultiplier);
-        case NoteParameter::AubioThresholdScale: return fetch(m_active.aubioThresholdScale);
-        case NoteParameter::OnsetSilenceDb: return fetch(m_active.onsetSilenceDb);
-        case NoteParameter::PitchSilenceDb: return fetch(m_active.pitchSilenceDb);
+        case NoteParameter::SpatialWeight: return fetch(m_active.spatialWeight);
+        case NoteParameter::FluxSensitivity: return fetch(m_active.fluxSensitivity);
+        case NoteParameter::SlopeDecay: return fetch(m_active.slopeDecay);
+        case NoteParameter::ConfirmationFrames: return static_cast<float>(m_active.confirmationFrames[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire));
     }
     return 0.f;
 }
 
 void NoteDetectionStore::setValue(NoteParameter id, int stringIdx, float value) {
     std::lock_guard<std::mutex> guard(m_mutex);
-    logStoreDetail("set-value-enter param=%d string=%d value=%.6f undo=%zu redo=%zu",
-                   static_cast<int>(id),
-                   stringIdx,
-                   static_cast<double>(value),
-                   m_undoStack.size(),
-                   m_redoStack.size());
     if (m_batchEditDepth > 0) {
         if (!m_batchUndoPushed) {
             pushUndo();
@@ -141,24 +125,14 @@ void NoteDetectionStore::setValue(NoteParameter id, int stringIdx, float value) 
     } else {
         pushUndo();
     }
-    if (float* ptr = access(m_current, id, stringIdx)) {
-        const double before = static_cast<double>(*ptr);
+    if (id == NoteParameter::ConfirmationFrames) {
+        // Handle int type separately
+        m_current.confirmationFrames[static_cast<std::size_t>(stringIdx)] = static_cast<int>(value);
+    } else if (float* ptr = access(m_current, id, stringIdx)) {
         *ptr = value;
-        logStoreDetail("set-value-write param=%d string=%d before=%.6f after=%.6f",
-                       static_cast<int>(id),
-                       stringIdx,
-                       before,
-                       static_cast<double>(value));
-    } else {
-        logStoreDetail("set-value-null param=%d string=%d", static_cast<int>(id), stringIdx);
     }
     m_redoStack.clear();
     syncActive();
-    logStoreDetail("set-value-exit param=%d string=%d undo=%zu redo=%zu",
-                   static_cast<int>(id),
-                   stringIdx,
-                   m_undoStack.size(),
-                   m_redoStack.size());
 }
 
 void NoteDetectionStore::beginBatchEdit() {
@@ -166,7 +140,6 @@ void NoteDetectionStore::beginBatchEdit() {
     ++m_batchEditDepth;
     if (m_batchEditDepth == 1)
         m_batchUndoPushed = false;
-    logStoreDetail("batch-begin depth=%d", m_batchEditDepth);
 }
 
 void NoteDetectionStore::endBatchEdit() {
@@ -174,84 +147,69 @@ void NoteDetectionStore::endBatchEdit() {
     if (m_batchEditDepth <= 0) {
         m_batchEditDepth = 0;
         m_batchUndoPushed = false;
-        logStoreDetail("batch-end-underflow");
         return;
     }
     --m_batchEditDepth;
     if (m_batchEditDepth == 0)
         m_batchUndoPushed = false;
-    logStoreDetail("batch-end depth=%d", m_batchEditDepth);
 }
 
 void NoteDetectionStore::setValueFromKey(const std::string& key, int stringIdx, float value) {
-    logStoreDetail("set-value-from-key key=%s string=%d value=%.6f", key.c_str(), stringIdx, static_cast<double>(value));
     if (auto param = parameterFromKey(key))
         setValue(*param, stringIdx, value);
-    else
-        logStoreDetail("set-value-from-key-miss key=%s", key.c_str());
 }
 
 float NoteDetectionStore::currentValueFromKey(const std::string& key, int stringIdx) const {
-    logStoreLookup("current-enter", key, stringIdx);
     if (auto param = parameterFromKey(key)) {
-        logStoreDetail("current-param-resolved key=%s param=%d", key.c_str(), static_cast<int>(*param));
-        if (const float* ptr = access(m_current, *param, stringIdx)) {
-            logStoreDetail("current-access-success key=%s string=%d", key.c_str(), stringIdx);
-            logStoreLookup("current-exit", key, stringIdx, ptr);
+        if (*param == NoteParameter::ConfirmationFrames) {
+            if (stringIdx >= 0 && stringIdx < kNumStrings) {
+                return static_cast<float>(m_current.confirmationFrames[static_cast<std::size_t>(stringIdx)]);
+            }
+        } else if (const float* ptr = access(m_current, *param, stringIdx)) {
             return *ptr;
         }
-        logStoreDetail("current-access-null key=%s string=%d", key.c_str(), stringIdx);
     }
-    logStoreLookup("current-miss", key, stringIdx);
     return 0.f;
 }
 
 float NoteDetectionStore::committedValueFromKey(const std::string& key, int stringIdx) const {
-    logStoreLookup("committed-enter", key, stringIdx);
     if (auto param = parameterFromKey(key)) {
-        logStoreDetail("committed-param-resolved key=%s param=%d", key.c_str(), static_cast<int>(*param));
-        if (const float* ptr = access(m_committed, *param, stringIdx)) {
-            logStoreDetail("committed-access-success key=%s string=%d", key.c_str(), stringIdx);
-            logStoreLookup("committed-exit", key, stringIdx, ptr);
+        if (*param == NoteParameter::ConfirmationFrames) {
+            if (stringIdx >= 0 && stringIdx < kNumStrings) {
+                return static_cast<float>(m_committed.confirmationFrames[static_cast<std::size_t>(stringIdx)]);
+            }
+        } else if (const float* ptr = access(m_committed, *param, stringIdx)) {
             return *ptr;
         }
-        logStoreDetail("committed-access-null key=%s string=%d", key.c_str(), stringIdx);
     }
-    logStoreLookup("committed-miss", key, stringIdx);
     return 0.f;
 }
 
 void NoteDetectionStore::undo() {
     std::lock_guard<std::mutex> guard(m_mutex);
-    logStoreDetail("undo-enter stack=%zu", m_undoStack.size());
     if (m_undoStack.empty())
         return;
     m_redoStack.push_back(m_current);
     m_current = m_undoStack.back();
     m_undoStack.pop_back();
     syncActive();
-    logStoreDetail("undo-exit stack=%zu redo=%zu", m_undoStack.size(), m_redoStack.size());
 }
 
 void NoteDetectionStore::redo() {
     std::lock_guard<std::mutex> guard(m_mutex);
-    logStoreDetail("redo-enter stack=%zu", m_redoStack.size());
     if (m_redoStack.empty())
         return;
     m_undoStack.push_back(m_current);
     m_current = m_redoStack.back();
     m_redoStack.pop_back();
     syncActive();
-    logStoreDetail("redo-exit stack=%zu undo=%zu", m_redoStack.size(), m_undoStack.size());
 }
 
 void NoteDetectionStore::revert() {
     std::lock_guard<std::mutex> guard(m_mutex);
-    logStoreDetail("revert-enter undo=%zu redo=%zu", m_undoStack.size(), m_redoStack.size());
     m_current = m_committed;
     clearHistory();
     syncActive();
-    logStoreDetail("revert-exit undo=%zu redo=%zu", m_undoStack.size(), m_redoStack.size());
 }
 
 void NoteDetectionStore::clearHistory() {
@@ -334,19 +292,12 @@ void NoteDetectionStore::applyCurrentSnapshot(const NoteDetectionParameterSet& s
 }
 
 std::optional<NoteParameter> NoteDetectionStore::parameterFromKey(const std::string& key) {
-    logStoreDetail("param-enter key=%s", key.c_str());
     const auto& descriptors = parameterDescriptors();
-    logStoreDetail("param-descriptors-ready size=%zu", descriptors.size());
-    std::size_t idx = 0;
     for (const auto& desc : descriptors) {
-        logStoreDetail("param-check idx=%zu desc=%s", idx, desc.key.c_str());
         if (desc.key == key) {
-            logStoreDetail("param-match idx=%zu", idx);
             return desc.id;
         }
-        ++idx;
     }
-    logStoreDetail("param-miss key=%s", key.c_str());
     return std::nullopt;
 }
 

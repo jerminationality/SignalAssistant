@@ -71,6 +71,8 @@ CMakeFiles/GuitarPi_copy_res: .qt/GuitarPi_res.txt
 .qt/GuitarPi_res.txt: /usr/lib/aarch64-linux-gnu/cmake/Qt6Qml/Qt6QmlCopyFiles.cmake
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/Map.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/Screen.svg
+.qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/Fret\ Cells.svg
+.qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/BinOverlay.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Frets.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Neck.png
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Neck.svg
@@ -79,18 +81,21 @@ CMakeFiles/GuitarPi_copy_res: .qt/GuitarPi_res.txt
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/NeckDisplay/Strings.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/TabCaptureLabel.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/TabGrid.svg
+.qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/binInlays.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/opaqueOverlayMarker.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/overlayMarker.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/TabPage/tabPage.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/ampsClosed.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/ampsOpen.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/bgFill.png
+.qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/bgFillMask.png
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/blueBgFIll.png
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/cabsClosed.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/cabsOpen.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/chevron.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/component.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/icons/coreIcon.svg
+.qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/icons/heatmap-grid.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/icons/lucide-pause.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/icons/lucide-play.svg
 .qt/GuitarPi_res.txt: /home/general/SignalAssistant/qml/assets/icons/lucide-repeat.svg

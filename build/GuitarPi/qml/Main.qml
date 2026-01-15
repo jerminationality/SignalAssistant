@@ -14,6 +14,7 @@ ApplicationWindow {
     title: "GuitarPi"
     property bool tuningPanelVisible: false
     property bool testOverlayHidden: false
+    property var currentBridge: pageLoader.item ? pageLoader.item.bridge : null
     onTuningPanelVisibleChanged: console.log("qml", "tuning-panel-visible", tuningPanelVisible ? "open" : "closed")
     Component.onCompleted: {
         console.log("qml", "ApplicationWindow completed")
@@ -157,7 +158,7 @@ ApplicationWindow {
         width: root.width - 48
         z: 50
         controller: AppController ? AppController.tuningController : null
-        bridge: tabPage.bridge
+        bridge: root.currentBridge
         visible: root.tuningPanelVisible
         enabled: root.tuningPanelVisible
         onCloseRequested: root.tuningPanelVisible = false

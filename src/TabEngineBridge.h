@@ -1,6 +1,8 @@
 #pragma once
 #include <QObject>
 #include <QVariantList>
+#include <QVariantMap>
+#include <QColor>
 #include <QElapsedTimer>
 #include <QTimer>
 #include <array>
@@ -11,8 +13,12 @@
 #include <vector>
 
 #include "TabEngine.h"
+#include "audio/AtomicNoteState.h"
+#include "audio/CQTWorkerThread.h"
+#include "audio/LockFreeRingBuffer.h"
 
 class HexAudioClient;
+class HexJackClient;
 
 class TabEngineBridge : public QObject {
     Q_OBJECT
@@ -29,6 +35,8 @@ class TabEngineBridge : public QObject {
     Q_PROPERTY(bool tuningModeEnabled READ tuningModeEnabled WRITE setTuningModeEnabled NOTIFY tuningModeEnabledChanged)
     Q_PROPERTY(QVariantList tuningDeviation READ tuningDeviation NOTIFY tuningDeviationChanged)
     Q_PROPERTY(QVariantList calibrationGains READ calibrationGains NOTIFY calibrationGainsChanged)
+    Q_PROPERTY(int binMagnitudeRevision READ binMagnitudeRevision NOTIFY binMagnitudesChanged)
+    Q_PROPERTY(bool heatmapEnabled READ heatmapEnabled WRITE setHeatmapEnabled NOTIFY heatmapEnabledChanged)
 public:
     explicit TabEngineBridge(QObject* parent=nullptr);
     ~TabEngineBridge();
@@ -46,6 +54,22 @@ public:
     bool tuningModeEnabled() const { return m_tuningModeEnabled; }
     QVariantList tuningDeviation() const;
     QVariantList calibrationGains() const;
+    int binMagnitudeRevision() const { return m_binMagnitudeRevision; }
+    bool heatmapEnabled() const { return m_heatmapEnabled.load(std::memory_order_acquire); }
+    
+    // Efficient single-bin lookup for QML colorProvider (O(1) per call)
+    Q_INVOKABLE qreal getBinMagnitude(int stringIndex, int fretIndex) const;
+    Q_INVOKABLE qreal getBinThreshold(int stringIndex, int fretIndex) const;
+    
+    // Heatmap enable/disable (controls atomic writes in CQT worker)
+    Q_INVOKABLE void setHeatmapEnabled(bool enabled);
+    
+    // Heatmap logging for QML UI draw states
+    Q_INVOKABLE void logHeatmapUIBatchStart();
+    Q_INVOKABLE void logHeatmapUIEntry(int stringIndex, int fretIndex, qreal magnitude,
+                                       qreal threshold, qreal intensity, qreal alpha, bool isAboveThreshold);
+    Q_INVOKABLE void logHeatmapUIBatchEnd();
+    Q_INVOKABLE void setHeatmapLoggingEnabled(bool enabled);
 
     Q_INVOKABLE void requestRefresh();
     Q_INVOKABLE void clear();
@@ -58,12 +82,21 @@ public:
     Q_INVOKABLE void updateCalibrationMultipliers();
 
     void setAudioClient(HexAudioClient* client);
+    void initCQTForRecordedSession(float sampleRate);  // Initialize CQT worker without JACK
+    void initCQTWorkerForJack(HexJackClient* jackClient);  // Initialize CQT worker for live JACK mode
     void getCalibrationMultipliers(std::array<float, 6>& multipliers) const;
     void processLiveAudioBlock(const float* const channels[6], int n, float sr);
     bool exportPendingCapture(const QString& label);
     bool hasPendingCapture() const { return m_pendingCaptureValid; }
     void discardPendingCapture();
     void updateThresholdsDisplay();
+    
+    // TIER 1 audio thread interface (inline, not a slot)
+    inline void notifyCQTWorker() {
+        if (m_cqtWorker) {
+            m_cqtWorker->notifyAudioAvailable();
+        }
+    }
 
     TabEngine& engine() { return *m_engine; }
     const TabEngine& engine() const { return *m_engine; }
@@ -93,6 +126,10 @@ signals:
     void tuningModeEnabledChanged();
     void tuningDeviationChanged();
     void calibrationGainsChanged();
+    void calibrationParametersUpdated();
+    void binMagnitudesChanged();
+    void binColorBatchChanged(QVariantMap batchUpdates);
+    void heatmapEnabledChanged();
 
 private:
     struct LiveEvent {
@@ -177,6 +214,24 @@ private:
     bool m_tuningModeEnabled {false};
     std::array<float, 6> m_tuningDeviationCents {};
     QElapsedTimer m_thresholdsUpdateTimer;
+
+    // TIER 2/3: CQT Worker Thread and Atomic Note State
+    audio::AtomicNoteState m_atomicNoteState;
+    std::unique_ptr<audio::CQTWorkerThread> m_cqtWorker;
+    QTimer* m_noteStatePollTimer {nullptr};
+    
+    // Standalone ring buffer for recorded session mode (no JACK client)
+    std::unique_ptr<audio::AudioRingBuffer> m_standaloneRingBuffer;
+    
+    // Bin magnitude heatmap cache (updated on UI timer, NOT audio thread)
+    // Uses Strategy B: revision bump triggers QML rebind, colorProvider does O(1) lookup
+    std::array<std::array<float, 25>, 6> m_binMagnitudeCache {};
+    std::array<std::array<float, 25>, 6> m_binThresholdCache {};
+    int m_binMagnitudeRevision {0};
+    std::uint64_t m_lastFrameCount {0};  // Tracks CQT frames to avoid redundant work
+    std::atomic<bool> m_heatmapEnabled {true};  // Controls atomic writes in CQT worker (default ON)
+    void updateBinMagnitudeCache();
+    void computeBatchedColors(QVariantMap& batchOut);  // NEON-optimized log-scale conversion
 
     void postMeterSnapshot(const std::array<float, 6>& meters);
     void updateTuningDeviation();

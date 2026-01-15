@@ -1,0 +1,174 @@
+{
+    "classes": [
+        {
+            "className": "FretboardProvider",
+            "lineNumber": 30,
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 5,
+                    "name": "getMagnitude",
+                    "returnType": "qreal"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 6,
+                    "name": "getActiveFret",
+                    "returnType": "int"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 7,
+                    "name": "isAttack",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 8,
+                    "name": "isSustaining",
+                    "returnType": "bool"
+                }
+            ],
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "name": "revision",
+                    "notify": "magnitudesChanged",
+                    "read": "revision",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "name": "magnitudes",
+                    "notify": "magnitudesChanged",
+                    "read": "magnitudes",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                }
+            ],
+            "qualifiedClassName": "FretboardProvider",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "name": "magnitudesChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "magnitude",
+                            "type": "qreal"
+                        }
+                    ],
+                    "index": 1,
+                    "name": "binChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "energy",
+                            "type": "qreal"
+                        }
+                    ],
+                    "index": 2,
+                    "name": "noteAttack",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "stringIndex",
+                            "type": "int"
+                        },
+                        {
+                            "name": "fretIndex",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 3,
+                    "name": "noteRelease",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "private",
+                    "index": 4,
+                    "name": "pollAtomicState",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "FretboardProvider.h",
+    "outputRevision": 68
+}

@@ -1,13 +1,16 @@
 #include "TabEngineBridge.h"
 
 #include "SessionLogger.h"
+#include "HeatmapLogger.h"
 #include "NoteDetectionStore.h"
+#include "CQT/CQTNoteDetector.h"
 #include "audio/HexAudioClient.h"
 #include "audio/HexJackClient.h"
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QVariantMap>
+#include <QColor>
 #include <QDebug>
 #include <QStringList>
 #include <QByteArray>
@@ -25,6 +28,14 @@
 #include <sndfile.h>
 #include <system_error>
 #include <cmath>
+
+// ARM NEON SIMD for log-scale magnitude conversion
+#ifdef __ARM_NEON
+#include <arm_neon.h>
+#define USE_NEON_LOG_SCALE 1
+#else
+#define USE_NEON_LOG_SCALE 0
+#endif
 
 namespace {
 constexpr float kSessionWaveTapSeconds = 8.0f;
@@ -65,6 +76,13 @@ TabEngineBridge::TabEngineBridge(QObject* parent)
     m_calibrationFadeTimer = new QTimer(this);
     m_calibrationFadeTimer->setSingleShot(true);
     connect(m_calibrationFadeTimer, &QTimer::timeout, this, &TabEngineBridge::handleCalibrationFadeComplete);
+    
+    // Timer for UI bin magnitude updates - runs at 10Hz from main thread to avoid xruns
+    m_noteStatePollTimer = new QTimer(this);
+    m_noteStatePollTimer->setInterval(100); // 10Hz
+    connect(m_noteStatePollTimer, &QTimer::timeout, this, &TabEngineBridge::updateBinMagnitudeCache);
+    m_noteStatePollTimer->start();
+    
     loadPersistentCalibration();
     syncFromEngine();
     updateThresholdsDisplay();  // Initialize threshold display
@@ -97,6 +115,213 @@ QVariantList TabEngineBridge::tuningDeviation() const {
     return list;
 }
 
+qreal TabEngineBridge::getBinMagnitude(int stringIndex, int fretIndex) const {
+    // O(1) lookup for QML colorProvider - called 150 times per render but very cheap
+    if (stringIndex < 0 || stringIndex >= 6) return 0.0;
+    if (fretIndex < 0 || fretIndex > 24) return 0.0;
+    return static_cast<qreal>(m_binMagnitudeCache[stringIndex][fretIndex]);
+}
+
+qreal TabEngineBridge::getBinThreshold(int stringIndex, int fretIndex) const {
+    // O(1) lookup for QML colorProvider - threshold for this string/fret combo
+    if (stringIndex < 0 || stringIndex >= 6) return 0.0;
+    if (fretIndex < 0 || fretIndex > 24) return 0.0;
+    return static_cast<qreal>(m_binThresholdCache[stringIndex][fretIndex]);
+}
+
+void TabEngineBridge::updateBinMagnitudeCache() {
+    // FULL-SPECTRUM MAGNITUDE CACHE UPDATE
+    // Reads ALL 150 bin magnitudes from AtomicNoteState (populated by CQT Worker)
+    // Uses magnitude gate to prevent UI signal flooding on Pi5
+    
+    // FRAME COUNTER CHECK: Skip if no new CQT frame since last poll
+    const std::uint64_t currentFrame = m_atomicNoteState.frameCounter();
+    
+    if (currentFrame == m_lastFrameCount) {
+        return;  // No new data from CQT worker
+    }
+    m_lastFrameCount = currentFrame;
+    
+    static constexpr float kMagnitudeGateThreshold = 0.005f;  // 0.5% intensity gate
+    
+    bool anySignificantChange = false;
+    
+    // Get current envelope floor for threshold calculation
+    auto& store = NoteDetectionStore::instance();
+    const auto& np = store.current();
+    
+    for (int s = 0; s < 6; ++s) {
+        const float envFloor = np.envelopeFloor[s];
+        
+        for (int f = 0; f <= 24; ++f) {
+            // Read actual CQT bin magnitude from atomic state (populated by CQT Worker)
+            const float liveVal = m_atomicNoteState.binMagnitude(s, f);
+            float& cached = m_binMagnitudeCache[s][f];
+            
+            // MAGNITUDE GATE: Only count as change if delta > 0.5% intensity
+            // This prevents signal flooding that causes Pi 5 freezes
+            if (std::abs(liveVal - cached) > kMagnitudeGateThreshold) {
+                anySignificantChange = true;
+            }
+            cached = liveVal;
+            
+            // Update threshold cache (threshold = envFloor * multiplier)
+            // Ensure minimum threshold to prevent division by zero in QML
+            const float multiplier = CQTNoteDetector::getThresholdMultiplier(s, f);
+            m_binThresholdCache[s][f] = std::max(envFloor * multiplier, 0.001f);
+        }
+    }
+    
+    // Log magnitude update to heatmap logger
+    HeatmapLogger::instance().logMagnitudeUpdate(currentFrame, m_binMagnitudeCache, m_binThresholdCache);
+    
+    // GOAL 1: Emit single batched signal with all 150 bin colors (prevents UI halting)
+    // Compute NEON-optimized log-scale colors and emit once per 100ms cycle
+    QVariantMap batchUpdates;
+    computeBatchedColors(batchUpdates);
+    
+    m_binMagnitudeRevision++;
+    emit binMagnitudesChanged();  // Legacy signal for revision tracking
+    emit binColorBatchChanged(batchUpdates);  // New batched signal with pre-computed colors
+}
+
+// ============================================================================
+// GOAL 2: NEON-Optimized Log-Scale Magnitude to Color Conversion
+// ============================================================================
+// Converts linear magnitudes [0.0-1.0] to dB scale, then to alpha [0.0-1.0]
+// Formula: db = 20 * log10(max(mag, 0.001)), alpha = clamp((db + 60) / 60, 0, 1)
+// This ensures low-frequency fundamentals (82Hz Low E) are visible in heatmap
+
+#if USE_NEON_LOG_SCALE
+namespace {
+// Fast log10 approximation using NEON (accuracy ~0.1%)
+// Based on: log10(x) = log2(x) / log2(10) ≈ log2(x) * 0.30103f
+inline float32x4_t neon_log10_approx(float32x4_t x) {
+    // Clamp to minimum to avoid log(0)
+    const float32x4_t minVal = vdupq_n_f32(0.001f);
+    x = vmaxq_f32(x, minVal);
+    
+    // Extract exponent and mantissa for log2 approximation
+    // log2(x) ≈ exponent + log2(mantissa), mantissa in [1,2)
+    int32x4_t xi = vreinterpretq_s32_f32(x);
+    int32x4_t exp = vsubq_s32(vshrq_n_s32(xi, 23), vdupq_n_s32(127));
+    float32x4_t expF = vcvtq_f32_s32(exp);
+    
+    // Mantissa: clear exponent bits, set to 1.0 range
+    int32x4_t mantissa = vorrq_s32(vandq_s32(xi, vdupq_n_s32(0x007FFFFF)), vdupq_n_s32(0x3F800000));
+    float32x4_t m = vreinterpretq_f32_s32(mantissa);
+    
+    // Polynomial approximation for log2(m) where m in [1,2)
+    // log2(m) ≈ -1.725 + m*(2.008 + m*(-0.718 + m*0.108)) [minimax]
+    const float32x4_t c0 = vdupq_n_f32(-1.725f);
+    const float32x4_t c1 = vdupq_n_f32(2.008f);
+    const float32x4_t c2 = vdupq_n_f32(-0.718f);
+    const float32x4_t c3 = vdupq_n_f32(0.108f);
+    
+    float32x4_t log2m = vmlaq_f32(c2, m, c3);  // c2 + m*c3
+    log2m = vmlaq_f32(c1, m, log2m);            // c1 + m*(c2 + m*c3)
+    log2m = vmlaq_f32(c0, m, log2m);            // c0 + m*(c1 + ...)
+    
+    // log2(x) = exponent + log2(mantissa)
+    float32x4_t log2x = vaddq_f32(expF, log2m);
+    
+    // log10(x) = log2(x) * log10(2) ≈ log2(x) * 0.30103f
+    const float32x4_t log10_2 = vdupq_n_f32(0.30103f);
+    return vmulq_f32(log2x, log10_2);
+}
+} // namespace
+#endif
+
+void TabEngineBridge::computeBatchedColors(QVariantMap& batchOut) {
+    // Process all 150 bins and convert magnitudes to QColor with log-scaled alpha
+    // Uses NEON SIMD to process 4 bins at a time on ARM platforms
+    
+#if USE_NEON_LOG_SCALE
+    // NEON path: process 4 magnitudes at a time
+    alignas(16) float magBuffer[4];
+    alignas(16) float alphaBuffer[4];
+    
+    const float32x4_t twenty = vdupq_n_f32(20.0f);
+    const float32x4_t sixty = vdupq_n_f32(60.0f);
+    const float32x4_t zero = vdupq_n_f32(0.0f);
+    const float32x4_t one = vdupq_n_f32(1.0f);
+    
+    for (int s = 0; s < 6; ++s) {
+        for (int f = 0; f < 25; f += 4) {
+            // Load 4 magnitudes (handle tail case)
+            const int remaining = std::min(4, 25 - f);
+            for (int i = 0; i < 4; ++i) {
+                magBuffer[i] = (f + i < 25) ? m_binMagnitudeCache[s][f + i] : 0.0f;
+            }
+            
+            // Load into NEON register
+            float32x4_t mag = vld1q_f32(magBuffer);
+            
+            // db = 20 * log10(max(mag, 0.001))
+            float32x4_t db = vmulq_f32(twenty, neon_log10_approx(mag));
+            
+            // alpha = clamp((db + 60) / 60, 0, 1)
+            float32x4_t alpha = vdivq_f32(vaddq_f32(db, sixty), sixty);
+            alpha = vmaxq_f32(alpha, zero);
+            alpha = vminq_f32(alpha, one);
+            
+            // Store results
+            vst1q_f32(alphaBuffer, alpha);
+            
+            // Create QColor entries for each bin
+            for (int i = 0; i < remaining; ++i) {
+                const int fret = f + i;
+                const float threshold = m_binThresholdCache[s][fret];
+                const float rawMag = m_binMagnitudeCache[s][fret];
+                const bool aboveThreshold = rawMag >= threshold;
+                
+                // Color: cyan for above threshold, blue-gray for below (ghosting)
+                QColor color;
+                if (aboveThreshold) {
+                    // Bright cyan with log-scaled alpha
+                    color = QColor::fromRgbF(0.0, 0.8, 1.0, alphaBuffer[i]);
+                } else {
+                    // Ghosted: 50% alpha reduction
+                    color = QColor::fromRgbF(0.2, 0.4, 0.6, alphaBuffer[i] * 0.5);
+                }
+                
+                // Key format: "bin_s{1-6}_f{0-24}"
+                QString key = QStringLiteral("bin_s%1_f%2").arg(s + 1).arg(fret);
+                batchOut[key] = color;
+            }
+        }
+    }
+    
+#else
+    // Scalar fallback for non-ARM platforms
+    for (int s = 0; s < 6; ++s) {
+        for (int f = 0; f < 25; ++f) {
+            const float rawMag = m_binMagnitudeCache[s][f];
+            const float threshold = m_binThresholdCache[s][f];
+            const bool aboveThreshold = rawMag >= threshold;
+            
+            // Log-scale conversion: db = 20 * log10(max(mag, 0.001))
+            const float clampedMag = std::max(rawMag, 0.001f);
+            const float db = 20.0f * std::log10(clampedMag);
+            
+            // Normalize to [0,1]: alpha = clamp((db + 60) / 60, 0, 1)
+            float alpha = (db + 60.0f) / 60.0f;
+            alpha = std::clamp(alpha, 0.0f, 1.0f);
+            
+            QColor color;
+            if (aboveThreshold) {
+                color = QColor::fromRgbF(0.0, 0.8, 1.0, alpha);
+            } else {
+                color = QColor::fromRgbF(0.2, 0.4, 0.6, alpha * 0.5);
+            }
+            
+            QString key = QStringLiteral("bin_s%1_f%2").arg(s + 1).arg(f);
+            batchOut[key] = color;
+        }
+    }
+#endif
+}
+
 void TabEngineBridge::setTuningModeEnabled(bool enabled) {
     if (m_tuningModeEnabled == enabled)
         return;
@@ -105,6 +330,11 @@ void TabEngineBridge::setTuningModeEnabled(bool enabled) {
 }
 
 TabEngineBridge::~TabEngineBridge() {
+    // Stop CQT worker thread before destruction
+    if (m_cqtWorker) {
+        m_cqtWorker->stop();
+        m_cqtWorker.reset();
+    }
     dumpSessionWaveSnapshot("shutdown");
 }
 
@@ -152,6 +382,24 @@ void TabEngineBridge::handleCalibrationStarted() {
 void TabEngineBridge::handleCalibrationStepChanged(int stringIndex, bool capturing) {
     if (!m_calibrationRunning)
         return;
+
+    // Handle noise floor phase (stringIndex == -1 with capturing == true)
+    if (stringIndex == -1 && capturing) {
+        // Noise floor capture starting - show all circles as grey (state 4)
+        for (int s = 0; s < 6; ++s) {
+            setCalibrationStepState(s, 4);
+        }
+        m_calibrationMessage = QStringLiteral("Capturing noise floor...");
+        emit calibrationStatusChanged();
+        return;
+    }
+    
+    // Handle transition from noise floor to first string - clear grey circles
+    if (m_activeCalibrationString == -1 && stringIndex >= 0) {
+        for (int s = 0; s < 6; ++s) {
+            setCalibrationStepState(s, 0);
+        }
+    }
 
     if (m_partialCalibration) {
         if (stringIndex < 0) {
@@ -222,44 +470,75 @@ void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& aver
     m_activeCalibrationCapturing = false;
     m_calibrationRunning = false;
     bool anyUpdated = false;
+    
+    // First pass: calculate preAmpGain (multipliers) and find max avgRms for spatialWeight
+    float maxAvgRms = 0.f;
     for (int s = 0; s < 6; ++s) {
         const float avg = averages[static_cast<std::size_t>(s)];
         const float peak = peaks[static_cast<std::size_t>(s)];
         if (avg >= 0.f && peak >= 0.f) {
             m_calibrationProfile.avgRms[static_cast<std::size_t>(s)] = avg;
             m_calibrationProfile.peakRms[static_cast<std::size_t>(s)] = peak;
-            // Calculate multiplier: targetRMS / avgInputRMS
+            // Calculate preAmpGain: targetRMS / avgInputRMS
             const float targetRms = NoteDetectionStore::instance().currentValueFromKey("targetRms", s);
             const float multiplier = (avg > 0.f) ? (targetRms / avg) : 1.0f;
             m_calibrationProfile.multipliers[static_cast<std::size_t>(s)] = std::clamp(multiplier, 0.2f, 8.0f);
+            maxAvgRms = std::max(maxAvgRms, avg);
             anyUpdated = true;
         }
     }
 
     if (anyUpdated) {
-        // Store the calculated multipliers in the calibrationGainMultiplier parameters
+        // Store preAmpGain (via calibrationGainMultiplier key for now)
         for (int s = 0; s < 6; ++s) {
             NoteDetectionStore::instance().setValueFromKey("calibrationGainMultiplier", s, 
                                                           m_calibrationProfile.multipliers[static_cast<std::size_t>(s)]);
         }
+        
+        // Calculate and store spatialWeight: maxAvgRms / thisStringAvgRms
+        // This normalizes all strings to the loudest string's output level
+        // spatialWeight is fixed at calibration time and not user-adjustable
+        if (maxAvgRms > 0.f && !m_partialCalibration) {
+            for (int s = 0; s < 6; ++s) {
+                const float avg = m_calibrationProfile.avgRms[static_cast<std::size_t>(s)];
+                const float weight = (avg > 0.f) ? (maxAvgRms / avg) : 1.0f;
+                m_calibrationProfile.spatialWeight[static_cast<std::size_t>(s)] = std::clamp(weight, 0.5f, 2.0f);
+                NoteDetectionStore::instance().setValueFromKey("spatialWeight", s, 
+                                                              m_calibrationProfile.spatialWeight[static_cast<std::size_t>(s)]);
+            }
+        }
+        
         m_calibrationProfile.valid = true;
         if (m_engine)
             m_engine->applyCalibration(m_calibrationProfile);
         
+        // Update CQT Worker Thread with new calibration data
+        if (m_cqtWorker) {
+            m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+                                        m_calibrationProfile.peakRms);
+        }
+        
         // Commit calibration values to tuning state
         NoteDetectionStore::instance().commit();
+        
+        // Notify UI of changed calibration gains (queued to ensure values are accessible)
+        QMetaObject::invokeMethod(this, [this]() {
+            emit calibrationGainsChanged();
+            emit calibrationParametersUpdated();
+        }, Qt::QueuedConnection);
         
         // Log calibration data
         SessionLogger::instance().log("calibration", "=== Calibration Complete ===");
         for (int s = 0; s < 6; ++s) {
             const float targetRms = NoteDetectionStore::instance().currentValueFromKey("targetRms", s);
             SessionLogger::instance().logf("calibration", 
-                "String %d: avgRms=%.6f peakRms=%.6f targetRms=%.6f multiplier=%.3f",
+                "String %d: avgRms=%.6f peakRms=%.6f targetRms=%.6f preAmpGain=%.3f spatialWeight=%.3f",
                 s + 1,
                 m_calibrationProfile.avgRms[static_cast<std::size_t>(s)],
                 m_calibrationProfile.peakRms[static_cast<std::size_t>(s)],
                 targetRms,
-                m_calibrationProfile.multipliers[static_cast<std::size_t>(s)]);
+                m_calibrationProfile.multipliers[static_cast<std::size_t>(s)],
+                m_calibrationProfile.spatialWeight[static_cast<std::size_t>(s)]);
         }
     }
 
@@ -398,8 +677,13 @@ void TabEngineBridge::setRecording(bool value) {
             clearPendingCapture();
         }
         m_captureSampleRate = m_liveSampleRate;
-        for (auto& buffer : m_captureBuffers)
+        const std::size_t reserveCap = (m_captureSampleRate > 1.0f)
+            ? static_cast<std::size_t>(std::max(1.0f, m_captureSampleRate * kSessionWaveTapSeconds))
+            : static_cast<std::size_t>(44100 * kSessionWaveTapSeconds);
+        for (auto& buffer : m_captureBuffers) {
             buffer.clear();
+            buffer.reserve(reserveCap);
+        }
     } else {
         // Finalise the current capture snapshot but keep live detection running.
         syncFromEngine();
@@ -461,8 +745,19 @@ void TabEngineBridge::setAudioClient(HexAudioClient* client) {
     if (m_audioClient == client)
         return;
 
+    // Stop existing CQT worker if any
+    if (m_cqtWorker) {
+        m_cqtWorker->stop();
+        m_cqtWorker.reset();
+    }
+
     if (m_audioClient) {
         m_audioClient->setTabBridge(nullptr);
+        // Disconnect from previous client's signals if it's a HexJackClient
+        auto* prevJackClient = dynamic_cast<HexJackClient*>(m_audioClient);
+        if (prevJackClient) {
+            disconnect(prevJackClient, nullptr, this, nullptr);
+        }
     }
 
     m_audioClient = client;
@@ -473,7 +768,95 @@ void TabEngineBridge::setAudioClient(HexAudioClient* client) {
         m_audioClient->connectMeters(this);
         m_audioClient->connectCalibration(this);
         updateThresholdsDisplay();  // Update thresholds when audio client connected
+        
+        // Connect to bufferConfigChanged to initialize CQT worker once JACK is started
+        auto* jackClient = dynamic_cast<HexJackClient*>(m_audioClient);
+        if (jackClient) {
+            // Try to create CQT worker now if sample rate is already valid
+            if (jackClient->sampleRate() > 0) {
+                initCQTWorkerForJack(jackClient);
+            } else {
+                // Sample rate not yet available - connect to signal for deferred init
+                // (The !m_cqtWorker check prevents multiple initializations)
+                connect(jackClient, &HexJackClient::bufferConfigChanged,
+                        this, [this, jackClient](int sampleRate, int /*bufferSize*/) {
+                    if (sampleRate > 0 && !m_cqtWorker) {
+                        initCQTWorkerForJack(jackClient);
+                    }
+                });
+                qInfo() << "TabEngineBridge: JACK sample rate not yet available, deferring CQT worker init";
+            }
+        } else {
+            qWarning() << "TabEngineBridge: setAudioClient called but dynamic_cast to HexJackClient FAILED";
+        }
     }
+}
+
+void TabEngineBridge::initCQTForRecordedSession(float sampleRate) {
+    // Stop existing CQT worker if any
+    if (m_cqtWorker) {
+        m_cqtWorker->stop();
+        m_cqtWorker.reset();
+    }
+    
+    // Create standalone ring buffer for recorded session audio
+    if (!m_standaloneRingBuffer) {
+        m_standaloneRingBuffer = std::make_unique<audio::AudioRingBuffer>();
+    }
+    
+    // Create CQT Worker Thread (TIER 2) for recorded session
+    audio::CQTWorkerConfig workerConfig;
+    workerConfig.sampleRate = sampleRate;
+    workerConfig.hopSize = 512;  // ~11.6ms at 44.1kHz
+    workerConfig.enableCoreAffinity = false;  // Don't pin cores in recorded mode
+    
+    m_cqtWorker = std::make_unique<audio::CQTWorkerThread>(
+        *m_standaloneRingBuffer,
+        m_atomicNoteState,
+        workerConfig
+    );
+    
+    // Pass calibration data to worker
+    if (m_calibrationProfile.valid) {
+        m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+                                    m_calibrationProfile.peakRms);
+    }
+    
+    m_cqtWorker->start();
+    qInfo() << "TabEngineBridge: CQT Worker Thread started for RECORDED SESSION (sample rate:" << sampleRate << ")";
+}
+
+void TabEngineBridge::initCQTWorkerForJack(HexJackClient* jackClient) {
+    if (!jackClient) return;
+    
+    // Stop existing CQT worker if any
+    if (m_cqtWorker) {
+        m_cqtWorker->stop();
+        m_cqtWorker.reset();
+    }
+    
+    audio::CQTWorkerConfig workerConfig;
+    workerConfig.sampleRate = static_cast<float>(jackClient->sampleRate());
+    workerConfig.hopSize = 512;  // ~11.6ms at 44.1kHz
+    workerConfig.enableCoreAffinity = true;
+    workerConfig.coreId = 1;  // Core 1 for CQT processing
+    
+    qInfo() << "TabEngineBridge: Creating CQT Worker with ring buffer from JACK client, sampleRate:" << workerConfig.sampleRate;
+    
+    m_cqtWorker = std::make_unique<audio::CQTWorkerThread>(
+        jackClient->audioRingBuffer(),
+        m_atomicNoteState,
+        workerConfig
+    );
+    
+    // Pass calibration data to worker
+    if (m_calibrationProfile.valid) {
+        m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+                                    m_calibrationProfile.peakRms);
+    }
+    
+    m_cqtWorker->start();
+    qInfo() << "TabEngineBridge: CQT Worker Thread started (TIER 2) with sample rate:" << workerConfig.sampleRate;
 }
 
 void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int n, float sr) {
@@ -529,6 +912,23 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
     // This ensures both live (JACK) and recorded session playback show meter activity
     postMeterSnapshot(blockRms);
 
+    // =========================================================================
+    // RECORDED SESSION MODE: Push audio to standalone ring buffer for CQT worker
+    // This replicates what HexJackClient does in live mode, but for recorded sessions
+    // =========================================================================
+    if (m_standaloneRingBuffer && m_cqtWorker) {
+        audio::AudioFrame frame;
+        for (int i = 0; i < n; ++i) {
+            for (int s = 0; s < 6; ++s) {
+                frame.samples[s] = channels[s] ? channels[s][i] : 0.0f;
+            }
+            // Push to ring buffer - if full, we drop samples
+            m_standaloneRingBuffer->push(frame);
+        }
+        // Notify CQT worker thread that audio is available
+        m_cqtWorker->notifyAudioAvailable();
+    }
+
     if (m_debugNoteLogging) {
         QStringList rmsSummary;
         for (int i = 0; i < 6; ++i)
@@ -540,7 +940,7 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
     m_engine->processBlock(channels, n, sr, blockStart);
     updateTuningDeviation();
     
-    // Update thresholds (throttled to 100ms to avoid overwhelming QML)
+    // Update thresholds and bin magnitudes (throttled to 100ms to avoid overwhelming QML)
     if (!m_thresholdsUpdateTimer.isValid() || m_thresholdsUpdateTimer.elapsed() >= 100) {
         auto thresholds = m_engine->getThresholds();
         for (int i = 0; i < 6; ++i) {
@@ -554,6 +954,10 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
             m_thresholds[i] = stringThresholds;
         }
         emit thresholdsChanged();
+        
+        // NOTE: Bin magnitude cache is updated by m_noteStatePollTimer (UI thread)
+        // Do NOT call updateBinMagnitudeCache() here - it emits signals from audio thread and causes xruns
+        
         m_thresholdsUpdateTimer.restart();
     }
     
@@ -614,17 +1018,20 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
         bool hasActiveNote = false;
         float activeEnvelope = 0.f;
         
-        // Find if string s has an active note (endSec within 50ms of current time)
+        // Find the most recent note for this string
         for (int i = total - 1; i >= 0; --i) {
             const auto& ev = events[std::size_t(i)];
             if (ev.stringIdx == s) {
-                const float timeSinceEnd = m_liveTimeSec - ev.endSec;
-                // Active if endSec is very recent (within 50ms)
-                if (timeSinceEnd >= -0.001f && timeSinceEnd <= 0.050f) {
+                // Note is active if:
+                // 1. endSec is 0 (not yet ended - still sustaining), OR
+                // 2. endSec is ahead of current time (still within sustain window)
+                const bool noteStillActive = (ev.endSec <= ev.startSec) || (ev.endSec > m_liveTimeSec);
+                
+                if (noteStillActive) {
                     hasActiveNote = true;
                     activeEnvelope = ev.velocity; // velocity is updated from envelope
-                    break;
                 }
+                break; // Only check most recent note for this string
             }
         }
         
@@ -1230,4 +1637,42 @@ bool TabEngineBridge::exportPendingCapture(const QString& rawLabel) {
 
     clearPendingCapture();
     return true;
+}
+// =============================================================================
+// HEATMAP LOGGING (for UI debugging)
+// =============================================================================
+
+void TabEngineBridge::logHeatmapUIBatchStart() {
+    HeatmapLogger::instance().logUIBatchStart(m_binMagnitudeRevision);
+}
+
+void TabEngineBridge::logHeatmapUIEntry(int stringIndex, int fretIndex, qreal magnitude,
+                                        qreal threshold, qreal intensity, qreal alpha, bool isAboveThreshold) {
+    HeatmapLogger::instance().logUIBatchEntry(
+        stringIndex, fretIndex,
+        static_cast<float>(magnitude),
+        static_cast<float>(threshold),
+        static_cast<float>(intensity),
+        static_cast<float>(alpha),
+        isAboveThreshold
+    );
+}
+
+void TabEngineBridge::logHeatmapUIBatchEnd() {
+    HeatmapLogger::instance().logUIBatchEnd();
+}
+
+void TabEngineBridge::setHeatmapLoggingEnabled(bool enabled) {
+    HeatmapLogger::instance().setEnabled(enabled);
+}
+
+void TabEngineBridge::setHeatmapEnabled(bool enabled) {
+    const bool wasEnabled = m_heatmapEnabled.exchange(enabled, std::memory_order_acq_rel);
+    if (wasEnabled != enabled) {
+        // Notify CQT worker of heatmap state change
+        if (m_cqtWorker) {
+            m_cqtWorker->setHeatmapEnabled(enabled);
+        }
+        emit heatmapEnabledChanged();
+    }
 }

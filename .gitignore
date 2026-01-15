@@ -1,3 +1,6 @@
 logs/sessionwavs/
 sessions/
 logs/*.log
+
+# Large log files
+logs/**/*.log

@@ -84,6 +84,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/module_GuitarPi.aotstats: .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.aotstats
 .rcc/qmlcache/module_GuitarPi.aotstats: .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.aotstats
 .rcc/qmlcache/module_GuitarPi.aotstats: .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.aotstats
+.rcc/qmlcache/module_GuitarPi.aotstats: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats
 .rcc/qmlcache/module_GuitarPi.aotstats: .rcc/qmlcache/module_GuitarPi.aotstatslist
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating .rcc/qmlcache/module_GuitarPi.aotstats"
 	/usr/lib/qt6/libexec/qmlaotstats aggregate /home/general/SignalAssistant/build/.rcc/qmlcache/module_GuitarPi.aotstatslist /home/general/SignalAssistant/build/.rcc/qmlcache/module_GuitarPi.aotstats
@@ -102,6 +103,20 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.aotstats: .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.aotstats
 
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: /usr/lib/qt6/libexec/qmlcachegen
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: .qt/rcc/qmake_GuitarPi.qrc
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0.qrc
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: GuitarPi/GuitarPi.qmltypes
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp: GuitarPi/qmldir
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats"
+	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
+	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/BatchedFretboardBinOverlay.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp /home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml
+
+.rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp
+	@$(CMAKE_COMMAND) -E touch_nocreate .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats
+
 .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp: /usr/lib/qt6/libexec/qmlcachegen
 .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp: /home/general/SignalAssistant/qml/components/ColorizedIcon.qml
 .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp: .qt/rcc/qmake_GuitarPi.qrc
@@ -109,7 +124,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/ColorizedIcon.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp /home/general/SignalAssistant/qml/components/ColorizedIcon.qml
 
@@ -123,7 +138,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/CoreAccordion.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp /home/general/SignalAssistant/qml/components/CoreAccordion.qml
 
@@ -137,7 +152,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/CoreComponent.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp /home/general/SignalAssistant/qml/components/CoreComponent.qml
 
@@ -151,7 +166,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/LatencyBadge.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/LatencyBadge_qml.cpp /home/general/SignalAssistant/qml/components/LatencyBadge.qml
 
@@ -165,7 +180,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/MapOverview.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/MapOverview_qml.cpp /home/general/SignalAssistant/qml/components/MapOverview.qml
 
@@ -179,7 +194,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/Meter.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/Meter_qml.cpp /home/general/SignalAssistant/qml/components/Meter.qml
 
@@ -193,7 +208,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/NavButton.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/NavButton_qml.cpp /home/general/SignalAssistant/qml/components/NavButton.qml
 
@@ -207,7 +222,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/RecordingOverlay.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/RecordingOverlay_qml.cpp /home/general/SignalAssistant/qml/components/RecordingOverlay.qml
 
@@ -221,7 +236,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/TestModeOverlay.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/TestModeOverlay_qml.cpp /home/general/SignalAssistant/qml/components/TestModeOverlay.qml
 
@@ -235,7 +250,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp, .rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/components/TuningPanel.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/components/TuningPanel_qml.cpp /home/general/SignalAssistant/qml/components/TuningPanel.qml
 
@@ -249,7 +264,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/pages/HomePage.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/HomePage_qml.cpp /home/general/SignalAssistant/qml/pages/HomePage.qml
 
@@ -263,7 +278,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/pages/RecordPage.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/RecordPage_qml.cpp /home/general/SignalAssistant/qml/pages/RecordPage.qml
 
@@ -277,7 +292,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/pages/RigPage.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/RigPage_qml.cpp /home/general/SignalAssistant/qml/pages/RigPage.qml
 
@@ -291,7 +306,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/pages/SettingsPage.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/SettingsPage_qml.cpp /home/general/SignalAssistant/qml/pages/SettingsPage.qml
 
@@ -305,7 +320,7 @@ CMakeFiles/module_GuitarPi_aotstats_target: .rcc/qmlcache/module_GuitarPi.aotsta
 .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp: .qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc
 .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp: GuitarPi/GuitarPi.qmltypes
 .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp: GuitarPi/qmldir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.aotstats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Generating .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp, .rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp.aotstats"
 	/usr/bin/cmake -E make_directory /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages
 	/usr/lib/qt6/libexec/qmlcachegen --bare --resource-path /qt/qml/GuitarPi/qml/pages/TabPage.qml -I /home/general/SignalAssistant/build -I /usr/lib/aarch64-linux-gnu/qt6/qml -i /home/general/SignalAssistant/build/GuitarPi/qmldir --resource /home/general/SignalAssistant/build/.qt/rcc/qmake_GuitarPi.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0.qrc --resource /home/general/SignalAssistant/build/.qt/rcc/GuitarPi_raw_qml_0_extra_qmldirs.qrc --dump-aot-stats "--module-id=GuitarPi(GuitarPi)" -o /home/general/SignalAssistant/build/.rcc/qmlcache/GuitarPi_qml/pages/TabPage_qml.cpp /home/general/SignalAssistant/qml/pages/TabPage.qml
 
@@ -317,6 +332,8 @@ CMakeFiles/module_GuitarPi_aotstats_target.dir/codegen:
 
 module_GuitarPi_aotstats_target: .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp
 module_GuitarPi_aotstats_target: .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp.aotstats
+module_GuitarPi_aotstats_target: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp
+module_GuitarPi_aotstats_target: .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp.aotstats
 module_GuitarPi_aotstats_target: .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp
 module_GuitarPi_aotstats_target: .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp.aotstats
 module_GuitarPi_aotstats_target: .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp

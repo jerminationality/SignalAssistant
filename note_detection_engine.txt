@@ -1,0 +1,3589 @@
+================================================================================
+NOTE DETECTION ENGINE - COMPLETE SOURCE REVIEW
+================================================================================
+
+Files included:
+  1. docs/Note Detection.md
+  2. src/CQT/CQTNoteDetector.h
+  3. src/CQT/CQTNoteDetector.cpp
+  4. src/audio/AtomicNoteState.h
+  5. src/audio/CQTWorkerThread.h
+  6. src/audio/CQTWorkerThread.cpp
+  7. src/TabEngine.h
+  8. src/TabEngine.cpp
+  9. src/NoteDetectionConfig.h
+ 10. src/NoteDetectionConfig.cpp
+ 11. src/NoteDetectionStore.h
+ 12. src/NoteDetectionStore.cpp
+ 13. src/FretboardProvider.h
+ 14. src/FretboardProvider.cpp
+ 15. src/TabEngineBridge.h
+
+================================================================================
+
+=== docs/Note Detection.md ===
+================================================================================
+                        NOTE DETECTION PARAMETERS (CQT SYSTEM)
+================================================================================
+
+--------------------------------------------------------------------------------
+CALIBRATION
+--------------------------------------------------------------------------------
+
+Noise Floor Capture
+    Description:  Automatic baseline measurement during calibration
+    Process:      Captures 2 seconds of silence before string calibration
+    Computation:  Averages RMS across all 6 strings during quiet period
+    Result:       Sets baselineFloor parameter automatically
+
+String Gain Calibration (Two-Stage System)
+    Description:  Measures each string's output level for two purposes:
+    
+    Stage 1 - preAmpGain (UI-adjustable):
+        Process:  Calculates gain to reach target RMS
+        Formula:  preAmpGain = targetRms / measuredAvgRms
+        Storage:  Saved to calibrationGainMultiplier (UI slider)
+        Purpose:  Pre-CQT amplification to compensate for pickup sensitivity
+        User:     Can adjust via slider after calibration
+    
+    Stage 2 - spatialWeight (calibration-fixed):
+        Process:  Calculates relative sensitivity for crosstalk rejection
+        Formula:  spatialWeight = max(allStringRms) / thisStringRms
+        Storage:  Saved to CalibrationProfile (internal, not UI-exposed)
+        Purpose:  Fair comparison across strings during spatial filtering
+        User:     Cannot adjust (preserves crosstalk rejection accuracy)
+
+--------------------------------------------------------------------------------
+NOTE-ON (ONSET) PARAMETERS
+--------------------------------------------------------------------------------
+
+baseline (Master Gate)
+    Description:  Hard noise floor - disregard all signal below this level
+    Formula:      baseline = baselineFloor
+    Input:        baselineFloor = 0.00018-0.00042 RMS (auto-set by calibration)
+    Check:        if (RMS < baseline) → Skip CQT processing for this string
+    Behavior:     Set by calibration, adjustable via slider
+    CQT:          Applied AFTER preAmpGain, before CQT transform
+
+envFloor
+    Description:  Musical threshold - minimum RMS for valid note events
+    Formula:      envFloor = envelopeFloor
+    Input:        envelopeFloor = 0.00045-0.00105 RMS (user-adjustable)
+    Behavior:     Static value, should be >= baseline
+    CQT:          Used as base for attack and sustain thresholds
+
+gateThreshold (Slope-Aware)
+    Description:  Onset acceptance threshold with fret-dependent sensitivity
+    Formula:      gateThreshold = envFloor × gateRatio × (1.0 - fret × 0.015)
+    Input:        gateRatio = 1.0-10.0 (user-adjustable)
+    Check:        peakRMS > gateThreshold → onset detected
+    CQT Feature:  Slope factor makes high frets (15-24) more sensitive by 22-36%
+    Example:      Fret 0:  threshold × 1.00
+                  Fret 12: threshold × 0.82 (18% lower)
+                  Fret 24: threshold × 0.64 (36% lower)
+
+--------------------------------------------------------------------------------
+NOTE-OFF (RELEASE) PARAMETERS
+--------------------------------------------------------------------------------
+
+sustainFloor
+    Description:  Minimum RMS level to keep note alive
+    Formula:      sustainFloor = envFloor × sustainFloorScale
+    Input:        sustainFloorScale = 0.58-1.5 (user-adjustable)
+    Check:        peakRMS < sustainFloor → note-off
+    CQT:          Applied to CQT RMS output (bin magnitude)
+    Note:         Can dip below envFloor (scale < 1.0) for quiet sustains
+
+retriggerGate (Spectral Flux Spike Detection)
+    Description:  Detects new attack during sustained note via CQT spectral flux
+    Formula:      if (flux > lastPeakRMS × 0.4) AND (newRMS > lastPeakRMS × 0.4)
+                  → trigger new attack on same fret
+    Purpose:      Detects re-articulation without requiring pitch change
+
+--------------------------------------------------------------------------------
+FREQUENCY FILTERING (CQT NATIVE)
+--------------------------------------------------------------------------------
+
+Bin Range Clamping
+    Description:  Each string scans only bins within its physical frequency range
+    Ranges:       String 0 (E): bins 0-74   → 70-350 Hz   (24 frets covered)
+                  String 1 (A): bins 15-89  → 95-465 Hz
+                  String 2 (D): bins 30-104 → 127-622 Hz
+                  String 3 (G): bins 45-119 → 170-831 Hz
+                  String 4 (B): bins 57-131 → 214-1048 Hz
+                  String 5 (e): bins 72-144 → 280-1396 Hz
+    Benefit:      Automatic octave error prevention, no manual filter tuning
+
+--------------------------------------------------------------------------------
+OTHER PARAMETERS
+--------------------------------------------------------------------------------
+
+Hysteresis & Stability
+    Description:  Discrete fret bins with stability mechanisms
+    Mechanism:    - 20% magnitude advantage required for fret change
+                  - 3 consecutive frames (Sticky Fret)
+    Purpose:      Prevents fret jitter and false oscillations
+
+Target RMS
+    Description:  Target signal level for calibration normalization
+    Range:        0.01-0.05 RMS (user-adjustable)
+    CQT:          Used to calculate initial preAmpGain during calibration
+
+Gain Multiplier (calibrationGainMultiplier → preAmpGain)
+    Description:  Pre-CQT signal amplification (Stage 1 gain)
+    Range:        0.5-2.0 (user-adjustable, per-string)
+    CQT:          Applied to raw audio BEFORE CQT transform
+    Purpose:      Compensates for pickup sensitivity, ensures signal clears baseline
+    Safety:       User adjustments don't affect crosstalk rejection (spatialWeight is separate)
+
+================================================================================
+                        CQT ONSET ACCEPTANCE FLOW
+================================================================================
+
+For an onset to be accepted, the following sequence occurs:
+
+    1. Master Gate Check:
+       if (RMS < baseline) → Skip CQT processing for this string
+
+    2. CQT Transform:
+       Compute 144-bin spectrum (36 bins/octave, ~70-1400Hz)
+
+    3. Spatial Filtering (Crosstalk Rejection):
+       For each bin: dominant = argmax(binRMS[s] × spatialWeight[s])
+       Suppress bin on all non-dominant strings
+
+    4. Peak Search (Range-Clamped):
+       Search only bins within string's 24-fret range
+       Find peak bin and estimate fret
+
+    5. Slope-Aware Threshold Check:
+       attackThreshold = envFloor × gateRatio × (1.0 - fret × 0.015)
+       if (peakRMS < attackThreshold) → No onset
+
+    6. Hysteresis (Sticky Fret):
+       If changing fret: require 20% RMS advantage
+       
+    7. Temporal Confirmation:
+       New fret must persist for 3 consecutive frames
+       
+    8. Note-On Accepted:
+       isAttack = true, output fret with centOffset (parabolic interpolation)
+
+================================================================================
+                        THRESHOLD RELATIONSHIPS (CQT)
+================================================================================
+
+Expected numerical ordering (lowest to highest):
+
+    baseline < sustainFloor ≤ envFloor < gateThreshold
+
+Where:
+    - baseline:         Noise floor (Master Gate, pre-CQT)
+    - sustainFloor:     Note decay cutoff (envFloor × sustainScale)
+    - envFloor:         Musical threshold base
+    - gateThreshold:    Attack threshold (envFloor × gateRatio × slope)
+
+Special Notes:
+    - Slope factor decreases threshold by 1.5% per fret
+    - Fret 24: gateThreshold is 36% lower than fret 0
+    - spatialWeight ensures fair crosstalk comparison regardless of preAmpGain
+
+================================================================================
+                        CQT SYSTEM ADVANTAGES
+================================================================================
+
+Frequency Resolution:
+    - 36 bins/octave (vs FFT's ~12)
+    - 3× better pitch discrimination
+    - Native bin-to-fret mapping
+
+Crosstalk Rejection:
+    - Unified 6-string processing
+    - Spatial filtering with fair comparison
+    - Eliminates false detections from adjacent strings
+
+High Fret Accuracy:
+    - Slope-aware thresholds (1.5% decay per fret)
+    - Compensates for naturally quieter high notes
+    - 22-36% more sensitive at frets 15-24
+
+Stability:
+    - Hysteresis (20% advantage for fret changes)
+    - Temporal confirmation (3-frame persistence)
+    - No pitch smoothing artifacts
+
+Simplicity:
+    - No manual HP/LP filter tuning
+    - Native spectral flux (no Aubio dependency)
+    - Automatic frequency range handling
+
+Two-Stage Gain:
+    - preAmpGain: User-adjustable (UI slider)
+    - spatialWeight: Calibration-fixed (crosstalk fairness)
+    - User can boost/cut without breaking crosstalk math
+
+================================================================================
+
+
+=== src/CQT/CQTNoteDetector.h ===
+#pragma once
+
+#include <memory>
+#include <vector>
+
+/**
+ * Guitar detection frame output from CQT analysis
+ * 
+ * ENERGY MEASUREMENT CONVENTION:
+ * All energy/amplitude measurements are expressed as RMS-equivalent values for
+ * consistency across the system. Internally, the CQT computes magnitude values
+ * (sqrt of power), which directly correlate with RMS energy measurements and can
+ * be compared against calibrated thresholds (envFloor, baseline, etc.) that are
+ * also in RMS units. Users only need to think in terms of RMS amplitude.
+ */
+struct GuitarFrame {
+    int stringID;           // 0-5 (Low E to High E)
+    int fret;               // 0-24 (stabilized via hysteresis), -1 if no note
+    float rmsAmplitude;     // RMS amplitude of input buffer
+    float centOffset;       // Sub-bin pitch offset in cents (for bends/vibrato)
+    float pitchHz;          // Detected pitch frequency in Hz (for tuning mode)
+    float binEnergy;        // Peak CQT bin energy (internally magnitude, exposed as RMS-equivalent)
+    float spectralFlux;     // CQT energy change rate (for onset detection)
+    bool isAttack;          // True if this is a new note attack
+    bool isSustaining;      // True if note is sustaining from previous frame
+};
+
+/**
+ * Per-string detection parameters (maps from existing NoteDetectionParameterSet)
+ */
+struct DetectionParams {
+    float baseline;         // Noise floor baseline (Master Gate threshold)
+    float envFloor;         // Base RMS threshold - scaled by frequency model to find bin thresholds
+    float preAmpGain;       // Pre-CQT gain (UI-adjustable, compensates for pickup output)
+    float spatialWeight;    // Post-CQT weight (calibration-fixed, for crosstalk fairness)
+    float gateRatio;        // Note-off multiplier (release = envFloor * gateRatio)
+    int confirmationFrames; // Fret stability hysteresis (1-5 frames)
+    float fluxSensitivity;  // Spectral flux retrigger threshold (0.05-0.50)
+    float slopeDecay;       // [DEPRECATED] Legacy slope parameter - replaced by frequency model
+};
+
+/**
+ * CQT-based note detector for 6-string guitar
+ * 
+ * Key features:
+ * - Unified 6-string scanning with inter-string crosstalk rejection
+ * - Frequency-dependent thresholds (compensates for harmonic complexity)
+ * - Hysteresis-based fret stability ("Sticky Fret" - 20% advantage + 3 frames)
+ * - Spectral flux-based retriggering (replaces Aubio onset detection)
+ * - Parabolic interpolation for sub-bin pitch accuracy
+ * 
+ * CQT Configuration:
+ * - 36 bins per octave (3x better than standard FFT)
+ * - 144 total bins covering ~70Hz to ~1400Hz (all guitar frets)
+ * - Per-string range clamping (72 bins per string for 24 frets)
+ * 
+ * Threshold Model:
+ * - Dynamic scaling: Threshold = RMS × (Base + Growth × Fret/24)
+ * - Base multipliers: 0.72 (High E) down to 0.52 (Low E)
+ * - Growth constant: 0.35 (purity increase toward bridge)
+ * - Accounts for: Low strings = more harmonics = lower fundamental energy
+ */
+class CQTNoteDetector {
+public:
+    explicit CQTNoteDetector(double sampleRate = 44100.0);
+    ~CQTNoteDetector();
+    
+    // Non-copyable (owns unique resources)
+    CQTNoteDetector(const CQTNoteDetector&) = delete;
+    CQTNoteDetector& operator=(const CQTNoteDetector&) = delete;
+    
+    // Move-constructible
+    CQTNoteDetector(CQTNoteDetector&&) noexcept = default;
+    CQTNoteDetector& operator=(CQTNoteDetector&&) noexcept = default;
+
+    /**
+     * Process all 6 strings in a unified pass
+     * 
+     * @param hexBuffers   Array of 6 float buffer pointers (one per string)
+     * @param bufferLength Number of samples in each buffer
+     * @param params       Detection parameters per string (must have 6 elements)
+     * @return Vector of GuitarFrame results (one per string, in order)
+     * 
+     * Note: hexBuffers[i] may be nullptr to indicate silence on that string
+     */
+    std::vector<GuitarFrame> process(
+        float** hexBuffers, 
+        int bufferLength,
+        const std::vector<DetectionParams>& params);
+    
+    /**
+     * Reset all string states (call after recalibration or mode change)
+     */
+    void reset();
+    
+    /**
+     * Update sample rate (recreates CQT kernels)
+     */
+    void setSampleRate(double sampleRate);
+
+private:
+    // CQT configuration constants
+    static constexpr int BINS_PER_OCTAVE = 36;
+
+    // Per-string state for hysteresis and flux tracking
+    struct StringState {
+        int currentFret = -1;
+        int candidateFret = -1;
+        int confirmationCount = 0;
+        float lastBins[144] = {0.0f};
+        float lastPeakMag = 0.0f;
+    };
+    StringState states[6];
+    
+    // Pimpl for CQT engine and working buffers
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
+};
+
+
+
+=== src/CQT/CQTNoteDetector.cpp ===
+/**
+ * CQTNoteDetector.cpp - Constant-Q Transform based note detection for 6-string guitar
+ * 
+ * Implements:
+ * - Unified 6-string scanning with inter-string crosstalk rejection
+ * - Slope-aware thresholds (1.5% decay per fret)
+ * - Hysteresis-based fret stability ("Sticky Fret")
+ * - Spectral flux-based retriggering
+ * - Parabolic interpolation for sub-bin pitch accuracy
+ * 
+ * Uses KISS FFT for efficient O(N log N) CQT kernel computation.
+ * ARM NEON SIMD optimization for Raspberry Pi 5 (Cortex-A76).
+ */
+
+#include "CQTNoteDetector.h"
+#include "../SessionLogger.h"
+#include <array>
+#include <cmath>
+#include <algorithm>
+#include <cstring>
+
+// CRITICAL: SessionLogger causes deadlocks in real-time audio thread
+// Only enable for offline debugging with recorded sessions
+#define ENABLE_CQT_RT_LOGGING 0  // Disable verbose CQT logging (keep TabEngine events only)
+
+// ============================================================================
+// ARM NEON SIMD Support
+// ============================================================================
+#ifdef HAVE_ARM_NEON
+#include <arm_neon.h>
+#define USE_NEON_SIMD 1
+#endif
+
+// ============================================================================
+// KISS FFT - Minimal embedded implementation (BSD-3-Clause)
+// Only the real-to-complex forward transform needed for CQT
+// ============================================================================
+
+namespace kissfft {
+
+struct kiss_fft_cpx {
+    float r;
+    float i;
+};
+
+class KissFFT {
+public:
+    explicit KissFFT(int nfft) : m_nfft(nfft) {
+        m_twiddles.resize(nfft);
+        for (int i = 0; i < nfft; ++i) {
+            const float phase = -2.0f * M_PI * i / nfft;
+            m_twiddles[i] = { std::cos(phase), std::sin(phase) };
+        }
+        m_scratch.resize(nfft);
+    }
+
+    void forward(const float* timeIn, kiss_fft_cpx* freqOut) {
+        // Real-to-complex via standard DFT for small sizes, Cooley-Tukey for power-of-2
+        if (isPowerOf2(m_nfft)) {
+            // Copy real input to complex scratch
+            for (int i = 0; i < m_nfft; ++i) {
+                m_scratch[i] = { timeIn[i], 0.0f };
+            }
+            fft_radix2(m_scratch.data(), freqOut, m_nfft, 1);
+        } else {
+            // Fallback: direct DFT for non-power-of-2 (CQT uses varied sizes)
+            dft_direct(timeIn, freqOut);
+        }
+    }
+
+private:
+    int m_nfft;
+    std::vector<kiss_fft_cpx> m_twiddles;
+    std::vector<kiss_fft_cpx> m_scratch;
+
+    static bool isPowerOf2(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+
+    void dft_direct(const float* x, kiss_fft_cpx* X) {
+        for (int k = 0; k < m_nfft; ++k) {
+            float sumR = 0.0f, sumI = 0.0f;
+            for (int n = 0; n < m_nfft; ++n) {
+                const float phase = -2.0f * M_PI * k * n / m_nfft;
+                sumR += x[n] * std::cos(phase);
+                sumI += x[n] * std::sin(phase);
+            }
+            X[k] = { sumR, sumI };
+        }
+    }
+
+    void fft_radix2(kiss_fft_cpx* in, kiss_fft_cpx* out, int n, int stride) {
+        if (n == 1) {
+            out[0] = in[0];
+            return;
+        }
+        const int half = n / 2;
+        fft_radix2(in, out, half, stride * 2);
+        fft_radix2(in + stride, out + half, half, stride * 2);
+
+        for (int k = 0; k < half; ++k) {
+            const float phase = -2.0f * M_PI * k / n;
+            const kiss_fft_cpx tw = { std::cos(phase), std::sin(phase) };
+            const kiss_fft_cpx t = {
+                tw.r * out[half + k].r - tw.i * out[half + k].i,
+                tw.r * out[half + k].i + tw.i * out[half + k].r
+            };
+            const kiss_fft_cpx e = out[k];
+            out[k] = { e.r + t.r, e.i + t.i };
+            out[half + k] = { e.r - t.r, e.i - t.i };
+        }
+    }
+};
+
+} // namespace kissfft
+
+// ============================================================================
+// CQT Kernel Implementation
+// ============================================================================
+
+namespace {
+
+// String open frequencies (standard tuning, Hz)
+constexpr float kOpenFreqs[6] = { 82.41f, 110.0f, 146.83f, 196.0f, 246.94f, 329.63f };
+
+// Bin ranges per string (36 bins/octave × 2 octaves = 72 bins covering 24 frets)
+// Indices into 144-bin CQT array (4 octaves total to cover all strings)
+constexpr int kBinRangeStart[6] = { 0, 15, 30, 45, 57, 72 };
+constexpr int kBinRangeEnd[6]   = { 74, 89, 104, 119, 131, 144 };
+
+// MIDI note for open strings
+constexpr int kOpenMidi[6] = { 40, 45, 50, 55, 59, 64 };
+
+// Minimum magnitude for parabolic interpolation
+constexpr float kMinMagnitude = 1e-10f;
+
+// Hysteresis parameters
+constexpr float kHysteresisAdvantage = 0.20f;  // 20% energy advantage required
+
+// ============================================================================
+// LINEAR GROWTH THRESHOLD MODEL (Physics-Based)
+// ============================================================================
+// As frets increase, the fundamental bin captures MORE energy because:
+//  - Shorter string length = purer fundamental, less harmonic spread
+//  - Energy concentrates toward bridge
+// Therefore, threshold INCREASES linearly with fret position.
+//
+// Base multipliers account for string characteristics:
+//  - Low strings: more harmonics = lower fundamental energy = lower base
+//  - High strings: purer tone = higher fundamental energy = higher base
+//
+// Formula: Threshold = GlobalRMS × (BaseMultiplier + GrowthConstant × (Fret / 24))
+// ============================================================================
+
+// Base multipliers per string (High E to Low E: S5..S0)
+// S5 (High E): 0.72 - purest tone, highest fundamental ratio
+// S4 (B):      0.68
+// S3 (G):      0.64
+// S2 (D):      0.60
+// S1 (A):      0.56
+// S0 (Low E):  0.52 - most harmonics, lowest fundamental ratio
+constexpr float kBaseMultipliers[6] = {
+    0.52f,  // S0 - Low E
+    0.56f,  // S1 - A
+    0.60f,  // S2 - D
+    0.64f,  // S3 - G
+    0.68f,  // S4 - B
+    0.72f   // S5 - High E
+};
+
+// Growth constant: purity increase toward bridge (fret 0→24)
+constexpr float kGrowthConstant = 0.35f;
+
+// Note-OFF hysteresis: 50% of dynamic Note-ON threshold
+constexpr float kNoteOffHysteresis = 0.50f;
+
+// Pre-calculated threshold multipliers [6 strings × 25 frets]
+// Computed at startup: kThresholdMultipliers[s][f] = Base[s] + 0.35 × (f / 24)
+struct ThresholdLUT {
+    float multipliers[6][25];
+    
+    constexpr ThresholdLUT() : multipliers{} {
+        for (int s = 0; s < 6; ++s) {
+            for (int f = 0; f < 25; ++f) {
+                multipliers[s][f] = kBaseMultipliers[s] + (kGrowthConstant * (static_cast<float>(f) / 24.0f));
+            }
+        }
+    }
+};
+
+// Static constexpr LUT - computed at compile time, zero runtime cost
+constexpr ThresholdLUT kThresholdLUT{};
+
+// O(1) threshold lookup (inlined for real-time audio callback)
+inline float getNoteOnMultiplier(int stringIdx, int fret) {
+    const int s = std::clamp(stringIdx, 0, 5);
+    const int f = std::clamp(fret, 0, 24);
+    return kThresholdLUT.multipliers[s][f];
+}
+
+// Note-OFF threshold = 50% of Note-ON threshold
+inline float getNoteOffMultiplier(int stringIdx, int fret) {
+    return getNoteOnMultiplier(stringIdx, fret) * kNoteOffHysteresis;
+}
+
+/**
+ * Note: CQT outputs magnitude values internally. For user-facing purposes (logs, UI),
+ * these are treated as RMS-equivalent energy measurements. The magnitude values from
+ * CQT bins correlate with signal energy and can be compared directly to RMS thresholds
+ * from calibration (envFloor, baseline) which are also energy-based measurements.
+ */
+
+/**
+ * Compute CQT center frequency for a given bin
+ * f(k) = fmin * 2^(k / binsPerOctave)
+ */
+inline float binToFreq(int bin, float fmin, int binsPerOctave) {
+    return fmin * std::pow(2.0f, static_cast<float>(bin) / binsPerOctave);
+}
+
+/**
+ * Compute CQT frequency for a refined (fractional) bin position
+ * f(k) = fmin * 2^(k / binsPerOctave)
+ */
+inline float refinedBinToFreq(float bin, float fmin, int binsPerOctave) {
+    return fmin * std::pow(2.0f, bin / static_cast<float>(binsPerOctave));
+}
+
+/**
+ * Compute RMS of a buffer
+ */
+inline float computeRms(const float* buffer, int length) {
+    if (length <= 0) return 0.0f;
+    double sum = 0.0;
+    for (int i = 0; i < length; ++i) {
+        sum += buffer[i] * buffer[i];
+    }
+    return static_cast<float>(std::sqrt(sum / length));
+}
+
+/**
+ * Parabolic interpolation for sub-bin pitch refinement
+ * Returns offset in bins (-0.5 to +0.5)
+ */
+inline float parabolicInterp(float y0, float y1, float y2) {
+    const float denom = y0 - 2.0f * y1 + y2;
+    if (std::abs(denom) < kMinMagnitude) return 0.0f;
+    return 0.5f * (y0 - y2) / denom;
+}
+
+/**
+ * Convert bin offset to cents
+ * 1 bin = 100/36 cents at 36 bins/octave
+ */
+inline float binOffsetToCents(float binOffset, int binsPerOctave) {
+    return binOffset * (1200.0f / binsPerOctave);
+}
+
+#ifdef USE_NEON_SIMD
+/**
+ * NEON-optimized complex correlation (4-wide SIMD)
+ * Processes 4 samples per iteration for ~4x speedup on ARM64
+ */
+inline void neonComplexCorrelation(
+    const float* __restrict__ samples,
+    const float* __restrict__ kernelReal,
+    const float* __restrict__ kernelImag,
+    int length,
+    float& sumR,
+    float& sumI)
+{
+    // Initialize accumulators
+    float32x4_t sumR_vec = vdupq_n_f32(0.0f);
+    float32x4_t sumI_vec = vdupq_n_f32(0.0f);
+    
+    // Process 4 samples at a time
+    int i = 0;
+    const int simdLen = length & ~3;  // Round down to multiple of 4
+    
+    for (; i < simdLen; i += 4) {
+        // Load 4 samples
+        float32x4_t s = vld1q_f32(samples + i);
+        
+        // Load 4 kernel values (real and imaginary)
+        float32x4_t kr = vld1q_f32(kernelReal + i);
+        float32x4_t ki = vld1q_f32(kernelImag + i);
+        
+        // Multiply-accumulate: sumR += sample * kernelReal, sumI += sample * kernelImag
+        sumR_vec = vmlaq_f32(sumR_vec, s, kr);
+        sumI_vec = vmlaq_f32(sumI_vec, s, ki);
+    }
+    
+    // Horizontal sum of SIMD vectors
+    sumR = vaddvq_f32(sumR_vec);
+    sumI = vaddvq_f32(sumI_vec);
+    
+    // Handle remaining samples (tail)
+    for (; i < length; ++i) {
+        sumR += samples[i] * kernelReal[i];
+        sumI += samples[i] * kernelImag[i];
+    }
+}
+
+/**
+ * NEON-optimized sqrt approximation using NEON RSQRTE + Newton-Raphson
+ * ~2x faster than std::sqrt for single floats
+ */
+inline float neonSqrt(float x) {
+    if (x <= 0.0f) return 0.0f;
+    float32x2_t v = vdup_n_f32(x);
+    float32x2_t est = vrsqrte_f32(v);
+    // One Newton-Raphson iteration for accuracy
+    est = vmul_f32(est, vrsqrts_f32(vmul_f32(v, est), est));
+    return vget_lane_f32(vmul_f32(v, est), 0);
+}
+#endif
+
+} // anonymous namespace
+
+// ============================================================================
+// CQT Engine (internal)
+// ============================================================================
+
+class CQTEngine {
+public:
+    CQTEngine(double sampleRate, int binsPerOctave, float fmin, int numBins)
+        : m_sampleRate(sampleRate)
+        , m_binsPerOctave(binsPerOctave)
+        , m_fmin(fmin)
+        , m_numBins(numBins)
+    {
+        initKernels();
+    }
+
+    /**
+     * Compute CQT magnitude spectrum for a mono buffer
+     * Output: magnitudes array of size m_numBins
+     * 
+     * Uses NEON SIMD optimization on ARM platforms for ~4x speedup
+     */
+    void compute(const float* buffer, int bufferLen, float* magnitudes) {
+        // For each CQT bin, apply the corresponding kernel
+        for (int k = 0; k < m_numBins; ++k) {
+            const auto& kernel = m_kernels[k];
+            const int N_k = kernel.length;
+            
+            // Center the kernel window in the buffer
+            const int offset = (bufferLen - N_k) / 2;
+            if (offset < 0 || N_k > bufferLen) {
+                magnitudes[k] = 0.0f;
+                continue;
+            }
+
+            float sumR = 0.0f, sumI = 0.0f;
+            
+#ifdef USE_NEON_SIMD
+            // NEON-optimized correlation (4-wide SIMD)
+            neonComplexCorrelation(
+                buffer + offset,
+                kernel.realPart.data(),
+                kernel.imagPart.data(),
+                N_k,
+                sumR, sumI);
+            
+            // NEON-optimized magnitude
+            magnitudes[k] = neonSqrt(sumR * sumR + sumI * sumI) / N_k;
+#else
+            // Scalar fallback
+            for (int n = 0; n < N_k; ++n) {
+                const float sample = buffer[offset + n];
+                sumR += sample * kernel.realPart[n];
+                sumI += sample * kernel.imagPart[n];
+            }
+            magnitudes[k] = std::sqrt(sumR * sumR + sumI * sumI) / N_k;
+#endif
+        }
+    }
+
+    int numBins() const { return m_numBins; }
+
+private:
+    struct CQTKernel {
+        int length;
+        std::vector<float> realPart;
+        std::vector<float> imagPart;
+    };
+
+    double m_sampleRate;
+    int m_binsPerOctave;
+    float m_fmin;
+    int m_numBins;
+    std::vector<CQTKernel> m_kernels;
+
+    void initKernels() {
+        m_kernels.resize(m_numBins);
+        
+        // Q factor for constant-Q: Q = 1 / (2^(1/B) - 1) where B = bins per octave
+        const float Q = 1.0f / (std::pow(2.0f, 1.0f / m_binsPerOctave) - 1.0f);
+
+        for (int k = 0; k < m_numBins; ++k) {
+            const float fk = binToFreq(k, m_fmin, m_binsPerOctave);
+            
+            // Window length for this bin: N_k = Q * fs / f_k
+            int N_k = static_cast<int>(std::ceil(Q * m_sampleRate / fk));
+            
+            // Ensure odd length for symmetric window
+            if (N_k % 2 == 0) N_k++;
+            
+            // Limit kernel size for efficiency (max ~4096 samples)
+            N_k = std::min(N_k, 4096);
+            
+            m_kernels[k].length = N_k;
+            m_kernels[k].realPart.resize(N_k);
+            m_kernels[k].imagPart.resize(N_k);
+
+            // Generate windowed complex exponential kernel
+            for (int n = 0; n < N_k; ++n) {
+                // Hamming window
+                const float window = 0.54f - 0.46f * std::cos(2.0f * M_PI * n / (N_k - 1));
+                
+                // Complex exponential at frequency fk
+                const float phase = 2.0f * M_PI * fk * n / m_sampleRate;
+                
+                m_kernels[k].realPart[n] = window * std::cos(phase);
+                m_kernels[k].imagPart[n] = window * std::sin(phase);
+            }
+        }
+    }
+};
+
+// ============================================================================
+// CQTNoteDetector Implementation
+// ============================================================================
+
+struct CQTNoteDetector::Impl {
+    std::unique_ptr<CQTEngine> cqtEngine;
+    double sampleRate;
+    float fmin;
+    int binsPerOctave;
+    
+    // Pre-allocated buffers (no heap allocation in process loop)
+    std::array<std::array<float, 144>, 6> binMagnitudes;   // CQT output per string
+    std::array<float, 144> spectralFluxBins;               // Flux computation
+    std::array<float, 6> stringRms;                        // RMS per string (post-preAmp)
+    std::array<float, 6> normalizedMags;                   // For crosstalk comparison
+    std::array<std::vector<float>, 6> preAmpBuffers;       // Pre-CQT gain application buffers
+    
+    // Accumulation buffers for CQT (need enough samples for lowest frequency kernel)
+    static constexpr int kAccumBufferSize = 4096;
+    std::array<std::array<float, kAccumBufferSize>, 6> accumBuffers;
+    std::array<int, 6> accumWritePos;
+    std::array<bool, 6> accumReady;  // Have we accumulated enough samples?
+    
+    Impl(double sr) : sampleRate(sr), fmin(70.0f), binsPerOctave(36) {
+        // Initialize CQT engine: 144 bins covering ~70Hz to ~1400Hz (4+ octaves)
+        // This covers all guitar notes from low E (82Hz) to 24th fret high E (~1319Hz)
+        const int numBins = 144;
+        
+        cqtEngine = std::make_unique<CQTEngine>(sr, binsPerOctave, fmin, numBins);
+        
+        // Zero-initialize all arrays
+        for (auto& arr : binMagnitudes) arr.fill(0.0f);
+        spectralFluxBins.fill(0.0f);
+        stringRms.fill(0.0f);
+        normalizedMags.fill(0.0f);
+        accumWritePos.fill(0);
+        accumReady.fill(false);
+        for (auto& buf : accumBuffers) buf.fill(0.0f);
+        
+        // Initialize preAmp buffers (max 4096 samples per string should be plenty)
+        for (auto& buf : preAmpBuffers) {
+            buf.resize(4096, 0.0f);
+        }
+    }
+};
+
+CQTNoteDetector::CQTNoteDetector(double sampleRate) 
+    : m_impl(std::make_unique<Impl>(sampleRate))
+{
+    // Initialize string states
+    for (int s = 0; s < 6; ++s) {
+        states[s] = StringState{};
+    }
+}
+
+CQTNoteDetector::~CQTNoteDetector() = default;
+
+std::vector<GuitarFrame> CQTNoteDetector::process(
+    float** hexBuffers, 
+    int bufferLength,
+    const std::vector<DetectionParams>& params)
+{
+    std::vector<GuitarFrame> results;
+    results.reserve(6);
+
+    if (!hexBuffers || params.size() < 6 || bufferLength <= 0) {
+        return results;
+    }
+
+    // ========================================================================
+    // PHASE 1: Accumulate samples and apply preAmpGain
+    // ========================================================================
+    
+    std::array<bool, 6> passedGate;
+    constexpr int kMinSamplesForCQT = 2048;  // Minimum samples needed for accurate CQT
+    
+    for (int s = 0; s < 6; ++s) {
+        const float* buffer = hexBuffers[s];
+        
+        if (!buffer) {
+            m_impl->stringRms[s] = 0.0f;
+            passedGate[s] = false;
+            m_impl->binMagnitudes[s].fill(0.0f);
+            m_impl->accumReady[s] = false;
+            continue;
+        }
+        
+        // Stage 1: Apply preAmpGain to raw input and accumulate
+        const float preAmp = params[s].preAmpGain;
+        auto& accumBuf = m_impl->accumBuffers[s];
+        int& writePos = m_impl->accumWritePos[s];
+        
+        // Shift buffer left if needed to make room
+        if (writePos + bufferLength > Impl::kAccumBufferSize) {
+            const int shift = writePos + bufferLength - Impl::kAccumBufferSize;
+            std::memmove(accumBuf.data(), accumBuf.data() + shift, 
+                        (Impl::kAccumBufferSize - shift) * sizeof(float));
+            writePos -= shift;
+        }
+        
+        // Append new amplified samples
+        for (int i = 0; i < bufferLength; ++i) {
+            accumBuf[writePos + i] = buffer[i] * preAmp;
+        }
+        writePos += bufferLength;
+        
+        // Calculate RMS on the most recent bufferLength samples
+        const float rms = computeRms(accumBuf.data() + writePos - bufferLength, bufferLength);
+        m_impl->stringRms[s] = rms;
+        
+        // Master Gate: Skip CQT if below baseline noise floor
+        passedGate[s] = (rms >= params[s].baseline);
+        
+        // Check if we have enough samples for CQT
+        m_impl->accumReady[s] = (writePos >= kMinSamplesForCQT);
+        
+        if (passedGate[s] && m_impl->accumReady[s]) {
+            // Compute CQT on accumulated buffer - use as many samples as available (up to 4096)
+            // This is needed because low-frequency CQT kernels need ~4096 samples for accuracy
+            const int cqtSamples = std::min(writePos, Impl::kAccumBufferSize);
+            const float* cqtInput = accumBuf.data() + writePos - cqtSamples;
+            m_impl->cqtEngine->compute(cqtInput, cqtSamples, m_impl->binMagnitudes[s].data());
+            
+            // Debug: Find max bin magnitude after CQT
+            float maxMag = 0.0f;
+            int maxBin = -1;
+            for (int b = 0; b < 144; ++b) {
+                if (m_impl->binMagnitudes[s][b] > maxMag) {
+                    maxMag = m_impl->binMagnitudes[s][b];
+                    maxBin = b;
+                }
+            }
+            // DISABLED - SessionLogger causes XRuns in real-time audio thread
+            // if (rms > 0.1f) {
+            //     SessionLogger::instance().logf("cqt-compute", 
+            //         "S%d: rms=%.4f preAmp=%.2f maxBinMag=%.6f maxBin=%d cqtSamples=%d",
+            //         s, rms, params[s].preAmpGain, maxMag, maxBin, cqtSamples);
+            // }
+        } else {
+            // Zero the magnitudes for gated or not-ready strings
+            m_impl->binMagnitudes[s].fill(0.0f);
+        }
+    }
+
+    // ========================================================================
+    // PHASE 2: Spatial Filtering (Crosstalk Rejection)
+    // ========================================================================
+    
+    // Stage 2: Apply spatialWeight for fair comparison across strings
+    // spatialWeight is set by calibration to normalize pickup sensitivity differences
+    // This ensures that crosstalk rejection math remains accurate even if user adjusts preAmpGain
+    
+    for (int bin = 0; bin < 144; ++bin) {
+        float maxWeightedMag = 0.0f;
+        int dominantString = -1;
+        
+        // Find dominant string for this bin using weighted magnitudes
+        for (int s = 0; s < 6; ++s) {
+            if (!passedGate[s]) continue;
+            
+            const float weightedMag = m_impl->binMagnitudes[s][bin] * params[s].spatialWeight;
+            if (weightedMag > maxWeightedMag) {
+                maxWeightedMag = weightedMag;
+                dominantString = s;
+            }
+        }
+        
+        // Suppress bin on non-dominant strings
+        if (dominantString >= 0) {
+#if ENABLE_CQT_RT_LOGGING
+            // Log crosstalk suppression decisions for higher bins (notes)
+            if (bin >= 24 && maxWeightedMag > 0.01f) {
+                SessionLogger::instance().logf("cqt-crosstalk",
+                    "Bin%d: dominant=S%d weightedMag=%.6f (gated strings: %d%d%d%d%d%d)",
+                    bin, dominantString, maxWeightedMag,
+                    passedGate[0]?1:0, passedGate[1]?1:0, passedGate[2]?1:0,
+                    passedGate[3]?1:0, passedGate[4]?1:0, passedGate[5]?1:0);
+            }
+#endif
+            
+            for (int s = 0; s < 6; ++s) {
+                if (s != dominantString) {
+                    m_impl->binMagnitudes[s][bin] = 0.0f;
+                }
+            }
+        }
+    }
+
+    // ========================================================================
+    // PHASE 3: Per-String Analysis
+    // ========================================================================
+    
+    for (int s = 0; s < 6; ++s) {
+        GuitarFrame frame;
+        frame.stringID = s;
+        frame.rmsAmplitude = m_impl->stringRms[s];
+        frame.fret = -1;
+        frame.centOffset = 0.0f;
+        frame.pitchHz = 0.0f;
+        frame.binEnergy = 0.0f;
+        frame.spectralFlux = 0.0f;
+        frame.isAttack = false;
+        frame.isSustaining = false;
+
+        if (!passedGate[s]) {
+            // String is below detection threshold - still compute pitch for tuning mode
+            // Use range-clamped peak search (same as gated path)
+            const int binStart = kBinRangeStart[s];
+            const int binEnd = std::min(kBinRangeEnd[s], 144);
+            
+            int peakBin = -1;
+            float peakMag = 0.0f;
+            for (int bin = binStart; bin < binEnd; ++bin) {
+                const float mag = m_impl->binMagnitudes[s][bin];
+                if (mag > peakMag) {
+                    peakMag = mag;
+                    peakBin = bin;
+                }
+            }
+            
+            // Compute fine pitch via parabolic interpolation
+            float centOffset = 0.0f;
+            float binOffset = 0.0f;
+            if (peakBin > 0 && peakBin < 143) {
+                const float y0 = m_impl->binMagnitudes[s][peakBin - 1];
+                const float y1 = m_impl->binMagnitudes[s][peakBin];
+                const float y2 = m_impl->binMagnitudes[s][peakBin + 1];
+                
+                if (y1 > kMinMagnitude) {
+                    binOffset = parabolicInterp(y0, y1, y2);
+                    centOffset = binOffsetToCents(binOffset, BINS_PER_OCTAVE);
+                }
+            }
+            
+            frame.centOffset = centOffset;
+            frame.binEnergy = peakMag;
+            
+            // Compute actual pitch frequency for tuning mode
+            if (peakBin >= 0) {
+                // Refined bin position = integer bin + fractional offset
+                const float refinedBin = static_cast<float>(peakBin) + binOffset;
+                frame.pitchHz = binToFreq(static_cast<int>(refinedBin), m_impl->fmin, m_impl->binsPerOctave) 
+                              * std::pow(2.0f, centOffset / 1200.0f);
+            }
+            
+            // Check for note release
+            if (states[s].currentFret >= 0) {
+                // Note-off condition (failed gate check)
+#if ENABLE_CQT_RT_LOGGING
+                SessionLogger::instance().logf("cqt-gateoff",
+                    "S%d F%d: NOTE OFF (gate failed) rms=%.4f gateThresh=%.4f",
+                    s, states[s].currentFret, m_impl->stringRms[s], 
+                    params[s].baseline * params[s].gateRatio);
+#endif
+                states[s].currentFret = -1;
+                states[s].lastPeakMag = 0.0f;
+            }
+            results.push_back(frame);
+            continue;
+        }
+
+        // --------------------------------------------------------------------
+        // 3a: Range-Clamped Peak Search
+        // --------------------------------------------------------------------
+        
+        const int binStart = kBinRangeStart[s];
+        const int binEnd = std::min(kBinRangeEnd[s], 144);
+        
+        float peakMag = 0.0f;
+        int peakBin = -1;
+        
+        for (int bin = binStart; bin < binEnd; ++bin) {
+            const float mag = m_impl->binMagnitudes[s][bin];
+            if (mag > peakMag) {
+                peakMag = mag;
+                peakBin = bin;
+            }
+        }
+
+        if (peakBin < 0 || peakMag < 1e-10f) {
+            // No significant energy in range
+            results.push_back(frame);
+            continue;
+        }
+        
+#if ENABLE_CQT_RT_LOGGING
+        // Log peak detection for gated strings
+        if (peakMag > 0.01f) {
+            SessionLogger::instance().logf("cqt-peak",
+                "S%d: peakBin=%d peakMag=%.6f binRange=[%d,%d] rms=%.4f",
+                s, peakBin, peakMag, binStart, binEnd, m_impl->stringRms[s]);
+        }
+#endif
+
+        // --------------------------------------------------------------------
+        // 3b: Fret Estimation from Peak Bin
+        // --------------------------------------------------------------------
+        
+        // Convert bin to fret using actual frequency calculation
+        // fret = 12 * log2(freq_detected / freq_open)
+        const float peakFreq = binToFreq(peakBin, m_impl->fmin, m_impl->binsPerOctave);
+        const float openFreq = kOpenFreqs[s];
+        const float fretFloat = 12.0f * std::log2(peakFreq / openFreq);
+        const int rawFret = std::max(0, std::min(24, 
+            static_cast<int>(std::round(fretFloat))));
+
+        // --------------------------------------------------------------------
+        // 3c: Frequency-Dependent Magnitude Threshold (Pre-Computed LUT)
+        // --------------------------------------------------------------------
+        
+        // Use pre-calculated threshold multiplier from compile-time LUT
+        // This avoids floating-point division in the real-time audio callback.
+        // See kThresholdLUT definition above for the physics model.
+        const float thresholdMultiplier = getNoteOnMultiplier(s, rawFret);
+        const float noteOnThreshold = params[s].envFloor * thresholdMultiplier;
+        
+        // Check if magnitude meets note-on threshold
+        if (peakMag < noteOnThreshold) {
+            // Below note-on threshold - check note-off threshold
+            // Note-OFF uses 50% of the dynamic Note-ON threshold (pre-computed LUT)
+            float noteOffThreshold = params[s].envFloor * getNoteOffMultiplier(s, 0);
+            
+            // CRITICAL FIX: Check magnitude of CURRENT fret's bin, not new peak bin
+            // This prevents notes from hanging when peak shifts to different bin
+            float currentFretMag = 0.0f;
+            if (states[s].currentFret >= 0) {
+                // Calculate the bin for the current fret using frequency
+                const float currentFretFreq = kOpenFreqs[s] * std::pow(2.0f, static_cast<float>(states[s].currentFret) / 12.0f);
+                const float currentFretBinFloat = static_cast<float>(m_impl->binsPerOctave) * std::log2f(currentFretFreq / m_impl->fmin);
+                const int currentBin = static_cast<int>(std::roundf(currentFretBinFloat));
+                if (currentBin >= binStart && currentBin < binEnd) {
+                    currentFretMag = m_impl->binMagnitudes[s][currentBin];
+                }
+                
+                // Note-OFF threshold = 50% of dynamic Note-ON threshold for current fret
+                noteOffThreshold = params[s].envFloor * getNoteOffMultiplier(s, states[s].currentFret);
+            }
+            
+            if (states[s].currentFret >= 0 && currentFretMag >= noteOffThreshold) {
+                // Continue sustaining current note (using current fret's magnitude)
+#if ENABLE_CQT_RT_LOGGING
+                SessionLogger::instance().logf("cqt-sustain",
+                    "S%d F%d: sustaining currentFretMag=%.6f peakMag=%.6f noteOffThresh=%.6f",
+                    s, states[s].currentFret, currentFretMag, peakMag, noteOffThreshold);
+#endif
+                frame.fret = states[s].currentFret;
+                frame.binEnergy = currentFretMag; // Use current fret's energy
+                frame.isSustaining = true;
+            } else if (states[s].currentFret >= 0 && currentFretMag < noteOffThreshold) {
+                // Release note (current fret's energy dropped below threshold)
+#if ENABLE_CQT_RT_LOGGING
+                SessionLogger::instance().logf("cqt-event",
+                    "[CQT] NOTE OFF     S%d F%-2d           (binRMS=%.4f)",
+                    s, states[s].currentFret, currentFretMag);
+#endif
+                states[s].currentFret = -1;
+                states[s].lastPeakMag = 0.0f;
+            }
+            results.push_back(frame);
+            continue;
+        }
+
+        // --------------------------------------------------------------------
+        // 3d: Spectral Flux Computation
+        // --------------------------------------------------------------------
+        
+        float flux = 0.0f;
+        for (int bin = binStart; bin < binEnd; ++bin) {
+            const float diff = m_impl->binMagnitudes[s][bin] - states[s].lastBins[bin];
+            if (diff > 0.0f) {
+                flux += diff * diff;
+            }
+        }
+        flux = std::sqrt(flux);
+        frame.spectralFlux = flux;
+
+        // --------------------------------------------------------------------
+        // 3e: Hysteresis (Sticky Fret)
+        // --------------------------------------------------------------------
+        
+        bool fretConfirmed = false;
+        
+        if (states[s].currentFret < 0) {
+            // No current note - this is a new onset
+            if (states[s].candidateFret == rawFret) {
+                states[s].confirmationCount++;
+            } else {
+                states[s].candidateFret = rawFret;
+                states[s].confirmationCount = 1;
+            }
+            
+            if (states[s].confirmationCount >= params[s].confirmationFrames) {
+#if ENABLE_CQT_RT_LOGGING
+                SessionLogger::instance().logf("cqt-event",
+                    "[CQT] NOTE ON      S%d F%-2d           (binRMS=%.4f)",
+                    s, rawFret, peakMag);
+#endif
+                states[s].currentFret = rawFret;
+                states[s].lastPeakMag = peakMag;
+                frame.isAttack = true;
+                fretConfirmed = true;
+            } else {
+#if ENABLE_CQT_RT_LOGGING
+                SessionLogger::instance().logf("cqt-candidate",
+                    "S%d F%d: candidate peakMag=%.6f confirmCount=%d/%d",
+                    s, rawFret, peakMag, states[s].confirmationCount, params[s].confirmationFrames);
+#endif
+            }
+        } else {
+            // Already have a note - check for fret change
+            // Calculate bin for current fret using frequency
+            const float currentFretFreq = kOpenFreqs[s] * std::pow(2.0f, states[s].currentFret / 12.0f);
+            const float currentFretBinFloat = static_cast<float>(m_impl->binsPerOctave) * std::log2(currentFretFreq / m_impl->fmin);
+            const int currentFretBin = static_cast<int>(std::round(currentFretBinFloat));
+            const float currentFretMag = (currentFretBin >= binStart && currentFretBin < binEnd) 
+                ? m_impl->binMagnitudes[s][currentFretBin] : 0.0f;
+            const float advantage = (peakMag - currentFretMag) / (currentFretMag + 1e-10f);
+            
+            if (rawFret != states[s].currentFret && advantage > kHysteresisAdvantage) {
+                // Candidate for fret change
+#if ENABLE_CQT_RT_LOGGING
+                SessionLogger::instance().logf("cqt-fretchange",
+                    "S%d: F%d->F%d candidate peakMag=%.6f currentMag=%.6f advantage=%.2f",
+                    s, states[s].currentFret, rawFret, peakMag, currentFretMag, advantage);
+#endif
+                    
+                if (states[s].candidateFret == rawFret) {
+                    states[s].confirmationCount++;
+                } else {
+                    states[s].candidateFret = rawFret;
+                    states[s].confirmationCount = 1;
+                }
+                
+                if (states[s].confirmationCount >= params[s].confirmationFrames) {
+#if ENABLE_CQT_RT_LOGGING
+                    SessionLogger::instance().logf("cqt-event",
+                        "[CQT] MOVE         S%d F%-2d -> F%-2d   (peakMag=%.4f, advantage=%.2f)",
+                        s, states[s].currentFret, rawFret, peakMag, advantage);
+#endif
+                    states[s].currentFret = rawFret;
+                    states[s].lastPeakMag = peakMag;
+                    frame.isAttack = true;
+                    fretConfirmed = true;
+                }
+            } else {
+                // Stick with current fret
+                states[s].candidateFret = states[s].currentFret;
+                states[s].confirmationCount = params[s].confirmationFrames;
+                fretConfirmed = true;
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // 3f: Retrigger Detection
+        // --------------------------------------------------------------------
+        
+        if (states[s].currentFret >= 0 && !frame.isAttack) {
+            // Check for retrigger via spectral flux spike
+            // Use a more conservative threshold to avoid false retriggering on normal sustain fluctuations
+            // Flux is normalized by the number of bins to make it scale-independent
+            const float normalizedFlux = flux / std::sqrt(static_cast<float>(binEnd - binStart));
+            const float fluxThreshold = params[s].fluxSensitivity;  // Use absolute threshold instead of relative
+            
+            // Retrigger only if:
+            // 1. Normalized flux exceeds threshold (indicating strong transient)
+            // 2. Peak magnitude has significantly increased (>50% jump)
+            // 3. We haven't just retriggered (debounce)
+            const bool strongTransient = normalizedFlux > fluxThreshold;
+            const bool magnitudeJump = peakMag > states[s].lastPeakMag * 1.5f;
+            
+            if (strongTransient && magnitudeJump) {
+#if ENABLE_CQT_RT_LOGGING
+                SessionLogger::instance().logf("cqt-event",
+                    "[CQT] RETRIGGER    S%d F%-2d           (spikeRMS=%.4f pastRMS=%.4f)",
+                    s, states[s].currentFret, peakMag, states[s].lastPeakMag);
+#endif
+                frame.isAttack = true;
+                states[s].lastPeakMag = peakMag;
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // 3g: Fine Pitch via Parabolic Interpolation
+        // --------------------------------------------------------------------
+        
+        float centOffset = 0.0f;
+        float binOffset = 0.0f;
+        if (peakBin > 0 && peakBin < 143) {
+            const float y0 = m_impl->binMagnitudes[s][peakBin - 1];
+            const float y1 = m_impl->binMagnitudes[s][peakBin];
+            const float y2 = m_impl->binMagnitudes[s][peakBin + 1];
+            
+            if (y1 > kMinMagnitude) {
+                binOffset = parabolicInterp(y0, y1, y2);
+                centOffset = binOffsetToCents(binOffset, BINS_PER_OCTAVE);
+            }
+        }
+        
+        // Compute actual pitch frequency for tuning mode
+        float pitchHz = 0.0f;
+        if (peakBin >= 0) {
+            // Refined bin position = integer bin + fractional offset
+            const float refinedBin = static_cast<float>(peakBin) + binOffset;
+            pitchHz = binToFreq(static_cast<int>(refinedBin), m_impl->fmin, m_impl->binsPerOctave) 
+                    * std::pow(2.0f, centOffset / 1200.0f);
+        }
+
+        // --------------------------------------------------------------------
+        // 3h: Update State
+        // --------------------------------------------------------------------
+        
+        // Store current bins for next frame's flux calculation
+        for (int bin = 0; bin < 144; ++bin) {
+            states[s].lastBins[bin] = m_impl->binMagnitudes[s][bin];
+        }
+        
+        if (fretConfirmed && peakMag > states[s].lastPeakMag) {
+            states[s].lastPeakMag = peakMag;
+        }
+
+        // --------------------------------------------------------------------
+        // 3i: Populate Output Frame
+        // --------------------------------------------------------------------
+        
+        frame.fret = states[s].currentFret;
+        frame.centOffset = centOffset;
+        frame.pitchHz = pitchHz;
+        frame.binEnergy = peakMag;
+        frame.isSustaining = (states[s].currentFret >= 0 && !frame.isAttack);
+
+#if ENABLE_CQT_RT_LOGGING
+        // Log final frame state for debugging
+        if (frame.fret >= 0 || frame.isAttack || frame.isSustaining) {
+            SessionLogger::instance().logf("cqt-frame",
+                "S%d: fret=%d attack=%d sustain=%d binMag=%.6f rms=%.4f",
+                s, frame.fret, frame.isAttack?1:0, frame.isSustaining?1:0, 
+                frame.binMagnitude, frame.rmsAmplitude);
+        }
+#endif
+
+        results.push_back(frame);
+    }
+
+    return results;
+}
+
+void CQTNoteDetector::reset() {
+    for (int s = 0; s < 6; ++s) {
+        states[s] = StringState{};
+        m_impl->binMagnitudes[s].fill(0.0f);
+        m_impl->accumBuffers[s].fill(0.0f);
+        m_impl->accumWritePos[s] = 0;
+        m_impl->accumReady[s] = false;
+    }
+    m_impl->stringRms.fill(0.0f);
+}
+
+void CQTNoteDetector::setSampleRate(double sampleRate) {
+    if (std::abs(sampleRate - m_impl->sampleRate) > 1.0) {
+        m_impl = std::make_unique<Impl>(sampleRate);
+        reset();
+    }
+}
+
+
+
+=== src/audio/AtomicNoteState.h ===
+#pragma once
+/**
+ * AtomicNoteState.h - Lock-free note state for Tier 2 -> Tier 3 communication
+ * 
+ * The CQT Worker (Tier 2) writes detected notes here.
+ * The UI Thread (Tier 3) reads the latest state for display.
+ * 
+ * Uses atomics to ensure:
+ * - No locks (UI never blocks on CQT)
+ * - UI always sees a consistent snapshot
+ * - CQT can update at ~86fps, UI polls at 60fps
+ */
+
+#include <atomic>
+#include <array>
+#include <cstdint>
+
+namespace audio {
+
+/**
+ * Per-string note state (atomically updated)
+ */
+struct StringNoteState {
+    std::atomic<int> fret{-1};           // Current detected fret (-1 = none)
+    std::atomic<float> energy{0.0f};     // Signal energy (RMS-equivalent)
+    std::atomic<bool> isAttack{false};   // True on new note onset
+    std::atomic<bool> isSustaining{false}; // True while note is held
+    std::atomic<float> pitchHz{0.0f};    // Detected pitch frequency
+    
+    // Per-fret bin magnitudes for heatmap overlay (frets 0-24)
+    static constexpr int NUM_FRETS = 25;
+    std::array<std::atomic<float>, NUM_FRETS> binMagnitudes{};
+    
+    // Copy current state (for UI snapshot)
+    void copyTo(int& outFret, float& outEnergy, bool& outAttack, bool& outSustain, float& outPitch) const {
+        outFret = fret.load(std::memory_order_acquire);
+        outEnergy = energy.load(std::memory_order_relaxed);
+        outAttack = isAttack.load(std::memory_order_relaxed);
+        outSustain = isSustaining.load(std::memory_order_relaxed);
+        outPitch = pitchHz.load(std::memory_order_relaxed);
+    }
+    
+    // Update from CQT worker
+    void update(int newFret, float newEnergy, bool attack, bool sustain, float pitch) {
+        fret.store(newFret, std::memory_order_relaxed);
+        energy.store(newEnergy, std::memory_order_relaxed);
+        isAttack.store(attack, std::memory_order_relaxed);
+        isSustaining.store(sustain, std::memory_order_relaxed);
+        pitchHz.store(pitch, std::memory_order_release);
+    }
+    
+    // Update bin magnitude for a specific fret (called from CQT worker)
+    void setBinMagnitude(int fretIdx, float magnitude) {
+        if (fretIdx >= 0 && fretIdx < NUM_FRETS) {
+            binMagnitudes[fretIdx].store(magnitude, std::memory_order_relaxed);
+        }
+    }
+    
+    // Read bin magnitude for a specific fret (called from UI thread)
+    float getBinMagnitude(int fretIdx) const {
+        if (fretIdx >= 0 && fretIdx < NUM_FRETS) {
+            return binMagnitudes[fretIdx].load(std::memory_order_relaxed);
+        }
+        return 0.0f;
+    }
+    
+    void clear() {
+        fret.store(-1, std::memory_order_relaxed);
+        energy.store(0.0f, std::memory_order_relaxed);
+        isAttack.store(false, std::memory_order_relaxed);
+        isSustaining.store(false, std::memory_order_relaxed);
+        pitchHz.store(0.0f, std::memory_order_relaxed);
+        for (auto& mag : binMagnitudes) {
+            mag.store(0.0f, std::memory_order_relaxed);
+        }
+    }
+};
+
+/**
+ * Global note state for all 6 strings
+ * 
+ * Usage:
+ * - CQT Worker calls updateString() after processing each frame
+ * - UI Thread calls snapshot() to get latest state for rendering
+ */
+class AtomicNoteState {
+public:
+    AtomicNoteState() {
+        m_frameCounter.store(0);
+        m_sampleRate.store(44100.0f);
+    }
+    
+    /**
+     * Update state for a single string (TIER 2 - CQT Worker)
+     */
+    void updateString(int stringIdx, int fret, float magnitude, 
+                      bool isAttack, bool isSustaining, float pitchHz) {
+        if (stringIdx < 0 || stringIdx >= 6) return;
+        m_strings[stringIdx].update(fret, magnitude, isAttack, isSustaining, pitchHz);
+    }
+    
+    /**
+     * Increment frame counter after processing a complete CQT frame (TIER 2)
+     */
+    void advanceFrame() {
+        m_frameCounter.fetch_add(1, std::memory_order_release);
+    }
+    
+    /**
+     * Set current sample rate (called when audio starts)
+     */
+    void setSampleRate(float sr) {
+        m_sampleRate.store(sr, std::memory_order_release);
+    }
+    
+    /**
+     * Get current frame counter (TIER 3 - UI can check for updates)
+     */
+    std::uint64_t frameCounter() const {
+        return m_frameCounter.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Get current sample rate
+     */
+    float sampleRate() const {
+        return m_sampleRate.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Read state for a single string (TIER 3 - UI Thread)
+     */
+    void readString(int stringIdx, int& outFret, float& outMag, 
+                    bool& outAttack, bool& outSustain, float& outPitch) const {
+        if (stringIdx < 0 || stringIdx >= 6) {
+            outFret = -1;
+            outMag = 0.0f;
+            outAttack = false;
+            outSustain = false;
+            outPitch = 0.0f;
+            return;
+        }
+        m_strings[stringIdx].copyTo(outFret, outMag, outAttack, outSustain, outPitch);
+    }
+    
+    /**
+     * Read fret for a single string (simple accessor for UI)
+     */
+    int fret(int stringIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return -1;
+        return m_strings[stringIdx].fret.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Read energy for a single string (simple accessor for UI)
+     */
+    float energy(int stringIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return 0.0f;
+        return m_strings[stringIdx].energy.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Read bin magnitude for a specific string and fret (TIER 3 - UI Thread)
+     * @param stringIdx 0-5 (Low E to High E)
+     * @param fretIdx 0-24 (open to 24th fret)
+     * @return Bin magnitude value (0.0 - 1.0+ range, RMS-equivalent)
+     */
+    float binMagnitude(int stringIdx, int fretIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return 0.0f;
+        return m_strings[stringIdx].getBinMagnitude(fretIdx);
+    }
+    
+    /**
+     * Alias for binMagnitude (FretboardProvider compatibility)
+     */
+    float getBinMagnitude(int stringIdx, int fretIdx) const {
+        return binMagnitude(stringIdx, fretIdx);
+    }
+    
+    /**
+     * Update bin magnitude for a specific string/fret (TIER 2 - CQT Worker)
+     */
+    void setBinMagnitude(int stringIdx, int fretIdx, float magnitude) {
+        if (stringIdx >= 0 && stringIdx < 6) {
+            m_strings[stringIdx].setBinMagnitude(fretIdx, magnitude);
+        }
+    }
+    
+    /**
+     * Clear all string states
+     */
+    void clearAll() {
+        for (auto& s : m_strings) {
+            s.clear();
+        }
+        m_frameCounter.store(0, std::memory_order_release);
+    }
+    
+    /**
+     * Direct access to string state (for bulk operations)
+     */
+    const StringNoteState& string(int idx) const { return m_strings[idx]; }
+    StringNoteState& string(int idx) { return m_strings[idx]; }
+    
+private:
+    std::array<StringNoteState, 6> m_strings;
+    std::atomic<std::uint64_t> m_frameCounter;
+    std::atomic<float> m_sampleRate;
+};
+
+} // namespace audio
+
+
+
+=== src/audio/CQTWorkerThread.h ===
+#pragma once
+/**
+ * CQTWorkerThread.h - TIER 2 Processing Thread
+ * 
+ * Responsibilities:
+ * - Pull audio frames from ring buffer (from TIER 1)
+ * - Apply per-string band-pass filtering (crosstalk rejection)
+ * - Accumulate hop-size worth of samples
+ * - Perform CQT analysis
+ * - Update atomic note state (for TIER 3)
+ * 
+ * Runs on Core 1 with high priority (SCHED_RR)
+ */
+
+#include "LockFreeRingBuffer.h"
+#include "AtomicNoteState.h"
+#include "ThreadPriority.h"
+#include "ButterworthFilter.h"
+
+#include <atomic>
+#include <memory>
+#include <thread>
+#include <array>
+#include <vector>
+#include <functional>
+
+// Forward declarations
+class CQTNoteDetector;
+class NoteDetectionStore;
+struct DetectionParams;
+struct GuitarFrame;
+
+namespace audio {
+
+/**
+ * Configuration for CQT Worker
+ */
+struct CQTWorkerConfig {
+    int hopSize = 512;           // Samples between CQT frames (~11.6ms at 44.1kHz)
+    float sampleRate = 44100.0f;
+    bool enableCoreAffinity = true;
+    int coreId = 1;              // Default to Core 1
+    bool enableBandPassFilters = true;  // Enable per-string band-pass filtering
+};
+
+/**
+ * Callback for when new note events are detected
+ * Called from TIER 2 thread - must be thread-safe!
+ */
+using NoteEventCallback = std::function<void(int stringIdx, int fret, float energy, 
+                                              bool isAttack, bool isSustaining)>;
+
+/**
+ * CQT Worker Thread (TIER 2)
+ * 
+ * Pulls audio from ring buffer, processes CQT, updates atomic note state
+ */
+class CQTWorkerThread {
+public:
+    explicit CQTWorkerThread(AudioRingBuffer& inputBuffer, 
+                             AtomicNoteState& outputState,
+                             const CQTWorkerConfig& config = {});
+    ~CQTWorkerThread();
+    
+    // Non-copyable, non-movable
+    CQTWorkerThread(const CQTWorkerThread&) = delete;
+    CQTWorkerThread& operator=(const CQTWorkerThread&) = delete;
+    
+    /**
+     * Start the worker thread
+     */
+    void start();
+    
+    /**
+     * Stop the worker thread (blocks until thread exits)
+     */
+    void stop();
+    
+    /**
+     * Check if worker is running
+     */
+    bool isRunning() const { return m_running.load(std::memory_order_acquire); }
+    
+    /**
+     * Signal that new audio is available (called from TIER 1)
+     * This is a lightweight hint - worker will check ring buffer
+     */
+    void notifyAudioAvailable() {
+        m_audioAvailable.store(true, std::memory_order_release);
+    }
+    
+    /**
+     * Set sample rate (thread-safe)
+     */
+    void setSampleRate(float sr);
+    
+    /**
+     * Get current processing statistics
+     */
+    std::uint64_t framesProcessed() const { return m_framesProcessed.load(); }
+    std::uint64_t bufferUnderruns() const { return m_underruns.load(); }
+    
+    /**
+     * Set callback for note events (optional, for legacy integration)
+     */
+    void setNoteEventCallback(NoteEventCallback cb) { m_noteCallback = std::move(cb); }
+    
+    /**
+     * Update calibration data (thread-safe)
+     */
+    void setCalibration(const std::array<float, 6>& avgRms, 
+                        const std::array<float, 6>& peakRms);
+    
+private:
+    void workerLoop();
+    void processCQTFrame();
+    std::vector<DetectionParams> buildDetectionParams();
+    
+    // Input/Output interfaces
+    AudioRingBuffer& m_inputBuffer;
+    AtomicNoteState& m_outputState;
+    
+    // Configuration
+    CQTWorkerConfig m_config;
+    std::atomic<float> m_sampleRate;
+    
+    // Thread management
+    std::thread m_thread;
+    std::atomic<bool> m_running{false};
+    std::atomic<bool> m_stopRequested{false};
+    std::atomic<bool> m_audioAvailable{false};
+    
+    // Pre-CQT Band-Pass Filtering (crosstalk rejection)
+    HexBandPassBank m_bandPassBank;
+    
+    // CQT Processing
+    std::unique_ptr<CQTNoteDetector> m_cqtDetector;
+    
+    // Accumulation buffers (hop-size collection)
+    std::array<std::vector<float>, 6> m_accumBuffers;
+    int m_accumSamples{0};
+    
+    // Calibration data (updated atomically via mutex-free double-buffer or atomics)
+    std::atomic<bool> m_calibrationValid{false};
+    std::array<std::atomic<float>, 6> m_calibrationAvgRms;
+    std::array<std::atomic<float>, 6> m_calibrationPeakRms;
+    
+    // Statistics
+    std::atomic<std::uint64_t> m_framesProcessed{0};
+    std::atomic<std::uint64_t> m_underruns{0};
+    
+    // Optional callback
+    NoteEventCallback m_noteCallback;
+};
+
+} // namespace audio
+
+
+
+=== src/audio/CQTWorkerThread.cpp ===
+/**
+ * CQTWorkerThread.cpp - TIER 2 Processing Thread Implementation
+ */
+
+#include "CQTWorkerThread.h"
+#include "../CQT/CQTNoteDetector.h"
+#include "../NoteDetectionStore.h"
+
+#include <chrono>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+
+#ifdef __linux__
+#include <pthread.h>
+#endif
+
+namespace audio {
+
+CQTWorkerThread::CQTWorkerThread(AudioRingBuffer& inputBuffer,
+                                 AtomicNoteState& outputState,
+                                 const CQTWorkerConfig& config)
+    : m_inputBuffer(inputBuffer)
+    , m_outputState(outputState)
+    , m_config(config)
+    , m_sampleRate(config.sampleRate)
+{
+    // Initialize accumulation buffers
+    for (auto& buf : m_accumBuffers) {
+        buf.resize(4096, 0.0f);  // Pre-allocate to avoid runtime allocation
+    }
+    
+    // Initialize calibration atomics
+    for (int i = 0; i < 6; ++i) {
+        m_calibrationAvgRms[i].store(0.0f);
+        m_calibrationPeakRms[i].store(0.0f);
+    }
+    
+    // Initialize band-pass filter bank for crosstalk rejection
+    if (config.enableBandPassFilters) {
+        m_bandPassBank.configure(static_cast<double>(config.sampleRate));
+    }
+    
+    // Create CQT detector
+    m_cqtDetector = std::make_unique<CQTNoteDetector>(static_cast<double>(config.sampleRate));
+}
+
+CQTWorkerThread::~CQTWorkerThread() {
+    stop();
+}
+
+void CQTWorkerThread::start() {
+    if (m_running.load(std::memory_order_acquire)) {
+        return;  // Already running
+    }
+    
+    m_stopRequested.store(false, std::memory_order_release);
+    m_running.store(true, std::memory_order_release);
+    
+    m_thread = std::thread(&CQTWorkerThread::workerLoop, this);
+    
+#ifdef __linux__
+    // Set thread name for debugging
+    pthread_setname_np(m_thread.native_handle(), "CQTWorker");
+#endif
+}
+
+void CQTWorkerThread::stop() {
+    if (!m_running.load(std::memory_order_acquire)) {
+        return;
+    }
+    
+    m_stopRequested.store(true, std::memory_order_release);
+    m_audioAvailable.store(true, std::memory_order_release);  // Wake up if sleeping
+    
+    if (m_thread.joinable()) {
+        m_thread.join();
+    }
+    
+    m_running.store(false, std::memory_order_release);
+}
+
+void CQTWorkerThread::setSampleRate(float sr) {
+    m_sampleRate.store(sr, std::memory_order_release);
+    m_outputState.setSampleRate(sr);
+    
+    // Reconfigure band-pass filters for new sample rate
+    if (m_config.enableBandPassFilters) {
+        m_bandPassBank.configure(static_cast<double>(sr));
+        m_bandPassBank.reset();  // Reset filter state on sample rate change
+    }
+    
+    if (m_cqtDetector) {
+        m_cqtDetector->setSampleRate(static_cast<double>(sr));
+    }
+}
+
+void CQTWorkerThread::setCalibration(const std::array<float, 6>& avgRms,
+                                      const std::array<float, 6>& peakRms) {
+    for (int i = 0; i < 6; ++i) {
+        m_calibrationAvgRms[i].store(avgRms[i], std::memory_order_relaxed);
+        m_calibrationPeakRms[i].store(peakRms[i], std::memory_order_relaxed);
+    }
+    m_calibrationValid.store(true, std::memory_order_release);
+}
+
+void CQTWorkerThread::workerLoop() {
+    // Configure thread for TIER 2
+    if (m_config.enableCoreAffinity) {
+        bool pinned = pinToCore(m_config.coreId);
+        bool highPri = setHighPriority(50);
+        (void)pinned;
+        (void)highPri;
+        // Log success/failure in production
+    }
+    
+    AudioFrame frame;
+    
+    while (!m_stopRequested.load(std::memory_order_acquire)) {
+        // Wait for audio to be available (spin with backoff)
+        int spinCount = 0;
+        while (!m_audioAvailable.exchange(false, std::memory_order_acq_rel)) {
+            if (m_stopRequested.load(std::memory_order_acquire)) {
+                return;
+            }
+            
+            // Adaptive backoff: spin briefly, then yield, then sleep
+            if (++spinCount < 100) {
+                // Spin
+                __asm__ volatile("" ::: "memory");
+            } else if (spinCount < 1000) {
+                std::this_thread::yield();
+            } else {
+                // Short sleep to avoid burning CPU
+                std::this_thread::sleep_for(std::chrono::microseconds(100));
+                spinCount = 500;  // Reset to yield range
+            }
+        }
+        
+        // Drain all available audio from ring buffer
+        while (m_inputBuffer.pop(frame)) {
+            // Apply per-string band-pass filtering for crosstalk rejection
+            // Filter first, THEN accumulate for CQT/RMS processing
+            if (m_config.enableBandPassFilters) {
+                m_bandPassBank.processFrame(frame.samples);
+            }
+            
+            // Accumulate filtered samples for each string
+            for (int s = 0; s < 6; ++s) {
+                if (m_accumSamples < static_cast<int>(m_accumBuffers[s].size())) {
+                    m_accumBuffers[s][m_accumSamples] = frame.samples[s];
+                }
+            }
+            m_accumSamples++;
+            
+            // Check if we've accumulated enough for a CQT hop
+            if (m_accumSamples >= m_config.hopSize) {
+                processCQTFrame();
+                
+                // Shift buffers by hop size (keep overlap)
+                const int overlap = m_accumSamples - m_config.hopSize;
+                if (overlap > 0) {
+                    for (auto& buf : m_accumBuffers) {
+                        std::memmove(buf.data(), buf.data() + m_config.hopSize, 
+                                    overlap * sizeof(float));
+                    }
+                }
+                m_accumSamples = overlap;
+            }
+        }
+    }
+}
+
+void CQTWorkerThread::processCQTFrame() {
+    if (!m_cqtDetector) return;
+    
+    // Update sample rate if changed
+    float sr = m_sampleRate.load(std::memory_order_acquire);
+    m_cqtDetector->setSampleRate(static_cast<double>(sr));
+    
+    // Build detection parameters from NoteDetectionStore
+    auto params = buildDetectionParams();
+    
+    // Prepare buffer pointers for CQT
+    float* buffers[6];
+    for (int s = 0; s < 6; ++s) {
+        buffers[s] = m_accumBuffers[s].data();
+    }
+    
+    // Process CQT
+    std::vector<GuitarFrame> frames = m_cqtDetector->process(buffers, m_accumSamples, params);
+    
+    // Update atomic note state from results
+    for (const auto& gf : frames) {
+        const int s = gf.stringID;
+        if (s < 0 || s >= 6) continue;
+        
+        m_outputState.updateString(s, gf.fret, gf.binEnergy, 
+                                   gf.isAttack, gf.isSustaining, gf.pitchHz);
+        
+        // Call legacy callback if set
+        if (m_noteCallback) {
+            m_noteCallback(s, gf.fret, gf.binEnergy, gf.isAttack, gf.isSustaining);
+        }
+    }
+    
+    // NOTE: Per-fret bin magnitudes for UI heatmap are computed in TabEngineBridge
+    // on the main thread timer (10Hz), NOT here in the real-time audio thread.
+    // The UI reads the 6 string fret/energy values via AtomicNoteState.
+    
+    m_outputState.advanceFrame();
+    m_framesProcessed.fetch_add(1, std::memory_order_relaxed);
+}
+
+std::vector<DetectionParams> CQTWorkerThread::buildDetectionParams() {
+    std::vector<DetectionParams> params;
+    params.reserve(6);
+    
+    // Get parameters from the global store
+    auto& store = NoteDetectionStore::instance();
+    const auto& np = store.current();
+    
+    bool calibValid = m_calibrationValid.load(std::memory_order_acquire);
+    
+    for (int s = 0; s < 6; ++s) {
+        DetectionParams dp;
+        dp.baseline = np.baselineFloor[s];
+        dp.envFloor = np.envelopeFloor[s];
+        dp.preAmpGain = np.calibrationGainMultiplier[s];
+        dp.gateRatio = np.gateRatio[s];
+        dp.confirmationFrames = np.confirmationFrames[s];
+        dp.fluxSensitivity = np.fluxSensitivity[s];
+        dp.slopeDecay = np.slopeDecay[s];
+        
+        // Calculate spatial weight from calibration
+        if (calibValid) {
+            float avgRms = m_calibrationAvgRms[s].load(std::memory_order_relaxed);
+            if (avgRms > 0.0001f) {
+                // Find max across all strings
+                float maxRms = 0.0f;
+                for (int i = 0; i < 6; ++i) {
+                    float r = m_calibrationAvgRms[i].load(std::memory_order_relaxed);
+                    if (r > maxRms) maxRms = r;
+                }
+                dp.spatialWeight = (maxRms > 0.0001f) ? (maxRms / avgRms) : 1.0f;
+            } else {
+                dp.spatialWeight = 1.0f;
+            }
+        } else {
+            dp.spatialWeight = 1.0f;
+        }
+        
+        params.push_back(dp);
+    }
+    
+    return params;
+}
+
+} // namespace audio
+
+
+
+=== src/TabEngine.h ===
+#pragma once
+#include <array>
+#include <memory>
+#include <string>
+#include <vector>
+
+struct StringThresholds {
+  float onsetThreshold {0.f};
+  float baseline {0.f};
+  float gateThreshold {0.f};
+  float envFloor {0.f};
+  float sustainFloor {0.f};
+  float retriggerGate {0.f};
+};
+
+struct Tuning {
+  // Low E (string 0) .. High E (string 5)
+  std::array<int, 6> stringMidi {40, 45, 50, 55, 59, 64}; // E2 A2 D3 G3 B3 E4
+};
+
+struct NoteEvent {
+  int         stringIdx = -1;     // 0..5
+  int         fret      = -1;     // 0..24
+  int         midi      = -1;     // absolute MIDI pitch
+  float       startSec  = 0.f;    // seconds
+  float       endSec    = 0.f;    // seconds (filled on close)
+  float       velocity  = 0.f;    // 0..1 (relative)
+  std::string articulation;       // "", "slide", "bend", "hammer", "pull", "pm"
+};
+
+struct TrackerConfig {
+  float onsetThreshold   = 0.020f;
+  float minNoteDurSec    = 0.045f;
+  float hopSec           = 0.010f; // 10 ms
+  float slideDeltaCents  = 120.f;  // >120c over ~60ms => slide
+  float bendDeltaCents   = 35.f;   // >35c sustained => bend
+};
+
+struct CalibrationProfile {
+  std::array<float, 6> avgRms {0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
+  std::array<float, 6> peakRms {0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
+  std::array<float, 6> multipliers {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+  std::array<float, 6> spatialWeight {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};  // Crosstalk fairness weight
+  bool valid = false;
+};
+
+struct FrameFeatures {
+  float tSec = 0.f;
+  float pitchHz = -1.f;
+  float pitchCents = 0.f;
+  float onsetStrength = 0.f;
+  float envelopeRms = 0.f;
+};
+
+class CQTNoteDetector;
+struct DetectionParams;
+struct GuitarFrame;
+
+class TabEngine {
+public:
+  TabEngine(const Tuning& t, const TrackerConfig& c);
+  ~TabEngine();
+  TabEngine(const TabEngine&) = delete;
+  TabEngine& operator=(const TabEngine&) = delete;
+  // channels[s] points to mono float buffer for string s; nullptr => silence
+  void processBlock(const float* const channels[6], int n, float sr, float t0);
+
+  const std::vector<NoteEvent>& events() const { return _events; }
+  std::string toJson(bool onlyFinished=true) const;
+  void importEvents(const std::vector<NoteEvent>& events);
+  void applyCalibration(const CalibrationProfile& profile);
+  std::array<float, 6> tuningDeviationCents() const;
+  std::array<float, 6> calibrationGains() const;
+  void setCalibrationGain(int stringIndex, float gain);
+  std::array<StringThresholds, 6> getThresholds() const;
+
+private:
+  void fuseEvents(float t0); // TODO(Copilot): rules (hammer/pull/slide/bend/pm)
+
+  Tuning _tuning;
+  TrackerConfig _cfg;
+  CalibrationProfile _calibration;
+  std::vector<NoteEvent> _events;
+  std::vector<int> _activeIdx; // per-string active event index or -1
+  std::unique_ptr<CQTNoteDetector> _cqtDetector;
+  
+  // CQT state tracking
+  struct StringCQTState {
+    float lastPitchHz = -1.0f;
+    float lastRms = 0.0f;
+    int lastFret = -1;
+  };
+  std::array<StringCQTState, 6> _cqtStates;
+};
+
+
+
+=== src/TabEngine.cpp ===
+#include "TabEngine.h"
+#include "CQT/CQTNoteDetector.h"
+#include "NoteDetectionStore.h"
+#include "SessionLogger.h"
+#include "util.h"
+#include <algorithm>
+#include <array>
+#include <sstream>
+#include <iomanip>
+#include <cmath>
+
+// CRITICAL: SessionLogger causes deadlocks in real-time audio thread
+// Only enable for offline debugging with recorded sessions
+#define ENABLE_TAB_RT_LOGGING 1  // Enable detailed note event logging
+
+TabEngine::TabEngine(const Tuning& t, const TrackerConfig& c)
+: _tuning(t), _cfg(c), _activeIdx(6, -1)
+{
+  // Initialize CQT detector with default sample rate (will be updated on first processBlock)
+  _cqtDetector = std::make_unique<CQTNoteDetector>(44100.0);
+  
+  // Initialize string states
+  for (auto& state : _cqtStates) {
+    state = StringCQTState{};
+  }
+}
+
+TabEngine::~TabEngine() = default;
+
+void TabEngine::processBlock(const float* const channels[6], int n, float sr, float t0) {
+  if (!_cqtDetector || n <= 0 || sr <= 0.f) {
+    return;
+  }
+  
+  // Update CQT sample rate if it changed
+  _cqtDetector->setSampleRate(static_cast<double>(sr));
+  
+  // Get current detection parameters from the store
+  auto& store = NoteDetectionStore::instance();
+  const auto& params = store.current();
+  
+  // Build DetectionParams for CQT from NoteDetectionParameterSet
+  std::vector<DetectionParams> cqtParams;
+  cqtParams.reserve(6);
+  
+  for (int s = 0; s < 6; ++s) {
+    DetectionParams dp;
+    dp.baseline = params.baselineFloor[s];
+    dp.envFloor = params.envelopeFloor[s];
+    
+    // Two-stage gain system:
+    // - preAmpGain: UI-adjustable (from calibrationGainMultiplier slider)
+    // - spatialWeight: Calibration-fixed fairness multiplier for crosstalk
+    dp.preAmpGain = params.calibrationGainMultiplier[s];
+    
+    // spatialWeight derived from calibration profile
+    // If calibration is valid, use the inverse of the measured RMS ratios
+    // Otherwise default to 1.0 (no weighting)
+    if (_calibration.valid && _calibration.avgRms[s] > 0.0001f) {
+      // Calculate weight to normalize this string relative to strongest string
+      float maxRms = *std::max_element(_calibration.avgRms.begin(), _calibration.avgRms.end());
+      dp.spatialWeight = (maxRms > 0.0001f) ? (maxRms / _calibration.avgRms[s]) : 1.0f;
+    } else {
+      dp.spatialWeight = 1.0f;
+    }
+    
+    dp.gateRatio = params.gateRatio[s];
+    dp.confirmationFrames = params.confirmationFrames[s];
+    dp.fluxSensitivity = params.fluxSensitivity[s];
+    dp.slopeDecay = params.slopeDecay[s];
+    cqtParams.push_back(dp);
+  }
+  
+  // Convert channels to non-const for CQT API (CQT doesn't modify them)
+  float* hexBuffers[6];
+  for (int s = 0; s < 6; ++s) {
+    hexBuffers[s] = const_cast<float*>(channels[s]);
+  }
+  
+  // Process all 6 strings in unified CQT pass
+  std::vector<GuitarFrame> frames = _cqtDetector->process(hexBuffers, n, cqtParams);
+  
+  // Convert GuitarFrame results to NoteEvents
+  for (const auto& frame : frames) {
+    const int s = frame.stringID;
+    if (s < 0 || s >= 6) continue;
+    
+    auto& state = _cqtStates[s];
+    state.lastRms = frame.rmsAmplitude;
+    
+    // Update pitch tracking using detected pitch from CQT (for tuning mode)
+    if (frame.pitchHz > 0.0f) {
+      state.lastPitchHz = frame.pitchHz;
+    }
+    
+    // Debug: Log CQT frame data for note detection debugging (DISABLED - causes XRuns)
+    // if (frame.rmsAmplitude > 0.01f) {
+    //   const float noteOnThresh = cqtParams[s].envFloor;
+    //   const float noteOffThresh = cqtParams[s].envFloor * cqtParams[s].gateRatio;
+    //   SessionLogger::instance().logf("cqt-frame", 
+    //     "S%d: fret=%d attack=%d sustain=%d binMag=%.6f noteOnThresh=%.6f noteOffThresh=%.6f rms=%.4f pitchHz=%.2f",
+    //     s, frame.fret, frame.isAttack ? 1 : 0, frame.isSustaining ? 1 : 0,
+    //     frame.binMagnitude, noteOnThresh, noteOffThresh, frame.rmsAmplitude, frame.pitchHz);
+    // }
+    
+    // Handle note events (only when fret is detected)
+    int& activeIdx = _activeIdx[s];
+    
+    // Calculate MIDI note for event tracking
+    const int midiNote = _tuning.stringMidi[s] + (frame.fret >= 0 ? frame.fret : 0);
+    
+    if (frame.fret >= 0 && frame.isAttack) {
+      // New note onset
+      // Close any previous note on this string
+      if (activeIdx >= 0 && activeIdx < static_cast<int>(_events.size())) {
+        auto& prevEvent = _events[activeIdx];
+        if (prevEvent.endSec <= prevEvent.startSec) {
+#if ENABLE_TAB_RT_LOGGING
+          SessionLogger::instance().logf("tab-noteclose",
+              "S%d: Closing previous note F%d (idx=%d) at t=%.3f (started at %.3f)",
+              s, prevEvent.fret, activeIdx, t0, prevEvent.startSec);
+#endif
+          prevEvent.endSec = t0;
+        }
+      }
+      
+      // Create new note event
+      NoteEvent evt;
+      evt.stringIdx = s;
+      evt.fret = frame.fret;
+      evt.midi = midiNote;
+      evt.startSec = t0;
+      evt.endSec = 0.0f; // Will be filled on note-off
+      evt.velocity = std::min(1.0f, frame.binEnergy * 10.0f); // Scale energy to 0-1 velocity
+      evt.articulation = "";
+      
+#if ENABLE_TAB_RT_LOGGING
+      const float envFloor = cqtParams[s].envFloor;
+      const float baseline = cqtParams[s].baseline;
+      SessionLogger::instance().logf("note-event",
+          "NOTE ON      S%d F%-2d           (rms=%.4f > envFloor=%.4f, baseline=%.4f)",
+          s, frame.fret, frame.binEnergy, envFloor, baseline);
+#endif
+      
+      activeIdx = static_cast<int>(_events.size());
+      _events.push_back(evt);
+      state.lastFret = frame.fret;
+      
+    } else if (frame.isSustaining) {
+      // Note continues - update if fret changed (slide/bend)
+      if (activeIdx >= 0 && activeIdx < static_cast<int>(_events.size())) {
+        auto& evt = _events[activeIdx];
+        
+        // If fret changed significantly, close old note and open new one
+        if (state.lastFret >= 0 && frame.fret != state.lastFret) {
+#if ENABLE_TAB_RT_LOGGING
+          SessionLogger::instance().logf("note-event",
+              "MOVE         S%d F%-2d -> F%-2d   (rms=%.4f, t=%.3f)",
+              s, state.lastFret, frame.fret, frame.binEnergy, t0);
+#endif
+          evt.endSec = t0;
+          
+          // Create new event for the changed fret
+          NoteEvent newEvt;
+          newEvt.stringIdx = s;
+          newEvt.fret = frame.fret;
+          newEvt.midi = midiNote;
+          newEvt.startSec = t0;
+          newEvt.endSec = 0.0f;
+          newEvt.velocity = std::min(1.0f, frame.binEnergy * 10.0f);
+          newEvt.articulation = "";
+          
+          activeIdx = static_cast<int>(_events.size());
+          _events.push_back(newEvt);
+          state.lastFret = frame.fret;
+        } else {
+          // Same fret, continuing sustain
+          // Check for retrigger (would need spectral flux from CQT to detect properly)
+          // For now, just detect if attack flag is set during sustain
+          if (frame.isAttack) {
+#if ENABLE_TAB_RT_LOGGING
+            SessionLogger::instance().logf("note-event",
+                "RETRIGGER    S%d F%-2d           (rms=%.4f, attack during sustain)",
+                s, frame.fret, frame.binEnergy);
+#endif
+          }
+        }
+      } else {
+#if ENABLE_TAB_RT_LOGGING
+        SessionLogger::instance().logf("tab-error",
+            "S%d F%d: Sustaining but no active note! activeIdx=%d t=%.3f",
+            s, frame.fret, activeIdx, t0);
+#endif
+      }
+      
+    } else {
+      // Note released
+      if (activeIdx >= 0 && activeIdx < static_cast<int>(_events.size())) {
+        auto& evt = _events[activeIdx];
+        if (evt.endSec <= evt.startSec) {
+#if ENABLE_TAB_RT_LOGGING
+          const float noteOffThresh = cqtParams[s].envFloor * cqtParams[s].gateRatio;
+          SessionLogger::instance().logf("note-event",
+              "NOTE OFF     S%d F%-2d           (rms=%.4f < noteOffThresh=%.4f, duration=%.3fs)",
+              s, evt.fret, frame.binEnergy, noteOffThresh, t0 - evt.startSec);
+#endif
+          evt.endSec = t0;
+        }
+        activeIdx = -1;
+        state.lastFret = -1;
+      } else if (state.lastFret >= 0) {
+#if ENABLE_TAB_RT_LOGGING
+        SessionLogger::instance().logf("tab-error",
+            "S%d: Note released but activeIdx invalid: %d (lastFret was %d)",
+            s, activeIdx, state.lastFret);
+#endif
+        state.lastFret = -1;
+      }
+    }
+  }
+  
+  fuseEvents(t0);
+}
+
+void TabEngine::fuseEvents(float /*t0*/) {
+  std::array<int, 6> lastFinished{};
+  lastFinished.fill(-1);
+
+  const int total = static_cast<int>(_events.size());
+  for (int i = 0; i < total; ++i) {
+    auto& ev = _events[i];
+    if (ev.stringIdx < 0 || ev.stringIdx >= 6)
+      continue;
+
+    const bool finished = ev.endSec > ev.startSec;
+    if (!finished)
+      continue;
+
+    const int prevIdx = lastFinished[ev.stringIdx];
+    if (prevIdx >= 0 && prevIdx < total) {
+      auto& prev = _events[prevIdx];
+      if (prev.endSec > prev.startSec) {
+        const float gap = ev.startSec - prev.endSec;
+        if (gap >= 0.f && gap < 0.12f) {
+          const int delta = ev.fret - prev.fret;
+          const int absDelta = delta >= 0 ? delta : -delta;
+
+          if (absDelta >= 2) {
+            if (ev.articulation.empty())
+              ev.articulation = "slide";
+            if (prev.articulation.empty())
+              prev.articulation = "slide";
+          } else if (delta == 1 || delta == 2) {
+            if (ev.articulation.empty())
+              ev.articulation = "hammer";
+          } else if (delta == -1 || delta == -2) {
+            if (ev.articulation.empty())
+              ev.articulation = "pull";
+          } else if (absDelta == 0 && gap < 0.06f) {
+            if (ev.velocity < prev.velocity * 0.7f && ev.articulation.empty())
+              ev.articulation = "pm";
+          }
+        }
+      }
+    }
+
+    if (ev.articulation.empty()) {
+      const float duration = ev.endSec - ev.startSec;
+      if (duration < 0.18f && ev.velocity < 0.30f)
+        ev.articulation = "pm";
+    }
+
+    lastFinished[ev.stringIdx] = i;
+  }
+}
+
+void TabEngine::importEvents(const std::vector<NoteEvent>& events) {
+  _events = events;
+  std::fill(_activeIdx.begin(), _activeIdx.end(), -1);
+  if (_cqtDetector) {
+    _cqtDetector->reset();
+  }
+  for (auto& state : _cqtStates) {
+    state = StringCQTState{};
+  }
+}
+
+void TabEngine::applyCalibration(const CalibrationProfile& profile) {
+  _calibration = profile;
+  // CQT uses calibrationGainMultiplier from NoteDetectionStore directly
+  // Reset detector state on calibration change
+  if (_cqtDetector) {
+    _cqtDetector->reset();
+  }
+}
+
+std::array<float, 6> TabEngine::tuningDeviationCents() const {
+  std::array<float, 6> deviations{};
+  for (int s = 0; s < 6; ++s) {
+    const float pitchHz = _cqtStates[s].lastPitchHz;
+    const float targetHz = midiToHz(_tuning.stringMidi[s]);
+    if (pitchHz > 0.f && targetHz > 0.f) {
+      deviations[s] = centsBetween(pitchHz, targetHz);
+      // Debug logging for tuning deviation (muted)
+      // if (std::abs(deviations[s]) > 1.0f) {
+      //   SessionLogger::instance().logf("tuning", "String %d: pitch=%.2fHz target=%.2fHz deviation=%.2fcents", 
+      //     s, pitchHz, targetHz, deviations[s]);
+      // }
+    }
+  }
+  return deviations;
+}
+
+std::array<float, 6> TabEngine::calibrationGains() const {
+  std::array<float, 6> gains{};
+  auto& store = NoteDetectionStore::instance();
+  const auto& params = store.current();
+  for (int s = 0; s < 6; ++s) {
+    gains[s] = params.calibrationGainMultiplier[s];
+  }
+  return gains;
+}
+
+void TabEngine::setCalibrationGain(int stringIndex, float gain) {
+  if (stringIndex < 0 || stringIndex >= 6)
+    return;
+  auto& store = NoteDetectionStore::instance();
+  store.setValue(NoteParameter::CalibrationGainMultiplier, stringIndex, gain);
+}
+
+std::string TabEngine::toJson(bool onlyFinished) const {
+  std::ostringstream oss;
+  oss << "[";
+  bool first = true;
+  for (const auto& e : _events) {
+    if (onlyFinished && e.endSec <= e.startSec) continue;
+    if (!first) oss << ",";
+    first = false;
+    oss << "{"
+        << "\"string\":" << e.stringIdx
+        << ",\"fret\":" << e.fret
+        << ",\"midi\":" << e.midi
+        << ",\"start\":" << std::fixed << std::setprecision(6) << e.startSec
+        << ",\"end\":"   << std::fixed << std::setprecision(6) << e.endSec
+        << ",\"vel\":"   << std::fixed << std::setprecision(3) << e.velocity
+        << ",\"art\":\"" << e.articulation << "\""
+        << "}";
+  }
+  oss << "]";
+  return oss.str();
+}
+
+std::array<StringThresholds, 6> TabEngine::getThresholds() const {
+  std::array<StringThresholds, 6> result;
+  auto& store = NoteDetectionStore::instance();
+  const auto& params = store.current();
+  
+  for (int s = 0; s < 6; ++s) {
+    StringThresholds& th = result[s];
+    th.baseline = params.baselineFloor[s];
+    th.envFloor = params.envelopeFloor[s];
+    th.gateThreshold = params.envelopeFloor[s] * params.gateRatio[s];
+    th.sustainFloor = params.envelopeFloor[s] * params.gateRatio[s];  // Same as gate threshold in CQT
+    th.retriggerGate = 0.0f;  // Not used in CQT (uses spectral flux instead)
+    th.onsetThreshold = 0.0f;  // Not used in CQT (uses spectral flux instead)
+  }
+  return result;
+}
+
+
+
+=== src/NoteDetectionConfig.h ===
+#pragma once
+
+#include <array>
+#include <string>
+
+struct NoteDetectionParameterSet {
+    std::array<float, 6> baselineFloor {};
+    std::array<float, 6> envelopeFloor {};
+    std::array<float, 6> gateRatio {};
+    std::array<float, 6> targetRms {};
+    std::array<float, 6> calibrationGainMultiplier {}; // Maps to preAmpGain
+    std::array<float, 6> spatialWeight {};             // Calibration-fixed crosstalk weight
+    std::array<int, 6> confirmationFrames {};          // Stability frames (1-5)
+    std::array<float, 6> fluxSensitivity {};           // Spectral flux retrigger threshold (0.05-0.50)
+    std::array<float, 6> slopeDecay {};                // Energy slope decay per fret (0.0-0.025)
+};
+
+NoteDetectionParameterSet makeDefaultNoteDetectionParameters();
+
+enum class NoteParameter {
+    BaselineFloor,
+    EnvelopeFloor,
+    GateRatio,
+    TargetRms,
+    CalibrationGainMultiplier,
+    SpatialWeight,
+    ConfirmationFrames,
+    FluxSensitivity,
+    SlopeDecay
+};
+
+inline constexpr int kNumStrings = 6;
+
+struct ParameterDescriptor {
+    NoteParameter id;
+    std::string key;
+    std::string label;
+    std::string description;
+    float minValue;
+    float maxValue;
+    float step;
+    bool useDecibels;
+    bool perStringMinMax = false;
+    std::array<float, 6> perStringMin {};
+    std::array<float, 6> perStringMax {};
+};
+
+const std::array<ParameterDescriptor, 9>& parameterDescriptors();
+
+std::string defaultStringLabel(int stringIndex);
+
+
+
+=== src/NoteDetectionConfig.cpp ===
+#include "NoteDetectionConfig.h"
+
+#include <algorithm>
+
+namespace {
+constexpr std::array<const char*, 6> kDefaultStringLabels {{"E", "A", "D", "G", "B", "e"}};
+
+constexpr std::array<float, 6> kDefaultBaselineFloor {{0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f}};
+constexpr std::array<float, 6> kDefaultEnvelopeFloor {{0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f}};
+constexpr std::array<float, 6> kDefaultGateRatio {{0.50f, 0.50f, 0.50f, 0.50f, 0.50f, 0.50f}};
+constexpr std::array<float, 6> kDefaultTargetRms {{0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f}};
+constexpr std::array<float, 6> kDefaultCalibrationGainMultiplier {{5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f}};
+// CQT parameters
+constexpr std::array<float, 6> kDefaultSpatialWeight {{1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f}};  // Calibration-set
+constexpr std::array<int, 6> kDefaultConfirmationFrames {{3, 3, 3, 3, 3, 3}};                  // Stability frames
+constexpr std::array<float, 6> kDefaultFluxSensitivity {{0.20f, 0.20f, 0.20f, 0.20f, 0.20f, 0.20f}};  // Spectral flux threshold
+constexpr std::array<float, 6> kDefaultSlopeDecay {{0.012f, 0.012f, 0.012f, 0.012f, 0.012f, 0.012f}};  // 1.2% per fret
+
+NoteDetectionParameterSet fromDefaults() {
+    NoteDetectionParameterSet set;
+    set.baselineFloor = kDefaultBaselineFloor;
+    set.envelopeFloor = kDefaultEnvelopeFloor;
+    set.gateRatio = kDefaultGateRatio;
+    set.targetRms = kDefaultTargetRms;
+    set.calibrationGainMultiplier = kDefaultCalibrationGainMultiplier;
+    set.spatialWeight = kDefaultSpatialWeight;
+    set.confirmationFrames = kDefaultConfirmationFrames;
+    set.fluxSensitivity = kDefaultFluxSensitivity;
+    set.slopeDecay = kDefaultSlopeDecay;
+    return set;
+}
+
+const std::array<ParameterDescriptor, 9> kDescriptors {{
+    {NoteParameter::BaselineFloor, "baselineFloor", "Baseline", "Master gate noise floor (RMS threshold).", 0.0001f, 0.0100f, 0.0001f, false},
+    {NoteParameter::EnvelopeFloor, "envelopeFloor", "Env Floor", "Note-on threshold (default 0.15, tunable ±0.1).", 0.05f, 0.25f, 0.01f, false},
+    {NoteParameter::GateRatio, "gateRatio", "Gate Ratio", "Note-off multiplier: releaseThreshold = envFloor × gateRatio.", 0.1f, 1.0f, 0.01f, false},
+    {NoteParameter::TargetRms, "targetRms", "Target RMS", "Calibration target for preAmpGain calculation.", 0.0001f, 0.35f, 0.0001f, false},
+    {NoteParameter::CalibrationGainMultiplier, "calibrationGainMultiplier", "Gain Multiplier", "Pre-CQT signal amplification (preAmpGain).", 0.2f, 8.0f, 0.01f, false},
+    {NoteParameter::SpatialWeight, "spatialWeight", "Spatial Weight", "[Calibration-Only] Crosstalk fairness multiplier.", 0.1f, 10.0f, 0.01f, false},
+    {NoteParameter::ConfirmationFrames, "confirmationFrames", "Confirmation", "Fret stability frames (1=fast, 5=solid).", 1.0f, 5.0f, 1.0f, false},
+    {NoteParameter::FluxSensitivity, "fluxSensitivity", "Flux Sensitivity", "Spectral flux retrigger threshold.", 0.05f, 0.50f, 0.01f, false},
+    {NoteParameter::SlopeDecay, "slopeDecay", "RMS Slope", "Energy slope decay per fret (0%=flat, 2.5%=max).", 0.0f, 0.025f, 0.001f, false}
+}};
+
+} // namespace
+
+NoteDetectionParameterSet makeDefaultNoteDetectionParameters() {
+    return fromDefaults();
+}
+
+const std::array<ParameterDescriptor, 9>& parameterDescriptors() {
+    return kDescriptors;
+}
+
+std::string defaultStringLabel(int stringIndex) {
+    if (stringIndex < 0 || stringIndex >= static_cast<int>(kDefaultStringLabels.size()))
+        return std::string("String ") + std::to_string(stringIndex + 1);
+    return kDefaultStringLabels[static_cast<std::size_t>(stringIndex)];
+}
+
+
+
+=== src/NoteDetectionStore.h ===
+#pragma once
+
+#include "NoteDetectionConfig.h"
+
+#include <atomic>
+#include <cstdint>
+#include <map>
+#include <mutex>
+#include <optional>
+#include <string>
+#include <vector>
+
+struct NoteDetectionParameterSetAtomic {
+    std::array<std::atomic<float>, 6> baselineFloor;
+    std::array<std::atomic<float>, 6> envelopeFloor;
+    std::array<std::atomic<float>, 6> gateRatio;
+    std::array<std::atomic<float>, 6> targetRms;
+    std::array<std::atomic<float>, 6> calibrationGainMultiplier;
+    std::array<std::atomic<float>, 6> spatialWeight;
+    std::array<std::atomic<int>, 6> confirmationFrames;
+    std::array<std::atomic<float>, 6> fluxSensitivity;
+    std::array<std::atomic<float>, 6> slopeDecay;
+
+    void store(const NoteDetectionParameterSet& source);
+};
+
+class NoteDetectionStore {
+public:
+    static NoteDetectionStore& instance();
+
+    const NoteDetectionParameterSet& defaults() const { return m_defaults; }
+    const NoteDetectionParameterSet& current() const { return m_current; }
+    const NoteDetectionParameterSet& committed() const { return m_committed; }
+
+    float activeValue(NoteParameter id, int stringIdx) const;
+    void setValue(NoteParameter id, int stringIdx, float value);
+
+    // Coalesce multiple rapid changes (e.g. slider drag) into a single undo entry.
+    void beginBatchEdit();
+    void endBatchEdit();
+
+    void undo();
+    void redo();
+    void revert();
+    void clearHistory();
+    void commit();
+
+    void saveState(const std::string& name);
+    bool loadState(const std::string& name);
+    std::vector<std::string> availableStates() const;
+    std::map<std::string, NoteDetectionParameterSet> savedStatesSnapshot() const;
+    void replaceSavedStates(const std::map<std::string, NoteDetectionParameterSet>& states);
+
+    NoteDetectionParameterSet snapshotCurrent() const;
+    NoteDetectionParameterSet snapshotCommitted() const;
+    void applyCommittedSnapshot(const NoteDetectionParameterSet& set);
+    void applyCurrentSnapshot(const NoteDetectionParameterSet& set);
+
+    void resetToDefaults();
+
+    void setValueFromKey(const std::string& key, int stringIdx, float value);
+    float currentValueFromKey(const std::string& key, int stringIdx) const;
+    float committedValueFromKey(const std::string& key, int stringIdx) const;
+
+    std::uint64_t activeGeneration() const {
+        return m_activeGeneration.load(std::memory_order_acquire);
+    }
+
+    void setCompareBaseline(bool enabled) { m_compareBaseline.store(enabled); }
+    bool compareBaseline() const { return m_compareBaseline.load(); }
+
+private:
+    NoteDetectionStore();
+
+    float* access(NoteDetectionParameterSet& set, NoteParameter id, int stringIdx);
+    const float* access(const NoteDetectionParameterSet& set, NoteParameter id, int stringIdx) const;
+    static std::optional<NoteParameter> parameterFromKey(const std::string& key);
+    void pushUndo();
+    void syncActive();
+
+    int m_batchEditDepth {0};
+    bool m_batchUndoPushed {false};
+
+    NoteDetectionParameterSet m_defaults;
+    NoteDetectionParameterSet m_current;
+    NoteDetectionParameterSet m_committed;
+    NoteDetectionParameterSetAtomic m_active;
+    std::vector<NoteDetectionParameterSet> m_undoStack;
+    std::vector<NoteDetectionParameterSet> m_redoStack;
+    std::map<std::string, NoteDetectionParameterSet> m_savedStates;
+    mutable std::mutex m_mutex;
+    std::atomic<std::uint64_t> m_activeGeneration {1};
+    std::atomic<bool> m_compareBaseline {false};
+};
+
+
+
+=== src/NoteDetectionStore.cpp ===
+#include "NoteDetectionStore.h"
+
+#include <algorithm>
+#include <cstdio>
+#include <cstdarg>
+
+namespace {
+
+void logStoreLookup(const char* stage, const std::string& key, int stringIdx, const float* value = nullptr) {
+    std::fprintf(stderr,
+                 "store %s key=%s string=%d",
+                 stage,
+                 key.c_str(),
+                 stringIdx);
+    if (value)
+        std::fprintf(stderr, " value=%.6f", static_cast<double>(*value));
+    std::fprintf(stderr, "\n");
+    std::fflush(stderr);
+}
+
+void logStoreDetail(const char* fmt, ...) {
+    std::fprintf(stderr, "store ");
+    va_list args;
+    va_start(args, fmt);
+    std::vfprintf(stderr, fmt, args);
+    va_end(args);
+    std::fprintf(stderr, "\n");
+    std::fflush(stderr);
+}
+
+}
+
+void NoteDetectionParameterSetAtomic::store(const NoteDetectionParameterSet& source) {
+    const auto transfer = [](auto& destArr, const auto& srcArr) {
+        for (std::size_t i = 0; i < destArr.size(); ++i)
+            destArr[i].store(srcArr[i], std::memory_order_release);
+    };
+    transfer(baselineFloor, source.baselineFloor);
+    transfer(envelopeFloor, source.envelopeFloor);
+    transfer(gateRatio, source.gateRatio);
+    transfer(targetRms, source.targetRms);
+    transfer(calibrationGainMultiplier, source.calibrationGainMultiplier);
+    transfer(spatialWeight, source.spatialWeight);
+    transfer(confirmationFrames, source.confirmationFrames);
+    transfer(fluxSensitivity, source.fluxSensitivity);
+    transfer(slopeDecay, source.slopeDecay);
+}
+
+NoteDetectionStore& NoteDetectionStore::instance() {
+    static NoteDetectionStore store;
+    return store;
+}
+
+NoteDetectionStore::NoteDetectionStore() {
+    m_defaults = makeDefaultNoteDetectionParameters();
+    m_current = m_defaults;
+    m_committed = m_defaults;
+    m_active.store(m_current);
+}
+
+float* NoteDetectionStore::access(NoteDetectionParameterSet& set, NoteParameter id, int stringIdx) {
+    logStoreDetail("access-enter param=%d string=%d", static_cast<int>(id), stringIdx);
+    if (stringIdx < 0 || stringIdx >= kNumStrings) {
+        logStoreDetail("access-string-out-of-range param=%d string=%d", static_cast<int>(id), stringIdx);
+        return nullptr;
+    }
+
+    float* result = nullptr;
+    switch (id) {
+        case NoteParameter::BaselineFloor: result = &set.baselineFloor[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::EnvelopeFloor: result = &set.envelopeFloor[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::GateRatio: result = &set.gateRatio[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::TargetRms: result = &set.targetRms[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::CalibrationGainMultiplier: result = &set.calibrationGainMultiplier[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::SpatialWeight: result = &set.spatialWeight[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::FluxSensitivity: result = &set.fluxSensitivity[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::SlopeDecay: result = &set.slopeDecay[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::ConfirmationFrames: return nullptr; // int type, handled separately
+    }
+
+    if (!result)
+        logStoreDetail("access-null param=%d string=%d", static_cast<int>(id), stringIdx);
+    else
+        logStoreDetail("access-success param=%d string=%d value=%.6f", static_cast<int>(id), stringIdx, static_cast<double>(*result));
+    return result;
+}
+
+const float* NoteDetectionStore::access(const NoteDetectionParameterSet& set, NoteParameter id, int stringIdx) const {
+    auto* self = const_cast<NoteDetectionStore*>(this);
+    return self->access(const_cast<NoteDetectionParameterSet&>(set), id, stringIdx);
+}
+
+float NoteDetectionStore::activeValue(NoteParameter id, int stringIdx) const {
+    if (stringIdx < 0 || stringIdx >= kNumStrings)
+        return 0.f;
+    const auto fetch = [stringIdx](const auto& arr) {
+        return arr[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire);
+    };
+    switch (id) {
+        case NoteParameter::BaselineFloor: return fetch(m_active.baselineFloor);
+        case NoteParameter::EnvelopeFloor: return fetch(m_active.envelopeFloor);
+        case NoteParameter::GateRatio: return fetch(m_active.gateRatio);
+        case NoteParameter::TargetRms: return fetch(m_active.targetRms);
+        case NoteParameter::CalibrationGainMultiplier: return fetch(m_active.calibrationGainMultiplier);
+        case NoteParameter::SpatialWeight: return fetch(m_active.spatialWeight);
+        case NoteParameter::FluxSensitivity: return fetch(m_active.fluxSensitivity);
+        case NoteParameter::SlopeDecay: return fetch(m_active.slopeDecay);
+        case NoteParameter::ConfirmationFrames: return static_cast<float>(m_active.confirmationFrames[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire));
+    }
+    return 0.f;
+}
+
+void NoteDetectionStore::setValue(NoteParameter id, int stringIdx, float value) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    logStoreDetail("set-value-enter param=%d string=%d value=%.6f undo=%zu redo=%zu",
+                   static_cast<int>(id),
+                   stringIdx,
+                   static_cast<double>(value),
+                   m_undoStack.size(),
+                   m_redoStack.size());
+    if (m_batchEditDepth > 0) {
+        if (!m_batchUndoPushed) {
+            pushUndo();
+            m_batchUndoPushed = true;
+        }
+    } else {
+        pushUndo();
+    }
+    if (id == NoteParameter::ConfirmationFrames) {
+        // Handle int type separately
+        const int before = m_current.confirmationFrames[static_cast<std::size_t>(stringIdx)];
+        m_current.confirmationFrames[static_cast<std::size_t>(stringIdx)] = static_cast<int>(value);
+        logStoreDetail("set-value-write param=%d string=%d before=%d after=%d",
+                       static_cast<int>(id),
+                       stringIdx,
+                       before,
+                       static_cast<int>(value));
+    } else if (float* ptr = access(m_current, id, stringIdx)) {
+        const double before = static_cast<double>(*ptr);
+        *ptr = value;
+        logStoreDetail("set-value-write param=%d string=%d before=%.6f after=%.6f",
+                       static_cast<int>(id),
+                       stringIdx,
+                       before,
+                       static_cast<double>(value));
+    } else {
+        logStoreDetail("set-value-null param=%d string=%d", static_cast<int>(id), stringIdx);
+    }
+    m_redoStack.clear();
+    syncActive();
+    logStoreDetail("set-value-exit param=%d string=%d undo=%zu redo=%zu",
+                   static_cast<int>(id),
+                   stringIdx,
+                   m_undoStack.size(),
+                   m_redoStack.size());
+}
+
+void NoteDetectionStore::beginBatchEdit() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    ++m_batchEditDepth;
+    if (m_batchEditDepth == 1)
+        m_batchUndoPushed = false;
+    logStoreDetail("batch-begin depth=%d", m_batchEditDepth);
+}
+
+void NoteDetectionStore::endBatchEdit() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    if (m_batchEditDepth <= 0) {
+        m_batchEditDepth = 0;
+        m_batchUndoPushed = false;
+        logStoreDetail("batch-end-underflow");
+        return;
+    }
+    --m_batchEditDepth;
+    if (m_batchEditDepth == 0)
+        m_batchUndoPushed = false;
+    logStoreDetail("batch-end depth=%d", m_batchEditDepth);
+}
+
+void NoteDetectionStore::setValueFromKey(const std::string& key, int stringIdx, float value) {
+    logStoreDetail("set-value-from-key key=%s string=%d value=%.6f", key.c_str(), stringIdx, static_cast<double>(value));
+    if (auto param = parameterFromKey(key))
+        setValue(*param, stringIdx, value);
+    else
+        logStoreDetail("set-value-from-key-miss key=%s", key.c_str());
+}
+
+float NoteDetectionStore::currentValueFromKey(const std::string& key, int stringIdx) const {
+    logStoreLookup("current-enter", key, stringIdx);
+    if (auto param = parameterFromKey(key)) {
+        logStoreDetail("current-param-resolved key=%s param=%d", key.c_str(), static_cast<int>(*param));
+        if (*param == NoteParameter::ConfirmationFrames) {
+            if (stringIdx >= 0 && stringIdx < kNumStrings) {
+                float result = static_cast<float>(m_current.confirmationFrames[static_cast<std::size_t>(stringIdx)]);
+                logStoreDetail("current-access-success key=%s string=%d", key.c_str(), stringIdx);
+                logStoreLookup("current-exit", key, stringIdx, &result);
+                return result;
+            }
+        } else if (const float* ptr = access(m_current, *param, stringIdx)) {
+            logStoreDetail("current-access-success key=%s string=%d", key.c_str(), stringIdx);
+            logStoreLookup("current-exit", key, stringIdx, ptr);
+            return *ptr;
+        }
+        logStoreDetail("current-access-null key=%s string=%d", key.c_str(), stringIdx);
+    }
+    logStoreLookup("current-miss", key, stringIdx);
+    return 0.f;
+}
+
+float NoteDetectionStore::committedValueFromKey(const std::string& key, int stringIdx) const {
+    logStoreLookup("committed-enter", key, stringIdx);
+    if (auto param = parameterFromKey(key)) {
+        logStoreDetail("committed-param-resolved key=%s param=%d", key.c_str(), static_cast<int>(*param));
+        if (*param == NoteParameter::ConfirmationFrames) {
+            if (stringIdx >= 0 && stringIdx < kNumStrings) {
+                float result = static_cast<float>(m_committed.confirmationFrames[static_cast<std::size_t>(stringIdx)]);
+                logStoreDetail("committed-access-success key=%s string=%d", key.c_str(), stringIdx);
+                logStoreLookup("committed-exit", key, stringIdx, &result);
+                return result;
+            }
+        } else if (const float* ptr = access(m_committed, *param, stringIdx)) {
+            logStoreDetail("committed-access-success key=%s string=%d", key.c_str(), stringIdx);
+            logStoreLookup("committed-exit", key, stringIdx, ptr);
+            return *ptr;
+        }
+        logStoreDetail("committed-access-null key=%s string=%d", key.c_str(), stringIdx);
+    }
+    logStoreLookup("committed-miss", key, stringIdx);
+    return 0.f;
+}
+
+void NoteDetectionStore::undo() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    logStoreDetail("undo-enter stack=%zu", m_undoStack.size());
+    if (m_undoStack.empty())
+        return;
+    m_redoStack.push_back(m_current);
+    m_current = m_undoStack.back();
+    m_undoStack.pop_back();
+    syncActive();
+    logStoreDetail("undo-exit stack=%zu redo=%zu", m_undoStack.size(), m_redoStack.size());
+}
+
+void NoteDetectionStore::redo() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    logStoreDetail("redo-enter stack=%zu", m_redoStack.size());
+    if (m_redoStack.empty())
+        return;
+    m_undoStack.push_back(m_current);
+    m_current = m_redoStack.back();
+    m_redoStack.pop_back();
+    syncActive();
+    logStoreDetail("redo-exit stack=%zu undo=%zu", m_redoStack.size(), m_undoStack.size());
+}
+
+void NoteDetectionStore::revert() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    logStoreDetail("revert-enter undo=%zu redo=%zu", m_undoStack.size(), m_redoStack.size());
+    m_current = m_committed;
+    clearHistory();
+    syncActive();
+    logStoreDetail("revert-exit undo=%zu redo=%zu", m_undoStack.size(), m_redoStack.size());
+}
+
+void NoteDetectionStore::clearHistory() {
+    m_undoStack.clear();
+    m_redoStack.clear();
+}
+
+void NoteDetectionStore::commit() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    m_committed = m_current;
+    clearHistory();
+    syncActive();
+}
+
+void NoteDetectionStore::resetToDefaults() {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    m_current = m_defaults;
+    clearHistory();
+    syncActive();
+}
+
+void NoteDetectionStore::saveState(const std::string& name) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    if (name.empty())
+        return;
+    m_savedStates[name] = m_current;
+}
+
+bool NoteDetectionStore::loadState(const std::string& name) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto it = m_savedStates.find(name);
+    if (it == m_savedStates.end())
+        return false;
+    m_current = it->second;
+    clearHistory();
+    syncActive();
+    return true;
+}
+
+std::vector<std::string> NoteDetectionStore::availableStates() const {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    std::vector<std::string> names;
+    names.reserve(m_savedStates.size());
+    for (const auto& entry : m_savedStates)
+        names.push_back(entry.first);
+    return names;
+}
+std::map<std::string, NoteDetectionParameterSet> NoteDetectionStore::savedStatesSnapshot() const {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    return m_savedStates;
+}
+
+void NoteDetectionStore::replaceSavedStates(const std::map<std::string, NoteDetectionParameterSet>& states) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    m_savedStates = states;
+}
+
+NoteDetectionParameterSet NoteDetectionStore::snapshotCurrent() const {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    return m_current;
+}
+
+NoteDetectionParameterSet NoteDetectionStore::snapshotCommitted() const {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    return m_committed;
+}
+
+void NoteDetectionStore::applyCommittedSnapshot(const NoteDetectionParameterSet& set) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    m_committed = set;
+    m_current = set;
+    clearHistory();
+    syncActive();
+}
+
+void NoteDetectionStore::applyCurrentSnapshot(const NoteDetectionParameterSet& set) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    m_current = set;
+    syncActive();
+}
+
+std::optional<NoteParameter> NoteDetectionStore::parameterFromKey(const std::string& key) {
+    logStoreDetail("param-enter key=%s", key.c_str());
+    const auto& descriptors = parameterDescriptors();
+    logStoreDetail("param-descriptors-ready size=%zu", descriptors.size());
+    std::size_t idx = 0;
+    for (const auto& desc : descriptors) {
+        logStoreDetail("param-check idx=%zu desc=%s", idx, desc.key.c_str());
+        if (desc.key == key) {
+            logStoreDetail("param-match idx=%zu", idx);
+            return desc.id;
+        }
+        ++idx;
+    }
+    logStoreDetail("param-miss key=%s", key.c_str());
+    return std::nullopt;
+}
+
+void NoteDetectionStore::pushUndo() {
+    m_undoStack.push_back(m_current);
+    if (m_undoStack.size() > 32)
+        m_undoStack.erase(m_undoStack.begin());
+}
+
+void NoteDetectionStore::syncActive() {
+    m_active.store(m_current);
+    m_activeGeneration.fetch_add(1, std::memory_order_acq_rel);
+}
+
+// no-op placeholder
+
+
+
+=== src/FretboardProvider.h ===
+#pragma once
+/**
+ * FretboardProvider.h - TIER 3 UI Bridge for Fretboard Heatmap
+ * 
+ * Bridges Tier 2 (CQT Worker) to Tier 3 (QML) using a 60Hz heartbeat poll.
+ * Prevents UI thread saturation by:
+ *   1. Pulling bin magnitudes from AtomicNoteState (lock-free atomics)
+ *   2. Only emitting signals when magnitude changes exceed delta threshold
+ *   3. Using revision counter for efficient QML binding updates
+ * 
+ * The CQT engine runs at ~86fps; this provider polls at 60fps to match
+ * typical display refresh rates. The "pull" model ensures the audio thread
+ * never blocks on UI operations.
+ * 
+ * Data Layout:
+ *   - 6 strings × 25 frets = 150 total bins
+ *   - All magnitudes are float (32-bit) for ARM NEON SIMD compatibility
+ */
+
+#include <QObject>
+#include <QTimer>
+#include <QVariantList>
+#include <array>
+#include <atomic>
+
+namespace audio {
+    class AtomicNoteState;  // Forward declaration
+}
+
+class FretboardProvider : public QObject {
+    Q_OBJECT
+    
+    // Revision counter for efficient QML binding (bumps on any change)
+    Q_PROPERTY(int revision READ revision NOTIFY magnitudesChanged)
+    
+    // Full 6×25 grid as flat list for bulk QML access (row-major: string 0 frets 0-24, string 1 frets 0-24, ...)
+    Q_PROPERTY(QVariantList magnitudes READ magnitudes NOTIFY magnitudesChanged)
+    
+public:
+    static constexpr int NUM_STRINGS = 6;
+    static constexpr int NUM_FRETS = 25;
+    static constexpr int TOTAL_BINS = NUM_STRINGS * NUM_FRETS;  // 150
+    
+    // Delta threshold for signal emission (prevents signal spam)
+    static constexpr float DELTA_THRESHOLD = 0.005f;
+    
+    // Poll interval in milliseconds (~60Hz)
+    static constexpr int POLL_INTERVAL_MS = 16;
+    
+    /**
+     * Construct with reference to shared atomic note state
+     * @param noteState Shared atomic state written by CQT Worker (TIER 2)
+     * @param parent    QObject parent for ownership
+     */
+    explicit FretboardProvider(audio::AtomicNoteState& noteState, QObject* parent = nullptr);
+    ~FretboardProvider() override;
+    
+    // Non-copyable
+    FretboardProvider(const FretboardProvider&) = delete;
+    FretboardProvider& operator=(const FretboardProvider&) = delete;
+    
+    /**
+     * Start the 60Hz polling timer
+     */
+    void start();
+    
+    /**
+     * Stop the polling timer
+     */
+    void stop();
+    
+    /**
+     * Check if polling is active
+     */
+    bool isRunning() const { return m_timer && m_timer->isActive(); }
+    
+    /**
+     * Get current revision counter
+     */
+    int revision() const { return m_revision; }
+    
+    /**
+     * Get all 150 magnitudes as a flat QVariantList (row-major order)
+     * For QML GridView/Repeater binding
+     */
+    QVariantList magnitudes() const;
+    
+    /**
+     * O(1) single-bin lookup for QML colorProvider callbacks
+     * @param stringIndex 0-5 (Low E to High E)
+     * @param fretIndex   0-24
+     * @return Magnitude value (0.0 - 1.0 normalized)
+     */
+    Q_INVOKABLE qreal getMagnitude(int stringIndex, int fretIndex) const;
+    
+    /**
+     * Get the detected fret for a string (-1 if no note)
+     * @param stringIndex 0-5
+     */
+    Q_INVOKABLE int getActiveFret(int stringIndex) const;
+    
+    /**
+     * Check if a string has an active attack (new note onset)
+     * @param stringIndex 0-5
+     */
+    Q_INVOKABLE bool isAttack(int stringIndex) const;
+    
+    /**
+     * Check if a string has a sustaining note
+     * @param stringIndex 0-5
+     */
+    Q_INVOKABLE bool isSustaining(int stringIndex) const;
+
+signals:
+    /**
+     * Emitted when any magnitude changes by more than DELTA_THRESHOLD
+     * QML bindings to 'revision' or 'magnitudes' will auto-update
+     */
+    void magnitudesChanged();
+    
+    /**
+     * Emitted when a specific bin changes significantly
+     * @param stringIndex 0-5
+     * @param fretIndex   0-24
+     * @param magnitude   New magnitude value
+     */
+    void binChanged(int stringIndex, int fretIndex, qreal magnitude);
+    
+    /**
+     * Emitted on note attack (new note detected)
+     */
+    void noteAttack(int stringIndex, int fretIndex, qreal energy);
+    
+    /**
+     * Emitted when note ends
+     */
+    void noteRelease(int stringIndex, int fretIndex);
+
+private slots:
+    /**
+     * Called by QTimer at 60Hz to poll atomic state
+     */
+    void pollAtomicState();
+
+private:
+    // Reference to shared atomic state (written by TIER 2, read by TIER 3)
+    audio::AtomicNoteState& m_noteState;
+    
+    // 60Hz polling timer
+    QTimer* m_timer{nullptr};
+    
+    // Cached magnitudes for delta detection (previous frame)
+    std::array<std::array<float, NUM_FRETS>, NUM_STRINGS> m_prevMagnitudes{};
+    
+    // Current magnitudes (updated each poll)
+    std::array<std::array<float, NUM_FRETS>, NUM_STRINGS> m_currMagnitudes{};
+    
+    // Cached active fret per string (for attack/release detection)
+    std::array<int, NUM_STRINGS> m_prevActiveFret{};
+    std::array<int, NUM_STRINGS> m_currActiveFret{};
+    
+    // Attack/sustain state per string
+    std::array<bool, NUM_STRINGS> m_isAttack{};
+    std::array<bool, NUM_STRINGS> m_isSustaining{};
+    
+    // Revision counter (incremented on any change)
+    int m_revision{0};
+    
+    // Frame counter from CQT worker (to detect new frames)
+    std::uint64_t m_lastFrameCounter{0};
+};
+
+
+
+=== src/FretboardProvider.cpp ===
+/**
+ * FretboardProvider.cpp - TIER 3 UI Bridge Implementation
+ * 
+ * Implements 60Hz polling of AtomicNoteState with delta-based signal emission.
+ * All magnitude math uses float (32-bit) for ARM NEON SIMD compatibility.
+ */
+
+#include "FretboardProvider.h"
+#include "audio/AtomicNoteState.h"
+
+#include <cmath>
+#include <algorithm>
+
+FretboardProvider::FretboardProvider(audio::AtomicNoteState& noteState, QObject* parent)
+    : QObject(parent)
+    , m_noteState(noteState)
+{
+    // Initialize arrays to zero/default
+    for (auto& row : m_prevMagnitudes) row.fill(0.0f);
+    for (auto& row : m_currMagnitudes) row.fill(0.0f);
+    m_prevActiveFret.fill(-1);
+    m_currActiveFret.fill(-1);
+    m_isAttack.fill(false);
+    m_isSustaining.fill(false);
+    
+    // Create polling timer (will be started by start())
+    m_timer = new QTimer(this);
+    m_timer->setTimerType(Qt::PreciseTimer);  // Request high-precision timing
+    connect(m_timer, &QTimer::timeout, this, &FretboardProvider::pollAtomicState);
+}
+
+FretboardProvider::~FretboardProvider() {
+    stop();
+}
+
+void FretboardProvider::start() {
+    if (m_timer && !m_timer->isActive()) {
+        m_timer->start(POLL_INTERVAL_MS);  // 16ms ≈ 60Hz
+    }
+}
+
+void FretboardProvider::stop() {
+    if (m_timer && m_timer->isActive()) {
+        m_timer->stop();
+    }
+}
+
+QVariantList FretboardProvider::magnitudes() const {
+    QVariantList result;
+    result.reserve(TOTAL_BINS);
+    
+    // Row-major order: string 0 frets 0-24, string 1 frets 0-24, ...
+    for (int s = 0; s < NUM_STRINGS; ++s) {
+        for (int f = 0; f < NUM_FRETS; ++f) {
+            result.append(static_cast<qreal>(m_currMagnitudes[s][f]));
+        }
+    }
+    
+    return result;
+}
+
+qreal FretboardProvider::getMagnitude(int stringIndex, int fretIndex) const {
+    // O(1) lookup - bounds check for safety
+    if (stringIndex < 0 || stringIndex >= NUM_STRINGS ||
+        fretIndex < 0 || fretIndex >= NUM_FRETS) {
+        return 0.0;
+    }
+    return static_cast<qreal>(m_currMagnitudes[stringIndex][fretIndex]);
+}
+
+int FretboardProvider::getActiveFret(int stringIndex) const {
+    if (stringIndex < 0 || stringIndex >= NUM_STRINGS) {
+        return -1;
+    }
+    return m_currActiveFret[stringIndex];
+}
+
+bool FretboardProvider::isAttack(int stringIndex) const {
+    if (stringIndex < 0 || stringIndex >= NUM_STRINGS) {
+        return false;
+    }
+    return m_isAttack[stringIndex];
+}
+
+bool FretboardProvider::isSustaining(int stringIndex) const {
+    if (stringIndex < 0 || stringIndex >= NUM_STRINGS) {
+        return false;
+    }
+    return m_isSustaining[stringIndex];
+}
+
+void FretboardProvider::pollAtomicState() {
+    // Check if CQT worker has produced new frames
+    const std::uint64_t frameCounter = m_noteState.frameCounter();
+    if (frameCounter == m_lastFrameCounter) {
+        // No new data - skip this poll cycle
+        return;
+    }
+    m_lastFrameCounter = frameCounter;
+    
+    bool anyChanged = false;
+    
+    // Read all 6 strings × 25 frets from atomic state
+    for (int s = 0; s < NUM_STRINGS; ++s) {
+        // Read per-string note state
+        int fret = -1;
+        float energy = 0.0f;
+        bool attack = false;
+        bool sustaining = false;
+        float pitchHz = 0.0f;
+        
+        m_noteState.readString(s, fret, energy, attack, sustaining, pitchHz);
+        
+        // Store active fret and state
+        m_currActiveFret[s] = fret;
+        m_isAttack[s] = attack;
+        m_isSustaining[s] = sustaining;
+        
+        // Check for note attack/release transitions
+        if (fret >= 0 && m_prevActiveFret[s] < 0) {
+            // New note attack
+            emit noteAttack(s, fret, static_cast<qreal>(energy));
+        } else if (fret < 0 && m_prevActiveFret[s] >= 0) {
+            // Note released
+            emit noteRelease(s, m_prevActiveFret[s]);
+        }
+        m_prevActiveFret[s] = fret;
+        
+        // Read all 25 fret bin magnitudes for this string
+        for (int f = 0; f < NUM_FRETS; ++f) {
+            const float mag = m_noteState.getBinMagnitude(s, f);
+            m_currMagnitudes[s][f] = mag;
+            
+            // Delta detection: only emit if change exceeds threshold
+            const float delta = std::fabsf(mag - m_prevMagnitudes[s][f]);
+            if (delta > DELTA_THRESHOLD) {
+                anyChanged = true;
+                emit binChanged(s, f, static_cast<qreal>(mag));
+            }
+        }
+        
+        // Update previous state for next frame's delta detection
+        m_prevMagnitudes[s] = m_currMagnitudes[s];
+    }
+    
+    // Emit bulk change signal if anything changed (for QML revision binding)
+    if (anyChanged) {
+        ++m_revision;
+        emit magnitudesChanged();
+    }
+}
+
+
+
+=== src/TabEngineBridge.h ===
+#pragma once
+#include <QObject>
+#include <QVariantList>
+#include <QElapsedTimer>
+#include <QTimer>
+#include <array>
+#include <atomic>
+#include <filesystem>
+#include <memory>
+#include <mutex>
+#include <vector>
+
+#include "TabEngine.h"
+#include "audio/AtomicNoteState.h"
+#include "audio/CQTWorkerThread.h"
+
+class HexAudioClient;
+
+class TabEngineBridge : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(QVariantList events READ events NOTIFY eventsChanged)
+    Q_PROPERTY(QString eventsJson READ eventsJson NOTIFY eventsChanged)
+    Q_PROPERTY(bool recording READ recording WRITE setRecording NOTIFY recordingChanged)
+    Q_PROPERTY(QVariantList hexMeters READ hexMeters NOTIFY hexMetersChanged)
+    Q_PROPERTY(QVariantList rawMeters READ rawMeters NOTIFY rawMetersChanged)
+    Q_PROPERTY(QVariantList thresholds READ thresholds NOTIFY thresholdsChanged)
+    Q_PROPERTY(bool calibrationRunning READ calibrationRunning NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(QString calibrationMessage READ calibrationMessage NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(QVariantList calibrationSteps READ calibrationSteps NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(bool calibrationReady READ calibrationReady NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(bool tuningModeEnabled READ tuningModeEnabled WRITE setTuningModeEnabled NOTIFY tuningModeEnabledChanged)
+    Q_PROPERTY(QVariantList tuningDeviation READ tuningDeviation NOTIFY tuningDeviationChanged)
+    Q_PROPERTY(QVariantList calibrationGains READ calibrationGains NOTIFY calibrationGainsChanged)
+    Q_PROPERTY(int binMagnitudeRevision READ binMagnitudeRevision NOTIFY binMagnitudesChanged)
+public:
+    explicit TabEngineBridge(QObject* parent=nullptr);
+    ~TabEngineBridge();
+
+    QVariantList events() const { return m_events; }
+    QString eventsJson() const { return m_eventsJson; }
+    bool recording() const { return m_captureEnabled.load(std::memory_order_acquire); }
+    QVariantList hexMeters() const { return m_hexMeters; }
+    QVariantList rawMeters() const { return m_rawMeters; }
+    QVariantList thresholds() const { return m_thresholds; }
+    bool calibrationRunning() const { return m_calibrationRunning; }
+    QString calibrationMessage() const { return m_calibrationMessage; }
+    QVariantList calibrationSteps() const { return m_calibrationSteps; }
+    bool calibrationReady() const { return m_calibrationProfile.valid; }
+    bool tuningModeEnabled() const { return m_tuningModeEnabled; }
+    QVariantList tuningDeviation() const;
+    QVariantList calibrationGains() const;
+    int binMagnitudeRevision() const { return m_binMagnitudeRevision; }
+    
+    // Efficient single-bin lookup for QML colorProvider (O(1) per call)
+    Q_INVOKABLE qreal getBinMagnitude(int stringIndex, int fretIndex) const;
+
+    Q_INVOKABLE void requestRefresh();
+    Q_INVOKABLE void clear();
+    Q_INVOKABLE void seedMockSession();
+    Q_INVOKABLE void setRecording(bool value);
+    Q_INVOKABLE void startCalibration();
+    Q_INVOKABLE void recalibrateString(int stringIndex);
+    Q_INVOKABLE void setTuningModeEnabled(bool enabled);
+    Q_INVOKABLE void setCalibrationGain(int stringIndex, double gain);
+    Q_INVOKABLE void updateCalibrationMultipliers();
+
+    void setAudioClient(HexAudioClient* client);
+    void getCalibrationMultipliers(std::array<float, 6>& multipliers) const;
+    void processLiveAudioBlock(const float* const channels[6], int n, float sr);
+    bool exportPendingCapture(const QString& label);
+    bool hasPendingCapture() const { return m_pendingCaptureValid; }
+    void discardPendingCapture();
+    void updateThresholdsDisplay();
+    
+    // TIER 1 audio thread interface (inline, not a slot)
+    inline void notifyCQTWorker() {
+        if (m_cqtWorker) {
+            m_cqtWorker->notifyAudioAvailable();
+        }
+    }
+
+    TabEngine& engine() { return *m_engine; }
+    const TabEngine& engine() const { return *m_engine; }
+    TrackerConfig& trackerConfig() { return m_cfg; }
+    const TrackerConfig& trackerConfig() const { return m_cfg; }
+    int liveBlockFramesHint() const;
+
+public slots:
+    void updateLiveMeters(const std::array<float, 6>& meters);
+    void handleCalibrationStarted();
+    void handleCalibrationStepChanged(int stringIndex, bool capturing);
+    void handleCalibrationFinished(const std::array<float, 6>& averages,
+                                   const std::array<float, 6>& peaks);
+    void handleCalibrationBaselineFloorCaptured(float noiseFloor);
+    void handleCalibrationFadeComplete();
+
+signals:
+    void eventsChanged();
+    void recordingChanged();
+    void liveNoteTriggered(int stringIndex, int fretIndex, float velocity);
+    void liveNoteEnded(int stringIndex, int fretIndex);
+    void liveNoteEnvelopeUpdated(int stringIndex, float envelope);
+    void hexMetersChanged();
+    void rawMetersChanged();
+    void thresholdsChanged();
+    void calibrationStatusChanged();
+    void tuningModeEnabledChanged();
+    void tuningDeviationChanged();
+    void calibrationGainsChanged();
+    void calibrationParametersUpdated();
+    void binMagnitudesChanged();
+
+private:
+    struct LiveEvent {
+        int stringIndex = -1;
+        int fretIndex = -1;
+        float velocity = 0.f;
+        float startSec = 0.f;
+    };
+
+    void syncFromEngine();
+    void scheduleLiveDispatch();
+    void dispatchLiveEvents();
+    void resetCalibrationSteps();
+    void setCalibrationStepState(int stringIdx, int state);
+    void markSingleCalibrationPending(int stringIdx);
+    QString calibrationStoragePath() const;
+    void loadPersistentCalibration();
+    void savePersistentCalibration() const;
+    void appendCaptureAudio(const float* const channels[6], int n);
+    void finalizeCaptureBuffers();
+    void clearPendingCapture();
+    void appendSessionWaveTap(const float* const channels[6], int n, float sr);
+    void dumpSessionWaveSnapshot(const char* reason = nullptr);
+    std::filesystem::path sessionWaveDirectory() const;
+    QString stringNoteToken(int stringIdx) const;
+    static QString sanitizeLabel(const QString& label);
+    std::filesystem::path captureRootDirectory() const;
+    bool writeWavFile(const std::filesystem::path& path,
+                      const std::vector<float>& samples,
+                      float sampleRate) const;
+    double pendingCaptureDurationSec() const;
+
+    Tuning m_tuning;
+    TrackerConfig m_cfg;
+    std::unique_ptr<TabEngine> m_engine;
+    QVariantList m_events;
+    QString m_eventsJson {"[]"};
+    QVariantList m_hexMeters;
+    QVariantList m_rawMeters;
+    QVariantList m_thresholds;
+    bool m_calibrationRunning {false};
+    QString m_calibrationMessage {QStringLiteral("Uncalibrated")};
+    CalibrationProfile m_calibrationProfile;
+    QVariantList m_calibrationSteps;
+    std::array<int, 6> m_calibrationStepStates {};
+    QTimer* m_calibrationFadeTimer {nullptr};
+    int m_activeCalibrationString {-1};
+    bool m_activeCalibrationCapturing {false};
+    bool m_calibrationLoaded {false};
+    int m_requestedCalibrationString {-1};
+    bool m_partialCalibration {false};
+    // Indicates whether we are actively collecting a capture session; live detection
+    // stays active regardless so overlays remain responsive when capture is off.
+    std::atomic<bool> m_captureEnabled {false};
+    std::atomic<bool> m_resetRequested {true};
+    std::atomic<int> m_lastDispatchedEvent {0};
+    float m_liveTimeSec {0.f};
+    float m_liveSampleRate {0.f};
+    std::atomic<int> m_lastProcessBlockFrames {0};
+
+    HexAudioClient* m_audioClient {nullptr};
+    std::mutex m_liveMutex;
+    std::vector<LiveEvent> m_livePending;
+    std::atomic<bool> m_dispatchQueued {false};
+    std::array<float, 6> m_lastLiveTriggerSec {};
+    std::array<int, 6> m_lastLiveFret {};
+    std::array<bool, 6> m_activeNoteDisplayed {};
+    std::array<std::vector<float>, 6> m_captureBuffers;
+    std::array<std::vector<float>, 6> m_pendingCaptureBuffers;
+    std::array<std::vector<float>, 6> m_sessionWaveTap;
+    std::array<std::size_t, 6> m_sessionWaveTapWriteIndex {};
+    std::array<std::size_t, 6> m_sessionWaveTapCount {};
+    std::size_t m_sessionWaveTapCapacity {0};
+    float m_captureSampleRate {0.f};
+    float m_pendingSampleRate {0.f};
+    float m_sessionWaveTapSampleRate {0.f};
+    bool m_sessionWaveTapDirty {false};
+    bool m_pendingCaptureValid {false};
+    QString m_pendingEventsJsonSnapshot;
+    bool m_debugNoteLogging {false};
+    bool m_externalMetersActive {false};
+    bool m_tuningModeEnabled {false};
+    std::array<float, 6> m_tuningDeviationCents {};
+    QElapsedTimer m_thresholdsUpdateTimer;
+
+    // TIER 2/3: CQT Worker Thread and Atomic Note State
+    audio::AtomicNoteState m_atomicNoteState;
+    std::unique_ptr<audio::CQTWorkerThread> m_cqtWorker;
+    QTimer* m_noteStatePollTimer {nullptr};
+    
+    // Bin magnitude heatmap cache (updated on UI timer, NOT audio thread)
+    // Uses Strategy B: revision bump triggers QML rebind, colorProvider does O(1) lookup
+    std::array<std::array<float, 25>, 6> m_binMagnitudeCache {};
+    int m_binMagnitudeRevision {0};
+    void updateBinMagnitudeCache();
+
+    void postMeterSnapshot(const std::array<float, 6>& meters);
+    void updateTuningDeviation();
+};
+
+
+

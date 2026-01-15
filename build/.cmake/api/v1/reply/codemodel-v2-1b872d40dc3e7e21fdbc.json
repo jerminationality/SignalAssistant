@@ -1,0 +1,286 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-67fd9d2808b8c9692aca.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "GuitarPi",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi-Debug-f564de009d0c4804212e.json",
+					"name" : "GuitarPi",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_autogen-Debug-c4c9c391ac36f41d09d1.json",
+					"name" : "GuitarPi_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_autogen_timestamp_deps-Debug-9aab9519c687925ac47f.json",
+					"name" : "GuitarPi_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_copy_qml::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_copy_qml-Debug-0352425a50b69b6856d7.json",
+					"name" : "GuitarPi_copy_qml",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_copy_res::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_copy_res-Debug-86c7094b524e963850a8.json",
+					"name" : "GuitarPi_copy_res",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_qmlimportscan::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_qmlimportscan-Debug-6c7c50185f4eb018aae9.json",
+					"name" : "GuitarPi_qmlimportscan",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_qmllint-Debug-928677bfea8175bb30b6.json",
+					"name" : "GuitarPi_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_qmllint_json::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_qmllint_json-Debug-00df4b439fe1df6049f4.json",
+					"name" : "GuitarPi_qmllint_json",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_qmllint_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_qmllint_module-Debug-e4ad04b0c0258164a886.json",
+					"name" : "GuitarPi_qmllint_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GuitarPi_qmltyperegistration::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GuitarPi_qmltyperegistration-Debug-f044551d184268e76058.json",
+					"name" : "GuitarPi_qmltyperegistration",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TabPagePreview::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TabPagePreview-Debug-fef3e80f927978408a84.json",
+					"name" : "TabPagePreview",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TabPagePreview_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TabPagePreview_autogen-Debug-d08f4ecd3fdb9e7464f2.json",
+					"name" : "TabPagePreview_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TabPagePreview_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TabPagePreview_autogen_timestamp_deps-Debug-71dfa39caae993b19f59.json",
+					"name" : "TabPagePreview_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "TabPagePreview_qmlimportscan::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TabPagePreview_qmlimportscan-Debug-037025db34c12b053510.json",
+					"name" : "TabPagePreview_qmlimportscan",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_aotstats::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_aotstats-Debug-02dcb1d59a4b086a48ae.json",
+					"name" : "all_aotstats",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint-Debug-d407deea5b4adc93f569.json",
+					"name" : "all_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint_json::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint_json-Debug-7720e3854b36fe12d21f.json",
+					"name" : "all_qmllint_json",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint_module-Debug-f463455efba4f748a342.json",
+					"name" : "all_qmllint_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmltyperegistrations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmltyperegistrations-Debug-870aac797c222fbdc738.json",
+					"name" : "all_qmltyperegistrations",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "guitarpi_tab::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-guitarpi_tab-Debug-1376e3d670c838e3f68d.json",
+					"name" : "guitarpi_tab",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "guitarpi_tab_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-guitarpi_tab_autogen-Debug-d004eebd27fa9732442c.json",
+					"name" : "guitarpi_tab_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "guitarpi_tab_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-guitarpi_tab_autogen_timestamp_deps-Debug-85dba8d2ebebf7428cf6.json",
+					"name" : "guitarpi_tab_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "module_GuitarPi_aotstats_target::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-module_GuitarPi_aotstats_target-Debug-574eb8e7085b7f2cda0d.json",
+					"name" : "module_GuitarPi_aotstats_target",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tab_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tab_module-Debug-f589c7e7bf9be1d17053.json",
+					"name" : "tab_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tab_module_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tab_module_autogen-Debug-465909452141f5b3b6ff.json",
+					"name" : "tab_module_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tab_module_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tab_module_autogen_timestamp_deps-Debug-5473ec9974a2406c7f3f.json",
+					"name" : "tab_module_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/general/SignalAssistant/build",
+		"source" : "/home/general/SignalAssistant"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

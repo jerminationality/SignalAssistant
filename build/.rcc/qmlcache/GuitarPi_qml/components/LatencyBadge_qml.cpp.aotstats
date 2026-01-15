@@ -6,7 +6,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 27,
-                        "durationMicroseconds": 412,
+                        "durationMicroseconds": 405,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "text",
                         "line": 6
@@ -14,7 +14,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 12,
-                        "durationMicroseconds": 196,
+                        "durationMicroseconds": 156,
                         "errorMessage": "",
                         "functionName": "width",
                         "line": 10
@@ -22,7 +22,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 20,
-                        "durationMicroseconds": 326,
+                        "durationMicroseconds": 280,
                         "errorMessage": "",
                         "functionName": "implicitWidth",
                         "line": 11
@@ -30,7 +30,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 15,
-                        "durationMicroseconds": 470,
+                        "durationMicroseconds": 448,
                         "errorMessage": "",
                         "functionName": "text",
                         "line": 15
@@ -38,7 +38,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 27,
-                        "durationMicroseconds": 174,
+                        "durationMicroseconds": 261,
                         "errorMessage": "",
                         "functionName": "centerIn",
                         "line": 14

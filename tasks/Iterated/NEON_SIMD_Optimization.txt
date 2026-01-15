@@ -1,0 +1,21 @@
+# HARDWARE OPTIMIZATION: ARM NEON SIMD
+# =====================================
+
+1. CONTEXT:
+The Raspberry Pi 5 (Cortex-A76) has advanced NEON instructions that can 
+process 4 floating-point operations in a single CPU cycle. If the CQT 
+is compiled for generic ARM, it is 4x slower than it should be.
+
+2. ACTION ITEMS FOR COPILOT:
+- Check the CQT/FFT library build flags. Ensure '-mfpu=neon' and 
+  '-funsafe-math-optimizations' are enabled if compiling via GCC/Clang.
+- If using FFTW, ensure the library was linked with 'libfftw3f_neon'.
+- If the CQT math is custom, use 'auto-vectorization' by ensuring 
+  loops are 'simple' (no branching/if-statements inside the 4096-sample 
+  processing loop).
+
+3. MATH VERIFICATION:
+The CQT engine uses many 'std::sin', 'std::cos', and 'complex' 
+multiplications. Replace standard math calls with NEON intrinsics 
+(vaddq_f32, vmulq_f32) or use a library like 'Sleef' or 'Yeppp!' 
+which are optimized for ARM vector math.

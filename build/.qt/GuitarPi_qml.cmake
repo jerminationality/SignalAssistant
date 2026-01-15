@@ -34,6 +34,8 @@ set(src_and_dest_list
     "/home/general/SignalAssistant/build/GuitarPi/qml/components/RecordingOverlay.qml"
     "/home/general/SignalAssistant/qml/components/TuningPanel.qml"
     "/home/general/SignalAssistant/build/GuitarPi/qml/components/TuningPanel.qml"
+    "/home/general/SignalAssistant/qml/components/BatchedFretboardBinOverlay.qml"
+    "/home/general/SignalAssistant/build/GuitarPi/qml/components/BatchedFretboardBinOverlay.qml"
 
 )
 set(timestamp_file "/home/general/SignalAssistant/build/.qt/GuitarPi_qml.txt")

@@ -17,4 +17,5 @@ MapOverview 1.0 qml/components/MapOverview.qml
 TestModeOverlay 1.0 qml/components/TestModeOverlay.qml
 RecordingOverlay 1.0 qml/components/RecordingOverlay.qml
 TuningPanel 1.0 qml/components/TuningPanel.qml
+BatchedFretboardBinOverlay 1.0 qml/components/BatchedFretboardBinOverlay.qml
 

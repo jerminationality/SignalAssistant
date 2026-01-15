@@ -106,24 +106,10 @@ CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/TabEngine.cpp -o CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.s
 
-CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o: CMakeFiles/guitarpi_tab.dir/flags.make
-CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o: /home/general/SignalAssistant/src/StringTracker.cpp
-CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o: CMakeFiles/guitarpi_tab.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o -MF CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o.d -o CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o -c /home/general/SignalAssistant/src/StringTracker.cpp
-
-CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/src/StringTracker.cpp > CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.i
-
-CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/StringTracker.cpp -o CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.s
-
 CMakeFiles/guitarpi_tab.dir/src/util.cpp.o: CMakeFiles/guitarpi_tab.dir/flags.make
 CMakeFiles/guitarpi_tab.dir/src/util.cpp.o: /home/general/SignalAssistant/src/util.cpp
 CMakeFiles/guitarpi_tab.dir/src/util.cpp.o: CMakeFiles/guitarpi_tab.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/guitarpi_tab.dir/src/util.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/guitarpi_tab.dir/src/util.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/guitarpi_tab.dir/src/util.cpp.o -MF CMakeFiles/guitarpi_tab.dir/src/util.cpp.o.d -o CMakeFiles/guitarpi_tab.dir/src/util.cpp.o -c /home/general/SignalAssistant/src/util.cpp
 
 CMakeFiles/guitarpi_tab.dir/src/util.cpp.i: cmake_force
@@ -137,7 +123,7 @@ CMakeFiles/guitarpi_tab.dir/src/util.cpp.s: cmake_force
 CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o: CMakeFiles/guitarpi_tab.dir/flags.make
 CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o: /home/general/SignalAssistant/src/SessionLogger.cpp
 CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o: CMakeFiles/guitarpi_tab.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o -MF CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o.d -o CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o -c /home/general/SignalAssistant/src/SessionLogger.cpp
 
 CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.i: cmake_force
@@ -147,6 +133,20 @@ CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.i: cmake_force
 CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/SessionLogger.cpp -o CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.s
+
+CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o: CMakeFiles/guitarpi_tab.dir/flags.make
+CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o: /home/general/SignalAssistant/src/HeatmapLogger.cpp
+CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o: CMakeFiles/guitarpi_tab.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o -MF CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o.d -o CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o -c /home/general/SignalAssistant/src/HeatmapLogger.cpp
+
+CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/src/HeatmapLogger.cpp > CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.i
+
+CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/HeatmapLogger.cpp -o CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.s
 
 CMakeFiles/guitarpi_tab.dir/src/NoteDetectionConfig.cpp.o: CMakeFiles/guitarpi_tab.dir/flags.make
 CMakeFiles/guitarpi_tab.dir/src/NoteDetectionConfig.cpp.o: /home/general/SignalAssistant/src/NoteDetectionConfig.cpp
@@ -176,29 +176,45 @@ CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/NoteDetectionStore.cpp -o CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.s
 
+CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o: CMakeFiles/guitarpi_tab.dir/flags.make
+CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o: /home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp
+CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o: CMakeFiles/guitarpi_tab.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o -MF CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o.d -o CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o -c /home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp
+
+CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp > CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.i
+
+CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp -o CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.s
+
 # Object files for target guitarpi_tab
 guitarpi_tab_OBJECTS = \
 "CMakeFiles/guitarpi_tab.dir/guitarpi_tab_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.o" \
-"CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o" \
 "CMakeFiles/guitarpi_tab.dir/src/util.cpp.o" \
 "CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o" \
+"CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o" \
 "CMakeFiles/guitarpi_tab.dir/src/NoteDetectionConfig.cpp.o" \
-"CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.o"
+"CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.o" \
+"CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o"
 
 # External object files for target guitarpi_tab
 guitarpi_tab_EXTERNAL_OBJECTS =
 
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/guitarpi_tab_autogen/mocs_compilation.cpp.o
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/TabEngine.cpp.o
-libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/StringTracker.cpp.o
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/util.cpp.o
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/SessionLogger.cpp.o
+libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/NoteDetectionConfig.cpp.o
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/NoteDetectionStore.cpp.o
+libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/build.make
 libguitarpi_tab.a: CMakeFiles/guitarpi_tab.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library libguitarpi_tab.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX static library libguitarpi_tab.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/guitarpi_tab.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/guitarpi_tab.dir/link.txt --verbose=$(VERBOSE)
 

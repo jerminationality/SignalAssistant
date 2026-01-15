@@ -2,6 +2,8 @@
 
 #include "AudioEngine.h"
 #include "HexAudioClient.h"
+#include "LockFreeRingBuffer.h"
+#include "ThreadPriority.h"
 
 #include <QObject>
 #include <QElapsedTimer>
@@ -52,6 +54,12 @@ public:
         }
         return snapshot;
     }
+    
+    /**
+     * Get the audio ring buffer for TIER 2 (CQT Worker) to consume
+     */
+    audio::AudioRingBuffer& audioRingBuffer() { return m_audioRingBuffer; }
+    const audio::AudioRingBuffer& audioRingBuffer() const { return m_audioRingBuffer; }
 
 signals:
     void bufferConfigChanged(int sampleRate, int bufferSize);
@@ -109,6 +117,9 @@ private:
     
     // Calibrated audio buffers (per-string)
     std::array<std::vector<float>, 6> m_calibratedBuffers;
+    
+    // TIER 1 -> TIER 2: Lock-free ring buffer for audio frames
+    audio::AudioRingBuffer m_audioRingBuffer;
 
     struct CalibrationState {
         bool active {false};
@@ -119,7 +130,7 @@ private:
         int sequenceCount {0};
         int framesRemaining {0};
         int captureFramesPerString {0};
-        std::array<int, 6> sequence {};
+        std::array<int, 7> sequence {};  // 7 elements: noise phase + 6 strings
         std::array<bool, 6> updated {};
         std::array<double, 6> sumRms {};
         std::array<int, 6> samples {};

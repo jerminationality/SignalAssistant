@@ -3,5 +3,6 @@
 /home/general/SignalAssistant/build/GuitarPi_autogen/include/../MYYQ2Y7GGF/moc_HexJackClient.cpp.json
 /home/general/SignalAssistant/build/GuitarPi_autogen/include/../UVLADIE3JM/moc_AppController.cpp.json
 /home/general/SignalAssistant/build/GuitarPi_autogen/include/../UVLADIE3JM/moc_DetectionTuningController.cpp.json
+/home/general/SignalAssistant/build/GuitarPi_autogen/include/../UVLADIE3JM/moc_FretboardProvider.cpp.json
 /home/general/SignalAssistant/build/GuitarPi_autogen/include/../UVLADIE3JM/moc_RecordedSessionPlayer.cpp.json
 /home/general/SignalAssistant/build/GuitarPi_autogen/include/../UVLADIE3JM/moc_TabEngineBridge.cpp.json

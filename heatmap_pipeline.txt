@@ -1,0 +1,3966 @@
+#pragma once
+/**
+ * AtomicNoteState.h - Lock-free note state for Tier 2 -> Tier 3 communication
+ * 
+ * The CQT Worker (Tier 2) writes detected notes here.
+ * The UI Thread (Tier 3) reads the latest state for display.
+ * 
+ * Uses atomics to ensure:
+ * - No locks (UI never blocks on CQT)
+ * - UI always sees a consistent snapshot
+ * - CQT can update at ~86fps, UI polls at 60fps
+ */
+
+#include <atomic>
+#include <array>
+#include <cstdint>
+
+namespace audio {
+
+/**
+ * Per-string note state (atomically updated)
+ */
+struct StringNoteState {
+    std::atomic<int> fret{-1};           // Current detected fret (-1 = none)
+    std::atomic<float> energy{0.0f};     // Signal energy (RMS-equivalent)
+    std::atomic<bool> isAttack{false};   // True on new note onset
+    std::atomic<bool> isSustaining{false}; // True while note is held
+    std::atomic<float> pitchHz{0.0f};    // Detected pitch frequency
+    
+    // Per-fret bin magnitudes for heatmap overlay (frets 0-24)
+    static constexpr int NUM_FRETS = 25;
+    std::array<std::atomic<float>, NUM_FRETS> binMagnitudes{};
+    
+    // Copy current state (for UI snapshot)
+    void copyTo(int& outFret, float& outEnergy, bool& outAttack, bool& outSustain, float& outPitch) const {
+        outFret = fret.load(std::memory_order_acquire);
+        outEnergy = energy.load(std::memory_order_relaxed);
+        outAttack = isAttack.load(std::memory_order_relaxed);
+        outSustain = isSustaining.load(std::memory_order_relaxed);
+        outPitch = pitchHz.load(std::memory_order_relaxed);
+    }
+    
+    // Update from CQT worker
+    void update(int newFret, float newEnergy, bool attack, bool sustain, float pitch) {
+        fret.store(newFret, std::memory_order_relaxed);
+        energy.store(newEnergy, std::memory_order_relaxed);
+        isAttack.store(attack, std::memory_order_relaxed);
+        isSustaining.store(sustain, std::memory_order_relaxed);
+        pitchHz.store(pitch, std::memory_order_release);
+    }
+    
+    // Update bin magnitude for a specific fret (called from CQT worker)
+    void setBinMagnitude(int fretIdx, float magnitude) {
+        if (fretIdx >= 0 && fretIdx < NUM_FRETS) {
+            binMagnitudes[fretIdx].store(magnitude, std::memory_order_relaxed);
+        }
+    }
+    
+    // Read bin magnitude for a specific fret (called from UI thread)
+    float getBinMagnitude(int fretIdx) const {
+        if (fretIdx >= 0 && fretIdx < NUM_FRETS) {
+            return binMagnitudes[fretIdx].load(std::memory_order_relaxed);
+        }
+        return 0.0f;
+    }
+    
+    void clear() {
+        fret.store(-1, std::memory_order_relaxed);
+        energy.store(0.0f, std::memory_order_relaxed);
+        isAttack.store(false, std::memory_order_relaxed);
+        isSustaining.store(false, std::memory_order_relaxed);
+        pitchHz.store(0.0f, std::memory_order_relaxed);
+        for (auto& mag : binMagnitudes) {
+            mag.store(0.0f, std::memory_order_relaxed);
+        }
+    }
+};
+
+/**
+ * Global note state for all 6 strings
+ * 
+ * Usage:
+ * - CQT Worker calls updateString() after processing each frame
+ * - UI Thread calls snapshot() to get latest state for rendering
+ */
+class AtomicNoteState {
+public:
+    AtomicNoteState() {
+        m_frameCounter.store(0);
+        m_sampleRate.store(44100.0f);
+    }
+    
+    /**
+     * Update state for a single string (TIER 2 - CQT Worker)
+     */
+    void updateString(int stringIdx, int fret, float magnitude, 
+                      bool isAttack, bool isSustaining, float pitchHz) {
+        if (stringIdx < 0 || stringIdx >= 6) return;
+        m_strings[stringIdx].update(fret, magnitude, isAttack, isSustaining, pitchHz);
+    }
+    
+    /**
+     * Increment frame counter after processing a complete CQT frame (TIER 2)
+     */
+    void advanceFrame() {
+        m_frameCounter.fetch_add(1, std::memory_order_release);
+    }
+    
+    /**
+     * Set current sample rate (called when audio starts)
+     */
+    void setSampleRate(float sr) {
+        m_sampleRate.store(sr, std::memory_order_release);
+    }
+    
+    /**
+     * Get current frame counter (TIER 3 - UI can check for updates)
+     */
+    std::uint64_t frameCounter() const {
+        return m_frameCounter.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Get current sample rate
+     */
+    float sampleRate() const {
+        return m_sampleRate.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Read state for a single string (TIER 3 - UI Thread)
+     */
+    void readString(int stringIdx, int& outFret, float& outMag, 
+                    bool& outAttack, bool& outSustain, float& outPitch) const {
+        if (stringIdx < 0 || stringIdx >= 6) {
+            outFret = -1;
+            outMag = 0.0f;
+            outAttack = false;
+            outSustain = false;
+            outPitch = 0.0f;
+            return;
+        }
+        m_strings[stringIdx].copyTo(outFret, outMag, outAttack, outSustain, outPitch);
+    }
+    
+    /**
+     * Read fret for a single string (simple accessor for UI)
+     */
+    int fret(int stringIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return -1;
+        return m_strings[stringIdx].fret.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Read energy for a single string (simple accessor for UI)
+     */
+    float energy(int stringIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return 0.0f;
+        return m_strings[stringIdx].energy.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Read bin magnitude for a specific string and fret (TIER 3 - UI Thread)
+     * @param stringIdx 0-5 (Low E to High E)
+     * @param fretIdx 0-24 (open to 24th fret)
+     * @return Bin magnitude value (0.0 - 1.0+ range, RMS-equivalent)
+     */
+    float binMagnitude(int stringIdx, int fretIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return 0.0f;
+        return m_strings[stringIdx].getBinMagnitude(fretIdx);
+    }
+    
+    /**
+     * Alias for binMagnitude (FretboardProvider compatibility)
+     */
+    float getBinMagnitude(int stringIdx, int fretIdx) const {
+        return binMagnitude(stringIdx, fretIdx);
+    }
+    
+    /**
+     * Update bin magnitude for a specific string/fret (TIER 2 - CQT Worker)
+     */
+    void setBinMagnitude(int stringIdx, int fretIdx, float magnitude) {
+        if (stringIdx >= 0 && stringIdx < 6) {
+            m_strings[stringIdx].setBinMagnitude(fretIdx, magnitude);
+        }
+    }
+    
+    /**
+     * Clear all string states
+     */
+    void clearAll() {
+        for (auto& s : m_strings) {
+            s.clear();
+        }
+        m_frameCounter.store(0, std::memory_order_release);
+    }
+    
+    /**
+     * Direct access to string state (for bulk operations)
+     */
+    const StringNoteState& string(int idx) const { return m_strings[idx]; }
+    StringNoteState& string(int idx) { return m_strings[idx]; }
+    
+private:
+    std::array<StringNoteState, 6> m_strings;
+    std::atomic<std::uint64_t> m_frameCounter;
+    std::atomic<float> m_sampleRate;
+};
+
+} // namespace audio
+#pragma once
+/**
+ * CQTWorkerThread.h - TIER 2 Processing Thread
+ * 
+ * Responsibilities:
+ * - Pull audio frames from ring buffer (from TIER 1)
+ * - Apply per-string band-pass filtering (crosstalk rejection)
+ * - Accumulate hop-size worth of samples
+ * - Perform CQT analysis
+ * - Update atomic note state (for TIER 3)
+ * 
+ * Runs on Core 1 with high priority (SCHED_RR)
+ */
+
+#include "LockFreeRingBuffer.h"
+#include "AtomicNoteState.h"
+#include "ThreadPriority.h"
+#include "ButterworthFilter.h"
+#include "../CQT/CQTNoteDetector.h"  // For DetectionParams, GuitarFrame std::array types
+
+#include <atomic>
+#include <memory>
+#include <thread>
+#include <array>
+#include <vector>
+#include <functional>
+
+// Forward declarations (CQTNoteDetector.h already included for DetectionParams, GuitarFrame)
+class NoteDetectionStore;
+
+namespace audio {
+
+/**
+ * Configuration for CQT Worker
+ */
+struct CQTWorkerConfig {
+    int hopSize = 512;           // Samples between CQT frames (~11.6ms at 44.1kHz)
+    float sampleRate = 44100.0f;
+    bool enableCoreAffinity = true;
+    int coreId = 1;              // Default to Core 1
+    bool enableBandPassFilters = true;  // Enable per-string band-pass filtering
+};
+
+/**
+ * Callback for when new note events are detected
+ * Called from TIER 2 thread - must be thread-safe!
+ */
+using NoteEventCallback = std::function<void(int stringIdx, int fret, float energy, 
+                                              bool isAttack, bool isSustaining)>;
+
+/**
+ * CQT Worker Thread (TIER 2)
+ * 
+ * Pulls audio from ring buffer, processes CQT, updates atomic note state
+ */
+class CQTWorkerThread {
+public:
+    explicit CQTWorkerThread(AudioRingBuffer& inputBuffer, 
+                             AtomicNoteState& outputState,
+                             const CQTWorkerConfig& config = {});
+    ~CQTWorkerThread();
+    
+    // Non-copyable, non-movable
+    CQTWorkerThread(const CQTWorkerThread&) = delete;
+    CQTWorkerThread& operator=(const CQTWorkerThread&) = delete;
+    
+    /**
+     * Start the worker thread
+     */
+    void start();
+    
+    /**
+     * Stop the worker thread (blocks until thread exits)
+     */
+    void stop();
+    
+    /**
+     * Check if worker is running
+     */
+    bool isRunning() const { return m_running.load(std::memory_order_acquire); }
+    
+    /**
+     * Signal that new audio is available (called from TIER 1)
+     * This is a lightweight hint - worker will check ring buffer
+     */
+    void notifyAudioAvailable() {
+        m_audioAvailable.store(true, std::memory_order_release);
+    }
+    
+    /**
+     * Set sample rate (thread-safe)
+     */
+    void setSampleRate(float sr);
+    
+    /**
+     * Get current processing statistics
+     */
+    std::uint64_t framesProcessed() const { return m_framesProcessed.load(); }
+    std::uint64_t bufferUnderruns() const { return m_underruns.load(); }
+    
+    /**
+     * Set callback for note events (optional, for legacy integration)
+     */
+    void setNoteEventCallback(NoteEventCallback cb) { m_noteCallback = std::move(cb); }
+    
+    /**
+     * Update calibration data (thread-safe)
+     */
+    void setCalibration(const std::array<float, 6>& avgRms, 
+                        const std::array<float, 6>& peakRms);
+    
+private:
+    void workerLoop();
+    void processCQTFrame();
+    void buildDetectionParamsNoAlloc(std::array<DetectionParams, 6>& outParams);
+    
+    // Input/Output interfaces
+    AudioRingBuffer& m_inputBuffer;
+    AtomicNoteState& m_outputState;
+    
+    // Configuration
+    CQTWorkerConfig m_config;
+    std::atomic<float> m_sampleRate;
+    
+    // Thread management
+    std::thread m_thread;
+    std::atomic<bool> m_running{false};
+    std::atomic<bool> m_stopRequested{false};
+    std::atomic<bool> m_audioAvailable{false};
+    
+    // Pre-CQT Band-Pass Filtering (crosstalk rejection)
+    HexBandPassBank m_bandPassBank;
+    
+    // CQT Processing
+    std::unique_ptr<CQTNoteDetector> m_cqtDetector;
+    
+    // Pre-allocated buffers for RT processing (NO HEAP ALLOCATION)
+    std::array<DetectionParams, 6> m_detectionParams;  // Reused each frame
+    std::array<GuitarFrame, 6> m_outputFrames;         // Reused each frame
+    
+    // Accumulation buffers (hop-size collection) - use std::array, NOT std::vector
+    static constexpr int kMaxAccumSamples = 4096;
+    std::array<std::array<float, kMaxAccumSamples>, 6> m_accumBuffers;
+    int m_accumSamples{0};
+    
+    // Calibration data (updated atomically via mutex-free double-buffer or atomics)
+    std::atomic<bool> m_calibrationValid{false};
+    std::array<std::atomic<float>, 6> m_calibrationAvgRms;
+    std::array<std::atomic<float>, 6> m_calibrationPeakRms;
+    
+    // Statistics
+    std::atomic<std::uint64_t> m_framesProcessed{0};
+    std::atomic<std::uint64_t> m_underruns{0};
+    
+    // Optional callback
+    NoteEventCallback m_noteCallback;
+};
+
+} // namespace audio
+/**
+ * CQTWorkerThread.cpp - TIER 2 Processing Thread Implementation
+ */
+
+#include "CQTWorkerThread.h"
+#include "../CQT/CQTNoteDetector.h"
+#include "../NoteDetectionStore.h"
+
+#include <chrono>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+
+#ifdef __linux__
+#include <pthread.h>
+#endif
+
+namespace audio {
+
+CQTWorkerThread::CQTWorkerThread(AudioRingBuffer& inputBuffer,
+                                 AtomicNoteState& outputState,
+                                 const CQTWorkerConfig& config)
+    : m_inputBuffer(inputBuffer)
+    , m_outputState(outputState)
+    , m_config(config)
+    , m_sampleRate(config.sampleRate)
+    , m_accumBuffers{}  // Zero-initialize std::array (no heap allocation)
+    , m_detectionParams{}
+    , m_outputFrames{}
+{
+    // Initialize calibration atomics
+    for (int i = 0; i < 6; ++i) {
+        m_calibrationAvgRms[i].store(0.0f);
+        m_calibrationPeakRms[i].store(0.0f);
+    }
+    
+    // Initialize band-pass filter bank for crosstalk rejection
+    if (config.enableBandPassFilters) {
+        m_bandPassBank.configure(static_cast<double>(config.sampleRate));
+    }
+    
+    // Create CQT detector
+    m_cqtDetector = std::make_unique<CQTNoteDetector>(static_cast<double>(config.sampleRate));
+}
+
+CQTWorkerThread::~CQTWorkerThread() {
+    stop();
+}
+
+void CQTWorkerThread::start() {
+    if (m_running.load(std::memory_order_acquire)) {
+        return;  // Already running
+    }
+    
+    m_stopRequested.store(false, std::memory_order_release);
+    m_running.store(true, std::memory_order_release);
+    
+    m_thread = std::thread(&CQTWorkerThread::workerLoop, this);
+    
+#ifdef __linux__
+    // Set thread name for debugging
+    pthread_setname_np(m_thread.native_handle(), "CQTWorker");
+#endif
+}
+
+void CQTWorkerThread::stop() {
+    if (!m_running.load(std::memory_order_acquire)) {
+        return;
+    }
+    
+    m_stopRequested.store(true, std::memory_order_release);
+    m_audioAvailable.store(true, std::memory_order_release);  // Wake up if sleeping
+    
+    if (m_thread.joinable()) {
+        m_thread.join();
+    }
+    
+    m_running.store(false, std::memory_order_release);
+}
+
+void CQTWorkerThread::setSampleRate(float sr) {
+    m_sampleRate.store(sr, std::memory_order_release);
+    m_outputState.setSampleRate(sr);
+    
+    // Reconfigure band-pass filters for new sample rate
+    if (m_config.enableBandPassFilters) {
+        m_bandPassBank.configure(static_cast<double>(sr));
+        m_bandPassBank.reset();  // Reset filter state on sample rate change
+    }
+    
+    if (m_cqtDetector) {
+        m_cqtDetector->setSampleRate(static_cast<double>(sr));
+    }
+}
+
+void CQTWorkerThread::setCalibration(const std::array<float, 6>& avgRms,
+                                      const std::array<float, 6>& peakRms) {
+    for (int i = 0; i < 6; ++i) {
+        m_calibrationAvgRms[i].store(avgRms[i], std::memory_order_relaxed);
+        m_calibrationPeakRms[i].store(peakRms[i], std::memory_order_relaxed);
+    }
+    m_calibrationValid.store(true, std::memory_order_release);
+}
+
+void CQTWorkerThread::workerLoop() {
+    // Configure thread for TIER 2
+    if (m_config.enableCoreAffinity) {
+        bool pinned = pinToCore(m_config.coreId);
+        bool highPri = setHighPriority(50);
+        (void)pinned;
+        (void)highPri;
+        // Log success/failure in production
+    }
+    
+    AudioFrame frame;
+    
+    while (!m_stopRequested.load(std::memory_order_acquire)) {
+        // Wait for audio to be available (spin with backoff)
+        int spinCount = 0;
+        while (!m_audioAvailable.exchange(false, std::memory_order_acq_rel)) {
+            if (m_stopRequested.load(std::memory_order_acquire)) {
+                return;
+            }
+            
+            // Adaptive backoff: spin briefly, then yield, then sleep
+            if (++spinCount < 100) {
+                // Spin
+                __asm__ volatile("" ::: "memory");
+            } else if (spinCount < 1000) {
+                std::this_thread::yield();
+            } else {
+                // Short sleep to avoid burning CPU
+                std::this_thread::sleep_for(std::chrono::microseconds(100));
+                spinCount = 500;  // Reset to yield range
+            }
+        }
+        
+        // Drain all available audio from ring buffer
+        while (m_inputBuffer.pop(frame)) {
+            // Apply per-string band-pass filtering for crosstalk rejection
+            // Filter first, THEN accumulate for CQT/RMS processing
+            if (m_config.enableBandPassFilters) {
+                m_bandPassBank.processFrame(frame.samples);
+            }
+            
+            // Accumulate filtered samples for each string
+            for (int s = 0; s < 6; ++s) {
+                if (m_accumSamples < kMaxAccumSamples) {
+                    m_accumBuffers[s][m_accumSamples] = frame.samples[s];
+                }
+            }
+            m_accumSamples++;
+            
+            // Check if we've accumulated enough for a CQT hop
+            if (m_accumSamples >= m_config.hopSize) {
+                processCQTFrame();
+                
+                // Shift buffers by hop size (keep overlap)
+                const int overlap = m_accumSamples - m_config.hopSize;
+                if (overlap > 0) {
+                    for (auto& buf : m_accumBuffers) {
+                        std::memmove(buf.data(), buf.data() + m_config.hopSize, 
+                                    overlap * sizeof(float));
+                    }
+                }
+                m_accumSamples = overlap;
+            }
+        }
+    }
+}
+
+void CQTWorkerThread::processCQTFrame() {
+    if (!m_cqtDetector) return;
+    
+    // Update sample rate if changed
+    float sr = m_sampleRate.load(std::memory_order_acquire);
+    m_cqtDetector->setSampleRate(static_cast<double>(sr));
+    
+    // Build detection parameters into pre-allocated array (NO HEAP ALLOCATION)
+    buildDetectionParamsNoAlloc(m_detectionParams);
+    
+    // Prepare buffer pointers for CQT
+    float* buffers[6];
+    for (int s = 0; s < 6; ++s) {
+        buffers[s] = m_accumBuffers[s].data();
+    }
+    
+    // Process CQT into pre-allocated output frames (NO HEAP ALLOCATION)
+    m_cqtDetector->processNoAlloc(buffers, m_accumSamples, m_detectionParams, m_outputFrames);
+    
+    // Update atomic note state from results
+    for (const auto& gf : m_outputFrames) {
+        const int s = gf.stringID;
+        if (s < 0 || s >= 6) continue;
+        
+        m_outputState.updateString(s, gf.fret, gf.binEnergy, 
+                                   gf.isAttack, gf.isSustaining, gf.pitchHz);
+        
+        // Push ALL 25 fret bin magnitudes for heatmap visualization
+        // This enables full-spectrum display instead of just the winning fret
+        for (int f = 0; f < 25; ++f) {
+            float mag = m_cqtDetector->getFretBinMagnitude(s, f);
+            m_outputState.setBinMagnitude(s, f, mag);
+        }
+        
+        // Call legacy callback if set
+        if (m_noteCallback) {
+            m_noteCallback(s, gf.fret, gf.binEnergy, gf.isAttack, gf.isSustaining);
+        }
+    }
+    
+    m_outputState.advanceFrame();
+    m_framesProcessed.fetch_add(1, std::memory_order_relaxed);
+}
+
+void CQTWorkerThread::buildDetectionParamsNoAlloc(std::array<DetectionParams, 6>& outParams) {
+    // Get parameters from the global store - NO HEAP ALLOCATION
+    auto& store = NoteDetectionStore::instance();
+    const auto& np = store.current();
+    
+    bool calibValid = m_calibrationValid.load(std::memory_order_acquire);
+    
+    // Pre-fetch max RMS for spatial weight calculation (avoid repeated loop)
+    float maxRms = 0.0f;
+    if (calibValid) {
+        for (int i = 0; i < 6; ++i) {
+            float r = m_calibrationAvgRms[i].load(std::memory_order_relaxed);
+            if (r > maxRms) maxRms = r;
+        }
+    }
+    
+    for (int s = 0; s < 6; ++s) {
+        DetectionParams& dp = outParams[s];
+        dp.baseline = np.baselineFloor[s];
+        dp.envFloor = np.envelopeFloor[s];
+        dp.preAmpGain = np.calibrationGainMultiplier[s];
+        dp.gateRatio = np.gateRatio[s];
+        dp.confirmationFrames = np.confirmationFrames[s];
+        dp.fluxSensitivity = np.fluxSensitivity[s];
+        dp.slopeDecay = np.slopeDecay[s];
+        
+        // Calculate spatial weight from calibration
+        if (calibValid) {
+            float avgRms = m_calibrationAvgRms[s].load(std::memory_order_relaxed);
+            if (avgRms > 0.0001f && maxRms > 0.0001f) {
+                dp.spatialWeight = maxRms / avgRms;
+            } else {
+                dp.spatialWeight = 1.0f;
+            }
+        } else {
+            dp.spatialWeight = 1.0f;
+        }
+    }
+}
+
+} // namespace audio
+#pragma once
+
+#include <array>
+#include <memory>
+#include <vector>
+
+/**
+ * Guitar detection frame output from CQT analysis
+ * 
+ * ENERGY MEASUREMENT CONVENTION:
+ * All energy/amplitude measurements are expressed as RMS-equivalent values for
+ * consistency across the system. Internally, the CQT computes magnitude values
+ * (sqrt of power), which directly correlate with RMS energy measurements and can
+ * be compared against calibrated thresholds (envFloor, baseline, etc.) that are
+ * also in RMS units. Users only need to think in terms of RMS amplitude.
+ */
+struct GuitarFrame {
+    int stringID;           // 0-5 (Low E to High E)
+    int fret;               // 0-24 (stabilized via hysteresis), -1 if no note
+    float rmsAmplitude;     // RMS amplitude of input buffer
+    float centOffset;       // Sub-bin pitch offset in cents (for bends/vibrato)
+    float pitchHz;          // Detected pitch frequency in Hz (for tuning mode)
+    float binEnergy;        // Peak CQT bin energy (internally magnitude, exposed as RMS-equivalent)
+    float spectralFlux;     // CQT energy change rate (for onset detection)
+    bool isAttack;          // True if this is a new note attack
+    bool isSustaining;      // True if note is sustaining from previous frame
+};
+
+/**
+ * Per-string detection parameters (maps from existing NoteDetectionParameterSet)
+ */
+struct DetectionParams {
+    float baseline;         // Noise floor baseline (Master Gate threshold)
+    float envFloor;         // Base RMS threshold - scaled by frequency model to find bin thresholds
+    float preAmpGain;       // Pre-CQT gain (UI-adjustable, compensates for pickup output)
+    float spatialWeight;    // Post-CQT weight (calibration-fixed, for crosstalk fairness)
+    float gateRatio;        // Note-off multiplier (release = envFloor * gateRatio)
+    int confirmationFrames; // Fret stability hysteresis (1-5 frames)
+    float fluxSensitivity;  // Spectral flux retrigger threshold (0.05-0.50)
+    float slopeDecay;       // [DEPRECATED] Legacy slope parameter - replaced by frequency model
+};
+
+/**
+ * CQT-based note detector for 6-string guitar
+ * 
+ * Key features:
+ * - Unified 6-string scanning with inter-string crosstalk rejection
+ * - Frequency-dependent thresholds (compensates for harmonic complexity)
+ * - Hysteresis-based fret stability ("Sticky Fret" - 20% advantage + 3 frames)
+ * - Spectral flux-based retriggering (replaces Aubio onset detection)
+ * - Parabolic interpolation for sub-bin pitch accuracy
+ * 
+ * CQT Configuration:
+ * - 36 bins per octave (3x better than standard FFT)
+ * - 144 total bins covering ~70Hz to ~1400Hz (all guitar frets)
+ * - Per-string range clamping (72 bins per string for 24 frets)
+ * 
+ * Threshold Model:
+ * - Dynamic scaling: Threshold = RMS × (Base + Growth × Fret/24)
+ * - Base multipliers: 0.72 (High E) down to 0.52 (Low E)
+ * - Growth constant: 0.35 (purity increase toward bridge)
+ * - Accounts for: Low strings = more harmonics = lower fundamental energy
+ */
+class CQTNoteDetector {
+public:
+    explicit CQTNoteDetector(double sampleRate = 44100.0);
+    ~CQTNoteDetector();
+    
+    // Non-copyable (owns unique resources)
+    CQTNoteDetector(const CQTNoteDetector&) = delete;
+    CQTNoteDetector& operator=(const CQTNoteDetector&) = delete;
+    
+    // Move-constructible
+    CQTNoteDetector(CQTNoteDetector&&) noexcept = default;
+    CQTNoteDetector& operator=(CQTNoteDetector&&) noexcept = default;
+
+    /**
+     * Process all 6 strings in a unified pass
+     * 
+     * @param hexBuffers   Array of 6 float buffer pointers (one per string)
+     * @param bufferLength Number of samples in each buffer
+     * @param params       Detection parameters per string (must have 6 elements)
+     * @return Vector of GuitarFrame results (one per string, in order)
+     * 
+     * Note: hexBuffers[i] may be nullptr to indicate silence on that string
+     */
+    std::vector<GuitarFrame> process(
+        float** hexBuffers, 
+        int bufferLength,
+        const std::vector<DetectionParams>& params);
+    
+    /**
+     * Process all 6 strings WITHOUT heap allocation (for real-time audio thread)
+     * 
+     * @param hexBuffers   Array of 6 float buffer pointers (one per string)
+     * @param bufferLength Number of samples in each buffer
+     * @param params       Detection parameters per string (std::array, no allocation)
+     * @param outFrames    Pre-allocated output array (exactly 6 elements)
+     * 
+     * This overload is preferred for TIER 2 processing as it avoids all heap allocations.
+     */
+    void processNoAlloc(
+        float** hexBuffers, 
+        int bufferLength,
+        const std::array<DetectionParams, 6>& params,
+        std::array<GuitarFrame, 6>& outFrames);
+    
+    /**
+     * Reset all string states (call after recalibration or mode change)
+     */
+    void reset();
+    
+    /**
+     * Update sample rate (recreates CQT kernels)
+     */
+    void setSampleRate(double sampleRate);
+    
+    /**
+     * Get bin magnitude for a specific string and fret (for UI heatmap)
+     * Returns the CQT magnitude at the bin corresponding to the given fret's frequency.
+     * MUST only be called AFTER processNoAlloc() on the same CQT frame data.
+     * 
+     * @param stringIdx 0-5 (Low E to High E)
+     * @param fretIdx   0-24 (open to 24th fret)
+     * @return CQT bin magnitude (0.0 - 1.0+ range, RMS-equivalent)
+     */
+    float getFretBinMagnitude(int stringIdx, int fretIdx) const;
+    
+    /**
+     * Get threshold for a specific string and fret
+     * Returns the scaled threshold value from the physics-based model.
+     * 
+     * @param stringIdx 0-5 (Low E to High E)  
+     * @param fretIdx   0-24 (open to 24th fret)
+     * @return Threshold multiplier (multiply by envFloor for actual threshold)
+     */
+    static float getThresholdMultiplier(int stringIdx, int fretIdx);
+
+private:
+    // CQT configuration constants
+    static constexpr int BINS_PER_OCTAVE = 36;
+
+    // Per-string state for hysteresis and flux tracking
+    struct StringState {
+        int currentFret = -1;
+        int candidateFret = -1;
+        int confirmationCount = 0;
+        float lastBins[144] = {0.0f};
+        float lastPeakMag = 0.0f;
+    };
+    StringState states[6];
+    
+    // Pimpl for CQT engine and working buffers
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
+};
+#pragma once
+#include <QObject>
+#include <QVariantList>
+#include <QElapsedTimer>
+#include <QTimer>
+#include <array>
+#include <atomic>
+#include <filesystem>
+#include <memory>
+#include <mutex>
+#include <vector>
+
+#include "TabEngine.h"
+#include "audio/AtomicNoteState.h"
+#include "audio/CQTWorkerThread.h"
+
+class HexAudioClient;
+
+class TabEngineBridge : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(QVariantList events READ events NOTIFY eventsChanged)
+    Q_PROPERTY(QString eventsJson READ eventsJson NOTIFY eventsChanged)
+    Q_PROPERTY(bool recording READ recording WRITE setRecording NOTIFY recordingChanged)
+    Q_PROPERTY(QVariantList hexMeters READ hexMeters NOTIFY hexMetersChanged)
+    Q_PROPERTY(QVariantList rawMeters READ rawMeters NOTIFY rawMetersChanged)
+    Q_PROPERTY(QVariantList thresholds READ thresholds NOTIFY thresholdsChanged)
+    Q_PROPERTY(bool calibrationRunning READ calibrationRunning NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(QString calibrationMessage READ calibrationMessage NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(QVariantList calibrationSteps READ calibrationSteps NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(bool calibrationReady READ calibrationReady NOTIFY calibrationStatusChanged)
+    Q_PROPERTY(bool tuningModeEnabled READ tuningModeEnabled WRITE setTuningModeEnabled NOTIFY tuningModeEnabledChanged)
+    Q_PROPERTY(QVariantList tuningDeviation READ tuningDeviation NOTIFY tuningDeviationChanged)
+    Q_PROPERTY(QVariantList calibrationGains READ calibrationGains NOTIFY calibrationGainsChanged)
+    Q_PROPERTY(int binMagnitudeRevision READ binMagnitudeRevision NOTIFY binMagnitudesChanged)
+public:
+    explicit TabEngineBridge(QObject* parent=nullptr);
+    ~TabEngineBridge();
+
+    QVariantList events() const { return m_events; }
+    QString eventsJson() const { return m_eventsJson; }
+    bool recording() const { return m_captureEnabled.load(std::memory_order_acquire); }
+    QVariantList hexMeters() const { return m_hexMeters; }
+    QVariantList rawMeters() const { return m_rawMeters; }
+    QVariantList thresholds() const { return m_thresholds; }
+    bool calibrationRunning() const { return m_calibrationRunning; }
+    QString calibrationMessage() const { return m_calibrationMessage; }
+    QVariantList calibrationSteps() const { return m_calibrationSteps; }
+    bool calibrationReady() const { return m_calibrationProfile.valid; }
+    bool tuningModeEnabled() const { return m_tuningModeEnabled; }
+    QVariantList tuningDeviation() const;
+    QVariantList calibrationGains() const;
+    int binMagnitudeRevision() const { return m_binMagnitudeRevision; }
+    
+    // Efficient single-bin lookup for QML colorProvider (O(1) per call)
+    Q_INVOKABLE qreal getBinMagnitude(int stringIndex, int fretIndex) const;
+    Q_INVOKABLE qreal getBinThreshold(int stringIndex, int fretIndex) const;
+
+    Q_INVOKABLE void requestRefresh();
+    Q_INVOKABLE void clear();
+    Q_INVOKABLE void seedMockSession();
+    Q_INVOKABLE void setRecording(bool value);
+    Q_INVOKABLE void startCalibration();
+    Q_INVOKABLE void recalibrateString(int stringIndex);
+    Q_INVOKABLE void setTuningModeEnabled(bool enabled);
+    Q_INVOKABLE void setCalibrationGain(int stringIndex, double gain);
+    Q_INVOKABLE void updateCalibrationMultipliers();
+
+    void setAudioClient(HexAudioClient* client);
+    void getCalibrationMultipliers(std::array<float, 6>& multipliers) const;
+    void processLiveAudioBlock(const float* const channels[6], int n, float sr);
+    bool exportPendingCapture(const QString& label);
+    bool hasPendingCapture() const { return m_pendingCaptureValid; }
+    void discardPendingCapture();
+    void updateThresholdsDisplay();
+    
+    // TIER 1 audio thread interface (inline, not a slot)
+    inline void notifyCQTWorker() {
+        if (m_cqtWorker) {
+            m_cqtWorker->notifyAudioAvailable();
+        }
+    }
+
+    TabEngine& engine() { return *m_engine; }
+    const TabEngine& engine() const { return *m_engine; }
+    TrackerConfig& trackerConfig() { return m_cfg; }
+    const TrackerConfig& trackerConfig() const { return m_cfg; }
+    int liveBlockFramesHint() const;
+
+public slots:
+    void updateLiveMeters(const std::array<float, 6>& meters);
+    void handleCalibrationStarted();
+    void handleCalibrationStepChanged(int stringIndex, bool capturing);
+    void handleCalibrationFinished(const std::array<float, 6>& averages,
+                                   const std::array<float, 6>& peaks);
+    void handleCalibrationBaselineFloorCaptured(float noiseFloor);
+    void handleCalibrationFadeComplete();
+
+signals:
+    void eventsChanged();
+    void recordingChanged();
+    void liveNoteTriggered(int stringIndex, int fretIndex, float velocity);
+    void liveNoteEnded(int stringIndex, int fretIndex);
+    void liveNoteEnvelopeUpdated(int stringIndex, float envelope);
+    void hexMetersChanged();
+    void rawMetersChanged();
+    void thresholdsChanged();
+    void calibrationStatusChanged();
+    void tuningModeEnabledChanged();
+    void tuningDeviationChanged();
+    void calibrationGainsChanged();
+    void calibrationParametersUpdated();
+    void binMagnitudesChanged();
+
+private:
+    struct LiveEvent {
+        int stringIndex = -1;
+        int fretIndex = -1;
+        float velocity = 0.f;
+        float startSec = 0.f;
+    };
+
+    void syncFromEngine();
+    void scheduleLiveDispatch();
+    void dispatchLiveEvents();
+    void resetCalibrationSteps();
+    void setCalibrationStepState(int stringIdx, int state);
+    void markSingleCalibrationPending(int stringIdx);
+    QString calibrationStoragePath() const;
+    void loadPersistentCalibration();
+    void savePersistentCalibration() const;
+    void appendCaptureAudio(const float* const channels[6], int n);
+    void finalizeCaptureBuffers();
+    void clearPendingCapture();
+    void appendSessionWaveTap(const float* const channels[6], int n, float sr);
+    void dumpSessionWaveSnapshot(const char* reason = nullptr);
+    std::filesystem::path sessionWaveDirectory() const;
+    QString stringNoteToken(int stringIdx) const;
+    static QString sanitizeLabel(const QString& label);
+    std::filesystem::path captureRootDirectory() const;
+    bool writeWavFile(const std::filesystem::path& path,
+                      const std::vector<float>& samples,
+                      float sampleRate) const;
+    double pendingCaptureDurationSec() const;
+
+    Tuning m_tuning;
+    TrackerConfig m_cfg;
+    std::unique_ptr<TabEngine> m_engine;
+    QVariantList m_events;
+    QString m_eventsJson {"[]"};
+    QVariantList m_hexMeters;
+    QVariantList m_rawMeters;
+    QVariantList m_thresholds;
+    bool m_calibrationRunning {false};
+    QString m_calibrationMessage {QStringLiteral("Uncalibrated")};
+    CalibrationProfile m_calibrationProfile;
+    QVariantList m_calibrationSteps;
+    std::array<int, 6> m_calibrationStepStates {};
+    QTimer* m_calibrationFadeTimer {nullptr};
+    int m_activeCalibrationString {-1};
+    bool m_activeCalibrationCapturing {false};
+    bool m_calibrationLoaded {false};
+    int m_requestedCalibrationString {-1};
+    bool m_partialCalibration {false};
+    // Indicates whether we are actively collecting a capture session; live detection
+    // stays active regardless so overlays remain responsive when capture is off.
+    std::atomic<bool> m_captureEnabled {false};
+    std::atomic<bool> m_resetRequested {true};
+    std::atomic<int> m_lastDispatchedEvent {0};
+    float m_liveTimeSec {0.f};
+    float m_liveSampleRate {0.f};
+    std::atomic<int> m_lastProcessBlockFrames {0};
+
+    HexAudioClient* m_audioClient {nullptr};
+    std::mutex m_liveMutex;
+    std::vector<LiveEvent> m_livePending;
+    std::atomic<bool> m_dispatchQueued {false};
+    std::array<float, 6> m_lastLiveTriggerSec {};
+    std::array<int, 6> m_lastLiveFret {};
+    std::array<bool, 6> m_activeNoteDisplayed {};
+    std::array<std::vector<float>, 6> m_captureBuffers;
+    std::array<std::vector<float>, 6> m_pendingCaptureBuffers;
+    std::array<std::vector<float>, 6> m_sessionWaveTap;
+    std::array<std::size_t, 6> m_sessionWaveTapWriteIndex {};
+    std::array<std::size_t, 6> m_sessionWaveTapCount {};
+    std::size_t m_sessionWaveTapCapacity {0};
+    float m_captureSampleRate {0.f};
+    float m_pendingSampleRate {0.f};
+    float m_sessionWaveTapSampleRate {0.f};
+    bool m_sessionWaveTapDirty {false};
+    bool m_pendingCaptureValid {false};
+    QString m_pendingEventsJsonSnapshot;
+    bool m_debugNoteLogging {false};
+    bool m_externalMetersActive {false};
+    bool m_tuningModeEnabled {false};
+    std::array<float, 6> m_tuningDeviationCents {};
+    QElapsedTimer m_thresholdsUpdateTimer;
+
+    // TIER 2/3: CQT Worker Thread and Atomic Note State
+    audio::AtomicNoteState m_atomicNoteState;
+    std::unique_ptr<audio::CQTWorkerThread> m_cqtWorker;
+    QTimer* m_noteStatePollTimer {nullptr};
+    
+    // Bin magnitude heatmap cache (updated on UI timer, NOT audio thread)
+    // Uses Strategy B: revision bump triggers QML rebind, colorProvider does O(1) lookup
+    std::array<std::array<float, 25>, 6> m_binMagnitudeCache {};
+    std::array<std::array<float, 25>, 6> m_binThresholdCache {};
+    int m_binMagnitudeRevision {0};
+    void updateBinMagnitudeCache();
+
+    void postMeterSnapshot(const std::array<float, 6>& meters);
+    void updateTuningDeviation();
+};
+#include "TabEngineBridge.h"
+
+#include "SessionLogger.h"
+#include "NoteDetectionStore.h"
+#include "CQT/CQTNoteDetector.h"
+#include "audio/HexAudioClient.h"
+#include "audio/HexJackClient.h"
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QVariantMap>
+#include <QDebug>
+#include <QStringList>
+#include <QByteArray>
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
+#include <vector>
+#include <QMetaObject>
+#include <QStandardPaths>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
+#include <QDateTime>
+#include <limits>
+#include <sndfile.h>
+#include <system_error>
+#include <cmath>
+
+namespace {
+constexpr float kSessionWaveTapSeconds = 8.0f;
+QString calibrationStringName(int index) {
+    static const std::array<const char*, 6> kNames{{"Low E", "A", "D", "G", "B", "High e"}};
+    if (index < 0 || index >= static_cast<int>(kNames.size()))
+        return QStringLiteral("string");
+    return QString::fromLatin1(kNames[static_cast<std::size_t>(index)]);
+}
+}
+
+TabEngineBridge::TabEngineBridge(QObject* parent)
+    : QObject(parent)
+    , m_engine(std::make_unique<TabEngine>(m_tuning, m_cfg))
+{
+    m_debugNoteLogging = qEnvironmentVariableIsSet("GUITARPI_TEST_LOG_NOTES");
+    if (m_debugNoteLogging)
+        qInfo() << "TabBridge" << "debug-note-logging" << "enabled";
+    m_lastLiveTriggerSec.fill(-1.f);
+    m_lastLiveFret.fill(-1);
+    m_hexMeters.clear();
+    for (int i = 0; i < 6; ++i)
+        m_hexMeters.append(0.0);
+    m_rawMeters.clear();
+    for (int i = 0; i < 6; ++i)
+        m_rawMeters.append(0.0);
+    m_thresholds.clear();
+    for (int i = 0; i < 6; ++i) {
+        QVariantMap stringThresholds;
+        stringThresholds["onsetThreshold"] = 0.0;
+        stringThresholds["gateThreshold"] = 0.0;
+        stringThresholds["envFloor"] = 0.0;
+        stringThresholds["sustainFloor"] = 0.0;
+        stringThresholds["retriggerGate"] = 0.0;
+        m_thresholds.append(stringThresholds);
+    }
+    resetCalibrationSteps();
+    m_calibrationFadeTimer = new QTimer(this);
+    m_calibrationFadeTimer->setSingleShot(true);
+    connect(m_calibrationFadeTimer, &QTimer::timeout, this, &TabEngineBridge::handleCalibrationFadeComplete);
+    
+    // Timer for UI bin magnitude updates - runs at 10Hz from main thread to avoid xruns
+    m_noteStatePollTimer = new QTimer(this);
+    m_noteStatePollTimer->setInterval(100); // 10Hz
+    connect(m_noteStatePollTimer, &QTimer::timeout, this, &TabEngineBridge::updateBinMagnitudeCache);
+    m_noteStatePollTimer->start();
+    
+    loadPersistentCalibration();
+    syncFromEngine();
+    updateThresholdsDisplay();  // Initialize threshold display
+    emit calibrationStatusChanged();
+}
+
+void TabEngineBridge::updateThresholdsDisplay() {
+    if (!m_engine)
+        return;
+    
+    auto thresholds = m_engine->getThresholds();
+    for (int i = 0; i < 6; ++i) {
+        QVariantMap stringThresholds;
+        stringThresholds["onsetThreshold"] = thresholds[i].onsetThreshold;
+        stringThresholds["baseline"] = thresholds[i].baseline;
+        stringThresholds["gateThreshold"] = thresholds[i].gateThreshold;
+        stringThresholds["envFloor"] = thresholds[i].envFloor;
+        stringThresholds["sustainFloor"] = thresholds[i].sustainFloor;
+        stringThresholds["retriggerGate"] = thresholds[i].retriggerGate;
+        m_thresholds[i] = stringThresholds;
+    }
+    emit thresholdsChanged();
+}
+
+QVariantList TabEngineBridge::tuningDeviation() const {
+    QVariantList list;
+    list.reserve(6);
+    for (float value : m_tuningDeviationCents)
+        list.append(value);
+    return list;
+}
+
+qreal TabEngineBridge::getBinMagnitude(int stringIndex, int fretIndex) const {
+    // O(1) lookup for QML colorProvider - called 150 times per render but very cheap
+    if (stringIndex < 0 || stringIndex >= 6) return 0.0;
+    if (fretIndex < 0 || fretIndex > 24) return 0.0;
+    return static_cast<qreal>(m_binMagnitudeCache[stringIndex][fretIndex]);
+}
+
+qreal TabEngineBridge::getBinThreshold(int stringIndex, int fretIndex) const {
+    // O(1) lookup for QML colorProvider - threshold for this string/fret combo
+    if (stringIndex < 0 || stringIndex >= 6) return 0.0;
+    if (fretIndex < 0 || fretIndex > 24) return 0.0;
+    return static_cast<qreal>(m_binThresholdCache[stringIndex][fretIndex]);
+}
+
+void TabEngineBridge::updateBinMagnitudeCache() {
+    // FULL-SPECTRUM MAGNITUDE CACHE UPDATE
+    // Reads ALL 150 bin magnitudes from AtomicNoteState (populated by CQT Worker)
+    // Uses magnitude gate to prevent UI signal flooding on Pi5
+    
+    static constexpr float kMagnitudeGateThreshold = 0.005f;  // 0.5% intensity gate
+    
+    bool anySignificantChange = false;
+    
+    // Get current envelope floor for threshold calculation
+    auto& store = NoteDetectionStore::instance();
+    const auto& np = store.current();
+    
+    for (int s = 0; s < 6; ++s) {
+        const float envFloor = np.envelopeFloor[s];
+        
+        for (int f = 0; f <= 24; ++f) {
+            // Read actual CQT bin magnitude from atomic state (populated by CQT Worker)
+            const float liveVal = m_atomicNoteState.binMagnitude(s, f);
+            float& cached = m_binMagnitudeCache[s][f];
+            
+            // MAGNITUDE GATE: Only count as change if delta > 0.5% intensity
+            // This prevents signal flooding that causes Pi 5 freezes
+            if (std::abs(liveVal - cached) > kMagnitudeGateThreshold) {
+                anySignificantChange = true;
+            }
+            cached = liveVal;
+            
+            // Update threshold cache (threshold = envFloor * multiplier)
+            const float multiplier = CQTNoteDetector::getThresholdMultiplier(s, f);
+            m_binThresholdCache[s][f] = envFloor * multiplier;
+        }
+    }
+    
+    // Only emit signal if there was a significant visual change
+    if (anySignificantChange) {
+        m_binMagnitudeRevision++;
+        emit binMagnitudesChanged();
+    }
+}
+
+void TabEngineBridge::setTuningModeEnabled(bool enabled) {
+    if (m_tuningModeEnabled == enabled)
+        return;
+    m_tuningModeEnabled = enabled;
+    emit tuningModeEnabledChanged();
+}
+
+TabEngineBridge::~TabEngineBridge() {
+    // Stop CQT worker thread before destruction
+    if (m_cqtWorker) {
+        m_cqtWorker->stop();
+        m_cqtWorker.reset();
+    }
+    dumpSessionWaveSnapshot("shutdown");
+}
+
+int TabEngineBridge::liveBlockFramesHint() const {
+    const int frames = m_lastProcessBlockFrames.load(std::memory_order_acquire);
+    return frames > 0 ? frames : 128;
+}
+
+void TabEngineBridge::updateLiveMeters(const std::array<float, 6>& meters) {
+    // Always update hex meters for both live (JACK) and recorded session playback
+    QVariantList list;
+    list.reserve(6);
+    for (float value : meters)
+        list.append(value);
+    m_hexMeters = list;
+    emit hexMetersChanged();
+    
+    // Update raw meters (only available during live JACK sessions)
+    if (!m_audioClient) {
+        return;
+    }
+    auto* jackClient = dynamic_cast<HexJackClient*>(m_audioClient);
+    if (jackClient) {
+        auto rawMeters = jackClient->getRawMeters();
+        QVariantList rawList;
+        rawList.reserve(6);
+        for (float value : rawMeters)
+            rawList.append(value);
+        m_rawMeters = rawList;
+        emit rawMetersChanged();
+    }
+}
+
+void TabEngineBridge::handleCalibrationStarted() {
+    m_calibrationRunning = true;
+    if (m_partialCalibration && m_requestedCalibrationString >= 0) {
+        const QString label = calibrationStringName(m_requestedCalibrationString);
+        m_calibrationMessage = QStringLiteral("Pluck %1 (single string)").arg(label);
+    } else if (m_activeCalibrationString < 0) {
+        m_calibrationMessage = QStringLiteral("Calibrating... follow string prompts");
+    }
+    emit calibrationStatusChanged();
+}
+
+void TabEngineBridge::handleCalibrationStepChanged(int stringIndex, bool capturing) {
+    if (!m_calibrationRunning)
+        return;
+
+    // Handle noise floor phase (stringIndex == -1 with capturing == true)
+    if (stringIndex == -1 && capturing) {
+        // Noise floor capture starting - show all circles as grey (state 4)
+        for (int s = 0; s < 6; ++s) {
+            setCalibrationStepState(s, 4);
+        }
+        m_calibrationMessage = QStringLiteral("Capturing noise floor...");
+        emit calibrationStatusChanged();
+        return;
+    }
+    
+    // Handle transition from noise floor to first string - clear grey circles
+    if (m_activeCalibrationString == -1 && stringIndex >= 0) {
+        for (int s = 0; s < 6; ++s) {
+            setCalibrationStepState(s, 0);
+        }
+    }
+
+    if (m_partialCalibration) {
+        if (stringIndex < 0) {
+            if (m_requestedCalibrationString >= 0)
+                setCalibrationStepState(m_requestedCalibrationString, 3);
+            m_activeCalibrationString = -1;
+            m_activeCalibrationCapturing = false;
+            m_calibrationMessage = QStringLiteral("Finalizing calibration...");
+            emit calibrationStatusChanged();
+            return;
+        }
+        if (stringIndex != m_requestedCalibrationString)
+            return;
+
+        m_activeCalibrationString = stringIndex;
+        m_activeCalibrationCapturing = capturing;
+        setCalibrationStepState(stringIndex, capturing ? 2 : 1);
+        const QString label = calibrationStringName(stringIndex);
+        m_calibrationMessage = capturing
+            ? QStringLiteral("Recording %1").arg(label)
+            : QStringLiteral("Pluck %1").arg(label);
+        emit calibrationStatusChanged();
+        return;
+    }
+
+    if (stringIndex < 0) {
+        if (m_activeCalibrationString >= 0)
+            setCalibrationStepState(m_activeCalibrationString, 3);
+        for (int s = 0; s < 6; ++s)
+            setCalibrationStepState(s, std::max(m_calibrationStepStates[static_cast<std::size_t>(s)], 3));
+        m_activeCalibrationString = -1;
+        m_activeCalibrationCapturing = false;
+        m_calibrationMessage = QStringLiteral("Finalizing calibration...");
+        emit calibrationStatusChanged();
+        return;
+    }
+
+    if (stringIndex != m_activeCalibrationString) {
+        if (m_activeCalibrationString >= 0)
+            setCalibrationStepState(m_activeCalibrationString, 3);
+        for (int s = 0; s < stringIndex; ++s)
+            setCalibrationStepState(s, 3);
+        for (int s = stringIndex + 1; s < 6; ++s) {
+            const std::size_t slot = static_cast<std::size_t>(s);
+            if (m_calibrationStepStates[slot] > 0 && m_calibrationStepStates[slot] < 3)
+                setCalibrationStepState(s, 0);
+        }
+    }
+
+    m_activeCalibrationString = stringIndex;
+    m_activeCalibrationCapturing = capturing;
+    setCalibrationStepState(stringIndex, capturing ? 2 : 1);
+
+    const QString label = calibrationStringName(stringIndex);
+    const QString step = QStringLiteral("%1/6").arg(stringIndex + 1);
+    m_calibrationMessage = capturing
+        ? QStringLiteral("Recording %1 (%2)").arg(label, step)
+        : QStringLiteral("Pluck %1 (%2)").arg(label, step);
+
+    emit calibrationStatusChanged();
+}
+
+void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& averages,
+                                                const std::array<float, 6>& peaks) {
+    for (int s = 0; s < 6; ++s)
+        setCalibrationStepState(s, std::max(m_calibrationStepStates[static_cast<std::size_t>(s)], 3));
+    m_activeCalibrationString = -1;
+    m_activeCalibrationCapturing = false;
+    m_calibrationRunning = false;
+    bool anyUpdated = false;
+    
+    // First pass: calculate preAmpGain (multipliers) and find max avgRms for spatialWeight
+    float maxAvgRms = 0.f;
+    for (int s = 0; s < 6; ++s) {
+        const float avg = averages[static_cast<std::size_t>(s)];
+        const float peak = peaks[static_cast<std::size_t>(s)];
+        if (avg >= 0.f && peak >= 0.f) {
+            m_calibrationProfile.avgRms[static_cast<std::size_t>(s)] = avg;
+            m_calibrationProfile.peakRms[static_cast<std::size_t>(s)] = peak;
+            // Calculate preAmpGain: targetRMS / avgInputRMS
+            const float targetRms = NoteDetectionStore::instance().currentValueFromKey("targetRms", s);
+            const float multiplier = (avg > 0.f) ? (targetRms / avg) : 1.0f;
+            m_calibrationProfile.multipliers[static_cast<std::size_t>(s)] = std::clamp(multiplier, 0.2f, 8.0f);
+            maxAvgRms = std::max(maxAvgRms, avg);
+            anyUpdated = true;
+        }
+    }
+
+    if (anyUpdated) {
+        // Store preAmpGain (via calibrationGainMultiplier key for now)
+        for (int s = 0; s < 6; ++s) {
+            NoteDetectionStore::instance().setValueFromKey("calibrationGainMultiplier", s, 
+                                                          m_calibrationProfile.multipliers[static_cast<std::size_t>(s)]);
+        }
+        
+        // Calculate and store spatialWeight: maxAvgRms / thisStringAvgRms
+        // This normalizes all strings to the loudest string's output level
+        // spatialWeight is fixed at calibration time and not user-adjustable
+        if (maxAvgRms > 0.f && !m_partialCalibration) {
+            for (int s = 0; s < 6; ++s) {
+                const float avg = m_calibrationProfile.avgRms[static_cast<std::size_t>(s)];
+                const float weight = (avg > 0.f) ? (maxAvgRms / avg) : 1.0f;
+                m_calibrationProfile.spatialWeight[static_cast<std::size_t>(s)] = std::clamp(weight, 0.5f, 2.0f);
+                NoteDetectionStore::instance().setValueFromKey("spatialWeight", s, 
+                                                              m_calibrationProfile.spatialWeight[static_cast<std::size_t>(s)]);
+            }
+        }
+        
+        m_calibrationProfile.valid = true;
+        if (m_engine)
+            m_engine->applyCalibration(m_calibrationProfile);
+        
+        // Update CQT Worker Thread with new calibration data
+        if (m_cqtWorker) {
+            m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+                                        m_calibrationProfile.peakRms);
+        }
+        
+        // Commit calibration values to tuning state
+        NoteDetectionStore::instance().commit();
+        
+        // Notify UI of changed calibration gains (queued to ensure values are accessible)
+        QMetaObject::invokeMethod(this, [this]() {
+            emit calibrationGainsChanged();
+            emit calibrationParametersUpdated();
+        }, Qt::QueuedConnection);
+        
+        // Log calibration data
+        SessionLogger::instance().log("calibration", "=== Calibration Complete ===");
+        for (int s = 0; s < 6; ++s) {
+            const float targetRms = NoteDetectionStore::instance().currentValueFromKey("targetRms", s);
+            SessionLogger::instance().logf("calibration", 
+                "String %d: avgRms=%.6f peakRms=%.6f targetRms=%.6f preAmpGain=%.3f spatialWeight=%.3f",
+                s + 1,
+                m_calibrationProfile.avgRms[static_cast<std::size_t>(s)],
+                m_calibrationProfile.peakRms[static_cast<std::size_t>(s)],
+                targetRms,
+                m_calibrationProfile.multipliers[static_cast<std::size_t>(s)],
+                m_calibrationProfile.spatialWeight[static_cast<std::size_t>(s)]);
+        }
+    }
+
+    const QString updatedLabel = (m_partialCalibration && m_requestedCalibrationString >= 0)
+        ? QStringLiteral("%1 updated").arg(calibrationStringName(m_requestedCalibrationString))
+        : QStringLiteral("Calibration updated");
+    m_calibrationMessage = updatedLabel;
+    m_partialCalibration = false;
+    m_requestedCalibrationString = -1;
+    emit calibrationStatusChanged();
+}
+
+void TabEngineBridge::handleCalibrationBaselineFloorCaptured(float noiseFloor) {
+    // Update baselineFloor parameter for all strings in tuning panel
+    for (int s = 0; s < 6; ++s) {
+        NoteDetectionStore::instance().setValueFromKey("baselineFloor", s, noiseFloor);
+    }
+    // Commit baseline floor to tuning state
+    NoteDetectionStore::instance().commit();
+    SessionLogger::instance().logf("calibration", "Baseline noise floor captured: %.6f", noiseFloor);
+    
+    // Set all circles to fade state (medium-dark grey)
+    for (int s = 0; s < 6; ++s) {
+        setCalibrationStepState(s, 4);
+    }
+    m_calibrationMessage = QStringLiteral("Noise floor captured");
+    emit calibrationStatusChanged();
+    
+    // Start 2-second fade timer
+    m_calibrationFadeTimer->start(2000);
+}
+
+void TabEngineBridge::handleCalibrationFadeComplete() {
+    // Fade all circles to inactive state
+    for (int s = 0; s < 6; ++s) {
+        setCalibrationStepState(s, 0);
+    }
+    
+    // Set first string (low E) to ready state (yellow)
+    setCalibrationStepState(0, 1);
+    m_calibrationMessage = QStringLiteral("Pluck low E (1/6)");
+    emit calibrationStatusChanged();
+}
+
+void TabEngineBridge::requestRefresh() {
+    syncFromEngine();
+}
+
+void TabEngineBridge::clear() {
+    if (m_engine) {
+        m_engine->importEvents({});
+    }
+    {
+        std::lock_guard<std::mutex> guard(m_liveMutex);
+        m_livePending.clear();
+    }
+    m_liveTimeSec = 0.f;
+    m_liveSampleRate = 0.f;
+    m_lastDispatchedEvent.store(0, std::memory_order_release);
+    m_lastLiveTriggerSec.fill(-1.f);
+    m_lastLiveFret.fill(-1);
+    syncFromEngine();
+}
+
+void TabEngineBridge::seedMockSession() {
+    if (!m_engine) {
+        return;
+    }
+
+    std::vector<NoteEvent> mock;
+
+    NoteEvent ev{};
+    ev.stringIdx = 5;
+    ev.fret = 0;
+    ev.midi = m_tuning.stringMidi[5];
+    ev.startSec = 0.0f;
+    ev.endSec = 1.4f;
+    ev.velocity = 0.78f;
+    ev.articulation.clear();
+    mock.push_back(ev);
+
+    ev.stringIdx = 4;
+    ev.fret = 2;
+    ev.midi = m_tuning.stringMidi[4] + ev.fret;
+    ev.startSec = 0.45f;
+    ev.endSec = 1.2f;
+    ev.velocity = 0.65f;
+    ev.articulation = "hammer";
+    mock.push_back(ev);
+
+    ev.stringIdx = 3;
+    ev.fret = 2;
+    ev.midi = m_tuning.stringMidi[3] + ev.fret;
+    ev.startSec = 1.0f;
+    ev.endSec = 1.6f;
+    ev.velocity = 0.62f;
+    ev.articulation = "slide";
+    mock.push_back(ev);
+
+    ev.stringIdx = 3;
+    ev.fret = 4;
+    ev.midi = m_tuning.stringMidi[3] + ev.fret;
+    ev.startSec = 1.62f;
+    ev.endSec = 2.1f;
+    ev.velocity = 0.72f;
+    ev.articulation = "slide";
+    mock.push_back(ev);
+
+    ev.stringIdx = 2;
+    ev.fret = 0;
+    ev.midi = m_tuning.stringMidi[2];
+    ev.startSec = 2.2f;
+    ev.endSec = 2.8f;
+    ev.velocity = 0.35f;
+    ev.articulation = "pm";
+    mock.push_back(ev);
+
+    m_engine->importEvents(mock);
+    syncFromEngine();
+}
+
+void TabEngineBridge::setRecording(bool value) {
+    // Treat the exposed "recording" property as a capture gate only. Live note detection
+    // keeps running regardless so the fret overlay never requires the toggle.
+    const bool prev = m_captureEnabled.exchange(value, std::memory_order_acq_rel);
+    if (prev == value)
+        return;
+
+    qInfo() << "TabBridge" << (value ? "recording-start" : "recording-stop");
+
+    if (value) {
+        // Starting a new capture should clear any accumulated timeline so taps begin fresh.
+        m_resetRequested.store(true, std::memory_order_release);
+        if (m_pendingCaptureValid) {
+            SessionLogger::instance().log("live-record", "pending capture discarded (new recording started before labeling)");
+            clearPendingCapture();
+        }
+        m_captureSampleRate = m_liveSampleRate;
+        const std::size_t reserveCap = (m_captureSampleRate > 1.0f)
+            ? static_cast<std::size_t>(std::max(1.0f, m_captureSampleRate * kSessionWaveTapSeconds))
+            : static_cast<std::size_t>(44100 * kSessionWaveTapSeconds);
+        for (auto& buffer : m_captureBuffers) {
+            buffer.clear();
+            buffer.reserve(reserveCap);
+        }
+    } else {
+        // Finalise the current capture snapshot but keep live detection running.
+        syncFromEngine();
+        finalizeCaptureBuffers();
+    }
+
+    emit recordingChanged();
+}
+
+void TabEngineBridge::startCalibration() {
+    if (!m_audioClient) {
+        m_calibrationMessage = QStringLiteral("Audio input unavailable");
+        emit calibrationStatusChanged();
+        return;
+    }
+    if (m_calibrationRunning)
+        return;
+
+    setTuningModeEnabled(false);
+
+    resetCalibrationSteps();
+    m_partialCalibration = false;
+    m_requestedCalibrationString = -1;
+    m_calibrationRunning = true;
+    m_calibrationMessage = QStringLiteral("Arming calibration...");
+    emit calibrationStatusChanged();
+    m_audioClient->requestCalibration(-1);
+}
+
+void TabEngineBridge::recalibrateString(int stringIndex) {
+    if (stringIndex < 0 || stringIndex >= 6)
+        return;
+    if (!m_audioClient) {
+        m_calibrationMessage = QStringLiteral("Audio input unavailable");
+        emit calibrationStatusChanged();
+        return;
+    }
+    if (!m_calibrationProfile.valid) {
+        m_calibrationMessage = QStringLiteral("Run full calibration before per-string tweaks");
+        emit calibrationStatusChanged();
+        return;
+    }
+    if (m_calibrationRunning)
+        return;
+
+    setTuningModeEnabled(false);
+
+    m_partialCalibration = true;
+    m_requestedCalibrationString = stringIndex;
+    markSingleCalibrationPending(stringIndex);
+    m_calibrationRunning = true;
+    const QString label = calibrationStringName(stringIndex);
+    m_calibrationMessage = QStringLiteral("Preparing %1...").arg(label);
+    emit calibrationStatusChanged();
+    m_audioClient->requestCalibration(stringIndex);
+}
+
+void TabEngineBridge::setAudioClient(HexAudioClient* client) {
+    if (m_audioClient == client)
+        return;
+
+    // Stop existing CQT worker if any
+    if (m_cqtWorker) {
+        m_cqtWorker->stop();
+        m_cqtWorker.reset();
+    }
+
+    if (m_audioClient) {
+        m_audioClient->setTabBridge(nullptr);
+    }
+
+    m_audioClient = client;
+    m_externalMetersActive = (m_audioClient != nullptr);
+
+    if (m_audioClient) {
+        m_audioClient->setTabBridge(this);
+        m_audioClient->connectMeters(this);
+        m_audioClient->connectCalibration(this);
+        updateThresholdsDisplay();  // Update thresholds when audio client connected
+        
+        // Create CQT Worker Thread (TIER 2) for JACK clients
+        auto* jackClient = dynamic_cast<HexJackClient*>(m_audioClient);
+        if (jackClient) {
+            audio::CQTWorkerConfig workerConfig;
+            workerConfig.sampleRate = static_cast<float>(jackClient->sampleRate());
+            workerConfig.hopSize = 512;  // ~11.6ms at 44.1kHz
+            workerConfig.enableCoreAffinity = true;
+            workerConfig.coreId = 1;  // Core 1 for CQT processing
+            
+            m_cqtWorker = std::make_unique<audio::CQTWorkerThread>(
+                jackClient->audioRingBuffer(),
+                m_atomicNoteState,
+                workerConfig
+            );
+            
+            // Pass calibration data to worker
+            if (m_calibrationProfile.valid) {
+                m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+                                            m_calibrationProfile.peakRms);
+            }
+            
+            m_cqtWorker->start();
+            qInfo() << "TabEngineBridge: CQT Worker Thread started (TIER 2)";
+        }
+    }
+}
+
+void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int n, float sr) {
+    if (!m_engine || n <= 0 || sr <= 0.f)
+        return;
+
+    m_lastProcessBlockFrames.store(n, std::memory_order_release);
+    appendSessionWaveTap(channels, n, sr);
+
+    const bool capturing = m_captureEnabled.load(std::memory_order_acquire);
+
+    bool reset = m_resetRequested.exchange(false, std::memory_order_acq_rel);
+    if (reset || std::fabs(m_liveSampleRate - sr) > 1e-4f) {
+        m_engine->importEvents({});
+        m_liveTimeSec = 0.f;
+        m_liveSampleRate = sr;
+        m_lastDispatchedEvent.store(0, std::memory_order_release);
+        m_lastLiveTriggerSec.fill(-1.f);
+        m_lastLiveFret.fill(-1);
+        m_activeNoteDisplayed.fill(false);
+        reset = true;
+        if (m_debugNoteLogging)
+            qInfo() << "TabBridge" << "engine-reset" << "sr" << sr << "capturing" << capturing;
+    }
+
+    if (!capturing && reset) {
+        // Keep preview responsive when capture is off by avoiding stale time bases.
+        m_liveTimeSec = 0.f;
+    }
+
+    if (capturing) {
+        if (m_captureSampleRate <= 0.f || std::fabs(m_captureSampleRate - sr) > 1e-3f)
+            m_captureSampleRate = sr;
+        appendCaptureAudio(channels, n);
+    }
+
+    std::array<float, 6> blockRms {};
+    if (n > 0) {
+        for (int i = 0; i < 6; ++i) {
+            const float* data = channels[static_cast<std::size_t>(i)];
+            if (!data)
+                continue;
+            double sum = 0.0;
+            for (int sample = 0; sample < n; ++sample) {
+                const double value = static_cast<double>(data[sample]);
+                sum += value * value;
+            }
+            blockRms[static_cast<std::size_t>(i)] = static_cast<float>(std::sqrt(sum / static_cast<double>(n)));
+        }
+    }
+
+    // Always update meters when processing audio blocks
+    // This ensures both live (JACK) and recorded session playback show meter activity
+    postMeterSnapshot(blockRms);
+
+    if (m_debugNoteLogging) {
+        QStringList rmsSummary;
+        for (int i = 0; i < 6; ++i)
+            rmsSummary << QStringLiteral("s%1=%2").arg(i + 1).arg(blockRms[static_cast<std::size_t>(i)], 0, 'f', 5);
+        qInfo() << "TabBridge" << "block-rms" << rmsSummary.join(' ');
+    }
+
+    const float blockStart = m_liveTimeSec;
+    m_engine->processBlock(channels, n, sr, blockStart);
+    updateTuningDeviation();
+    
+    // Update thresholds and bin magnitudes (throttled to 100ms to avoid overwhelming QML)
+    if (!m_thresholdsUpdateTimer.isValid() || m_thresholdsUpdateTimer.elapsed() >= 100) {
+        auto thresholds = m_engine->getThresholds();
+        for (int i = 0; i < 6; ++i) {
+            QVariantMap stringThresholds;
+            stringThresholds["onsetThreshold"] = thresholds[i].onsetThreshold;
+            stringThresholds["baseline"] = thresholds[i].baseline;
+            stringThresholds["gateThreshold"] = thresholds[i].gateThreshold;
+            stringThresholds["envFloor"] = thresholds[i].envFloor;
+            stringThresholds["sustainFloor"] = thresholds[i].sustainFloor;
+            stringThresholds["retriggerGate"] = thresholds[i].retriggerGate;
+            m_thresholds[i] = stringThresholds;
+        }
+        emit thresholdsChanged();
+        
+        // NOTE: Bin magnitude cache is updated by m_noteStatePollTimer (UI thread)
+        // Do NOT call updateBinMagnitudeCache() here - it emits signals from audio thread and causes xruns
+        
+        m_thresholdsUpdateTimer.restart();
+    }
+    
+    m_liveTimeSec += static_cast<float>(n) / sr;
+
+    const auto& events = m_engine->events();
+    const int total = static_cast<int>(events.size());
+    int last = m_lastDispatchedEvent.load(std::memory_order_acquire);
+    
+    std::vector<LiveEvent> newEvents;
+    if (total > last) {
+        newEvents.reserve(static_cast<std::size_t>(total - last));
+        for (int i = last; i < total; ++i) {
+            const auto& ev = events[std::size_t(i)];
+            if (ev.stringIdx < 0 || ev.stringIdx >= 6)
+                continue;
+            if (ev.fret < 0 || ev.fret > 24)
+                continue;
+
+            const float prevTrigger = m_lastLiveTriggerSec[std::size_t(ev.stringIdx)];
+            const int prevFret = m_lastLiveFret[std::size_t(ev.stringIdx)];
+            const float dt = (prevTrigger >= 0.f) ? ev.startSec - prevTrigger : std::numeric_limits<float>::infinity();
+            if (prevTrigger >= 0.f && std::fabs(dt) < 0.06f && prevFret == ev.fret)
+                continue;
+
+            newEvents.push_back({ev.stringIdx, ev.fret, ev.velocity, ev.startSec});
+            // Mark this note as displayed immediately
+            m_activeNoteDisplayed[std::size_t(ev.stringIdx)] = true;
+            if (m_debugNoteLogging) {
+                qInfo() << "TabBridge" << "note"
+                        << "string" << ev.stringIdx
+                        << "fret" << ev.fret
+                        << "velocity" << QString::number(ev.velocity, 'f', 3)
+                        << "start" << QString::number(ev.startSec, 'f', 3);
+            }
+        }
+
+        m_lastDispatchedEvent.store(total, std::memory_order_release);
+    }
+
+    // Check for notes that have ended and emit liveNoteEnded signal
+    // Also emit envelope updates for active notes to drive visual feedback
+    // Skip entirely if no notes are active to avoid unnecessary processing
+    bool anyNotesDisplayed = false;
+    for (int s = 0; s < 6; ++s) {
+        if (m_activeNoteDisplayed[std::size_t(s)]) {
+            anyNotesDisplayed = true;
+            break;
+        }
+    }
+    
+    if (anyNotesDisplayed) {
+        for (int s = 0; s < 6; ++s) {
+            // Only check if we have a displayed note on this string
+            if (!m_activeNoteDisplayed[std::size_t(s)])
+                continue;
+            
+        bool hasActiveNote = false;
+        float activeEnvelope = 0.f;
+        
+        // Find the most recent note for this string
+        for (int i = total - 1; i >= 0; --i) {
+            const auto& ev = events[std::size_t(i)];
+            if (ev.stringIdx == s) {
+                // Note is active if endSec is still ahead of current time
+                // (endSec gets updated continuously while note sustains)
+                const bool noteStillActive = (ev.endSec > m_liveTimeSec);
+                
+                if (noteStillActive) {
+                    hasActiveNote = true;
+                    activeEnvelope = ev.velocity; // velocity is updated from envelope
+                }
+                break; // Only check most recent note for this string
+            }
+        }
+        
+        // If we have an active note, emit envelope update
+        if (hasActiveNote) {
+            QMetaObject::invokeMethod(this,
+                [this, s, activeEnvelope]() { emit liveNoteEnvelopeUpdated(s, activeEnvelope); },
+                Qt::QueuedConnection);
+        }
+        
+        // If we had a displayed note and now it's not active, emit noteEnded
+        if (!hasActiveNote) {
+            const int endedFret = m_lastLiveFret[std::size_t(s)];
+            if (endedFret >= 0) {
+                QMetaObject::invokeMethod(this,
+                    [this, s, endedFret]() { emit liveNoteEnded(s, endedFret); },
+                    Qt::QueuedConnection);
+            }
+            m_activeNoteDisplayed[std::size_t(s)] = false;
+        }
+    }
+    }
+
+    if (newEvents.empty())
+        return;
+
+    {
+        std::lock_guard<std::mutex> guard(m_liveMutex);
+        m_livePending.insert(m_livePending.end(), newEvents.begin(), newEvents.end());
+    }
+
+    scheduleLiveDispatch();
+
+    if (!capturing) {
+        const int maxPreviewEvents = 256;
+        if (total > maxPreviewEvents) {
+            m_resetRequested.store(true, std::memory_order_release);
+        }
+    }
+}
+
+void TabEngineBridge::postMeterSnapshot(const std::array<float, 6>& meters) {
+    QMetaObject::invokeMethod(this,
+                              [this, meters]() { updateLiveMeters(meters); },
+                              Qt::QueuedConnection);
+}
+
+void TabEngineBridge::syncFromEngine() {
+    if (!m_engine) {
+        if (!m_events.isEmpty()) {
+            m_events.clear();
+            m_eventsJson = "[]";
+            emit eventsChanged();
+        }
+        return;
+    }
+
+    updateThresholdsDisplay();  // Update thresholds when syncing from engine
+
+    QVariantList list;
+    list.reserve(static_cast<int>(m_engine->events().size()));
+    for (const auto& ev : m_engine->events()) {
+        QVariantMap map;
+        map.insert(QStringLiteral("string"), ev.stringIdx);
+        map.insert(QStringLiteral("fret"), ev.fret);
+        map.insert(QStringLiteral("midi"), ev.midi);
+        map.insert(QStringLiteral("start"), ev.startSec);
+        map.insert(QStringLiteral("end"), ev.endSec);
+        map.insert(QStringLiteral("velocity"), ev.velocity);
+        map.insert(QStringLiteral("articulation"), QString());
+        list.push_back(map);
+    }
+
+    m_events = list;
+    const QJsonDocument doc = QJsonDocument::fromVariant(list);
+    m_eventsJson = QString::fromUtf8(doc.toJson(QJsonDocument::Compact));
+    emit eventsChanged();
+}
+
+void TabEngineBridge::scheduleLiveDispatch() {
+    bool expected = false;
+    if (m_dispatchQueued.compare_exchange_strong(expected, true, std::memory_order_acq_rel)) {
+        QMetaObject::invokeMethod(this, [this]() { dispatchLiveEvents(); }, Qt::QueuedConnection);
+    }
+}
+
+void TabEngineBridge::updateTuningDeviation() {
+    if (!m_engine)
+        return;
+    const auto deviations = m_engine->tuningDeviationCents();
+    if (deviations == m_tuningDeviationCents)
+        return;
+    m_tuningDeviationCents = deviations;
+    emit tuningDeviationChanged();
+}
+
+void TabEngineBridge::dispatchLiveEvents() {
+    std::vector<LiveEvent> batch;
+    {
+        std::lock_guard<std::mutex> guard(m_liveMutex);
+        batch.swap(m_livePending);
+        m_dispatchQueued.store(false, std::memory_order_release);
+    }
+
+    if (batch.empty())
+        return;
+
+    for (const auto& ev : batch) {
+        m_lastLiveTriggerSec[std::size_t(ev.stringIndex)] = ev.startSec;
+        m_lastLiveFret[std::size_t(ev.stringIndex)] = ev.fretIndex;
+        qInfo() << "EMIT liveNoteTriggered: S" << ev.stringIndex << " F" << ev.fretIndex;
+        emit liveNoteTriggered(ev.stringIndex, ev.fretIndex, ev.velocity);
+    }
+}
+
+void TabEngineBridge::resetCalibrationSteps() {
+    m_calibrationStepStates.fill(0);
+    m_calibrationSteps.clear();
+    m_calibrationSteps.reserve(6);
+    for (int i = 0; i < 6; ++i)
+        m_calibrationSteps.append(0);
+    m_activeCalibrationString = -1;
+    m_activeCalibrationCapturing = false;
+}
+
+void TabEngineBridge::setCalibrationStepState(int stringIdx, int state) {
+    if (stringIdx < 0 || stringIdx >= 6)
+        return;
+    const std::size_t slot = static_cast<std::size_t>(stringIdx);
+    if (m_calibrationStepStates[slot] == state)
+        return;
+    m_calibrationStepStates[slot] = state;
+    if (m_calibrationSteps.size() < 6)
+        m_calibrationSteps.resize(6);
+    m_calibrationSteps[slot] = QVariant(state);
+}
+
+void TabEngineBridge::markSingleCalibrationPending(int stringIdx) {
+    resetCalibrationSteps();
+    if (stringIdx < 0 || stringIdx >= 6)
+        return;
+    setCalibrationStepState(stringIdx, 1);
+}
+
+QString TabEngineBridge::calibrationStoragePath() const {
+    const QString base = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    if (base.isEmpty())
+        return QString();
+    QDir dir(base);
+    if (!dir.exists())
+        dir.mkpath(QStringLiteral("."));
+    return dir.filePath(QStringLiteral("calibration_profile.json"));
+}
+
+void TabEngineBridge::loadPersistentCalibration() {
+    // Derive calibration profile from tuning state
+    for (int i = 0; i < 6; ++i) {
+        m_calibrationProfile.multipliers[static_cast<std::size_t>(i)] = 
+            NoteDetectionStore::instance().committedValueFromKey("calibrationGainMultiplier", i);
+    }
+    
+    // Try to load avgRms and peakRms from legacy calibration file if it exists
+    const QString path = calibrationStoragePath();
+    if (!path.isEmpty()) {
+        QFile file(path);
+        if (file.exists() && file.open(QIODevice::ReadOnly)) {
+            const QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+            if (doc.isObject()) {
+                const QJsonObject obj = doc.object();
+                const QJsonArray avgArr = obj.value(QStringLiteral("avg")).toArray();
+                const QJsonArray peakArr = obj.value(QStringLiteral("peak")).toArray();
+                if (avgArr.size() == 6 && peakArr.size() == 6) {
+                    for (int i = 0; i < 6; ++i) {
+                        m_calibrationProfile.avgRms[static_cast<std::size_t>(i)] = static_cast<float>(avgArr[i].toDouble());
+                        m_calibrationProfile.peakRms[static_cast<std::size_t>(i)] = static_cast<float>(peakArr[i].toDouble());
+                    }
+                    SessionLogger::instance().log("calibration", "Loaded avgRms/peakRms from legacy calibration file");
+                }
+            }
+        }
+    }
+    
+    m_calibrationProfile.valid = true;
+    if (m_engine)
+        m_engine->applyCalibration(m_calibrationProfile);
+
+    m_calibrationLoaded = true;
+    m_calibrationMessage = QStringLiteral("Calibration loaded from tuning state");
+    SessionLogger::instance().log("calibration", "Calibration profile derived from tuning state");
+}
+
+void TabEngineBridge::updateCalibrationMultipliers() {
+    // Sync multipliers from NoteDetectionStore to calibration profile for engine
+    bool anyChanged = false;
+    for (int i = 0; i < 6; ++i) {
+        const float newMult = NoteDetectionStore::instance().currentValueFromKey("calibrationGainMultiplier", i);
+        if (!m_calibrationProfile.valid || m_calibrationProfile.multipliers[static_cast<std::size_t>(i)] != newMult) {
+            m_calibrationProfile.multipliers[static_cast<std::size_t>(i)] = newMult;
+            anyChanged = true;
+        }
+    }
+    
+    if (anyChanged) {
+        m_calibrationProfile.valid = true;
+        // Apply to engine
+        if (m_engine)
+            m_engine->applyCalibration(m_calibrationProfile);
+        
+        SessionLogger::instance().log("calibration", "Calibration multipliers synced to engine");
+    }
+}
+
+void TabEngineBridge::appendCaptureAudio(const float* const channels[6], int n) {
+    if (n <= 0)
+        return;
+    for (int s = 0; s < 6; ++s) {
+        auto& dest = m_captureBuffers[static_cast<std::size_t>(s)];
+        const float* src = channels[s];
+        if (src) {
+            dest.insert(dest.end(), src, src + n);
+        } else {
+            dest.insert(dest.end(), static_cast<std::size_t>(n), 0.0f);
+        }
+    }
+}
+
+void TabEngineBridge::appendSessionWaveTap(const float* const channels[6], int n, float sr) {
+    if (n <= 0 || sr <= 0.f)
+        return;
+
+    bool sampleRateChanged = false;
+    if (m_sessionWaveTapSampleRate <= 0.f || std::fabs(m_sessionWaveTapSampleRate - sr) > 1.0e-3f) {
+        m_sessionWaveTapSampleRate = sr;
+        sampleRateChanged = true;
+    }
+
+    const std::size_t limitSamples = (m_sessionWaveTapSampleRate > 0.f)
+        ? static_cast<std::size_t>(std::max(1.0f, m_sessionWaveTapSampleRate * kSessionWaveTapSeconds))
+        : 0u;
+
+    if (sampleRateChanged || limitSamples != m_sessionWaveTapCapacity) {
+        m_sessionWaveTapCapacity = limitSamples;
+        for (auto& buffer : m_sessionWaveTap)
+            buffer.assign(m_sessionWaveTapCapacity, 0.f);
+        m_sessionWaveTapWriteIndex.fill(0);
+        m_sessionWaveTapCount.fill(0);
+    }
+
+    if (m_sessionWaveTapCapacity == 0)
+        return;
+
+    for (int s = 0; s < 6; ++s) {
+        auto& tap = m_sessionWaveTap[static_cast<std::size_t>(s)];
+        if (tap.size() != m_sessionWaveTapCapacity)
+            tap.assign(m_sessionWaveTapCapacity, 0.f);
+
+        const float* src = channels[s];
+        std::size_t writeIndex = m_sessionWaveTapWriteIndex[static_cast<std::size_t>(s)];
+        std::size_t count = m_sessionWaveTapCount[static_cast<std::size_t>(s)];
+
+        int processed = 0;
+        while (processed < n) {
+            const std::size_t available = m_sessionWaveTapCapacity - writeIndex;
+            const std::size_t chunk = std::min<std::size_t>(available, static_cast<std::size_t>(n - processed));
+            if (chunk == 0)
+                break;
+
+            auto writeBegin = tap.begin() + static_cast<std::ptrdiff_t>(writeIndex);
+            auto writeEnd = writeBegin + static_cast<std::ptrdiff_t>(chunk);
+            if (src) {
+                std::copy(src + processed, src + processed + static_cast<int>(chunk), writeBegin);
+            } else {
+                std::fill(writeBegin, writeEnd, 0.f);
+            }
+
+            writeIndex = (writeIndex + chunk) % m_sessionWaveTapCapacity;
+            processed += static_cast<int>(chunk);
+        }
+
+        const std::size_t newSamples = static_cast<std::size_t>(n);
+        count = std::min(m_sessionWaveTapCapacity, count + newSamples);
+        m_sessionWaveTapWriteIndex[static_cast<std::size_t>(s)] = writeIndex;
+        m_sessionWaveTapCount[static_cast<std::size_t>(s)] = count;
+    }
+    m_sessionWaveTapDirty = true;
+}
+
+void TabEngineBridge::finalizeCaptureBuffers() {
+    bool hasSamples = false;
+    for (int s = 0; s < 6; ++s) {
+        auto& pending = m_pendingCaptureBuffers[static_cast<std::size_t>(s)];
+        auto& active = m_captureBuffers[static_cast<std::size_t>(s)];
+        if (!active.empty())
+            hasSamples = true;
+        pending.swap(active);
+    }
+    m_pendingSampleRate = m_captureSampleRate;
+    m_pendingCaptureValid = hasSamples && m_pendingSampleRate > 0.f;
+    m_pendingEventsJsonSnapshot = m_eventsJson;
+    m_captureSampleRate = 0.f;
+    if (!m_pendingCaptureValid)
+        clearPendingCapture();
+}
+
+std::filesystem::path TabEngineBridge::sessionWaveDirectory() const {
+    std::filesystem::path base = std::filesystem::current_path() / "logs";
+    std::string sessionName;
+    const auto& logger = SessionLogger::instance();
+    const std::string logPath = logger.logFilePath();
+    if (!logPath.empty()) {
+        std::filesystem::path logFile(logPath);
+        if (!logFile.parent_path().empty())
+            base = logFile.parent_path();
+        sessionName = logFile.stem().string();
+    }
+    if (sessionName.empty()) {
+        sessionName = QStringLiteral("session-%1")
+                          .arg(QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyyMMdd-HHmmss")))
+                          .toStdString();
+    }
+    return base / "sessionwavs" / sessionName;
+}
+
+void TabEngineBridge::dumpSessionWaveSnapshot(const char* reason) {
+    if (!m_sessionWaveTapDirty || m_sessionWaveTapSampleRate <= 0.f)
+        return;
+
+    const std::filesystem::path targetDir = sessionWaveDirectory();
+    std::error_code ec;
+    std::filesystem::create_directories(targetDir, ec);
+    if (ec) {
+        SessionLogger::instance().logf("sessionwavs", "failed to create %s (%d)", targetDir.string().c_str(), ec.value());
+        return;
+    }
+
+    int written = 0;
+    std::vector<float> scratch;
+    for (int s = 0; s < 6; ++s) {
+        const auto& buffer = m_sessionWaveTap[static_cast<std::size_t>(s)];
+        const std::size_t capacity = buffer.size();
+        const std::size_t count = (capacity > 0)
+            ? std::min<std::size_t>(capacity, m_sessionWaveTapCount[static_cast<std::size_t>(s)])
+            : 0u;
+        if (buffer.empty() || count == 0 || capacity == 0)
+            continue;
+
+        scratch.clear();
+        if (scratch.capacity() < count)
+            scratch.reserve(count);
+
+        const std::size_t writeIndex = m_sessionWaveTapWriteIndex[static_cast<std::size_t>(s)] % capacity;
+        const std::size_t start = (writeIndex + capacity - count) % capacity;
+        const std::size_t firstChunk = std::min<std::size_t>(count, capacity - start);
+        scratch.insert(scratch.end(),
+                       buffer.begin() + static_cast<std::ptrdiff_t>(start),
+                       buffer.begin() + static_cast<std::ptrdiff_t>(start + firstChunk));
+        if (firstChunk < count) {
+            const std::size_t secondChunk = count - firstChunk;
+            scratch.insert(scratch.end(),
+                           buffer.begin(),
+                           buffer.begin() + static_cast<std::ptrdiff_t>(secondChunk));
+        }
+
+        QString baseName = stringNoteToken(s);
+        if (baseName.isEmpty())
+            baseName = QStringLiteral("string%1").arg(s + 1);
+        const std::filesystem::path filePath = targetDir / (baseName + QStringLiteral(".wav")).toStdString();
+        if (writeWavFile(filePath, scratch, m_sessionWaveTapSampleRate))
+            ++written;
+    }
+
+    if (written > 0) {
+        std::string extra;
+        if (reason && *reason) {
+            extra = " (";
+            extra += reason;
+            extra += ')';
+        }
+        SessionLogger::instance().logf("sessionwavs",
+                                       "wrote %d wav files to %s%s",
+                                       written,
+                                       targetDir.string().c_str(),
+                                       extra.c_str());
+    }
+
+    m_sessionWaveTapDirty = false;
+    m_sessionWaveTapWriteIndex.fill(0);
+    m_sessionWaveTapCount.fill(0);
+    for (auto& buffer : m_sessionWaveTap)
+        std::fill(buffer.begin(), buffer.end(), 0.f);
+}
+
+void TabEngineBridge::clearPendingCapture() {
+    for (auto& buffer : m_pendingCaptureBuffers)
+        buffer.clear();
+    m_pendingSampleRate = 0.f;
+    m_pendingCaptureValid = false;
+    m_pendingEventsJsonSnapshot.clear();
+}
+
+QString TabEngineBridge::stringNoteToken(int stringIdx) const {
+    if (stringIdx < 0 || stringIdx >= static_cast<int>(m_tuning.stringMidi.size()))
+        return QStringLiteral("string%1").arg(stringIdx + 1);
+    static const std::array<const char*, 12> kNotes{{"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"}};
+    const int midi = m_tuning.stringMidi[static_cast<std::size_t>(stringIdx)];
+    const int note = ((midi % 12) + 12) % 12;
+    const int octave = midi / 12 - 1;
+    QString base = QString::fromLatin1(kNotes[static_cast<std::size_t>(note)]);
+    base.replace('#', 's');
+    bool duplicate = false;
+    for (int i = 0; i < static_cast<int>(m_tuning.stringMidi.size()); ++i) {
+        if (i == stringIdx)
+            continue;
+        const int otherMidi = m_tuning.stringMidi[static_cast<std::size_t>(i)];
+        const int otherNote = ((otherMidi % 12) + 12) % 12;
+        if (otherNote == note) {
+            duplicate = true;
+            break;
+        }
+    }
+    if (duplicate)
+        return QStringLiteral("%1%2").arg(base).arg(octave);
+    return base;
+}
+
+QString TabEngineBridge::sanitizeLabel(const QString& label) {
+    QString trimmed = label;
+    trimmed = trimmed.trimmed();
+    if (trimmed.isEmpty())
+        trimmed = QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyyMMdd-HHmmss"));
+
+    QString safe;
+    safe.reserve(trimmed.size());
+    for (const QChar& ch : trimmed) {
+        if (ch.isLetterOrNumber()) {
+            safe.append(ch);
+        } else if (ch.isSpace()) {
+            safe.append(QLatin1Char(' '));
+        } else if (ch == QLatin1Char('-') || ch == QLatin1Char('_')) {
+            safe.append(ch);
+        } else {
+            safe.append(QLatin1Char('_'));
+        }
+    }
+
+    while (safe.startsWith(QLatin1Char('_')))
+        safe.remove(0, 1);
+    if (safe.isEmpty())
+        safe = QStringLiteral("session");
+    return safe;
+}
+
+std::filesystem::path TabEngineBridge::captureRootDirectory() const {
+    const QByteArray custom = qgetenv("SIGNALASSISTANT_CAPTURE_DIR");
+    if (!custom.isEmpty())
+        return std::filesystem::path(QString::fromUtf8(custom).toStdString());
+    return std::filesystem::current_path() / "sessions" / "live";
+}
+
+bool TabEngineBridge::writeWavFile(const std::filesystem::path& path,
+                                   const std::vector<float>& samples,
+                                   float sampleRate) const {
+    if (samples.empty() || sampleRate <= 0.f)
+        return false;
+
+    SF_INFO info {};
+    info.channels = 1;
+    info.samplerate = static_cast<int>(std::lround(sampleRate));
+    info.format = SF_FORMAT_WAV | SF_FORMAT_FLOAT;
+
+    SNDFILE* file = sf_open(path.string().c_str(), SFM_WRITE, &info);
+    if (!file)
+        return false;
+
+    const sf_count_t written = sf_write_float(file, samples.data(), static_cast<sf_count_t>(samples.size()));
+    sf_write_sync(file);
+    sf_close(file);
+    return written == static_cast<sf_count_t>(samples.size());
+}
+
+double TabEngineBridge::pendingCaptureDurationSec() const {
+    if (m_pendingSampleRate <= 0.f)
+        return 0.0;
+    std::size_t maxSamples = 0;
+    for (const auto& buffer : m_pendingCaptureBuffers)
+        maxSamples = std::max(maxSamples, buffer.size());
+    return (m_pendingSampleRate > 0.f)
+        ? static_cast<double>(maxSamples) / static_cast<double>(m_pendingSampleRate)
+        : 0.0;
+}
+
+void TabEngineBridge::discardPendingCapture() {
+    if (!m_pendingCaptureValid)
+        return;
+    SessionLogger::instance().log("live-record", "pending capture discarded (user cancelled)");
+    clearPendingCapture();
+}
+
+void TabEngineBridge::getCalibrationMultipliers(std::array<float, 6>& multipliers) const {
+    auto& store = NoteDetectionStore::instance();
+    for (int s = 0; s < 6; ++s) {
+        multipliers[static_cast<std::size_t>(s)] = 
+            store.activeValue(NoteParameter::CalibrationGainMultiplier, s);
+    }
+}
+
+QVariantList TabEngineBridge::calibrationGains() const {
+    QVariantList list;
+    for (int s = 0; s < 6; ++s) {
+        const float value = NoteDetectionStore::instance().currentValueFromKey("calibrationGainMultiplier", s);
+        list.append(value);
+    }
+    return list;
+}
+
+void TabEngineBridge::setCalibrationGain(int stringIndex, double gain) {
+    // Legacy method - calibration gains should only be set by calibration profile
+    // This method is kept for API compatibility but does nothing
+    Q_UNUSED(stringIndex);
+    Q_UNUSED(gain);
+}
+
+bool TabEngineBridge::exportPendingCapture(const QString& rawLabel) {
+    if (!m_pendingCaptureValid)
+        return false;
+
+    const QString safeLabel = sanitizeLabel(rawLabel);
+    const QString timestamp = QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyyMMdd-HHmmss"));
+
+    std::filesystem::path root = captureRootDirectory();
+    std::error_code ec;
+    std::filesystem::create_directories(root, ec);
+    if (ec)
+        return false;
+
+    QString folderName = safeLabel;
+    std::filesystem::path sessionDir = root / folderName.toStdString();
+    int suffix = 1;
+    ec.clear();
+    while (std::filesystem::exists(sessionDir, ec)) {
+        if (ec)
+            return false;
+        folderName = QStringLiteral("%1_%2").arg(safeLabel).arg(++suffix);
+        sessionDir = root / folderName.toStdString();
+    }
+
+    std::filesystem::create_directories(sessionDir, ec);
+    if (ec)
+        return false;
+
+    bool success = true;
+    for (int s = 0; s < 6; ++s) {
+        const auto& buffer = m_pendingCaptureBuffers[static_cast<std::size_t>(s)];
+        if (buffer.empty())
+            continue;
+        QString baseName = stringNoteToken(s);
+        if (baseName.isEmpty())
+            baseName = QStringLiteral("string%1").arg(s + 1);
+        const std::filesystem::path filePath = sessionDir / (baseName + QStringLiteral(".wav")).toStdString();
+        if (!writeWavFile(filePath, buffer, m_pendingSampleRate)) {
+            success = false;
+            break;
+        }
+    }
+
+    if (!success) {
+        SessionLogger::instance().log("live-record", "failed to write WAV files");
+        return false;
+    }
+
+    const QString metaPath = QString::fromStdString((sessionDir / "metadata.json").string());
+    QFile metaFile(metaPath);
+    if (metaFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        QJsonObject meta;
+        meta.insert(QStringLiteral("label"), rawLabel);
+        meta.insert(QStringLiteral("folder"), folderName);
+        meta.insert(QStringLiteral("timestamp"), timestamp);
+        meta.insert(QStringLiteral("sampleRate"), m_pendingSampleRate);
+        meta.insert(QStringLiteral("durationSec"), pendingCaptureDurationSec());
+        QJsonArray midiArr;
+        for (int midi : m_tuning.stringMidi)
+            midiArr.append(midi);
+        meta.insert(QStringLiteral("stringMidi"), midiArr);
+        QJsonArray stringNames;
+        for (int s = 0; s < 6; ++s)
+            stringNames.append(stringNoteToken(s));
+        meta.insert(QStringLiteral("stringNames"), stringNames);
+        metaFile.write(QJsonDocument(meta).toJson(QJsonDocument::Indented));
+        metaFile.close();
+    }
+
+    const QString eventsPath = QString::fromStdString((sessionDir / "events.json").string());
+    QFile eventsFile(eventsPath);
+    if (eventsFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        eventsFile.write(m_pendingEventsJsonSnapshot.toUtf8());
+        eventsFile.close();
+    }
+
+    SessionLogger::instance().logf("live-record",
+                                   "saved session folder='%s' duration=%.2f",
+                                   folderName.toUtf8().constData(),
+                                   pendingCaptureDurationSec());
+
+    clearPendingCapture();
+    return true;
+}
+import QtQuick
+
+Item {
+    id: overlay
+
+    // Preserve SVG coordinate system (viewBox 0 0 1216 127) - matches Fret Cells.svg
+    width: 1216
+    height: 127
+    
+    // Expose canvas for external requestPaint() calls
+    property alias canvas: canvas
+
+    // Defaults (match SVG)
+    property color defaultFill: "#222222"
+    property color defaultStroke: "#585858"
+    property real defaultStrokeW: 0.5
+    property real binH: 20.5
+
+    // If set, used to compute colors on-demand:
+    // function(s1to6, f0to24, binId) -> color/string
+    property var colorProvider: null
+
+    // Internal color overrides (fast set per bin)
+    // Key: "bin_s{1..6}_f{0..24}" -> color string / Qt.rgba / QColor
+    property var colorOverrides: ({})
+    property int colorRevision: 0  // bump to force bindings to re-evaluate
+
+    // SVG string Y positions (s1 high e .. s6 low E)
+    readonly property var stringY: [
+        105.25, // s1
+        84.25,  // s2
+        63.25,  // s3
+        42.25,  // s4
+        21.25,  // s5
+        0.25    // s6
+    ]
+
+    // SVG fret X positions and widths (F0..F24)
+    readonly property var fretX: [
+        1.25, 38.25, 128.25, 211.25, 289.25, 363.25, 433.25, 499.25, 562.25,
+        620.25, 676.25, 728.25, 777.25, 824.25, 868.25, 909.25, 948.75,
+        985.75, 1020.75, 1053.75, 1085.25, 1114.75, 1142.25, 1168.25, 1192.75
+    ]
+    readonly property var fretW: [
+        34.5, 89.5, 81.5, 76.5, 72.5, 68.5, 64.5, 61.5, 56.5, 54.5,
+        50.5, 47.5, 45.5, 42.5, 39.5, 38.0, 35.5, 33.5, 31.5, 30.0,
+        28.0, 26.0, 24.5, 23.0, 23.0
+    ]
+
+    signal binClicked(string binId, int stringIndex1to6, int fretIndex0to24, real localX, real localY)
+    signal binPressed(string binId, int stringIndex1to6, int fretIndex0to24, real localX, real localY)
+    signal binReleased(string binId, int stringIndex1to6, int fretIndex0to24, real localX, real localY)
+
+    function binIdFor(s1to6, f0to24) {
+        return "bin_s" + s1to6 + "_f" + f0to24
+    }
+
+    // Binding-safe color getter (depends on colorRevision to re-evaluate)
+    function colorFor(s1to6, f0to24) {
+        colorRevision // dependency hook
+        const id = binIdFor(s1to6, f0to24)
+
+        // 1) explicit override wins
+        const ov = colorOverrides[id]
+        if (ov !== undefined && ov !== null) return ov
+
+        // 2) provider fallback
+        if (colorProvider) return colorProvider(s1to6, f0to24, id)
+
+        // 3) default
+        return defaultFill
+    }
+
+    // Fast API to set colors (override map) and force redraw
+    function setBinColorById(binId, color) {
+        const next = Object.assign({}, colorOverrides)
+        next[binId] = color
+        colorOverrides = next
+        colorRevision++
+    }
+
+    function clearBinColorById(binId) {
+        const next = Object.assign({}, colorOverrides)
+        delete next[binId]
+        colorOverrides = next
+        colorRevision++
+    }
+
+    function clearAllOverrides() {
+        colorOverrides = ({})
+        colorRevision++
+    }
+
+    // Compute (string,fret) from a point in overlay local coords.
+    // Returns { valid: bool, s: int, f: int, id: string }
+    function hitTest(localX, localY) {
+        // Find string (rows). stringY are top edges.
+        let s = -1
+        for (let i = 0; i < 6; i++) {
+            const y0 = stringY[i]
+            const y1 = y0 + binH
+            if (localY >= y0 && localY <= y1) {
+                s = i + 1 // 1..6
+                break
+            }
+        }
+        if (s === -1) return { valid: false }
+
+        // Find fret (columns)
+        let f = -1
+        for (let j = 0; j < 25; j++) {
+            const x0 = fretX[j]
+            const x1 = x0 + fretW[j]
+            if (localX >= x0 && localX <= x1) {
+                f = j
+                break
+            }
+        }
+        if (f === -1) return { valid: false }
+
+        return { valid: true, s: s, f: f, id: binIdFor(s, f) }
+    }
+
+    // ---- Rendering via Canvas ----
+    Canvas {
+        id: canvas
+        anchors.fill: parent
+        
+        // Use immediate rendering (Threaded/FBO can crash on Pi5)
+        renderStrategy: Canvas.Immediate
+        
+        onPaint: {
+            var ctx = getContext("2d")
+            ctx.clearRect(0, 0, width, height)
+            
+            // Draw all 150 bins (6 strings x 25 frets)
+            // Uses SVG coordinates directly since container is 1216x127
+            for (var s = 1; s <= 6; s++) {
+                var y = overlay.stringY[s - 1]
+                
+                for (var f = 0; f < 25; f++) {
+                    var x = overlay.fretX[f]
+                    var w = overlay.fretW[f]
+                    var h = overlay.binH
+                    
+                    // Get color from provider
+                    var fillColor = overlay.colorFor(s, f)
+                    
+                    // Fill rectangle
+                    ctx.fillStyle = fillColor
+                    ctx.fillRect(x, y, w, h)
+                }
+            }
+        }
+    }
+
+    // ---- Interaction: one handler ----
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+
+        onPressed: (mouse) => {
+            const h = overlay.hitTest(mouse.x, mouse.y)
+            if (h.valid) overlay.binPressed(h.id, h.s, h.f, mouse.x, mouse.y)
+        }
+        onReleased: (mouse) => {
+            const h = overlay.hitTest(mouse.x, mouse.y)
+            if (h.valid) overlay.binReleased(h.id, h.s, h.f, mouse.x, mouse.y)
+        }
+        onClicked: (mouse) => {
+            const h = overlay.hitTest(mouse.x, mouse.y)
+            if (h.valid) overlay.binClicked(h.id, h.s, h.f, mouse.x, mouse.y)
+        }
+    }
+}
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import "../components"
+
+Item {
+    id: root
+    implicitWidth: 1280
+    implicitHeight: 720
+
+    // Bin overlay heatmap toggle
+    property bool binOverlayEnabled: false
+
+    property var bridge: (typeof AppController !== "undefined" && AppController)
+                         ? AppController.tabBridge
+                         : ((typeof TabBridge !== "undefined" && TabBridge) ? TabBridge : null)
+    property bool monitorSwitchGuard: false
+    readonly property var stringLabels: ["E", "A", "D", "G", "B", "e"]
+    property string lastTestPlaybackState: ""
+
+    readonly property real baseWidth: 1280
+    readonly property real baseHeight: 720
+    readonly property real scaleFactor: Math.min(width / baseWidth, height / baseHeight)
+
+    Rectangle {
+        anchors.fill: parent
+        color: "#0d0d0f"
+        z: -100
+    }
+    function handleMonitorToggle(enabled) {
+        if (!bridge)
+            return;
+        bridge.setRecording(enabled);
+    }
+
+    function gainColor(value) {
+        if (value >= 0.85)
+            return "#ff5252";
+        if (value >= 0.6)
+            return "#ffd84d";
+        return "#5ad45a";
+    }
+
+    function meterDisplayLevel(value) {
+        var normalized = Math.max(0, Math.min(1, value));
+        var ceiling = 0.35; // compress usable range so low inputs render taller
+        return Math.min(1, normalized / ceiling);
+    }
+
+    function calibrationStepColor(state) {
+        switch (state) {
+        case 4:
+            return "#6b6b73"; // Medium-dark grey for fading noise capture
+        case 3:
+            return "#56d56e";
+        case 2:
+            return "#ff9f5a";
+        case 1:
+            return "#ffd84d";
+        default:
+            return "#3b3b43";
+        }
+    }
+
+    function tuningDeviationAt(index) {
+        if (!bridge || !bridge.tuningDeviation)
+            return 0;
+        if (index < 0 || index >= bridge.tuningDeviation.length)
+            return 0;
+        var dev = Number(bridge.tuningDeviation[index]);
+        if (bridge.tuningModeEnabled && Math.abs(dev) > 0.01) {
+            console.log("tuning-deviation", "string", index, "cents", dev.toFixed(2));
+        }
+        return dev;
+    }
+
+    function tuningColorFromDeviation(cents) {
+        var absCents = Math.abs(cents);
+        
+        // Color gradient based on cents deviation:
+        // 0-3 cents: solid green (in tune)
+        // 3-20 cents: fade from green through yellow to red
+        // 20+ cents: solid red (out of tune)
+        
+        var green = {r: 0.337, g: 0.835, b: 0.431};   // #56d56e
+        var yellow = {r: 1.0, g: 0.843, b: 0.302};    // #ffd84d
+        var red = {r: 0.867, g: 0.243, b: 0.262};     // #dd3e43
+        
+        if (absCents <= 3) {
+            // Solid green - in tune
+            return Qt.rgba(green.r, green.g, green.b, 1);
+        } else if (absCents <= 20) {
+            // Interpolate from green through yellow to red (3-20 cents range)
+            // Map 3-20 cents to 0-1 ratio
+            var ratio = (absCents - 3) / 17.0;
+            
+            if (ratio <= 0.5) {
+                // Green to yellow (3-11.5 cents)
+                var r1 = ratio * 2.0;
+                return Qt.rgba(
+                    green.r + (yellow.r - green.r) * r1,
+                    green.g + (yellow.g - green.g) * r1,
+                    green.b + (yellow.b - green.b) * r1,
+                    1
+                );
+            } else {
+                // Yellow to red (11.5-20 cents)
+                var r2 = (ratio - 0.5) * 2.0;
+                return Qt.rgba(
+                    yellow.r + (red.r - yellow.r) * r2,
+                    yellow.g + (red.g - yellow.g) * r2,
+                    yellow.b + (red.b - yellow.b) * r2,
+                    1
+                );
+            }
+        } else {
+            // Solid red - out of tune
+            return Qt.rgba(red.r, red.g, red.b, 1);
+        }
+    }
+
+    function getActiveTuningString() {
+        if (!bridge || !bridge.hexMeters || !bridge.tuningModeEnabled)
+            return -1;
+        
+        var maxLevel = 0;
+        var maxIndex = -1;
+        var threshold = 0.02; // Minimum signal level to consider string active
+        
+        for (var i = 0; i < bridge.hexMeters.length; i++) {
+            var level = Number(bridge.hexMeters[i]);
+            if (level > maxLevel && level > threshold) {
+                maxLevel = level;
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
+
+    function tuningCircleColor(state, index) {
+        if (bridge && bridge.tuningModeEnabled && !bridge.calibrationRunning) {
+            var activeString = getActiveTuningString();
+            var deviation = tuningDeviationAt(index);
+            
+            // Show color only for the currently active string
+            if (activeString >= 0 && activeString === index) {
+                // Always show tuning color for active string, regardless of deviation value
+                return tuningColorFromDeviation(deviation);
+            }
+            // All other strings show neutral gray
+            return "#3b3b43";
+        }
+        return calibrationStepColor(state);
+    }
+
+    Item {
+        id: canvas
+        width: baseWidth
+        height: baseHeight
+        anchors.centerIn: parent
+        transformOrigin: Item.Center
+        scale: scaleFactor
+
+        Image {
+            id: backgroundFill
+            anchors.fill: parent
+            source: "../assets/blueBgFIll.png"
+            fillMode: Image.Stretch
+            z: -10
+        }
+
+        Image {
+            id: tabCaptureLabel
+            source: "../assets/TabPage/TabCaptureLabel.svg"
+            anchors.left: parent.left
+            anchors.leftMargin: 48
+            anchors.top: parent.top
+            anchors.topMargin: 40
+            smooth: true
+            z: -5
+            visible: false
+        }
+
+        Image {
+            id: tabGrid
+            source: "../assets/TabPage/TabGrid.svg"
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: neckStage.top
+            anchors.bottomMargin: 32
+            fillMode: Image.Stretch
+            smooth: true
+            z: -4
+            visible: false
+        }
+
+            Item {
+                id: neckStage
+                readonly property int bottomPadding: 28
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: bottomPadding
+            height: neckBackdrop.implicitWidth > 0
+                    ? width * neckBackdrop.implicitHeight / neckBackdrop.implicitWidth
+                    : 250
+            z: -2
+
+            Image {
+                id: neckBackdrop
+                source: "../assets/neckDisplayBGDark.png"
+                anchors.fill: parent
+                anchors.bottomMargin: -neckStage.bottomPadding
+                fillMode: Image.Stretch
+                smooth: true
+                z: -1
+            }
+
+            Item {
+                id: neckSection
+                readonly property real baseFretWidth: 1205
+                readonly property real baseStringHeight: 109
+                readonly property real baseNeckWidth: 1185
+                readonly property real baseNeckHeight: 134
+                readonly property real baseStringsWidth: 1221
+                readonly property real stringsHorizontalExpansion: baseStringsWidth - baseFretWidth
+                readonly property real stringsVerticalOffset: (baseNeckHeight - baseStringHeight) / 2
+                readonly property real fretDetectionOffset: 6
+                readonly property real fretZeroOverlayOffset: 8
+                property bool playbackActive: false
+                property int playbackIndex: 0
+                property var playbackEvents: []
+                width: fretsImage.width > 0 ? fretsImage.width : baseFretWidth
+                height: fretsImage.height > 0 ? fretsImage.height : 165
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                z: 1
+
+                readonly property var baseFretBoundaries: [
+                    0,
+                    26.0342,
+                    115.471,
+                    198.308,
+                    276.854,
+                    350.779,
+                    420.415,
+                    486.42,
+                    548.795,
+                    607.869,
+                    663.314,
+                    715.458,
+                    764.632,
+                    811.495,
+                    855.389,
+                    896.642,
+                    935.915,
+                    973.208,
+                    1007.86,
+                    1041.19,
+                    1072.22,
+                    1101.59,
+                    1129.31,
+                    1155.38,
+                    1179.8,
+                    1203.57
+                ]
+
+                readonly property var baseStringOffsets: [0.25293, 20.4473, 40.6436, 60.8398, 81.0342, 101.229]
+                readonly property var normalizedFretBoundaries: baseFretBoundaries.map(function(value) {
+                    return value / baseFretWidth;
+                })
+                readonly property var normalizedStringOffsets: baseStringOffsets.map(function(value) {
+                    return value / baseStringHeight;
+                })
+
+                property bool allowMouseOverlay: true
+                property string overlaySource: ""
+                property int activeString: -1
+                property int activeFret: -1
+                property bool liveNotesActive: liveNoteModel.count > 0
+
+                ListModel {
+                    id: liveNoteModel
+                }
+
+                Timer {
+                    id: liveNoteSweepTimer
+                    interval: 40
+                    repeat: true
+                    running: true
+                    onTriggered: neckSection.pruneLiveNotes()
+                }
+
+                function stringCenter(index) {
+                    if (index < 0 || index >= normalizedStringOffsets.length) {
+                        return stringsImage.y + stringsImage.height / 2;
+                    }
+                    var scale = stringsImage.height > 0 ? stringsImage.height : neckSection.baseStringHeight;
+                    return stringsImage.y + normalizedStringOffsets[index] * scale;
+                }
+
+                function fretCenter(index) {
+                    var bounds = normalizedFretBoundaries;
+                    if (index < 0 || index + 1 >= bounds.length) {
+                        return fretsImage.x + fretsImage.width / 2;
+                    }
+                    var left = bounds[index] * fretsImage.width;
+                    var right = bounds[index + 1] * fretsImage.width;
+                    var center = fretsImage.x + (left + right) / 2;
+                    if (index === 0)
+                        center -= neckSection.fretZeroOverlayOffset;
+                    return center;
+                }
+
+                function stringIndexFor(y) {
+                    var count = normalizedStringOffsets.length;
+                    var stringsHeight = stringsImage.height > 0 ? stringsImage.height : neckSection.baseStringHeight;
+                    for (var i = 0; i < count; i++) {
+                        var currentCenter = stringCenter(i);
+                        var lower = i === 0 ? stringsImage.y : (stringCenter(i - 1) + currentCenter) / 2;
+                        var upper = i === count - 1 ? (stringsImage.y + stringsHeight) : (currentCenter + stringCenter(i + 1)) / 2;
+                        if (y >= lower && y < upper) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                }
+
+                function fretIndexFor(x) {
+                    var boardWidth = fretsImage.width > 0 ? fretsImage.width : neckSection.baseFretWidth;
+                    var localX = x - fretsImage.x;
+                    if (localX < 0 || localX > boardWidth) {
+                        return -1;
+                    }
+                    var bounds = normalizedFretBoundaries;
+                    var detectionOffset = neckSection.fretDetectionOffset;
+                    for (var i = 0; i < bounds.length - 1; i++) {
+                        var left = bounds[i] * boardWidth - detectionOffset;
+                        var right = bounds[i + 1] * boardWidth - detectionOffset;
+                        if (i === bounds.length - 2)
+                            right = boardWidth;
+                        var within = (i === bounds.length - 2)
+                                      ? (localX >= left && localX <= right)
+                                      : (localX >= left && localX < right);
+                        if (within) {
+                            return i;
+                        }
+                    }
+                    if (localX >= boardWidth) {
+                        return bounds.length - 2;
+                    }
+                    return -1;
+                }
+
+                // Allows mouse testing and future audio triggers to light up a single fret/string location.
+                function activateOverlay(stringIndex, fretIndex, source) {
+                    if (fretIndex < 0 || fretIndex >= normalizedFretBoundaries.length - 1)
+                        return deactivateOverlay(source);
+
+                    if (stringIndex < 0 || stringIndex >= normalizedStringOffsets.length)
+                        return deactivateOverlay(source);
+
+                    var resolvedSource = source || (overlaySource.length ? overlaySource : "external");
+                    overlaySource = resolvedSource;
+
+                    activeFret = fretIndex;
+                    activeString = stringIndex;
+
+                    hoverMarker.x = fretCenter(fretIndex) - hoverMarker.width / 2;
+                    hoverMarker.y = stringCenter(stringIndex) - hoverMarker.height / 2;
+                    hoverMarker.visible = true;
+                }
+
+                function deactivateOverlay(source) {
+                    if (source && overlaySource.length && overlaySource !== source)
+                        return;
+
+                    if (activeFret === -1 && activeString === -1 && !hoverMarker.visible)
+                        return;
+
+                    overlaySource = "";
+                    activeFret = -1;
+                    activeString = -1;
+                    hoverMarker.visible = false;
+                }
+
+                function addLiveNoteOverlay(rawStringIndex, fretIndex, velocity) {
+                    if (fretIndex < 0 || fretIndex >= normalizedFretBoundaries.length - 1)
+                        return;
+                    if (rawStringIndex < 0 || rawStringIndex >= normalizedStringOffsets.length)
+                        return;
+                    var overlayString = 5 - rawStringIndex;
+                    if (overlayString < 0 || overlayString >= normalizedStringOffsets.length)
+                        return;
+
+                    var energy = Math.max(0, Math.min(1, velocity === undefined ? 0.6 : velocity));
+                    var updated = false;
+                    for (var i = 0; i < liveNoteModel.count; ++i) {
+                        var entry = liveNoteModel.get(i);
+                        if (entry.overlayString === overlayString && entry.fretIndex === fretIndex) {
+                            liveNoteModel.set(i, {
+                                                  overlayString: overlayString,
+                                                  fretIndex: fretIndex,
+                                                  velocity: Math.max(entry.velocity, energy),
+                                                  envelope: energy
+                                              });
+                            updated = true;
+                            break;
+                        }
+                    }
+                    if (!updated) {
+                        liveNoteModel.append({
+                                                 overlayString: overlayString,
+                                                 fretIndex: fretIndex,
+                                                 velocity: energy,
+                                                 envelope: energy
+                                             });
+                    }
+                    allowMouseOverlay = false;
+                }
+
+                function removeLiveNoteOverlay(rawStringIndex, fretIndex) {
+                    if (rawStringIndex < 0 || rawStringIndex >= 6)
+                        return;
+                    var overlayString = 5 - rawStringIndex;
+                    if (overlayString < 0 || overlayString >= normalizedStringOffsets.length)
+                        return;
+                    
+                    for (var i = liveNoteModel.count - 1; i >= 0; --i) {
+                        var entry = liveNoteModel.get(i);
+                        if (entry.overlayString === overlayString && entry.fretIndex === fretIndex) {
+                            liveNoteModel.remove(i);
+                            break;
+                        }
+                    }
+                    
+                    if (liveNoteModel.count === 0 && !playbackActive)
+                        allowMouseOverlay = true;
+                }
+
+                function updateLiveNoteEnvelope(rawStringIndex, envelope) {
+                    if (rawStringIndex < 0 || rawStringIndex >= 6)
+                        return;
+                    var overlayString = 5 - rawStringIndex;
+                    if (overlayString < 0 || overlayString >= normalizedStringOffsets.length)
+                        return;
+                    
+                    for (var i = 0; i < liveNoteModel.count; ++i) {
+                        var entry = liveNoteModel.get(i);
+                        if (entry.overlayString === overlayString) {
+                            liveNoteModel.setProperty(i, "envelope", Math.max(0, Math.min(1, envelope)));
+                            break;
+                        }
+                    }
+                }
+
+                function pruneLiveNotes() {
+                    // No longer needed - overlays are removed explicitly on note-off
+                    // Keeping function for compatibility but it does nothing
+                }
+
+                function clearLiveNotes() {
+                    liveNoteModel.clear();
+                    if (!playbackActive)
+                        allowMouseOverlay = true;
+                }
+
+                function updateHover(x, y) {
+                    if (!allowMouseOverlay)
+                        return;
+
+                    var boardWidth = fretsImage.width > 0 ? fretsImage.width : neckSection.baseFretWidth;
+                    var stringsHeight = stringsImage.height > 0 ? stringsImage.height : neckSection.baseStringHeight;
+                    var withinHorizontal = x >= fretsImage.x && x <= fretsImage.x + boardWidth;
+                    var withinVertical = y >= stringsImage.y && y <= stringsImage.y + stringsHeight;
+
+                    if (!withinHorizontal || !withinVertical) {
+                        deactivateOverlay("mouse");
+                        return;
+                    }
+
+                    var fretIndex = fretIndexFor(x);
+                    var stringIndex = stringIndexFor(y);
+
+                    if (fretIndex === -1 || stringIndex === -1) {
+                        deactivateOverlay("mouse");
+                        return;
+                    }
+
+                    activateOverlay(stringIndex, fretIndex, "mouse");
+                }
+
+                function stopPlayback() {
+                    playbackActive = false;
+                    playbackEvents = [];
+                    playbackIndex = 0;
+                    playbackEventTimer.stop();
+                    playbackReleaseTimer.stop();
+                    allowMouseOverlay = (liveNoteModel.count === 0);
+                    deactivateOverlay("playback");
+                }
+
+                function finishPlayback() {
+                    playbackActive = false;
+                    playbackEvents = [];
+                    playbackIndex = 0;
+                    playbackEventTimer.stop();
+                    playbackReleaseTimer.stop();
+                    allowMouseOverlay = (liveNoteModel.count === 0);
+                    deactivateOverlay("playback");
+                }
+
+                function playDetectedEvents(events) {
+                    stopPlayback();
+                    if (!events || events.length === 0)
+                        return;
+
+                    playbackEvents = events.slice().sort(function(a, b) {
+                        var startA = (a && a.start) ? a.start : 0;
+                        var startB = (b && b.start) ? b.start : 0;
+                        return startA - startB;
+                    });
+
+                    playbackIndex = 0;
+                    playbackActive = true;
+                    allowMouseOverlay = false;
+                    scheduleNextPlaybackEvent();
+                }
+
+                function scheduleNextPlaybackEvent() {
+                    playbackEventTimer.stop();
+                    if (!playbackActive) {
+                        return;
+                    }
+                    if (playbackIndex >= playbackEvents.length) {
+                        if (!playbackReleaseTimer.running)
+                            finishPlayback();
+                        return;
+                    }
+
+                    var ev = playbackEvents[playbackIndex];
+                    if (!ev)
+                        return finishPlayback();
+
+                    var delay = 0;
+                    if (playbackIndex === 0) {
+                        delay = 0;
+                    } else {
+                        var prev = playbackEvents[playbackIndex - 1];
+                        var prevStart = prev && prev.start !== undefined ? prev.start : 0;
+                        var curStart = ev.start !== undefined ? ev.start : 0;
+                        delay = Math.max(0, curStart - prevStart);
+                    }
+
+                    if (delay <= 0) {
+                        showPlaybackEvent(ev);
+                    } else {
+                        playbackEventTimer.interval = Math.max(1, Math.round(delay * 1000));
+                        playbackEventTimer.start();
+                    }
+                }
+
+                function showPlaybackEvent(ev) {
+                    if (!playbackActive || !ev)
+                        return;
+
+                    var stringIdx = Math.round(Number(ev.string));
+                    var fretIdx = Math.round(Number(ev.fret));
+                    if (!(stringIdx >= 0 && stringIdx < normalizedStringOffsets.length)) {
+                        playbackIndex += 1;
+                        scheduleNextPlaybackEvent();
+                        return;
+                    }
+                    if (!(fretIdx >= 0 && fretIdx < normalizedFretBoundaries.length)) {
+                        playbackIndex += 1;
+                        scheduleNextPlaybackEvent();
+                        return;
+                    }
+
+                    activateOverlay(stringIdx, fretIdx, "playback");
+
+                    var endVal = (ev.end !== undefined) ? ev.end : (ev.start || 0);
+                    var startVal = (ev.start !== undefined) ? ev.start : 0;
+                    var durationMs = Math.max(80, Math.round(Math.max(endVal - startVal, 0.08) * 1000));
+                    playbackReleaseTimer.interval = durationMs;
+                    playbackReleaseTimer.start();
+
+                    playbackIndex += 1;
+                    scheduleNextPlaybackEvent();
+                }
+
+                function handlePlaybackRelease() {
+                    if (overlaySource === "playback")
+                        deactivateOverlay("playback");
+                    if (!playbackActive && !playbackEventTimer.running)
+                        allowMouseOverlay = (liveNoteModel.count === 0);
+                    if (playbackActive && playbackIndex >= playbackEvents.length && !playbackEventTimer.running)
+                        finishPlayback();
+                }
+
+                Image {
+                    id: fretsImage
+                    visible: !root.binOverlayEnabled
+                    source: "../assets/TabPage/NeckDisplay/Frets.svg"
+                    sourceSize.width: neckSection.baseFretWidth
+                    sourceSize.height: 165
+                    width: neckSection.baseFretWidth
+                    height: 165
+                    fillMode: Image.Stretch
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    smooth: true
+                    z: 2
+                }
+
+                Image {
+                    id: neckImage
+                    visible: !root.binOverlayEnabled
+                    source: "../assets/TabPage/NeckDisplay/Neck.png"
+                    sourceSize.width: neckSection.baseNeckWidth
+                    sourceSize.height: neckSection.baseNeckHeight
+                    width: neckSection.baseNeckWidth
+                    height: neckSection.baseNeckHeight
+                    fillMode: Image.Stretch
+                    // Anchor neck to the parent so it does not move when frets are adjusted.
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.horizontalCenterOffset: 14
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: -19
+                    smooth: true
+                    z: 0
+                }
+
+                Image {
+                    id: stringsImage
+                    visible: !root.binOverlayEnabled
+                    source: "../assets/TabPage/NeckDisplay/Strings.svg"
+                    sourceSize.width: neckSection.baseStringsWidth
+                    sourceSize.height: neckSection.baseStringHeight
+                    width: fretsImage.width + neckSection.stringsHorizontalExpansion
+                    height: neckSection.baseStringHeight
+                    fillMode: Image.Stretch
+                    anchors.horizontalCenter: fretsImage.horizontalCenter
+                    anchors.horizontalCenterOffset: -4
+                    anchors.top: parent.top
+                    anchors.topMargin: neckSection.stringsVerticalOffset - 3
+                    smooth: true
+                    z: 1
+                }
+
+                Image {
+                    id: stringLabels
+                    visible: !root.binOverlayEnabled
+                    source: "../assets/TabPage/NeckDisplay/StringLabels.svg"
+                    sourceSize.height: neckSection.baseNeckHeight
+                    height: neckSection.baseNeckHeight
+                    anchors.right: fretsImage.left
+                    anchors.rightMargin: 22
+                    anchors.verticalCenter: neckImage.verticalCenter
+                    anchors.verticalCenterOffset: neckSection.stringsVerticalOffset + 2 + neckSection.baseStringHeight / 2 - neckSection.baseNeckHeight / 2
+                    smooth: true
+                    z: 2
+                }
+
+                Image {
+                    id: hoverMarker
+                    source: "../assets/TabPage/overlayMarker.svg"
+                    width: 14
+                    height: 14
+                    visible: false
+                    smooth: true
+                    z: 3
+                }
+
+                Repeater {
+                    id: liveNoteRepeater
+                    model: liveNoteModel
+                    delegate: Rectangle {
+                        // Hide when bin overlay is active (heatmap replaces note overlay)
+                        visible: !root.binOverlayEnabled
+                        width: 44
+                        height: 18
+                        radius: 6
+                        color: Qt.rgba(0.96, 0.58, 0.32, 0.85)
+                        border.color: "#ffd8a2"
+                        border.width: 1
+                        x: neckSection.fretCenter(fretIndex) - width / 2
+                        y: neckSection.stringCenter(overlayString) - height / 2
+                        // Opacity linked to envelope for smooth decay visualization
+                        // Minimum 0.2 opacity to keep visible, max at full envelope
+                        opacity: Math.max(0.2, Math.min(1.0, envelope * 1.2))
+                        z: 2.5
+                        
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 40
+                                easing.type: Easing.OutQuad
+                            }
+                        }
+                    }
+                }
+
+                Rectangle {
+                    id: hoverBadge
+                    height: neckSection.activeFret >= 0 ? 24 : 0
+                    color: "#2A231DEE"
+                    radius: 12
+                    border.color: "#F2E8D544"
+                    border.width: 1
+                    visible: neckSection.activeFret >= 0
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    implicitWidth: hoverText.implicitWidth + 20
+                    z: 4
+
+                    Text {
+                        id: hoverText
+                        anchors.centerIn: parent
+                        color: "#F2E8D5"
+                        font.pixelSize: 12
+                        text: neckSection.activeFret >= 0 ? ("S" + (neckSection.activeString + 1) + "  F" + neckSection.activeFret) : ""
+                    }
+                }
+
+                MouseArea {
+                    id: hoverArea
+                    anchors.fill: fretsImage
+                    hoverEnabled: true
+                    acceptedButtons: Qt.NoButton
+                    onPositionChanged: {
+                        if (neckSection.allowMouseOverlay)
+                            neckSection.updateHover(hoverArea.mouseX, hoverArea.mouseY);
+                    }
+                    onEntered: {
+                        if (neckSection.allowMouseOverlay)
+                            neckSection.updateHover(hoverArea.mouseX, hoverArea.mouseY);
+                    }
+                    onExited: {
+                        if (neckSection.allowMouseOverlay)
+                            neckSection.deactivateOverlay("mouse");
+                    }
+                }
+
+                Timer {
+                    id: playbackEventTimer
+                    interval: 150
+                    repeat: false
+                    onTriggered: {
+                        if (!neckSection.playbackActive)
+                            return;
+                        if (neckSection.playbackIndex >= neckSection.playbackEvents.length) {
+                            neckSection.finishPlayback();
+                            return;
+                        }
+                        neckSection.showPlaybackEvent(neckSection.playbackEvents[neckSection.playbackIndex]);
+                    }
+                }
+
+                Timer {
+                    id: playbackReleaseTimer
+                    interval: 100
+                    repeat: false
+                    onTriggered: neckSection.handlePlaybackRelease()
+                }
+
+            }
+
+        }
+
+        Item {
+            id: hexMeterStrip
+            // Map the desired root-space offsets back into the scaled canvas coordinates
+            property real canvasBottomY: canvas.mapFromItem(root, 0, root.height - 2).y
+            property real canvasRightX: canvas.mapFromItem(root, root.width - 28, 0).x
+            property int meterHeight: 64
+            x: canvasRightX - width
+            y: canvasBottomY - height - 4
+            height: metersRow.implicitHeight
+            width: metersRow.implicitWidth
+            visible: bridge !== null
+            Row {
+                id: metersRow
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                spacing: 2
+                Repeater {
+                    model: 6
+                    delegate: Column {
+                        spacing: 2
+                        width: 16
+                        property real level: (bridge && bridge.hexMeters && bridge.hexMeters.length > index)
+                                            ? Math.max(0, Math.min(1, bridge.hexMeters[index]))
+                                            : 0
+                        property real displayLevel: meterDisplayLevel(level)
+                        Rectangle {
+                            width: 10
+                            height: hexMeterStrip.meterHeight
+                            radius: 4
+                            color: "#15161a"
+                            border.color: "#2a2c31"
+                            border.width: 1
+                            Rectangle {
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.bottom: parent.bottom
+                                height: parent.height * displayLevel
+                                radius: 3
+                                color: gainColor(displayLevel)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // RMS Numeric Display
+        Column {
+            id: rmsNumericDisplay
+            spacing: 1
+            anchors.right: hexMeterStrip.left
+            anchors.rightMargin: 10
+            anchors.bottom: hexMeterStrip.bottom
+            visible: bridge !== null
+            z: 10
+            
+            Repeater {
+                model: root.stringLabels ? root.stringLabels.length : 0
+                delegate: Row {
+                    spacing: 3
+                    property int stringIndex: root.stringLabels && root.stringLabels.length > 0 ? (root.stringLabels.length - 1 - index) : 0
+                    property string stringLabel: root.stringLabels && root.stringLabels.length > stringIndex ? root.stringLabels[stringIndex] : ""
+                    
+                    Label {
+                        text: stringLabel
+                        font.pixelSize: 9
+                        color: "#94a3b8"
+                        width: 10
+                    }
+                    Label {
+                        text: {
+                            var raw = (bridge && bridge.rawMeters && bridge.rawMeters.length > stringIndex) 
+                                ? bridge.rawMeters[stringIndex] : 0.0
+                            var cal = (bridge && bridge.hexMeters && bridge.hexMeters.length > stringIndex) 
+                                ? bridge.hexMeters[stringIndex] : 0.0
+                            return raw.toFixed(3) + "   " + cal.toFixed(3)
+                        }
+                        font.family: "Monospace"
+                        font.pixelSize: 9
+                        color: "#cbd5e1"
+                    }
+                }
+            }
+        }
+
+        Switch {
+            id: liveHexMonitorSwitch
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: 4
+            anchors.bottomMargin: 8
+            visible: AppController && !AppController.testMode
+            checked: AppController ? AppController.liveHexMonitorEnabled : false
+            onToggled: if (AppController) AppController.setLiveHexMonitorEnabled(checked)
+        }
+
+        Switch {
+            id: monitorSwitch
+            anchors.top: parent.top
+            anchors.topMargin: 32
+            anchors.right: parent.right
+            anchors.rightMargin: 32
+            implicitHeight: 44
+            implicitWidth: indicatorFrame.implicitWidth
+            width: implicitWidth
+            focusPolicy: Qt.NoFocus
+            hoverEnabled: true
+            contentItem: Item {}
+            indicator: Rectangle {
+                id: indicatorFrame
+                implicitWidth: 82
+                implicitHeight: 36
+                radius: height / 2
+                color: monitorSwitch.checked ? "#B9393F" : "#3C3027"
+                border.color: monitorSwitch.checked ? "#F2B1A6" : "#7A6957"
+                border.width: 1
+                Behavior on color { ColorAnimation { duration: 180 } }
+                Behavior on border.color { ColorAnimation { duration: 180 } }
+
+                Rectangle {
+                    width: 30
+                    height: 30
+                    radius: height / 2
+                    anchors.verticalCenter: parent.verticalCenter
+                    x: monitorSwitch.checked ? parent.width - width - 3 : 3
+                    color: "#F2E8D5"
+                    border.color: "#B59879"
+                    border.width: 1
+                    Behavior on x { NumberAnimation { duration: 160; easing.type: Easing.InOutQuad } }
+                }
+            }
+
+            onCheckedChanged: {
+                if (root.monitorSwitchGuard)
+                    return;
+                root.handleMonitorToggle(checked);
+            }
+        }
+
+        // Live thresholds display
+        Column {
+            id: thresholdsTable
+            anchors.right: calibrationPanel.left
+            anchors.rightMargin: 16
+            anchors.bottom: calibrationPanel.bottom
+            spacing: 0
+            visible: bridge && bridge.thresholds !== undefined && hexMeterStrip.visible
+            
+            // Header row
+            Row {
+                spacing: 3
+                Label {
+                    text: ""
+                    width: 10
+                    font.pixelSize: 8
+                }
+                Label {
+                    text: "Baseline"
+                    width: 45
+                    font.pixelSize: 8
+                    color: "#7d8694"
+                    font.family: "Monospace"
+                    horizontalAlignment: Text.AlignHCenter
+                }
+                Label {
+                    text: "envFloor"
+                    width: 45
+                    font.pixelSize: 8
+                    color: "#7d8694"
+                    font.family: "Monospace"
+                    horizontalAlignment: Text.AlignHCenter
+                }
+                Label {
+                    text: "Gate"
+                    width: 45
+                    font.pixelSize: 8
+                    color: "#7d8694"
+                    font.family: "Monospace"
+                    horizontalAlignment: Text.AlignHCenter
+                }
+                Label {
+                    text: "Sust"
+                    width: 45
+                    font.pixelSize: 8
+                    color: "#7d8694"
+                    font.family: "Monospace"
+                    horizontalAlignment: Text.AlignHCenter
+                }
+            }
+            
+            Repeater {
+                model: 6
+                delegate: Row {
+                    spacing: 3
+                    property int stringIndex: index
+                    property string stringLabel: root.stringLabels[stringIndex]
+                    property var thresholdData: (bridge && bridge.thresholds && bridge.thresholds.length > stringIndex) 
+                        ? bridge.thresholds[stringIndex] : null
+                    
+                    Label {
+                        text: stringLabel
+                        font.pixelSize: 9
+                        color: "#94a3b8"
+                        width: 10
+                    }
+                    Label {
+                        text: (thresholdData && typeof thresholdData.baseline === 'number') ? thresholdData.baseline.toFixed(4) : "-.----"
+                        width: 45
+                        font.family: "Monospace"
+                        font.pixelSize: 9
+                        color: "#cbd5e1"
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                    Label {
+                        text: (thresholdData && typeof thresholdData.envFloor === 'number') ? thresholdData.envFloor.toFixed(4) : "-.----"
+                        width: 45
+                        font.family: "Monospace"
+                        font.pixelSize: 9
+                        color: "#cbd5e1"
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                    Label {
+                        text: (thresholdData && typeof thresholdData.gateThreshold === 'number') ? thresholdData.gateThreshold.toFixed(4) : "-.----"
+                        width: 45
+                        font.family: "Monospace"
+                        font.pixelSize: 9
+                        color: "#cbd5e1"
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                    Label {
+                        text: (thresholdData && typeof thresholdData.sustainFloor === 'number') ? thresholdData.sustainFloor.toFixed(4) : "-.----"
+                        width: 45
+                        font.family: "Monospace"
+                        font.pixelSize: 9
+                        color: "#cbd5e1"
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                }
+            }
+        }
+
+        Item {
+            id: calibrationPanel
+            property int groupSpacing: 12
+            width: calibrationCluster.implicitWidth
+            height: calibrationCluster.implicitHeight
+            x: Math.max(24, hexMeterStrip.x - groupSpacing - width - 88)
+            y: hexMeterStrip.y + hexMeterStrip.height - height + 4
+            visible: hexMeterStrip.visible
+            
+            Row {
+                    id: calibrationCluster
+                    spacing: 12
+                    Button {
+                        id: calibrationButton
+                        leftPadding: 2
+                        rightPadding: 2
+                        topPadding: 6
+                        bottomPadding: 6
+                        implicitWidth: calibrateLabel.implicitWidth + leftPadding + rightPadding + 16
+                        text: {
+                            if (!bridge)
+                                return qsTr("Calibrate Input");
+                            if (bridge.calibrationRunning)
+                                return qsTr("Calibrating...");
+                            return bridge.calibrationReady ? qsTr("Recalibrate") : qsTr("Calibrate Input");
+                        }
+                        enabled: bridge && !bridge.calibrationRunning
+                        onClicked: if (bridge) bridge.startCalibration()
+                        contentItem: Text {
+                            id: calibrateLabel
+                            text: calibrationButton.text
+                            color: calibrationButton.enabled ? "#fdfdfd" : "#9c9ea6"
+                            font.pixelSize: 14
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        background: Rectangle {
+                            radius: 4
+                            color: calibrationButton.enabled ? "#2b2c32" : "#1d1e22"
+                            border.color: calibrationButton.down ? "#fdfdfd" : "#4b4d55"
+                            border.width: 1
+                        }
+                    }
+                    Row {
+                        id: calibrationIndicatorsRow
+                        spacing: 8
+                        anchors.verticalCenter: parent.verticalCenter
+                        Row {
+                            id: calibrationStatusRow
+                            spacing: 4
+                            visible: bridge && bridge.calibrationSteps && bridge.calibrationSteps.length === root.stringLabels.length
+                            opacity: bridge && bridge.calibrationRunning ? 1 : 0.65
+                            Repeater {
+                                model: bridge && bridge.calibrationSteps ? bridge.calibrationSteps : []
+                                delegate: Item {
+                                    width: 26
+                                    height: indicatorColumn.implicitHeight
+                                    // Reactive properties for tuning mode - accessing these forces binding updates
+                                    readonly property var tuningDev: bridge ? bridge.tuningDeviation : []
+                                    readonly property var hexMeterLevels: bridge ? bridge.hexMeters : []
+                                    Column {
+                                        id: indicatorColumn
+                                        spacing: 2
+                                        anchors.horizontalCenter: parent.horizontalCenter
+                                        Rectangle {
+                                            width: 20
+                                            height: 20
+                                            radius: width / 2
+                                            // Reference parent's reactive properties to trigger re-evaluation
+                                            color: {
+                                                var _ = parent.parent.tuningDev;
+                                                var __ = parent.parent.hexMeterLevels;
+                                                return tuningCircleColor(Number(modelData), index);
+                                            }
+                                            border.color: Number(modelData) >= 2 ? "#fefefe" : "#b0b3bb"
+                                            border.width: 1
+                                            opacity: Number(modelData) === 0 ? 0.7 : 1
+                                            
+                                            Behavior on color {
+                                                ColorAnimation {
+                                                    duration: bridge && bridge.tuningModeEnabled ? 80 : 2000
+                                                    easing.type: Easing.InOutQuad
+                                                }
+                                            }
+                                        }
+                                        Text {
+                                            width: parent.width
+                                            horizontalAlignment: Text.AlignHCenter
+                                            text: root.stringLabels[index]
+                                            font.pixelSize: 10
+                                            color: "#dfe3ea"
+                                            opacity: Number(modelData) >= 3 ? 1 : 0.8
+                                        }
+                                    }
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        enabled: bridge && !bridge.calibrationRunning
+                                        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                        onClicked: if (bridge) bridge.recalibrateString(index)
+                                    }
+                                }
+                            }
+                        }
+                        Item {
+                            width: -8
+                            height: 1
+                        }
+                        ToolButton {
+                            id: tuningToggle
+                            checkable: true
+                            implicitWidth: 40
+                            implicitHeight: 40
+                            anchors.verticalCenter: calibrationButton.verticalCenter
+                            enabled: !(bridge && bridge.calibrationRunning)
+                            background: Rectangle {
+                                anchors.fill: parent
+                                color: "transparent"
+                            }
+                            contentItem: Image {
+                                anchors.centerIn: parent
+                                source: Qt.resolvedUrl("../assets/icons/tuningFork.svg")
+                                width: 28
+                                height: 28
+                                fillMode: Image.PreserveAspectFit
+                                opacity: tuningToggle.checked ? 1.0 : 0.12 
+                            }
+                            onClicked: if (bridge) bridge.setTuningModeEnabled(!bridge.tuningModeEnabled)
+                            Component.onCompleted: {
+                                if (bridge)
+                                    checked = bridge.tuningModeEnabled;
+                            }
+                            Connections {
+                                target: bridge
+                                onTuningModeEnabledChanged: if (bridge) checked = bridge.tuningModeEnabled
+                            }
+                        }
+                        ToolButton {
+                            id: tuningPanelButton
+                            checkable: true
+                            implicitWidth: 44
+                            implicitHeight: 44
+                            y: -6
+                            x: -14
+                            Component.onCompleted: {
+                                var w = ApplicationWindow.window
+                                    if (w && typeof w.tuningPanelVisible !== 'undefined') {
+                                        checked = Qt.binding(function() { return w.tuningPanelVisible })
+                                        console.log("qml", "tuning-panel-button", "connected to main window")
+                                    } else {
+                                        console.log("qml", "tuning-panel-button", "failed to find main window")
+                                    }
+                                }
+                                background: Rectangle {
+                                    anchors.fill: parent
+                                color: "transparent"
+                            }
+                            contentItem: Image {
+                                anchors.centerIn: parent
+                                source: Qt.resolvedUrl("../assets/icons/lucide-settings.svg")
+                                width: 28
+                                height: 28
+                                fillMode: Image.PreserveAspectFit
+                                opacity: tuningPanelButton.checked ? 1.0 : 0.12
+                            }
+                            onClicked: {
+                                var w = ApplicationWindow.window
+                                if (w && typeof w.tuningPanelVisible !== 'undefined') {
+                                    w.tuningPanelVisible = !w.tuningPanelVisible
+                                }
+                            }
+                        }
+                        // Bin Overlay Heatmap Toggle
+                        ToolButton {
+                            id: binOverlayToggle
+                            checkable: true
+                            checked: root.binOverlayEnabled
+                            implicitWidth: 44
+                            implicitHeight: 44
+                            anchors.verticalCenter: calibrationButton.verticalCenter
+                            ToolTip.visible: hovered
+                            ToolTip.text: "Toggle CQT Bin Heatmap Overlay"
+                            ToolTip.delay: 500
+                            background: Rectangle {
+                                anchors.fill: parent
+                                color: binOverlayToggle.checked ? "#2a1a1a" : "transparent"
+                                radius: 4
+                                border.color: binOverlayToggle.checked ? "#ff6633" : "transparent"
+                                border.width: 1
+                            }
+                            contentItem: Text {
+                                anchors.centerIn: parent
+                                text: "🔥"
+                                font.pixelSize: 20
+                                opacity: binOverlayToggle.checked ? 1.0 : 0.35
+                            }
+                            onClicked: {
+                                root.binOverlayEnabled = !root.binOverlayEnabled
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
+    Connections {
+        target: bridge
+        function onRecordingChanged() {
+            if (!bridge)
+                return;
+            if (root.monitorSwitchGuard)
+                return;
+            root.monitorSwitchGuard = true;
+            monitorSwitch.checked = bridge.recording;
+            root.monitorSwitchGuard = false;
+            if (!bridge.recording && neckSection) {
+                neckSection.clearLiveNotes();
+                neckSection.deactivateOverlay("live");
+            }
+        }
+        function onLiveNoteTriggered(stringIndex, fretIndex, velocity) {
+            // Skip note overlay processing when bin overlay (heatmap) is active
+            if (root.binOverlayEnabled)
+                return;
+            if (stringIndex === undefined || fretIndex === undefined)
+                return;
+            if (!neckSection)
+                return;
+            if (stringIndex < 0 || fretIndex < 0)
+                return;
+            neckSection.addLiveNoteOverlay(stringIndex, fretIndex, velocity);
+        }
+        function onLiveNoteEnded(stringIndex, fretIndex) {
+            // Skip note overlay processing when bin overlay (heatmap) is active
+            if (root.binOverlayEnabled)
+                return;
+            if (stringIndex === undefined || fretIndex === undefined)
+                return;
+            if (!neckSection)
+                return;
+            if (stringIndex < 0 || fretIndex < 0)
+                return;
+            neckSection.removeLiveNoteOverlay(stringIndex, fretIndex);
+        }
+        function onLiveNoteEnvelopeUpdated(stringIndex, envelope) {
+            // Skip envelope updates when bin overlay (heatmap) is active
+            if (root.binOverlayEnabled)
+                return;
+            if (stringIndex === undefined || envelope === undefined)
+                return;
+            if (!neckSection)
+                return;
+            if (stringIndex < 0)
+                return;
+            neckSection.updateLiveNoteEnvelope(stringIndex, envelope);
+        }
+    }
+
+    Connections {
+        target: AppController
+        function onTestPlaybackChanged() {
+            if (!neckSection)
+                return;
+            if (!AppController || !AppController.testMode) {
+                if (root.lastTestPlaybackState.length > 0)
+                    neckSection.stopPlayback();
+                root.lastTestPlaybackState = "";
+                return;
+            }
+
+            var state = AppController.testPlaybackState;
+            if (state === root.lastTestPlaybackState)
+                return;
+            root.lastTestPlaybackState = state;
+
+            if (state === "Playing") {
+                var events = bridge && bridge.events ? bridge.events : [];
+                neckSection.playDetectedEvents(events);
+            } else if (state === "Stopped" || state === "Idle" || state === "Paused" || state === "Complete") {
+                neckSection.stopPlayback();
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        if (bridge) {
+            root.monitorSwitchGuard = true;
+            monitorSwitch.checked = bridge.recording;
+            root.monitorSwitchGuard = false;
+            bridge.requestRefresh();
+        }
+    }
+
+    onBridgeChanged: {
+        if (bridge) {
+            root.monitorSwitchGuard = true;
+            monitorSwitch.checked = bridge.recording;
+            root.monitorSwitchGuard = false;
+            bridge.requestRefresh();
+        } else {
+            root.monitorSwitchGuard = true;
+            monitorSwitch.checked = false;
+            root.monitorSwitchGuard = false;
+            neckSection.stopPlayback();
+        }
+    }
+
+    Component.onDestruction: {
+        if (bridge)
+            bridge.setRecording(false);
+    }
+
+    // Bin Overlay Heatmap - shows live CQT magnitude per fret/string
+    // Absolute positioning at root level (28, 478) - independent of fretboard display
+    Item {
+        id: binOverlayContainer
+        visible: root.binOverlayEnabled
+        
+        // Absolute position and size matching Fret Cells.svg (1216x127)
+        x: 28
+        y: 478
+        width: 1216
+        height: 127
+        z: 100  // Above everything else
+        clip: true
+        
+        // Clear live notes when overlay becomes visible
+        onVisibleChanged: {
+            if (visible && neckSection) {
+                neckSection.clearLiveNotes();
+                // Request initial paint
+                binOverlay.canvas.requestPaint();
+            }
+        }
+        
+        BatchedFretboardBinOverlay {
+            id: binOverlay
+            opacity: 0.85
+            
+            // Fill container - canvas uses SVG coords directly (1216x127)
+            anchors.fill: parent
+            
+            // Color provider: intensity-based alpha blending
+            // Uses magnitude/threshold ratio for accurate full-spectrum visualization
+            colorProvider: function(s1to6, f0to24, binId) {
+                if (!bridge) {
+                    return "#181818";
+                }
+                
+                // BatchedFretboardBinOverlay uses s1to6 (1-based, 1=high E, 6=low E)
+                // Our binMagnitudes array uses 0-5 (0=low E, 5=high E)
+                // So we need to flip: string index = 6 - s1to6
+                var stringIndex = 6 - s1to6;
+                
+                // O(1) lookup via Q_INVOKABLE
+                var magnitude = bridge.getBinMagnitude(stringIndex, f0to24);
+                var threshold = bridge.getBinThreshold(stringIndex, f0to24);
+                
+                // Map magnitude to intensity (0.0 to 1.0)
+                // Use 1.5x threshold as full brightness point
+                var intensity = (threshold > 0.0001) 
+                    ? Math.min(magnitude / (threshold * 1.5), 1.0)
+                    : 0.0;
+                
+                if (intensity < 0.1) {
+                    return "#181818"; // Near-black for low energy
+                }
+                
+                // Color: #37C38B (R=0.216, G=0.765, B=0.545) with intensity-based alpha
+                // Bright when above threshold, dimmer glow when below
+                var aboveThreshold = magnitude > threshold;
+                var alpha = aboveThreshold ? intensity : (intensity * 0.5);
+                
+                return Qt.rgba(0.216, 0.765, 0.545, alpha);
+            }
+            
+            onBinClicked: (binId, s, f, x, y) => {
+                // Could show tooltip or detailed info here
+            }
+            
+            // C++ magnitude gate triggers repaint only when meaningful changes occur
+            Connections {
+                target: bridge
+                function onBinMagnitudesChanged() {
+                    // Bump colorRevision to invalidate colorFor() cache
+                    binOverlay.colorRevision++;
+                    // Direct requestPaint - C++ gate ensures we're not flooding
+                    binOverlay.canvas.requestPaint();
+                }
+            }
+        }
+    }
+}

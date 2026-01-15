@@ -6,7 +6,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 342,
+                        "durationMicroseconds": 203,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 10
@@ -14,7 +14,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 17,
-                        "durationMicroseconds": 184,
+                        "durationMicroseconds": 160,
                         "errorMessage": "Cannot access value for name level",
                         "functionName": "height",
                         "line": 19
@@ -22,7 +22,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 314,
+                        "durationMicroseconds": 276,
                         "errorMessage": "",
                         "functionName": "left",
                         "line": 16
@@ -30,7 +30,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 371,
+                        "durationMicroseconds": 246,
                         "errorMessage": "",
                         "functionName": "right",
                         "line": 17
@@ -38,7 +38,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 25,
-                        "durationMicroseconds": 256,
+                        "durationMicroseconds": 410,
                         "errorMessage": "",
                         "functionName": "bottom",
                         "line": 18

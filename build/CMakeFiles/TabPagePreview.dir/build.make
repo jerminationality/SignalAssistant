@@ -162,10 +162,24 @@ CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/TabEngineBridge.cpp -o CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.s
 
+CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o: CMakeFiles/TabPagePreview.dir/flags.make
+CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o: /home/general/SignalAssistant/src/FretboardProvider.cpp
+CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o: CMakeFiles/TabPagePreview.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o -MF CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o.d -o CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o -c /home/general/SignalAssistant/src/FretboardProvider.cpp
+
+CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/src/FretboardProvider.cpp > CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.i
+
+CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/FretboardProvider.cpp -o CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.s
+
 CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o: CMakeFiles/TabPagePreview.dir/flags.make
 CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o: /home/general/SignalAssistant/src/audio/AudioEngine.cpp
 CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o: CMakeFiles/TabPagePreview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o -MF CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o.d -o CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o -c /home/general/SignalAssistant/src/audio/AudioEngine.cpp
 
 CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.i: cmake_force
@@ -179,7 +193,7 @@ CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.s: cmake_force
 CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o: CMakeFiles/TabPagePreview.dir/flags.make
 CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o: /home/general/SignalAssistant/src/audio/CarlaClient.cpp
 CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o: CMakeFiles/TabPagePreview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o -MF CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o.d -o CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o -c /home/general/SignalAssistant/src/audio/CarlaClient.cpp
 
 CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.i: cmake_force
@@ -193,7 +207,7 @@ CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.s: cmake_force
 CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o: CMakeFiles/TabPagePreview.dir/flags.make
 CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o: /home/general/SignalAssistant/src/audio/HexJackClient.cpp
 CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o: CMakeFiles/TabPagePreview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o -MF CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o.d -o CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o -c /home/general/SignalAssistant/src/audio/HexJackClient.cpp
 
 CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.i: cmake_force
@@ -207,7 +221,7 @@ CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.s: cmake_force
 CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o: CMakeFiles/TabPagePreview.dir/flags.make
 CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o: /home/general/SignalAssistant/src/audio/JackMonitorSink.cpp
 CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o: CMakeFiles/TabPagePreview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o -MF CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o.d -o CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o -c /home/general/SignalAssistant/src/audio/JackMonitorSink.cpp
 
 CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.i: cmake_force
@@ -218,6 +232,20 @@ CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/audio/JackMonitorSink.cpp -o CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.s
 
+CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o: CMakeFiles/TabPagePreview.dir/flags.make
+CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o: /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp
+CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o: CMakeFiles/TabPagePreview.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o -MF CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o.d -o CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o -c /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp
+
+CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp > CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.i
+
+CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp -o CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.s
+
 # Object files for target TabPagePreview
 TabPagePreview_OBJECTS = \
 "CMakeFiles/TabPagePreview.dir/TabPagePreview_autogen/mocs_compilation.cpp.o" \
@@ -226,10 +254,12 @@ TabPagePreview_OBJECTS = \
 "CMakeFiles/TabPagePreview.dir/src/DetectionTuningController.cpp.o" \
 "CMakeFiles/TabPagePreview.dir/src/RecordedSessionPlayer.cpp.o" \
 "CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o" \
+"CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o" \
 "CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o" \
 "CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o" \
 "CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o" \
-"CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o"
+"CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o" \
+"CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o"
 
 # External object files for target TabPagePreview
 TabPagePreview_EXTERNAL_OBJECTS =
@@ -240,10 +270,12 @@ TabPagePreview: CMakeFiles/TabPagePreview.dir/src/AppController.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/src/DetectionTuningController.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/src/RecordedSessionPlayer.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o
+TabPagePreview: CMakeFiles/TabPagePreview.dir/src/FretboardProvider.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/src/audio/AudioEngine.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/src/audio/CarlaClient.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/src/audio/JackMonitorSink.cpp.o
+TabPagePreview: CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o
 TabPagePreview: CMakeFiles/TabPagePreview.dir/build.make
 TabPagePreview: CMakeFiles/TabPagePreview.dir/compiler_depend.ts
 TabPagePreview: /usr/lib/aarch64-linux-gnu/libQt6QuickControls2.so.6.8.2
@@ -263,7 +295,7 @@ TabPagePreview: /usr/lib/aarch64-linux-gnu/libQt6Network.so.6.8.2
 TabPagePreview: /usr/lib/aarch64-linux-gnu/libQt6Core.so.6.8.2
 TabPagePreview: /usr/lib/aarch64-linux-gnu/libsndfile.so
 TabPagePreview: CMakeFiles/TabPagePreview.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable TabPagePreview"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/general/SignalAssistant/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable TabPagePreview"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TabPagePreview.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

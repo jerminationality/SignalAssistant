@@ -23,7 +23,7 @@
 namespace {
 
 constexpr int kMeterIntervalMs = 40; // ~25Hz UI update cadence
-constexpr const char* kDefaultJackCommand = "JACK_NO_AUDIO_RESERVATION=1 jackd -R -P70 -d alsa -d hw:2,0 -p128 -n3 -r48000 -s";
+constexpr const char* kDefaultJackCommand = "JACK_NO_AUDIO_RESERVATION=1 jackd -R -P70 -d alsa -d hw:2,0 -p256 -n3 -r44100 -s";
 
 float computeLevel(const jack_default_audio_sample_t* buffer, jack_nframes_t frames) {
     if (!buffer || frames == 0) return 0.0f;

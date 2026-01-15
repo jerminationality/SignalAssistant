@@ -1,0 +1,15 @@
+Act as a Senior Audio DSP Engineer. Implement CQTNoteDetector.cpp using the following logic from Note Detection.md:
+
+1. Unified Scan: Analyze all 6 strings in one pass to allow inter-string magnitude comparison.
+2. Master Gate: Skip CQT for any channel where current RMS < baseline.
+3. Range Clamping: Search only the 72 bins corresponding to 24 frets per string (E:0-74, A:15-89, D:30-104, G:45-119, B:57-131, e:72-144).
+4. Slope Threshold: 
+   - Attack Threshold = (envFloor * gateRatio) * (1.0 - (fret * 0.015)).
+5. Spatial Filtering: Compare (binMagnitude * calibrationGain) across all 6 strings. If a bin is stronger on another string, ignore it on this string to kill crosstalk.
+6. Hysteresis: Implement 'Sticky Fret'—a fret change requires 20% magnitude advantage and 3-frame persistence.
+7. Retrigger Logic: Trigger a new onset if CQT Spectral Flux spikes and new magnitude > (lastPeak * 0.4).
+8. Release Logic: Trigger Note-Off when bin magnitude < (envFloor * sustainScale).
+9. Fine Pitch: Use parabolic interpolation on the 3-bin peak cluster for centOffset.
+10. Library Constraint: Use a lightweight, O(N log N) CQT implementation. If an FFT is required for the transform, use KISS FFT to keep the footprint minimal.
+
+Optimization: Avoid heap allocations in the process loop.

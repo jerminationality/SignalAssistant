@@ -7,6 +7,7 @@ f2e7040a46293bee4cded677b937946d .qt/GuitarPi_res.txt
 41f73795d30605ad48cc07bcd4a78e34 .qt/rcc/qrc_GuitarPi_raw_qml_0_extra_qmldirs.cpp
 893896ee4b3cb7f2fcecce16ad5b665c .qt/rcc/qrc_qmake_GuitarPi.cpp
 1711899393af011646a125329d433979 .rcc/qmlcache/GuitarPi_qml/Main_qml.cpp
+c263f2f4ade052e43edf896cfc490106 .rcc/qmlcache/GuitarPi_qml/components/BatchedFretboardBinOverlay_qml.cpp
 cd939e83be3d2c18f8ca61a06baa881f .rcc/qmlcache/GuitarPi_qml/components/ColorizedIcon_qml.cpp
 f6917af66f73bd1c538d67505f8628ae .rcc/qmlcache/GuitarPi_qml/components/CoreAccordion_qml.cpp
 bbecdafd4963d18e0cfd4622ef430f25 .rcc/qmlcache/GuitarPi_qml/components/CoreComponent_qml.cpp
