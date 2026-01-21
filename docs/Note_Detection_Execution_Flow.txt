@@ -1,0 +1,591 @@
+===============================================================================
+GUITARPI NOTE DETECTION - EXACT EXECUTION FLOW
+===============================================================================
+Line-by-line walkthrough of audio sample → logged note event
+
+===============================================================================
+1. YINWORKERTHREAD AUDIO CALLBACK
+===============================================================================
+
+File: src/audio/YINWorkerThread.cpp
+
+Lines 170-190: onAudioData()
+  → JACK delivers audio chunk (512 samples @ 48kHz = 10.7ms)
+  → Copy to ring buffer for each string
+  → Increment m_accumSamples counter
+  → Check if buffer full:
+      - Onset buffer: 512 samples
+      - Pitch buffer: 2048 samples
+  → When pitch buffer full → call processYINFrame()
+
+===============================================================================
+2. FASTYINDETECTOR::PROCESS() - MAIN DETECTION
+===============================================================================
+
+File: src/YIN/FastYINDetector.cpp
+
+Lines 53-85: Sample Accumulation
+  → Copy new samples to internal ring buffer
+  → Check: m_samplesAccumulated >= m_pitchBufferSize (2048)
+  → If not enough samples: return early with last result
+  → If enough: proceed to detection
+
+Line 91: Compute RMS (Fast Onset Detection)
+  ```
+  const float rms = computeRMS(onsetBuffer, m_onsetBufferSize);
+  ```
+  → Uses 512 samples for fast attack detection
+  → Returns single RMS value (signal energy)
+
+Lines 94-112: Run YIN Pitch Detection
+  ```
+  YINResult pitchResult = m_pitchYIN.detectPitch(
+      pitchBuffer, m_pitchBufferSize, params.yinThreshold);
+  ```
+  → Uses 2048 samples for accurate pitch
+  → Returns:
+      - pitchResult.frequency (Hz)
+      - pitchResult.confidence (0.0-1.0)
+
+Lines 115-123: Convert Frequency → Fret Number
+  ```
+  int detectedFret = -1;
+  if (pitchResult.frequency > 0 && pitchResult.confidence >= params.yinThreshold) {
+      const int midiNote = frequencyToMIDI(pitchResult.frequency);
+      detectedFret = midiNote - m_stringMIDI;
+      if (detectedFret < 0 || detectedFret > 24) {
+          detectedFret = -1;  // Out of range
+      }
+  }
+  ```
+  → NOW WE HAVE detectedFret (-1 if invalid)
+
+Line 126: Update State Machine
+  ```
+  updateStateMachine(rms, pitchResult, params);
+  ```
+  → Calls state machine logic (see section 3)
+
+Line 129: Get Stability-Filtered Fret
+  ```
+  const int stableFret = updateFretStability(detectedFret, params);
+  ```
+  → Calls fret stability logic (see section 4)
+
+Lines 132-145: Build Result Structure
+  ```
+  FastYINResult result;
+  result.pitchResult = pitchResult;
+  result.state = m_state;                    // Current state
+  result.isOnset = (m_state == NoteState::ATTACK);
+  result.isSustaining = (m_state == NoteState::SUSTAIN);
+  result.currentRMS = rms;
+  result.peakRMS = m_peakRMS;
+  result.onsetThreshold = m_lastOnsetThreshold;
+  result.detectedFret = detectedFret;         // Raw from pitch
+  result.stableFret = stableFret;             // Stability-filtered
+  ```
+
+Line 175: Return to YINWorkerThread
+  ```
+  return result;
+  ```
+
+===============================================================================
+3. UPDATESTATEMACHINE() - STATE TRANSITIONS
+===============================================================================
+
+File: src/YIN/FastYINDetector.cpp, Lines 185-308
+
+Called with: (rms, pitchResult, params)
+
+-------------------------------------------------------------------------------
+IDLE State (Lines 197-210)
+-------------------------------------------------------------------------------
+CHECK: Is there a new note onset?
+  Conditions:
+    - rms > noiseGate * 3.0          (signal above noise floor × 3)
+    - rms > lastRMS * 2.0            (2x energy increase)
+    - (rms - lastRMS) > 0.08         (absolute jump of 0.08)
+
+  IF YES:
+    → m_state = NoteState::ATTACK
+    → m_peakRMS = rms
+    → m_lastOnsetThreshold = rms
+    → Store lastRMS for next frame
+
+  IF NO:
+    → Stay in IDLE
+    → Update lastRMS
+
+-------------------------------------------------------------------------------
+ATTACK State (Lines 213-227)
+-------------------------------------------------------------------------------
+CHECK: Is pitch confident enough to confirm note?
+  Condition:
+    - pitchResult.confidence >= yinThreshold (typically 0.10)
+
+  IF YES:
+    → m_state = NoteState::SUSTAIN
+    → Note confirmed, stable pitch detected
+
+  IF NO:
+    → Stay in ATTACK
+    → Waiting for confident pitch detection
+    → Update peakRMS if rms increased
+
+-------------------------------------------------------------------------------
+SUSTAIN State (Lines 230-270)
+-------------------------------------------------------------------------------
+CHECK 1: Should we release the note?
+  Condition:
+    - rms < m_peakRMS * releaseRatio (typically 0.35)
+
+  IF YES:
+    → m_state = NoteState::RELEASE
+    → Note is decaying
+
+CHECK 2: Is there a re-attack (new note plucked)?
+  Conditions:
+    - rms > lastRMS * 2.0            (2x increase)
+    - (rms - lastRMS) > 0.08         (absolute jump)
+    - rms > noiseGate * 3.0          (above noise × 3)
+
+  IF YES:
+    → m_state = NoteState::ATTACK
+    → m_lastOnsetThreshold = lastRMS * 2.0
+    → m_peakRMS = rms
+    → New note detected during sustain
+
+ALWAYS:
+  → m_peakRMS = std::max(m_peakRMS, rms)  // Track peak
+  → m_lastRMS = rms
+
+-------------------------------------------------------------------------------
+RELEASE State (Lines 273-308)
+-------------------------------------------------------------------------------
+CHECK 1: Has signal dropped to silence?
+  Condition:
+    - rms < noiseGate
+
+  IF YES:
+    → m_state = NoteState::IDLE
+    → Back to waiting for new note
+
+CHECK 2: Is there a re-attack from decay?
+  Conditions:
+    - rms > lastRMS * 1.8            (1.8x increase, more sensitive)
+    - (rms - lastRMS) > 0.05         (absolute jump)
+    - rms > noiseGate * 2.0          (above noise × 2)
+
+  IF YES:
+    → m_state = NoteState::ATTACK
+    → m_lastOnsetThreshold = lastRMS * 1.8
+    → m_peakRMS = rms
+    → New note plucked during decay
+
+ALWAYS:
+  → m_lastRMS = rms
+
+===============================================================================
+4. UPDATEFRETSTABILITY() - FRET LOCKING
+===============================================================================
+
+File: src/YIN/FastYINDetector.cpp, Lines 310-367
+
+Called with: (detectedFret, params)
+Returns: stableFret (the fret to report)
+
+-------------------------------------------------------------------------------
+Lines 324-328: Invalid Fret Check
+-------------------------------------------------------------------------------
+```
+if (detectedFret < 0) {
+    if (m_state == IDLE || m_state == RELEASE) {
+        m_currentFret = -1;      // Clear fret when note is off
+    }
+    return m_currentFret;        // Keep last fret during ATTACK/SUSTAIN
+}
+```
+
+-------------------------------------------------------------------------------
+Lines 331-334: FRET LOCK DURING SUSTAIN ⭐⭐⭐
+-------------------------------------------------------------------------------
+```
+if (m_state == NoteState::SUSTAIN && m_currentFret >= 0) {
+    return m_currentFret;  // LOCKED - ignore any detectedFret changes
+}
+```
+→ This prevents F0↔F4 bouncing during decay phase
+→ Once committed to a fret, it cannot change during SUSTAIN
+
+-------------------------------------------------------------------------------
+Lines 337-341: Same Fret (No Change)
+-------------------------------------------------------------------------------
+```
+if (detectedFret == m_currentFret) {
+    m_candidateFret = -1;
+    m_fretStabilityCount = 0;
+    return m_currentFret;
+}
+```
+
+-------------------------------------------------------------------------------
+Lines 344-364: New Candidate Fret
+-------------------------------------------------------------------------------
+```
+if (detectedFret == m_candidateFret) {
+    m_fretStabilityCount++;
+    
+    // Promote candidate after N frames (typically 2)
+    if (m_fretStabilityCount >= params.fretStabilityFrames) {
+        m_currentFret = m_candidateFret;     // PROMOTE
+        m_candidateFret = -1;
+        m_fretStabilityCount = 0;
+    }
+} else {
+    // Different candidate - reset tracking
+    m_candidateFret = detectedFret;
+    m_fretStabilityCount = 1;
+    
+    // Immediate promotion on first note (from IDLE)
+    if (m_currentFret < 0) {
+        m_currentFret = detectedFret;        // IMMEDIATE (no wait)
+        m_candidateFret = -1;
+        m_fretStabilityCount = 0;
+    }
+}
+```
+
+Return: m_currentFret (the stable fret)
+
+===============================================================================
+5. YINWORKERTHREAD WRITES TO ATOMIC STATE
+===============================================================================
+
+File: src/audio/YINWorkerThread.cpp, Lines 233-255
+
+Result returned from FastYINDetector::process()
+
+Line 233: Choose Fret Based on State
+  ```
+  const bool isAttack = result.isOnset;
+  const int fret = isAttack ? result.detectedFret : result.stableFret;
+  ```
+  → ATTACK state: Use detectedFret (immediate, no waiting)
+  → SUSTAIN/RELEASE: Use stableFret (stability-filtered)
+  → This gives fast response during onset, stable during sustain
+
+Lines 246-248: Signal Onset Counter
+  ```
+  if (isAttack) {
+      m_outputState.signalOnset(s);  // Atomic increment (uint32_t)
+  }
+  ```
+  → Increments monotonic counter
+  → TabEngine detects counter changes to catch onsets
+  → Ensures onset is never missed even if ATTACK lasts 1 frame
+
+Lines 250-255: Write Atomic State
+  ```
+  const float energy = result.currentRMS;
+  const bool isSustaining = result.isSustaining;
+  const float pitchHz = result.pitchResult.frequency;
+  const float onsetThreshold = result.onsetThreshold;
+  
+  m_outputState.writeString(s, fret, energy, isAttack, 
+                            isSustaining, pitchHz, onsetThreshold);
+  ```
+  → Lock-free atomic write
+  → TabEngine reads this asynchronously
+
+===============================================================================
+6. TABENGINE READS ATOMIC STATE
+===============================================================================
+
+File: src/TabEngine.cpp, Lines 50-108
+
+TabEngine polls at ~11.6ms intervals
+
+-------------------------------------------------------------------------------
+Lines 50-58: Initialize Variables and Read State
+-------------------------------------------------------------------------------
+```
+float energy = 0.0f;
+bool isAttack = false;
+bool isSustaining = false;
+float pitchHz = 0.0f;
+float onsetThreshold = 0.0f;
+
+_noteState->readString(s, fret, energy, isAttack, 
+                      isSustaining, pitchHz, onsetThreshold);
+```
+→ Lock-free atomic read
+→ Gets current state from YIN worker
+
+-------------------------------------------------------------------------------
+Lines 63-71: Detect Onset via Counter
+-------------------------------------------------------------------------------
+```
+const uint32_t currentOnsetCounter = _noteState->getOnsetCounter(s);
+
+const bool onsetCounterChanged = (currentOnsetCounter != state.lastOnsetCounter);
+state.lastOnsetCounter = currentOnsetCounter;
+```
+→ Compare counter to last known value
+→ If changed: onset detected (ATTACK state occurred)
+→ More reliable than volatile isAttack flag
+
+-------------------------------------------------------------------------------
+Lines 76-93: Pending Onset Mechanism
+-------------------------------------------------------------------------------
+```
+bool newOnset = false;
+
+if (state.pendingOnset && fret >= 0) {
+    // Pending onset now has valid fret
+    newOnset = true;
+    state.pendingOnset = false;
+    energy = state.pendingOnsetEnergy;  // Use stored energy
+    
+} else if (onsetCounterChanged) {
+    if (fret >= 0) {
+        // Normal case: onset with valid fret
+        newOnset = true;
+    } else {
+        // Onset detected but fret not valid yet
+        state.pendingOnset = true;
+        state.pendingOnsetEnergy = energy;
+        state.pendingOnsetTime = t0;
+    }
+}
+```
+→ Handles race condition where onset detected before pitch valid
+→ Stores onset and waits for fret to materialize
+
+-------------------------------------------------------------------------------
+Lines 96-108: Clear Pending Onset
+-------------------------------------------------------------------------------
+```
+if (state.pendingOnset) {
+    const float timeSincePending = t0 - state.pendingOnsetTime;
+    const bool signalGone = (!isSustaining && !onsetCounterChanged 
+                             && energy < params.noiseGateRMS[s]);
+    const bool timeout = (timeSincePending > 0.2f);  // 200ms
+    
+    if (signalGone || timeout) {
+        state.pendingOnset = false;
+    }
+}
+```
+→ Clear if signal disappeared without fret materializing
+→ Or if timeout exceeded (bad pitch detection)
+
+===============================================================================
+7. TABENGINE NOTE EVENT LOGIC
+===============================================================================
+
+File: src/TabEngine.cpp
+
+-------------------------------------------------------------------------------
+Lines 115-145: NOTE ON
+-------------------------------------------------------------------------------
+```
+if (newOnset) {
+    const bool isRetrigger = (state.lastFret == fret && activeIdx >= 0);
+    
+    // Close previous note on this string
+    if (activeIdx >= 0 && activeIdx < _events.size()) {
+        auto& prevEvent = _events[activeIdx];
+        if (prevEvent.endSec <= prevEvent.startSec) {
+            prevEvent.endSec = t0;
+        }
+    }
+    
+    // Create new note event
+    NoteEvent evt;
+    evt.stringIdx = s;
+    evt.fret = fret;
+    evt.midi = _tuning.stringMidi[s] + fret;
+    evt.startSec = t0;
+    evt.endSec = 0.0f;  // Filled on note-off
+    evt.velocity = std::min(1.0f, energy * 10.0f);
+    evt.articulation = "";
+    
+    #if ENABLE_TAB_RT_LOGGING
+    if (isRetrigger) {
+        NoteLogger::instance().logRetrigger(s, fret, energy, 
+                                           onsetThreshold, ...);
+    } else {
+        NoteLogger::instance().logNoteOn(s, fret, energy, 
+                                        onsetThreshold, ...);
+    }
+    #endif
+    
+    activeIdx = _events.size();
+    _events.push_back(evt);
+    state.lastFret = fret;
+}
+```
+
+-------------------------------------------------------------------------------
+Lines 147-178: REPITCH (Fret Change During Sustain)
+-------------------------------------------------------------------------------
+```
+else if (isSustaining && fret >= 0) {
+    if (activeIdx >= 0 && activeIdx < _events.size()) {
+        auto& evt = _events[activeIdx];
+        
+        // Only allow repitch if energy is still strong
+        const float minRepitchEnergy = onsetThreshold * 0.5f;
+        
+        if (state.lastFret >= 0 && fret != state.lastFret 
+            && energy > minRepitchEnergy) {
+            
+            #if ENABLE_TAB_RT_LOGGING
+            NoteLogger::instance().logRepitch(s, state.lastFret, fret, 
+                                             energy, onsetThreshold, ...);
+            #endif
+            
+            evt.endSec = t0;  // Close old note
+            
+            // Create new event for changed fret
+            NoteEvent newEvt;
+            newEvt.stringIdx = s;
+            newEvt.fret = fret;
+            newEvt.midi = _tuning.stringMidi[s] + fret;
+            newEvt.startSec = t0;
+            newEvt.endSec = 0.0f;
+            newEvt.velocity = std::min(1.0f, energy * 10.0f);
+            newEvt.articulation = "";
+            
+            activeIdx = _events.size();
+            _events.push_back(newEvt);
+            state.lastFret = fret;
+        }
+    }
+}
+```
+→ Requires energy > 50% of onset threshold
+→ Prevents decay-phase jitter from creating events
+
+-------------------------------------------------------------------------------
+Lines 180-195: NOTE OFF
+-------------------------------------------------------------------------------
+```
+else if (state.wasSustaining && !isSustaining) {
+    // Transition: isSustaining was true, now false
+    // This happens when: SUSTAIN → RELEASE
+    
+    if (activeIdx >= 0 && activeIdx < _events.size()) {
+        auto& evt = _events[activeIdx];
+        if (evt.endSec <= evt.startSec) {
+            
+            #if ENABLE_TAB_RT_LOGGING
+            const float noteOffThresh = params.yinThreshold[s] 
+                                       * params.releaseRatio[s];
+            NoteLogger::instance().logNoteOff(s, evt.fret, energy, 
+                                             noteOffThresh, ...);
+            #endif
+            
+            evt.endSec = t0;
+        }
+        activeIdx = -1;
+        state.lastFret = -1;
+    }
+}
+```
+
+Lines 197-199: Update State Tracking
+```
+state.wasAttack = isAttack;
+state.wasSustaining = isSustaining;
+```
+→ Store for next frame to detect transitions
+
+===============================================================================
+8. NOTELOGGER - BACKGROUND LOGGING
+===============================================================================
+
+File: src/NoteLogger.cpp
+
+All log calls are non-blocking:
+  → logNoteOn(), logNoteOff(), logRetrigger(), logRepitch()
+  → Events queued to background thread
+  → Written to timestamped log file: logs/01-2026/notes-YYYYMMDD-HHMMSS.log
+
+Log format:
+  [ON]       S1  F0         RMS = 0.36  >  ENV = 0.34
+  [OFF]      S1  F0         RMS = 0.00  <  OFF = 0.04
+  [REPITCH]  S1  F4 -> F0   RMS = 0.11  |  Thresh = 0.20
+  [RETRIG]   S1  F4         Spike = 0.20  >  Thresh = 0.18
+
+===============================================================================
+TIMING SUMMARY
+===============================================================================
+
+Total Onset Latency: ~50-100ms
+  - Attack detection:      10.7ms  (512 samples)
+  - Pitch confirmation:    42.7ms  (2048 samples)
+  - TabEngine polling:     ~11.6ms (next tick)
+  - Processing overhead:   ~5-10ms
+
+State Machine Frame Rate: ~86 fps (every ~11.6ms)
+
+Buffer Sizes (String 0 - Low E):
+  - Onset buffer:  512 samples  (10.7ms @ 48kHz)
+  - Pitch buffer:  2048 samples (42.7ms @ 48kHz)
+
+===============================================================================
+KEY PROTECTION MECHANISMS
+===============================================================================
+
+1. Onset Counter (AtomicNoteState.h)
+   → Monotonic uint32_t incremented on ATTACK entry
+   → TabEngine compares to detect onsets
+   → Never miss onset even if ATTACK lasts 1 frame
+
+2. Pending Onset (TabEngine.cpp:76-108)
+   → Stores onset when counter changes but fret = -1
+   → Emits note when fret becomes valid
+   → Clears after 200ms timeout or signal drop
+   → Handles race: onset detected before pitch valid
+
+3. Fret Lock During SUSTAIN (FastYINDetector.cpp:331-334)
+   → Once committed to fret during ATTACK, locks for SUSTAIN
+   → Prevents F0↔F4 bouncing during decay
+   → Decay harmonics/noise cannot change reported fret
+
+4. REPITCH Energy Threshold (TabEngine.cpp:156)
+   → Only allow fret changes if energy > 50% of onset threshold
+   → Prevents low-energy decay jitter from creating events
+   → Real slides/bends still detected (high energy)
+
+5. Fret Stability (FastYINDetector.cpp:344-364)
+   → Requires 2 consecutive frames to change fret
+   → Exception: First note promoted immediately
+   → Exception: SUSTAIN state locks fret completely
+
+===============================================================================
+COMMON ISSUES AND FIXES
+===============================================================================
+
+Issue: REPITCH spam during decay (F0↔F4 bouncing)
+Root Cause: Fret not locked during SUSTAIN, pitch detection unstable
+Fix Applied: Lines 331-334 lock fret during SUSTAIN state
+
+Issue: Note ON delay (1-2 seconds)
+Root Cause: Using stableFret during ATTACK (waits for stability)
+Fix Applied: Line 233 uses detectedFret during ATTACK (immediate)
+
+Issue: Multiple ON/OFF cycles from single pluck
+Root Cause: YIN state bouncing, pending onset cleared too aggressively
+Fix Applied: Stricter pending onset clearing (lines 96-108)
+
+Issue: False re-triggers during sustain
+Root Cause: Re-attack thresholds too sensitive (1.4x)
+Fix Applied: Increased to 2.0x for SUSTAIN, 1.8x for RELEASE
+
+===============================================================================
+END OF EXECUTION FLOW DOCUMENTATION
+===============================================================================

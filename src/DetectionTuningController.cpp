@@ -50,15 +50,14 @@ void fromJson(const QJsonValue& value, std::array<int, 6>& arr) {
 
 QJsonObject serializeParameterSetJson(const NoteDetectionParameterSet& set) {
     QJsonObject obj;
-    obj.insert("baselineFloor", toJson(set.baselineFloor));
-    obj.insert("envelopeFloor", toJson(set.envelopeFloor));
-    obj.insert("gateRatio", toJson(set.gateRatio));
+    obj.insert("yinThreshold", toJson(set.yinThreshold));
+    obj.insert("noiseGateRMS", toJson(set.noiseGateRMS));
+    obj.insert("onsetSensitivity", toJson(set.onsetSensitivity));
+    obj.insert("releaseRatio", toJson(set.releaseRatio));
+    obj.insert("fretStabilityFrames", toJson(set.fretStabilityFrames));
     obj.insert("targetRms", toJson(set.targetRms));
     obj.insert("calibrationGainMultiplier", toJson(set.calibrationGainMultiplier));
     obj.insert("spatialWeight", toJson(set.spatialWeight));
-    obj.insert("confirmationFrames", toJson(set.confirmationFrames));
-    obj.insert("fluxSensitivity", toJson(set.fluxSensitivity));
-    obj.insert("slopeDecay", toJson(set.slopeDecay));
     return obj;
 }
 
@@ -79,19 +78,19 @@ QVariantList buildCategories() {
         std::initializer_list<NoteParameter> params;
     };
 
-    // CQT parameters organized by category
+    // YIN parameters organized by category
     const std::array<CategoryDef, 2> kCategoryDefs = {{
-        {"envelope", "Detection Thresholds", {
-            NoteParameter::BaselineFloor,
-            NoteParameter::EnvelopeFloor,
-            NoteParameter::GateRatio,
-            NoteParameter::FluxSensitivity,
-            NoteParameter::SlopeDecay
+        {"detection", "YIN Detection", {
+            NoteParameter::YINThreshold,
+            NoteParameter::NoiseGateRMS,
+            NoteParameter::OnsetSensitivity,
+            NoteParameter::ReleaseRatio,
+            NoteParameter::FretStabilityFrames
         }},
-        {"calibration", "Calibration & Stability", {
+        {"calibration", "Calibration & Gain", {
             NoteParameter::TargetRms,
             NoteParameter::CalibrationGainMultiplier,
-            NoteParameter::ConfirmationFrames
+            NoteParameter::SpatialWeight
         }}
     }};
 
@@ -272,17 +271,16 @@ void DetectionTuningController::loadFromDisk() {
             for (auto it = root.begin(); it != root.end(); ++it) {
                 NoteDetectionParameterSet set = makeDefaultNoteDetectionParameters();
                 const QJsonObject obj = it.value().toObject();
-                // baselineFloor is not loaded from tuning settings
-                // It is ONLY set by the calibration profile in TabEngineBridge::handleCalibrationBaselineFloorCaptured()
-                // Keep default values (will be overwritten by calibration profile)
-                fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
-                fromJson(obj.value("gateRatio"), set.gateRatio);
+                // Load YIN detection parameters
+                fromJson(obj.value("yinThreshold"), set.yinThreshold);
+                fromJson(obj.value("noiseGateRMS"), set.noiseGateRMS);
+                fromJson(obj.value("onsetSensitivity"), set.onsetSensitivity);
+                fromJson(obj.value("releaseRatio"), set.releaseRatio);
+                fromJson(obj.value("fretStabilityFrames"), set.fretStabilityFrames);
+                // Calibration parameters
                 fromJson(obj.value("targetRms"), set.targetRms);
                 fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
                 fromJson(obj.value("spatialWeight"), set.spatialWeight);
-                fromJson(obj.value("confirmationFrames"), set.confirmationFrames);
-                fromJson(obj.value("fluxSensitivity"), set.fluxSensitivity);
-                fromJson(obj.value("slopeDecay"), set.slopeDecay);
                 states[it.key().toStdString()] = set;
             }
         }
@@ -309,15 +307,16 @@ void DetectionTuningController::loadSnapshotsFromDirectory(std::map<std::string,
             continue;
         const QJsonObject obj = doc.object();
         NoteDetectionParameterSet set = makeDefaultNoteDetectionParameters();
-        // baselineFloor is not loaded - only from calibration
-        fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
-        fromJson(obj.value("gateRatio"), set.gateRatio);
+        // Load YIN detection parameters
+        fromJson(obj.value("yinThreshold"), set.yinThreshold);
+        fromJson(obj.value("noiseGateRMS"), set.noiseGateRMS);
+        fromJson(obj.value("onsetSensitivity"), set.onsetSensitivity);
+        fromJson(obj.value("releaseRatio"), set.releaseRatio);
+        fromJson(obj.value("fretStabilityFrames"), set.fretStabilityFrames);
+        // Calibration parameters
         fromJson(obj.value("targetRms"), set.targetRms);
         fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
         fromJson(obj.value("spatialWeight"), set.spatialWeight);
-        fromJson(obj.value("confirmationFrames"), set.confirmationFrames);
-        fromJson(obj.value("fluxSensitivity"), set.fluxSensitivity);
-        fromJson(obj.value("slopeDecay"), set.slopeDecay);
         const QString label = obj.value(QStringLiteral("label")).toString(QFileInfo(fileName).completeBaseName());
         states[label.toStdString()] = set;
     }
@@ -445,15 +444,16 @@ bool DetectionTuningController::readParameterSet(const QString& path, NoteDetect
         return false;
     const QJsonObject obj = doc.object();
     NoteDetectionParameterSet set = outSet;
-    // baselineFloor is not loaded - only from calibration
-    fromJson(obj.value("envelopeFloor"), set.envelopeFloor);
-    fromJson(obj.value("gateRatio"), set.gateRatio);
+    // Load YIN detection parameters
+    fromJson(obj.value("yinThreshold"), set.yinThreshold);
+    fromJson(obj.value("noiseGateRMS"), set.noiseGateRMS);
+    fromJson(obj.value("onsetSensitivity"), set.onsetSensitivity);
+    fromJson(obj.value("releaseRatio"), set.releaseRatio);
+    fromJson(obj.value("fretStabilityFrames"), set.fretStabilityFrames);
+    // Calibration parameters
     fromJson(obj.value("targetRms"), set.targetRms);
     fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
     fromJson(obj.value("spatialWeight"), set.spatialWeight);
-    fromJson(obj.value("confirmationFrames"), set.confirmationFrames);
-    fromJson(obj.value("fluxSensitivity"), set.fluxSensitivity);
-    fromJson(obj.value("slopeDecay"), set.slopeDecay);
     outSet = set;
     return true;
 }

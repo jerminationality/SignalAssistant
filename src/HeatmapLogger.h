@@ -18,7 +18,7 @@ class HeatmapLogger {
 public:
     static HeatmapLogger& instance();
 
-    // Called from TabEngineBridge::updateBinMagnitudeCache() when magnitudes change
+    // Called from TabEngineBridge::updateNoteStateCache() when note states change
     void logMagnitudeUpdate(
         std::uint64_t frameCount,
         const std::array<std::array<float, 25>, 6>& magnitudes,

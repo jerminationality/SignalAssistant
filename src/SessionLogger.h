@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <condition_variable>
 #include <cstdarg>
 #include <deque>
@@ -14,6 +15,18 @@ public:
 
     void log(const std::string& component, const std::string& message);
     void logf(const std::string& component, const char* fmt, ...);
+    
+    /**
+     * Log RMS and envelope ticker for note detection monitoring.
+     * Format: RMS [ x.xx | x.xx | x.xx | x.xx | x.xx | x.xx ]   ENV [ x.xx | x.xx | x.xx | x.xx | x.xx | x.xx ]
+     * Only logs if any string is above its noise floor threshold.
+     * @param rmsValues RMS values for each string (index 0 = low E / S1)
+     * @param envValues Envelope threshold values for each string
+     * @param noiseFloor Noise floor thresholds for each string
+     */
+    void logRmsEnvTicker(const std::array<float, 6>& rmsValues, 
+                         const std::array<float, 6>& envValues,
+                         const std::array<float, 6>& noiseFloor);
 
     void setComponentFilter(const std::string& filter);
     void clearComponentFilter();

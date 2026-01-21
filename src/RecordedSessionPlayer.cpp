@@ -278,10 +278,10 @@ bool RecordedSessionPlayer::loadSession(const RunSessionOptions& options) {
     else if (m_debugLogging)
         qInfo() << "RecordedPlayer" << "loaded" << "sr" << m_sampleRate << "frames" << m_totalFrames;
 
-    // Initialize CQT worker for recorded session mode
+    // Initialize YIN worker for recorded session mode
     // This allows heatmap visualization to work without a live JACK connection
     if (m_ready && m_bridge) {
-        m_bridge->initCQTForRecordedSession(static_cast<float>(m_sampleRate));
+        m_bridge->initYINForRecordedSession(static_cast<float>(m_sampleRate));
     }
 
     if (m_monitorEnabled.load(std::memory_order_acquire)) {

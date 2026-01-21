@@ -4,6 +4,11 @@
 #include <string>
 #include <vector>
 
+// Forward declarations
+namespace audio {
+class AtomicNoteState;
+}
+
 struct StringThresholds {
   float onsetThreshold {0.f};
   float baseline {0.f};
@@ -52,16 +57,17 @@ struct FrameFeatures {
   float envelopeRms = 0.f;
 };
 
-class CQTNoteDetector;
-struct DetectionParams;
-struct GuitarFrame;
-
 class TabEngine {
 public:
   TabEngine(const Tuning& t, const TrackerConfig& c);
   ~TabEngine();
   TabEngine(const TabEngine&) = delete;
   TabEngine& operator=(const TabEngine&) = delete;
+  
+  // Set the atomic note state reference (from YIN Worker Thread)
+  void setNoteState(audio::AtomicNoteState* state) { _noteState = state; }
+  
+  // Process a block - reads from AtomicNoteState populated by YIN Worker
   // channels[s] points to mono float buffer for string s; nullptr => silence
   void processBlock(const float* const channels[6], int n, float sr, float t0);
 
@@ -82,13 +88,19 @@ private:
   CalibrationProfile _calibration;
   std::vector<NoteEvent> _events;
   std::vector<int> _activeIdx; // per-string active event index or -1
-  std::unique_ptr<CQTNoteDetector> _cqtDetector;
+  audio::AtomicNoteState* _noteState {nullptr};  // YIN worker output state
   
-  // CQT state tracking
-  struct StringCQTState {
+  // YIN state tracking
+  struct StringYINState {
     float lastPitchHz = -1.0f;
     float lastRms = 0.0f;
     int lastFret = -1;
+    bool wasAttack = false;
+    bool wasSustaining = false;
+    uint32_t lastOnsetCounter = 0;  // Tracks onset counter to detect new onsets
+    bool pendingOnset = false;      // True if onset detected but fret not yet valid
+    float pendingOnsetEnergy = 0.0f; // Energy at time of pending onset
+    float pendingOnsetTime = 0.0f;   // Time of pending onset
   };
-  std::array<StringCQTState, 6> _cqtStates;
+  std::array<StringYINState, 6> _yinStates;
 };

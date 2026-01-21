@@ -26,27 +26,43 @@ struct StringNoteState {
     std::atomic<bool> isAttack{false};   // True on new note onset
     std::atomic<bool> isSustaining{false}; // True while note is held
     std::atomic<float> pitchHz{0.0f};    // Detected pitch frequency
+    std::atomic<float> onsetThreshold{0.0f}; // Adaptive threshold that triggered onset
+    std::atomic<uint32_t> onsetCounter{0}; // Increments on each new onset (never misses one)
     
     // Per-fret bin magnitudes for heatmap overlay (frets 0-24)
     static constexpr int NUM_FRETS = 25;
     std::array<std::atomic<float>, NUM_FRETS> binMagnitudes{};
     
     // Copy current state (for UI snapshot)
-    void copyTo(int& outFret, float& outEnergy, bool& outAttack, bool& outSustain, float& outPitch) const {
+    void copyTo(int& outFret, float& outEnergy, bool& outAttack, bool& outSustain, 
+                float& outPitch, float& outThreshold) const {
         outFret = fret.load(std::memory_order_acquire);
         outEnergy = energy.load(std::memory_order_relaxed);
         outAttack = isAttack.load(std::memory_order_relaxed);
         outSustain = isSustaining.load(std::memory_order_relaxed);
         outPitch = pitchHz.load(std::memory_order_relaxed);
+        outThreshold = onsetThreshold.load(std::memory_order_relaxed);
     }
     
     // Update from CQT worker
-    void update(int newFret, float newEnergy, bool attack, bool sustain, float pitch) {
+    void update(int newFret, float newEnergy, bool attack, bool sustain, 
+                float pitch, float threshold) {
         fret.store(newFret, std::memory_order_relaxed);
         energy.store(newEnergy, std::memory_order_relaxed);
         isAttack.store(attack, std::memory_order_relaxed);
         isSustaining.store(sustain, std::memory_order_relaxed);
-        pitchHz.store(pitch, std::memory_order_release);
+        pitchHz.store(pitch, std::memory_order_relaxed);
+        onsetThreshold.store(threshold, std::memory_order_release);
+    }
+    
+    // Signal a new onset (increments counter so readers never miss it)
+    void signalOnset() {
+        onsetCounter.fetch_add(1, std::memory_order_release);
+    }
+    
+    // Get current onset counter value
+    uint32_t getOnsetCounter() const {
+        return onsetCounter.load(std::memory_order_acquire);
     }
     
     // Update bin magnitude for a specific fret (called from CQT worker)
@@ -70,6 +86,8 @@ struct StringNoteState {
         isAttack.store(false, std::memory_order_relaxed);
         isSustaining.store(false, std::memory_order_relaxed);
         pitchHz.store(0.0f, std::memory_order_relaxed);
+        onsetThreshold.store(0.0f, std::memory_order_relaxed);
+        // Don't reset onsetCounter - it's monotonic
         for (auto& mag : binMagnitudes) {
             mag.store(0.0f, std::memory_order_relaxed);
         }
@@ -94,9 +112,10 @@ public:
      * Update state for a single string (TIER 2 - CQT Worker)
      */
     void updateString(int stringIdx, int fret, float magnitude, 
-                      bool isAttack, bool isSustaining, float pitchHz) {
+                      bool isAttack, bool isSustaining, float pitchHz,
+                      float onsetThreshold = 0.0f) {
         if (stringIdx < 0 || stringIdx >= 6) return;
-        m_strings[stringIdx].update(fret, magnitude, isAttack, isSustaining, pitchHz);
+        m_strings[stringIdx].update(fret, magnitude, isAttack, isSustaining, pitchHz, onsetThreshold);
     }
     
     /**
@@ -131,16 +150,35 @@ public:
      * Read state for a single string (TIER 3 - UI Thread)
      */
     void readString(int stringIdx, int& outFret, float& outMag, 
-                    bool& outAttack, bool& outSustain, float& outPitch) const {
+                    bool& outAttack, bool& outSustain, float& outPitch,
+                    float& outThreshold) const {
         if (stringIdx < 0 || stringIdx >= 6) {
             outFret = -1;
             outMag = 0.0f;
             outAttack = false;
             outSustain = false;
             outPitch = 0.0f;
+            outThreshold = 0.0f;
             return;
         }
-        m_strings[stringIdx].copyTo(outFret, outMag, outAttack, outSustain, outPitch);
+        m_strings[stringIdx].copyTo(outFret, outMag, outAttack, outSustain, outPitch, outThreshold);
+    }
+    
+    /**
+     * Get onset counter for a string (for detecting missed onsets)
+     */
+    uint32_t getOnsetCounter(int stringIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return 0;
+        return m_strings[stringIdx].getOnsetCounter();
+    }
+    
+    /**
+     * Signal onset on a string (called by YIN worker when entering ATTACK)
+     */
+    void signalOnset(int stringIdx) {
+        if (stringIdx >= 0 && stringIdx < 6) {
+            m_strings[stringIdx].signalOnset();
+        }
     }
     
     /**
@@ -157,6 +195,14 @@ public:
     float energy(int stringIdx) const {
         if (stringIdx < 0 || stringIdx >= 6) return 0.0f;
         return m_strings[stringIdx].energy.load(std::memory_order_acquire);
+    }
+    
+    /**
+     * Read onset threshold for a single string (simple accessor for UI)
+     */
+    float onsetThreshold(int stringIdx) const {
+        if (stringIdx < 0 || stringIdx >= 6) return 0.0f;
+        return m_strings[stringIdx].onsetThreshold.load(std::memory_order_acquire);
     }
     
     /**

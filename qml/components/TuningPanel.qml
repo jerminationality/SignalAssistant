@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 
 FocusScope {
     id: root
-    height: 452
+    height: 372
     focus: visible
     property var controller: null
     property var bridge: null
@@ -477,6 +477,8 @@ FocusScope {
                             color: "#e2e8f0"
                             font.pixelSize: 15
                             font.bold: true
+                            visible: modelData.title !== "YIN Detection"
+                            height: visible ? implicitHeight : 0
                         }
 
                         Loader {

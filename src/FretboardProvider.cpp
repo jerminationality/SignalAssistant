@@ -7,9 +7,13 @@
 
 #include "FretboardProvider.h"
 #include "audio/AtomicNoteState.h"
+#include "SessionLogger.h"
 
 #include <cmath>
 #include <algorithm>
+
+// Enable detailed note event logging for debugging
+#define FRETBOARD_NOTE_DEBUG 0
 
 FretboardProvider::FretboardProvider(audio::AtomicNoteState& noteState, QObject* parent)
     : QObject(parent)
@@ -108,8 +112,9 @@ void FretboardProvider::pollAtomicState() {
         bool attack = false;
         bool sustaining = false;
         float pitchHz = 0.0f;
+        float onsetThreshold = 0.0f;
         
-        m_noteState.readString(s, fret, energy, attack, sustaining, pitchHz);
+        m_noteState.readString(s, fret, energy, attack, sustaining, pitchHz, onsetThreshold);
         
         // Store active fret and state
         m_currActiveFret[s] = fret;
@@ -119,9 +124,19 @@ void FretboardProvider::pollAtomicState() {
         // Check for note attack/release transitions
         if (fret >= 0 && m_prevActiveFret[s] < 0) {
             // New note attack
+#if FRETBOARD_NOTE_DEBUG
+            SessionLogger::instance().logf("fb-note-attack",
+                "S%d F%d: emitting noteAttack (energy=%.4f, pitch=%.1fHz)",
+                s, fret, energy, pitchHz);
+#endif
             emit noteAttack(s, fret, static_cast<qreal>(energy));
         } else if (fret < 0 && m_prevActiveFret[s] >= 0) {
             // Note released
+#if FRETBOARD_NOTE_DEBUG
+            SessionLogger::instance().logf("fb-note-release",
+                "S%d F%d: emitting noteRelease (was sustaining=%d)",
+                s, m_prevActiveFret[s], m_isSustaining[s] ? 1 : 0);
+#endif
             emit noteRelease(s, m_prevActiveFret[s]);
         }
         m_prevActiveFret[s] = fret;

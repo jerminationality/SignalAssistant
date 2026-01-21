@@ -46,15 +46,14 @@ void NoteDetectionParameterSetAtomic::store(const NoteDetectionParameterSet& sou
         for (std::size_t i = 0; i < destArr.size(); ++i)
             destArr[i].store(srcArr[i], std::memory_order_release);
     };
-    transfer(baselineFloor, source.baselineFloor);
-    transfer(envelopeFloor, source.envelopeFloor);
-    transfer(gateRatio, source.gateRatio);
+    transfer(yinThreshold, source.yinThreshold);
+    transfer(noiseGateRMS, source.noiseGateRMS);
+    transfer(onsetSensitivity, source.onsetSensitivity);
+    transfer(releaseRatio, source.releaseRatio);
+    transfer(fretStabilityFrames, source.fretStabilityFrames);
     transfer(targetRms, source.targetRms);
     transfer(calibrationGainMultiplier, source.calibrationGainMultiplier);
     transfer(spatialWeight, source.spatialWeight);
-    transfer(confirmationFrames, source.confirmationFrames);
-    transfer(fluxSensitivity, source.fluxSensitivity);
-    transfer(slopeDecay, source.slopeDecay);
 }
 
 NoteDetectionStore& NoteDetectionStore::instance() {
@@ -76,15 +75,14 @@ float* NoteDetectionStore::access(NoteDetectionParameterSet& set, NoteParameter 
 
     float* result = nullptr;
     switch (id) {
-        case NoteParameter::BaselineFloor: result = &set.baselineFloor[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::EnvelopeFloor: result = &set.envelopeFloor[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::GateRatio: result = &set.gateRatio[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::YINThreshold: result = &set.yinThreshold[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::NoiseGateRMS: result = &set.noiseGateRMS[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::OnsetSensitivity: result = &set.onsetSensitivity[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::ReleaseRatio: result = &set.releaseRatio[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::TargetRms: result = &set.targetRms[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::CalibrationGainMultiplier: result = &set.calibrationGainMultiplier[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::SpatialWeight: result = &set.spatialWeight[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::FluxSensitivity: result = &set.fluxSensitivity[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::SlopeDecay: result = &set.slopeDecay[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::ConfirmationFrames: return nullptr; // int type, handled separately
+        case NoteParameter::FretStabilityFrames: return nullptr; // int type, handled separately
     }
 
     return result;
@@ -102,15 +100,14 @@ float NoteDetectionStore::activeValue(NoteParameter id, int stringIdx) const {
         return arr[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire);
     };
     switch (id) {
-        case NoteParameter::BaselineFloor: return fetch(m_active.baselineFloor);
-        case NoteParameter::EnvelopeFloor: return fetch(m_active.envelopeFloor);
-        case NoteParameter::GateRatio: return fetch(m_active.gateRatio);
+        case NoteParameter::YINThreshold: return fetch(m_active.yinThreshold);
+        case NoteParameter::NoiseGateRMS: return fetch(m_active.noiseGateRMS);
+        case NoteParameter::OnsetSensitivity: return fetch(m_active.onsetSensitivity);
+        case NoteParameter::ReleaseRatio: return fetch(m_active.releaseRatio);
+        case NoteParameter::FretStabilityFrames: return static_cast<float>(m_active.fretStabilityFrames[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire));
         case NoteParameter::TargetRms: return fetch(m_active.targetRms);
         case NoteParameter::CalibrationGainMultiplier: return fetch(m_active.calibrationGainMultiplier);
         case NoteParameter::SpatialWeight: return fetch(m_active.spatialWeight);
-        case NoteParameter::FluxSensitivity: return fetch(m_active.fluxSensitivity);
-        case NoteParameter::SlopeDecay: return fetch(m_active.slopeDecay);
-        case NoteParameter::ConfirmationFrames: return static_cast<float>(m_active.confirmationFrames[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire));
     }
     return 0.f;
 }
@@ -125,9 +122,9 @@ void NoteDetectionStore::setValue(NoteParameter id, int stringIdx, float value) 
     } else {
         pushUndo();
     }
-    if (id == NoteParameter::ConfirmationFrames) {
+    if (id == NoteParameter::FretStabilityFrames) {
         // Handle int type separately
-        m_current.confirmationFrames[static_cast<std::size_t>(stringIdx)] = static_cast<int>(value);
+        m_current.fretStabilityFrames[static_cast<std::size_t>(stringIdx)] = static_cast<int>(value);
     } else if (float* ptr = access(m_current, id, stringIdx)) {
         *ptr = value;
     }
@@ -161,9 +158,9 @@ void NoteDetectionStore::setValueFromKey(const std::string& key, int stringIdx, 
 
 float NoteDetectionStore::currentValueFromKey(const std::string& key, int stringIdx) const {
     if (auto param = parameterFromKey(key)) {
-        if (*param == NoteParameter::ConfirmationFrames) {
+        if (*param == NoteParameter::FretStabilityFrames) {
             if (stringIdx >= 0 && stringIdx < kNumStrings) {
-                return static_cast<float>(m_current.confirmationFrames[static_cast<std::size_t>(stringIdx)]);
+                return static_cast<float>(m_current.fretStabilityFrames[static_cast<std::size_t>(stringIdx)]);
             }
         } else if (const float* ptr = access(m_current, *param, stringIdx)) {
             return *ptr;
@@ -174,9 +171,9 @@ float NoteDetectionStore::currentValueFromKey(const std::string& key, int string
 
 float NoteDetectionStore::committedValueFromKey(const std::string& key, int stringIdx) const {
     if (auto param = parameterFromKey(key)) {
-        if (*param == NoteParameter::ConfirmationFrames) {
+        if (*param == NoteParameter::FretStabilityFrames) {
             if (stringIdx >= 0 && stringIdx < kNumStrings) {
-                return static_cast<float>(m_committed.confirmationFrames[static_cast<std::size_t>(stringIdx)]);
+                return static_cast<float>(m_committed.fretStabilityFrames[static_cast<std::size_t>(stringIdx)]);
             }
         } else if (const float* ptr = access(m_committed, *param, stringIdx)) {
             return *ptr;

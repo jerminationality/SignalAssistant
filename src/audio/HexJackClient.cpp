@@ -369,9 +369,9 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
             self->m_audioRingBuffer.push(frame);
         }
         
-        // Notify CQT worker thread that audio is available
+        // Notify YIN worker thread that audio is available
         if (self->m_bridge) {
-            self->m_bridge->notifyCQTWorker();
+            self->m_bridge->notifyYINWorker();
         }
     }
     

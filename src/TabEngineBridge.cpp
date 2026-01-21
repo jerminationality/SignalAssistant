@@ -3,7 +3,10 @@
 #include "SessionLogger.h"
 #include "HeatmapLogger.h"
 #include "NoteDetectionStore.h"
-#include "CQT/CQTNoteDetector.h"
+#include "NoteLogger.h"
+
+// Enable detailed note event logging for debugging note-off issues
+#define NOTE_DEBUG 0
 #include "audio/HexAudioClient.h"
 #include "audio/HexJackClient.h"
 #include <QJsonDocument>
@@ -51,6 +54,9 @@ TabEngineBridge::TabEngineBridge(QObject* parent)
     : QObject(parent)
     , m_engine(std::make_unique<TabEngine>(m_tuning, m_cfg))
 {
+    // Set note state reference for TabEngine to consume YIN results
+    m_engine->setNoteState(&m_atomicNoteState);
+    
     m_debugNoteLogging = qEnvironmentVariableIsSet("GUITARPI_TEST_LOG_NOTES");
     if (m_debugNoteLogging)
         qInfo() << "TabBridge" << "debug-note-logging" << "enabled";
@@ -77,10 +83,10 @@ TabEngineBridge::TabEngineBridge(QObject* parent)
     m_calibrationFadeTimer->setSingleShot(true);
     connect(m_calibrationFadeTimer, &QTimer::timeout, this, &TabEngineBridge::handleCalibrationFadeComplete);
     
-    // Timer for UI bin magnitude updates - runs at 10Hz from main thread to avoid xruns
+    // Timer for UI note state updates - runs at 10Hz from main thread to avoid xruns
     m_noteStatePollTimer = new QTimer(this);
     m_noteStatePollTimer->setInterval(100); // 10Hz
-    connect(m_noteStatePollTimer, &QTimer::timeout, this, &TabEngineBridge::updateBinMagnitudeCache);
+    connect(m_noteStatePollTimer, &QTimer::timeout, this, &TabEngineBridge::updateNoteStateCache);
     m_noteStatePollTimer->start();
     
     loadPersistentCalibration();
@@ -119,7 +125,7 @@ qreal TabEngineBridge::getBinMagnitude(int stringIndex, int fretIndex) const {
     // O(1) lookup for QML colorProvider - called 150 times per render but very cheap
     if (stringIndex < 0 || stringIndex >= 6) return 0.0;
     if (fretIndex < 0 || fretIndex > 24) return 0.0;
-    return static_cast<qreal>(m_binMagnitudeCache[stringIndex][fretIndex]);
+    return static_cast<qreal>(m_noteStateCache[stringIndex][fretIndex]);
 }
 
 qreal TabEngineBridge::getBinThreshold(int stringIndex, int fretIndex) const {
@@ -129,16 +135,16 @@ qreal TabEngineBridge::getBinThreshold(int stringIndex, int fretIndex) const {
     return static_cast<qreal>(m_binThresholdCache[stringIndex][fretIndex]);
 }
 
-void TabEngineBridge::updateBinMagnitudeCache() {
-    // FULL-SPECTRUM MAGNITUDE CACHE UPDATE
-    // Reads ALL 150 bin magnitudes from AtomicNoteState (populated by CQT Worker)
+void TabEngineBridge::updateNoteStateCache() {
+    // NOTE STATE CACHE UPDATE
+    // Reads note state from AtomicNoteState (populated by YIN Worker)
     // Uses magnitude gate to prevent UI signal flooding on Pi5
     
-    // FRAME COUNTER CHECK: Skip if no new CQT frame since last poll
+    // FRAME COUNTER CHECK: Skip if no new YIN frame since last poll
     const std::uint64_t currentFrame = m_atomicNoteState.frameCounter();
     
     if (currentFrame == m_lastFrameCount) {
-        return;  // No new data from CQT worker
+        return;  // No new data from YIN worker
     }
     m_lastFrameCount = currentFrame;
     
@@ -146,17 +152,32 @@ void TabEngineBridge::updateBinMagnitudeCache() {
     
     bool anySignificantChange = false;
     
-    // Get current envelope floor for threshold calculation
+    // Get current YIN threshold for threshold calculation
     auto& store = NoteDetectionStore::instance();
     const auto& np = store.current();
     
+    // Update live onset thresholds from AtomicNoteState (per-string adaptive values)
+    bool thresholdsChanged = false;
     for (int s = 0; s < 6; ++s) {
-        const float envFloor = np.envelopeFloor[s];
+        const float liveOnsetThreshold = m_atomicNoteState.onsetThreshold(s);
+        
+        // Update the thresholds display with live adaptive threshold
+        if (s < m_thresholds.size()) {
+            QVariantMap stringThresholds = m_thresholds[s].toMap();
+            const float oldEnv = stringThresholds["envFloor"].toFloat();
+            if (std::abs(liveOnsetThreshold - oldEnv) > 0.0001f) {
+                stringThresholds["envFloor"] = liveOnsetThreshold;
+                m_thresholds[s] = stringThresholds;
+                thresholdsChanged = true;
+            }
+        }
+        
+        const float envFloor = np.yinThreshold[s];
         
         for (int f = 0; f <= 24; ++f) {
-            // Read actual CQT bin magnitude from atomic state (populated by CQT Worker)
+            // Read note energy from atomic state (populated by YIN Worker)
             const float liveVal = m_atomicNoteState.binMagnitude(s, f);
-            float& cached = m_binMagnitudeCache[s][f];
+            float& cached = m_noteStateCache[s][f];
             
             // MAGNITUDE GATE: Only count as change if delta > 0.5% intensity
             // This prevents signal flooding that causes Pi 5 freezes
@@ -165,23 +186,28 @@ void TabEngineBridge::updateBinMagnitudeCache() {
             }
             cached = liveVal;
             
-            // Update threshold cache (threshold = envFloor * multiplier)
+            // Update threshold cache (threshold = envFloor for YIN)
+            // YIN uses uniform threshold across frets (no frequency-dependent scaling)
             // Ensure minimum threshold to prevent division by zero in QML
-            const float multiplier = CQTNoteDetector::getThresholdMultiplier(s, f);
-            m_binThresholdCache[s][f] = std::max(envFloor * multiplier, 0.001f);
+            m_binThresholdCache[s][f] = std::max(envFloor, 0.001f);
         }
     }
     
+    // Emit thresholds changed signal if any live onset thresholds changed
+    if (thresholdsChanged) {
+        emit this->thresholdsChanged();
+    }
+    
     // Log magnitude update to heatmap logger
-    HeatmapLogger::instance().logMagnitudeUpdate(currentFrame, m_binMagnitudeCache, m_binThresholdCache);
+    HeatmapLogger::instance().logMagnitudeUpdate(currentFrame, m_noteStateCache, m_binThresholdCache);
     
     // GOAL 1: Emit single batched signal with all 150 bin colors (prevents UI halting)
     // Compute NEON-optimized log-scale colors and emit once per 100ms cycle
     QVariantMap batchUpdates;
     computeBatchedColors(batchUpdates);
     
-    m_binMagnitudeRevision++;
-    emit binMagnitudesChanged();  // Legacy signal for revision tracking
+    m_noteStateRevision++;
+    emit noteStateChanged();  // Signal for revision tracking
     emit binColorBatchChanged(batchUpdates);  // New batched signal with pre-computed colors
 }
 
@@ -251,7 +277,7 @@ void TabEngineBridge::computeBatchedColors(QVariantMap& batchOut) {
             // Load 4 magnitudes (handle tail case)
             const int remaining = std::min(4, 25 - f);
             for (int i = 0; i < 4; ++i) {
-                magBuffer[i] = (f + i < 25) ? m_binMagnitudeCache[s][f + i] : 0.0f;
+                magBuffer[i] = (f + i < 25) ? m_noteStateCache[s][f + i] : 0.0f;
             }
             
             // Load into NEON register
@@ -272,7 +298,7 @@ void TabEngineBridge::computeBatchedColors(QVariantMap& batchOut) {
             for (int i = 0; i < remaining; ++i) {
                 const int fret = f + i;
                 const float threshold = m_binThresholdCache[s][fret];
-                const float rawMag = m_binMagnitudeCache[s][fret];
+                const float rawMag = m_noteStateCache[s][fret];
                 const bool aboveThreshold = rawMag >= threshold;
                 
                 // Color: cyan for above threshold, blue-gray for below (ghosting)
@@ -296,7 +322,7 @@ void TabEngineBridge::computeBatchedColors(QVariantMap& batchOut) {
     // Scalar fallback for non-ARM platforms
     for (int s = 0; s < 6; ++s) {
         for (int f = 0; f < 25; ++f) {
-            const float rawMag = m_binMagnitudeCache[s][f];
+            const float rawMag = m_noteStateCache[s][f];
             const float threshold = m_binThresholdCache[s][f];
             const bool aboveThreshold = rawMag >= threshold;
             
@@ -330,10 +356,10 @@ void TabEngineBridge::setTuningModeEnabled(bool enabled) {
 }
 
 TabEngineBridge::~TabEngineBridge() {
-    // Stop CQT worker thread before destruction
-    if (m_cqtWorker) {
-        m_cqtWorker->stop();
-        m_cqtWorker.reset();
+    // Stop YIN worker thread before destruction
+    if (m_yinWorker) {
+        m_yinWorker->stop();
+        m_yinWorker.reset();
     }
     dumpSessionWaveSnapshot("shutdown");
 }
@@ -512,9 +538,9 @@ void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& aver
         if (m_engine)
             m_engine->applyCalibration(m_calibrationProfile);
         
-        // Update CQT Worker Thread with new calibration data
-        if (m_cqtWorker) {
-            m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+        // Update YIN Worker Thread with new calibration data
+        if (m_yinWorker) {
+            m_yinWorker->setCalibration(m_calibrationProfile.avgRms, 
                                         m_calibrationProfile.peakRms);
         }
         
@@ -745,10 +771,10 @@ void TabEngineBridge::setAudioClient(HexAudioClient* client) {
     if (m_audioClient == client)
         return;
 
-    // Stop existing CQT worker if any
-    if (m_cqtWorker) {
-        m_cqtWorker->stop();
-        m_cqtWorker.reset();
+    // Stop existing YIN worker if any
+    if (m_yinWorker) {
+        m_yinWorker->stop();
+        m_yinWorker.reset();
     }
 
     if (m_audioClient) {
@@ -769,22 +795,22 @@ void TabEngineBridge::setAudioClient(HexAudioClient* client) {
         m_audioClient->connectCalibration(this);
         updateThresholdsDisplay();  // Update thresholds when audio client connected
         
-        // Connect to bufferConfigChanged to initialize CQT worker once JACK is started
+        // Connect to bufferConfigChanged to initialize YIN worker once JACK is started
         auto* jackClient = dynamic_cast<HexJackClient*>(m_audioClient);
         if (jackClient) {
-            // Try to create CQT worker now if sample rate is already valid
+            // Try to create YIN worker now if sample rate is already valid
             if (jackClient->sampleRate() > 0) {
-                initCQTWorkerForJack(jackClient);
+                initYINWorkerForJack(jackClient);
             } else {
                 // Sample rate not yet available - connect to signal for deferred init
-                // (The !m_cqtWorker check prevents multiple initializations)
+                // (The !m_yinWorker check prevents multiple initializations)
                 connect(jackClient, &HexJackClient::bufferConfigChanged,
                         this, [this, jackClient](int sampleRate, int /*bufferSize*/) {
-                    if (sampleRate > 0 && !m_cqtWorker) {
-                        initCQTWorkerForJack(jackClient);
+                    if (sampleRate > 0 && !m_yinWorker) {
+                        initYINWorkerForJack(jackClient);
                     }
                 });
-                qInfo() << "TabEngineBridge: JACK sample rate not yet available, deferring CQT worker init";
+                qInfo() << "TabEngineBridge: JACK sample rate not yet available, deferring YIN worker init";
             }
         } else {
             qWarning() << "TabEngineBridge: setAudioClient called but dynamic_cast to HexJackClient FAILED";
@@ -792,11 +818,11 @@ void TabEngineBridge::setAudioClient(HexAudioClient* client) {
     }
 }
 
-void TabEngineBridge::initCQTForRecordedSession(float sampleRate) {
-    // Stop existing CQT worker if any
-    if (m_cqtWorker) {
-        m_cqtWorker->stop();
-        m_cqtWorker.reset();
+void TabEngineBridge::initYINForRecordedSession(float sampleRate) {
+    // Stop existing YIN worker if any
+    if (m_yinWorker) {
+        m_yinWorker->stop();
+        m_yinWorker.reset();
     }
     
     // Create standalone ring buffer for recorded session audio
@@ -804,13 +830,13 @@ void TabEngineBridge::initCQTForRecordedSession(float sampleRate) {
         m_standaloneRingBuffer = std::make_unique<audio::AudioRingBuffer>();
     }
     
-    // Create CQT Worker Thread (TIER 2) for recorded session
-    audio::CQTWorkerConfig workerConfig;
+    // Create YIN Worker Thread (TIER 2) for recorded session
+    audio::YINWorkerConfig workerConfig;
     workerConfig.sampleRate = sampleRate;
-    workerConfig.hopSize = 512;  // ~11.6ms at 44.1kHz
+    workerConfig.hopSize = 256;  // ~5.3ms at 48kHz (faster response than CQT)
     workerConfig.enableCoreAffinity = false;  // Don't pin cores in recorded mode
     
-    m_cqtWorker = std::make_unique<audio::CQTWorkerThread>(
+    m_yinWorker = std::make_unique<audio::YINWorkerThread>(
         *m_standaloneRingBuffer,
         m_atomicNoteState,
         workerConfig
@@ -818,32 +844,32 @@ void TabEngineBridge::initCQTForRecordedSession(float sampleRate) {
     
     // Pass calibration data to worker
     if (m_calibrationProfile.valid) {
-        m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+        m_yinWorker->setCalibration(m_calibrationProfile.avgRms, 
                                     m_calibrationProfile.peakRms);
     }
     
-    m_cqtWorker->start();
-    qInfo() << "TabEngineBridge: CQT Worker Thread started for RECORDED SESSION (sample rate:" << sampleRate << ")";
+    m_yinWorker->start();
+    qInfo() << "TabEngineBridge: YIN Worker Thread started for RECORDED SESSION (sample rate:" << sampleRate << ")";
 }
 
-void TabEngineBridge::initCQTWorkerForJack(HexJackClient* jackClient) {
+void TabEngineBridge::initYINWorkerForJack(HexJackClient* jackClient) {
     if (!jackClient) return;
     
-    // Stop existing CQT worker if any
-    if (m_cqtWorker) {
-        m_cqtWorker->stop();
-        m_cqtWorker.reset();
+    // Stop existing YIN worker if any
+    if (m_yinWorker) {
+        m_yinWorker->stop();
+        m_yinWorker.reset();
     }
     
-    audio::CQTWorkerConfig workerConfig;
+    audio::YINWorkerConfig workerConfig;
     workerConfig.sampleRate = static_cast<float>(jackClient->sampleRate());
-    workerConfig.hopSize = 512;  // ~11.6ms at 44.1kHz
+    workerConfig.hopSize = 256;  // ~5.3ms at 48kHz (faster response than CQT)
     workerConfig.enableCoreAffinity = true;
-    workerConfig.coreId = 1;  // Core 1 for CQT processing
+    workerConfig.coreId = 1;  // Core 1 for YIN processing
     
-    qInfo() << "TabEngineBridge: Creating CQT Worker with ring buffer from JACK client, sampleRate:" << workerConfig.sampleRate;
+    qInfo() << "TabEngineBridge: Creating YIN Worker with ring buffer from JACK client, sampleRate:" << workerConfig.sampleRate;
     
-    m_cqtWorker = std::make_unique<audio::CQTWorkerThread>(
+    m_yinWorker = std::make_unique<audio::YINWorkerThread>(
         jackClient->audioRingBuffer(),
         m_atomicNoteState,
         workerConfig
@@ -851,12 +877,12 @@ void TabEngineBridge::initCQTWorkerForJack(HexJackClient* jackClient) {
     
     // Pass calibration data to worker
     if (m_calibrationProfile.valid) {
-        m_cqtWorker->setCalibration(m_calibrationProfile.avgRms, 
+        m_yinWorker->setCalibration(m_calibrationProfile.avgRms, 
                                     m_calibrationProfile.peakRms);
     }
     
-    m_cqtWorker->start();
-    qInfo() << "TabEngineBridge: CQT Worker Thread started (TIER 2) with sample rate:" << workerConfig.sampleRate;
+    m_yinWorker->start();
+    qInfo() << "TabEngineBridge: YIN Worker Thread started (TIER 2) with sample rate:" << workerConfig.sampleRate;
 }
 
 void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int n, float sr) {
@@ -913,10 +939,10 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
     postMeterSnapshot(blockRms);
 
     // =========================================================================
-    // RECORDED SESSION MODE: Push audio to standalone ring buffer for CQT worker
+    // RECORDED SESSION MODE: Push audio to standalone ring buffer for YIN worker
     // This replicates what HexJackClient does in live mode, but for recorded sessions
     // =========================================================================
-    if (m_standaloneRingBuffer && m_cqtWorker) {
+    if (m_standaloneRingBuffer && m_yinWorker) {
         audio::AudioFrame frame;
         for (int i = 0; i < n; ++i) {
             for (int s = 0; s < 6; ++s) {
@@ -925,8 +951,8 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
             // Push to ring buffer - if full, we drop samples
             m_standaloneRingBuffer->push(frame);
         }
-        // Notify CQT worker thread that audio is available
-        m_cqtWorker->notifyAudioAvailable();
+        // Notify YIN worker thread that audio is available
+        m_yinWorker->notifyAudioAvailable();
     }
 
     if (m_debugNoteLogging) {
@@ -955,8 +981,8 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
         }
         emit thresholdsChanged();
         
-        // NOTE: Bin magnitude cache is updated by m_noteStatePollTimer (UI thread)
-        // Do NOT call updateBinMagnitudeCache() here - it emits signals from audio thread and causes xruns
+        // NOTE: Note state cache is updated by m_noteStatePollTimer (UI thread)
+        // Do NOT call updateNoteStateCache() here - it emits signals from audio thread and causes xruns
         
         m_thresholdsUpdateTimer.restart();
     }
@@ -1017,6 +1043,9 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
             
         bool hasActiveNote = false;
         float activeEnvelope = 0.f;
+        int mostRecentFret = -1;
+        float mostRecentEndSec = -1.f;
+        float mostRecentStartSec = -1.f;
         
         // Find the most recent note for this string
         for (int i = total - 1; i >= 0; --i) {
@@ -1026,6 +1055,9 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
                 // 1. endSec is 0 (not yet ended - still sustaining), OR
                 // 2. endSec is ahead of current time (still within sustain window)
                 const bool noteStillActive = (ev.endSec <= ev.startSec) || (ev.endSec > m_liveTimeSec);
+                mostRecentFret = ev.fret;
+                mostRecentEndSec = ev.endSec;
+                mostRecentStartSec = ev.startSec;
                 
                 if (noteStillActive) {
                     hasActiveNote = true;
@@ -1035,6 +1067,15 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
             }
         }
         
+#if NOTE_DEBUG
+        // Log detailed note state for debugging
+        SessionLogger::instance().logf("note-state",
+            "S%d: displayed=%d hasActive=%d mostRecentFret=%d start=%.3f end=%.3f liveT=%.3f lastFret=%d",
+            s, m_activeNoteDisplayed[std::size_t(s)] ? 1 : 0, hasActiveNote ? 1 : 0,
+            mostRecentFret, mostRecentStartSec, mostRecentEndSec, m_liveTimeSec,
+            m_lastLiveFret[std::size_t(s)]);
+#endif
+        
         // If we have an active note, emit envelope update
         if (hasActiveNote) {
             QMetaObject::invokeMethod(this,
@@ -1043,14 +1084,27 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
         }
         
         // If we had a displayed note and now it's not active, emit noteEnded
+        // Use mostRecentFret from event data instead of m_lastLiveFret which may be stale
+        // (m_lastLiveFret is only updated in dispatchLiveEvents which is queued)
         if (!hasActiveNote) {
-            const int endedFret = m_lastLiveFret[std::size_t(s)];
+            // Prefer mostRecentFret from event scan; fallback to m_lastLiveFret for edge cases
+            const int endedFret = (mostRecentFret >= 0) ? mostRecentFret : m_lastLiveFret[std::size_t(s)];
             if (endedFret >= 0) {
+                qInfo() << "[UI-NOTE-OFF] S" << s << "F" << endedFret
+                        << "endSec=" << QString::number(mostRecentEndSec, 'f', 3)
+                        << "liveT=" << QString::number(m_liveTimeSec, 'f', 3);
+#if NOTE_DEBUG
+                SessionLogger::instance().logf("note-off-emit",
+                    "S%d F%d: Emitting liveNoteEnded (endSec=%.3f, liveT=%.3f)",
+                    s, endedFret, mostRecentEndSec, m_liveTimeSec);
+#endif
                 QMetaObject::invokeMethod(this,
                     [this, s, endedFret]() { emit liveNoteEnded(s, endedFret); },
                     Qt::QueuedConnection);
             }
             m_activeNoteDisplayed[std::size_t(s)] = false;
+            // Clear m_lastLiveFret so we don't emit duplicate note-off on next pass
+            m_lastLiveFret[std::size_t(s)] = -1;
         }
     }
     }
@@ -1142,8 +1196,38 @@ void TabEngineBridge::dispatchLiveEvents() {
     for (const auto& ev : batch) {
         m_lastLiveTriggerSec[std::size_t(ev.stringIndex)] = ev.startSec;
         m_lastLiveFret[std::size_t(ev.stringIndex)] = ev.fretIndex;
-        qInfo() << "EMIT liveNoteTriggered: S" << ev.stringIndex << " F" << ev.fretIndex;
+        qInfo() << "[UI-NOTE-ON]  S" << ev.stringIndex << "F" << ev.fretIndex 
+                << "vel=" << QString::number(ev.velocity, 'f', 2)
+                << "t=" << QString::number(ev.startSec, 'f', 3);
         emit liveNoteTriggered(ev.stringIndex, ev.fretIndex, ev.velocity);
+    }
+    
+    // UI-to-YIN Sync Check: Compare what UI displays vs what YIN worker reports
+    // Done at end of dispatchLiveEvents after all UI state updates are complete
+    // This helps debug timing/latency issues between detection and display
+    {
+        std::array<int, 6> uiDisplayedFrets{};
+        std::array<int, 6> yinActiveFrets{};
+        std::array<bool, 6> uiDisplayedFlags{};
+        std::array<bool, 6> yinSustainingFlags{};
+        
+        for (int s = 0; s < 6; ++s) {
+            // UI state: what is currently shown on screen
+            uiDisplayedFrets[s] = m_lastLiveFret[s];
+            uiDisplayedFlags[s] = m_activeNoteDisplayed[s];
+            
+            // YIN worker state: what the detection engine currently reports
+            int fret = -1;
+            float energy = 0.0f;
+            bool attack = false;
+            bool sustaining = false;
+            float pitchHz = 0.0f;
+            float threshold = 0.0f;
+            m_atomicNoteState.readString(s, fret, energy, attack, sustaining, pitchHz, threshold);
+            
+            yinActiveFrets[s] = fret;
+            yinSustainingFlags[s] = sustaining;
+        }
     }
 }
 
@@ -1643,7 +1727,7 @@ bool TabEngineBridge::exportPendingCapture(const QString& rawLabel) {
 // =============================================================================
 
 void TabEngineBridge::logHeatmapUIBatchStart() {
-    HeatmapLogger::instance().logUIBatchStart(m_binMagnitudeRevision);
+    HeatmapLogger::instance().logUIBatchStart(m_noteStateRevision);
 }
 
 void TabEngineBridge::logHeatmapUIEntry(int stringIndex, int fretIndex, qreal magnitude,
@@ -1669,9 +1753,9 @@ void TabEngineBridge::setHeatmapLoggingEnabled(bool enabled) {
 void TabEngineBridge::setHeatmapEnabled(bool enabled) {
     const bool wasEnabled = m_heatmapEnabled.exchange(enabled, std::memory_order_acq_rel);
     if (wasEnabled != enabled) {
-        // Notify CQT worker of heatmap state change
-        if (m_cqtWorker) {
-            m_cqtWorker->setHeatmapEnabled(enabled);
+        // Notify YIN worker of heatmap state change
+        if (m_yinWorker) {
+            m_yinWorker->setHeatmapEnabled(enabled);
         }
         emit heatmapEnabledChanged();
     }

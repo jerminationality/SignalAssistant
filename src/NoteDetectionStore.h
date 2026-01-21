@@ -11,15 +11,16 @@
 #include <vector>
 
 struct NoteDetectionParameterSetAtomic {
-    std::array<std::atomic<float>, 6> baselineFloor;
-    std::array<std::atomic<float>, 6> envelopeFloor;
-    std::array<std::atomic<float>, 6> gateRatio;
+    // YIN Detection Parameters
+    std::array<std::atomic<float>, 6> yinThreshold;
+    std::array<std::atomic<float>, 6> noiseGateRMS;
+    std::array<std::atomic<float>, 6> onsetSensitivity;
+    std::array<std::atomic<float>, 6> releaseRatio;
+    std::array<std::atomic<int>, 6> fretStabilityFrames;
+    // Calibration Parameters
     std::array<std::atomic<float>, 6> targetRms;
     std::array<std::atomic<float>, 6> calibrationGainMultiplier;
     std::array<std::atomic<float>, 6> spatialWeight;
-    std::array<std::atomic<int>, 6> confirmationFrames;
-    std::array<std::atomic<float>, 6> fluxSensitivity;
-    std::array<std::atomic<float>, 6> slopeDecay;
 
     void store(const NoteDetectionParameterSet& source);
 };

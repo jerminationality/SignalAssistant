@@ -73,7 +73,7 @@ qt_add_executable(GuitarPi
     src/audio/CarlaClient.cpp
     src/audio/HexJackClient.cpp
     src/audio/JackMonitorSink.cpp
-    src/audio/CQTWorkerThread.cpp
+    src/audio/YINWorkerThread.cpp
 )
 
 qt_add_executable(TabPagePreview
@@ -87,7 +87,7 @@ qt_add_executable(TabPagePreview
     src/audio/CarlaClient.cpp
     src/audio/HexJackClient.cpp
     src/audio/JackMonitorSink.cpp
-    src/audio/CQTWorkerThread.cpp
+    src/audio/YINWorkerThread.cpp
 )
 
 file(GLOB_RECURSE GUITARPI_QML_ASSETS CONFIGURE_DEPENDS
@@ -126,14 +126,20 @@ add_library(guitarpi_tab
     src/util.h
     src/SessionLogger.cpp
     src/SessionLogger.h
+    src/NoteLogger.cpp
+    src/NoteLogger.h
     src/HeatmapLogger.cpp
     src/HeatmapLogger.h
     src/NoteDetectionConfig.cpp
     src/NoteDetectionConfig.h
     src/NoteDetectionStore.cpp
     src/NoteDetectionStore.h
-    src/CQT/CQTNoteDetector.cpp
-    src/CQT/CQTNoteDetector.h
+    # YIN detector
+    src/YIN/YINDetector.cpp
+    src/YIN/YINDetector.h
+    src/YIN/FastYINDetector.cpp
+    src/YIN/FastYINDetector.h
+    src/YIN/YINConfig.h
 )
 
 target_include_directories(guitarpi_tab

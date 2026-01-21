@@ -123,6 +123,49 @@ void SessionLogger::logf(const std::string& component, const char* fmt, ...) {
     writeLine(component, formatted);
 }
 
+void SessionLogger::logRmsEnvTicker(const std::array<float, 6>& rmsValues,
+                                     const std::array<float, 6>& envValues,
+                                     const std::array<float, 6>& noiseFloor) {
+    if (!m_ready)
+        return;
+    
+    // Only log if any string is above noise floor
+    bool anyAboveFloor = false;
+    for (int s = 0; s < 6; ++s) {
+        if (rmsValues[s] > noiseFloor[s]) {
+            anyAboveFloor = true;
+            break;
+        }
+    }
+    if (!anyAboveFloor)
+        return;
+    
+    // Build the ticker message
+    // Format: RMS [ x.xx | x.xx | x.xx | x.xx | x.xx | x.xx ]   ENV [ x.xx | x.xx | x.xx | x.xx | x.xx | x.xx ]
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2);
+    
+    oss << "RMS [ ";
+    for (int i = 0; i < 6; ++i) {
+        if (i > 0) oss << " | ";
+        // Display -.-- instead of 0.00 for visual separation
+        if (rmsValues[i] < 0.005f) {
+            oss << std::setw(4) << "-.--";
+        } else {
+            oss << std::setw(4) << rmsValues[i];
+        }
+    }
+    oss << " ]   ENV [ ";
+    for (int i = 0; i < 6; ++i) {
+        if (i > 0) oss << " | ";
+        // ENV always shows numbers
+        oss << std::setw(4) << envValues[i];
+    }
+    oss << " ]";
+    
+    writeLine("rms-ticker", oss.str());
+}
+
 void SessionLogger::writeLine(const std::string& component, const std::string& message) {
     if (!m_componentFilter.empty() && component != m_componentFilter)
         return;
