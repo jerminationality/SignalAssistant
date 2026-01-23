@@ -1,17 +1,18 @@
 /home/general/SignalAssistant/build/GuitarPi_autogen/UVLADIE3JM/moc_AppController.cpp: /home/general/SignalAssistant/src/AppController.h \
   /home/general/SignalAssistant/build/GuitarPi_autogen/moc_predefs.h \
-  /home/general/SignalAssistant/src/CQT/CQTNoteDetector.h \
   /home/general/SignalAssistant/src/DetectionTuningController.h \
   /home/general/SignalAssistant/src/NoteDetectionConfig.h \
   /home/general/SignalAssistant/src/NoteDetectionStore.h \
   /home/general/SignalAssistant/src/RunSessionOptions.h \
   /home/general/SignalAssistant/src/TabEngine.h \
   /home/general/SignalAssistant/src/TabEngineBridge.h \
+  /home/general/SignalAssistant/src/YIN/FastYINDetector.h \
+  /home/general/SignalAssistant/src/YIN/YINDetector.h \
   /home/general/SignalAssistant/src/audio/AtomicNoteState.h \
   /home/general/SignalAssistant/src/audio/ButterworthFilter.h \
-  /home/general/SignalAssistant/src/audio/CQTWorkerThread.h \
   /home/general/SignalAssistant/src/audio/LockFreeRingBuffer.h \
   /home/general/SignalAssistant/src/audio/ThreadPriority.h \
+  /home/general/SignalAssistant/src/audio/YINWorkerThread.h \
   /usr/include/aarch64-linux-gnu/bits/atomic_wide_counter.h \
   /usr/include/aarch64-linux-gnu/bits/byteswap.h \
   /usr/include/aarch64-linux-gnu/bits/confname.h \

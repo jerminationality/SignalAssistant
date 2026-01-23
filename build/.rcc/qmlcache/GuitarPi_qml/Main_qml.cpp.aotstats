@@ -22,7 +22,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 34,
-                        "durationMicroseconds": 911,
+                        "durationMicroseconds": 855,
                         "errorMessage": "",
                         "functionName": "onTuningPanelVisibleChanged",
                         "line": 18
@@ -30,7 +30,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 28,
-                        "durationMicroseconds": 189,
+                        "durationMicroseconds": 168,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onCompleted",
                         "line": 19
@@ -38,7 +38,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 30,
-                        "durationMicroseconds": 74,
+                        "durationMicroseconds": 66,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onDestruction",
                         "line": 23
@@ -46,7 +46,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 301,
+                        "durationMicroseconds": 329,
                         "errorMessage": "",
                         "functionName": "context",
                         "line": 27
@@ -54,7 +54,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 143,
+                        "durationMicroseconds": 138,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "enabled",
                         "line": 29
@@ -62,7 +62,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 116,
+                        "durationMicroseconds": 110,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onActivated",
                         "line": 30
@@ -70,7 +70,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 4402,
+                        "durationMicroseconds": 251,
                         "errorMessage": "",
                         "functionName": "context",
                         "line": 34
@@ -78,7 +78,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 156,
+                        "durationMicroseconds": 123,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "enabled",
                         "line": 36
@@ -86,7 +86,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 79,
+                        "durationMicroseconds": 66,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "onActivated",
                         "line": 37
@@ -94,7 +94,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 247,
+                        "durationMicroseconds": 235,
                         "errorMessage": "",
                         "functionName": "context",
                         "line": 41
@@ -102,7 +102,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 114,
+                        "durationMicroseconds": 115,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "enabled",
                         "line": 43
@@ -110,7 +110,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 56,
+                        "durationMicroseconds": 54,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "onActivated",
                         "line": 44
@@ -118,7 +118,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 222,
+                        "durationMicroseconds": 214,
                         "errorMessage": "",
                         "functionName": "context",
                         "line": 48
@@ -126,7 +126,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 51,
+                        "durationMicroseconds": 50,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "enabled",
                         "line": 50
@@ -134,7 +134,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 47,
+                        "durationMicroseconds": 41,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "onActivated",
                         "line": 51
@@ -142,7 +142,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 26,
-                        "durationMicroseconds": 159,
+                        "durationMicroseconds": 141,
                         "errorMessage": "",
                         "functionName": "sourceComponent",
                         "line": 57
@@ -150,7 +150,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 139,
+                        "durationMicroseconds": 117,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 56
@@ -158,7 +158,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 40,
-                        "durationMicroseconds": 61,
+                        "durationMicroseconds": 60,
                         "errorMessage": "Cannot access value for name pageLoader",
                         "functionName": "onShowTabCaptureRequested",
                         "line": 64
@@ -166,7 +166,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 27,
-                        "durationMicroseconds": 138,
+                        "durationMicroseconds": 121,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 63
@@ -174,7 +174,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 420,
+                        "durationMicroseconds": 393,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "bridge",
                         "line": 72
@@ -182,7 +182,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 27,
-                        "durationMicroseconds": 150,
+                        "durationMicroseconds": 140,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 71
@@ -190,7 +190,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 396,
+                        "durationMicroseconds": 443,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "visible",
                         "line": 82
@@ -198,7 +198,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 4726,
+                        "durationMicroseconds": 355,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "sessionName",
                         "line": 83
@@ -206,7 +206,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 24,
-                        "durationMicroseconds": 365,
+                        "durationMicroseconds": 323,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "playbackState",
                         "line": 84
@@ -214,7 +214,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 19,
-                        "durationMicroseconds": 334,
+                        "durationMicroseconds": 329,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "progress",
                         "line": 85
@@ -222,7 +222,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 19,
-                        "durationMicroseconds": 337,
+                        "durationMicroseconds": 367,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "duration",
                         "line": 86
@@ -230,7 +230,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 19,
-                        "durationMicroseconds": 327,
+                        "durationMicroseconds": 370,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "position",
                         "line": 87
@@ -238,7 +238,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 26,
-                        "durationMicroseconds": 333,
+                        "durationMicroseconds": 346,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "hexAudioEnabled",
                         "line": 88
@@ -246,7 +246,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 326,
+                        "durationMicroseconds": 343,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "loopEnabled",
                         "line": 89
@@ -254,7 +254,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 26,
-                        "durationMicroseconds": 339,
+                        "durationMicroseconds": 361,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onPlayRequested",
                         "line": 90
@@ -262,7 +262,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 27,
-                        "durationMicroseconds": 330,
+                        "durationMicroseconds": 328,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onPauseRequested",
                         "line": 91
@@ -270,7 +270,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 26,
-                        "durationMicroseconds": 329,
+                        "durationMicroseconds": 325,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onStopRequested",
                         "line": 92
@@ -278,7 +278,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 30,
-                        "durationMicroseconds": 4561,
+                        "durationMicroseconds": 361,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onHexMonitorToggled",
                         "line": 93
@@ -286,7 +286,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 30,
-                        "durationMicroseconds": 153,
+                        "durationMicroseconds": 140,
                         "errorMessage": "",
                         "functionName": "onHexMonitorToggled",
                         "line": 93
@@ -294,7 +294,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 26,
-                        "durationMicroseconds": 372,
+                        "durationMicroseconds": 347,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onSeekRequested",
                         "line": 94
@@ -302,7 +302,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 26,
-                        "durationMicroseconds": 132,
+                        "durationMicroseconds": 119,
                         "errorMessage": "",
                         "functionName": "onSeekRequested",
                         "line": 94
@@ -310,7 +310,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 24,
-                        "durationMicroseconds": 366,
+                        "durationMicroseconds": 359,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onLoopToggled",
                         "line": 95
@@ -318,7 +318,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 122,
+                        "durationMicroseconds": 115,
                         "errorMessage": "",
                         "functionName": "onLoopToggled",
                         "line": 95
@@ -326,7 +326,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 311,
+                        "durationMicroseconds": 325,
                         "errorMessage": "",
                         "functionName": "left",
                         "line": 78
@@ -334,7 +334,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 25,
-                        "durationMicroseconds": 252,
+                        "durationMicroseconds": 242,
                         "errorMessage": "",
                         "functionName": "bottom",
                         "line": 79
@@ -342,7 +342,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 364,
+                        "durationMicroseconds": 376,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "visible",
                         "line": 103
@@ -358,7 +358,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 332,
+                        "durationMicroseconds": 324,
                         "errorMessage": "",
                         "functionName": "left",
                         "line": 100
@@ -366,7 +366,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 25,
-                        "durationMicroseconds": 4478,
+                        "durationMicroseconds": 240,
                         "errorMessage": "",
                         "functionName": "bottom",
                         "line": 101
@@ -414,7 +414,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 17,
-                        "durationMicroseconds": 136,
+                        "durationMicroseconds": 169,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "target",
                         "line": 141
@@ -422,7 +422,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 9,
-                        "durationMicroseconds": 63,
+                        "durationMicroseconds": 79,
                         "errorMessage": "Cannot retrieve a non-object type by ID: recordingLabelDialog",
                         "functionName": "onLiveRecordingLabelRequested",
                         "line": 142
@@ -430,7 +430,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 9,
-                        "durationMicroseconds": 101,
+                        "durationMicroseconds": 103,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "onTestSessionChanged",
                         "line": 148
@@ -438,7 +438,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 16,
-                        "durationMicroseconds": 72,
+                        "durationMicroseconds": 137,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "width",
                         "line": 158
@@ -446,7 +446,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 446,
+                        "durationMicroseconds": 455,
                         "errorMessage": "Cannot access value for name AppController",
                         "functionName": "controller",
                         "line": 160
@@ -454,7 +454,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 17,
-                        "durationMicroseconds": 59,
+                        "durationMicroseconds": 51,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "bridge",
                         "line": 161
@@ -462,7 +462,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 42,
+                        "durationMicroseconds": 34,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "visible",
                         "line": 162
@@ -470,7 +470,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 39,
+                        "durationMicroseconds": 28,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "enabled",
                         "line": 163
@@ -478,7 +478,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 27,
-                        "durationMicroseconds": 44,
+                        "durationMicroseconds": 42,
                         "errorMessage": "Cannot retrieve a non-object type by ID: root",
                         "functionName": "onCloseRequested",
                         "line": 164

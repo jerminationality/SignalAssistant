@@ -5,7 +5,6 @@ GuitarPi_autogen/timestamp: \
 	/home/general/SignalAssistant/build/GuitarPi_autogen/moc_predefs.h \
 	/home/general/SignalAssistant/src/AppController.cpp \
 	/home/general/SignalAssistant/src/AppController.h \
-	/home/general/SignalAssistant/src/CQT/CQTNoteDetector.h \
 	/home/general/SignalAssistant/src/DetectionTuningController.cpp \
 	/home/general/SignalAssistant/src/DetectionTuningController.h \
 	/home/general/SignalAssistant/src/FretboardProvider.cpp \
@@ -18,12 +17,12 @@ GuitarPi_autogen/timestamp: \
 	/home/general/SignalAssistant/src/TabEngine.h \
 	/home/general/SignalAssistant/src/TabEngineBridge.cpp \
 	/home/general/SignalAssistant/src/TabEngineBridge.h \
+	/home/general/SignalAssistant/src/YIN/FastYINDetector.h \
+	/home/general/SignalAssistant/src/YIN/YINDetector.h \
 	/home/general/SignalAssistant/src/audio/AtomicNoteState.h \
 	/home/general/SignalAssistant/src/audio/AudioEngine.cpp \
 	/home/general/SignalAssistant/src/audio/AudioEngine.h \
 	/home/general/SignalAssistant/src/audio/ButterworthFilter.h \
-	/home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp \
-	/home/general/SignalAssistant/src/audio/CQTWorkerThread.h \
 	/home/general/SignalAssistant/src/audio/CarlaClient.cpp \
 	/home/general/SignalAssistant/src/audio/CarlaClient.h \
 	/home/general/SignalAssistant/src/audio/HexAudioClient.h \
@@ -33,6 +32,8 @@ GuitarPi_autogen/timestamp: \
 	/home/general/SignalAssistant/src/audio/JackMonitorSink.h \
 	/home/general/SignalAssistant/src/audio/LockFreeRingBuffer.h \
 	/home/general/SignalAssistant/src/audio/ThreadPriority.h \
+	/home/general/SignalAssistant/src/audio/YINWorkerThread.cpp \
+	/home/general/SignalAssistant/src/audio/YINWorkerThread.h \
 	/home/general/SignalAssistant/src/main.cpp \
 	/usr/include/aarch64-linux-gnu/bits/atomic_wide_counter.h \
 	/usr/include/aarch64-linux-gnu/bits/byteswap.h \

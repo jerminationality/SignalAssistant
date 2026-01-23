@@ -85,13 +85,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 202,
+				"line" : 208,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 184,
+				"line" : 190,
 				"parent" : 0
 			},
 			{
@@ -289,13 +289,13 @@
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 146,
+				"line" : 152,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 156,
+				"line" : 162,
 				"parent" : 0
 			},
 			{
@@ -348,7 +348,7 @@
 			{
 				"command" : 20,
 				"file" : 1,
-				"line" : 197,
+				"line" : 203,
 				"parent" : 0
 			}
 		]
@@ -789,7 +789,7 @@
 		{
 			"backtrace" : 4,
 			"compileGroupIndex" : 0,
-			"path" : "src/audio/CQTWorkerThread.cpp",
+			"path" : "src/audio/YINWorkerThread.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

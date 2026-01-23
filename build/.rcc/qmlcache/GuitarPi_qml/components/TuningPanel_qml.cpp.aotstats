@@ -6,7 +6,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 12,
-                        "durationMicroseconds": 206,
+                        "durationMicroseconds": 219,
                         "errorMessage": "",
                         "functionName": "focus",
                         "line": 8
@@ -14,7 +14,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 32,
-                        "durationMicroseconds": 164,
+                        "durationMicroseconds": 206,
                         "errorMessage": "Cannot generate efficient code for storing an array in a non-sequence type",
                         "functionName": "stringLabels",
                         "line": 11
@@ -22,7 +22,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 34,
-                        "durationMicroseconds": 197,
+                        "durationMicroseconds": 155,
                         "errorMessage": "Cannot generate efficient code for storing an array in a non-sequence type",
                         "functionName": "sliderRegistry",
                         "line": 14
@@ -30,7 +30,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 23,
-                        "durationMicroseconds": 190,
+                        "durationMicroseconds": 205,
                         "errorMessage": "Cannot load property keyboardModifiers from QtObject::application with type QQmlApplication.",
                         "functionName": "onVisibleChanged",
                         "line": 19
@@ -38,7 +38,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 5,
-                        "durationMicroseconds": 28,
+                        "durationMicroseconds": 35,
                         "errorMessage": "function without return type annotation returns (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::shiftHeld with type bool. This may prevent proper compilation to Cpp.",
                         "functionName": "shiftActive",
                         "line": 67
@@ -46,7 +46,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 26,
-                        "durationMicroseconds": 313,
+                        "durationMicroseconds": 375,
                         "errorMessage": "Cannot retrieve a non-object type by ID: compareSwitch",
                         "functionName": "onControllerChanged",
                         "line": 78
@@ -54,7 +54,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 5,
-                        "durationMicroseconds": 85,
+                        "durationMicroseconds": 116,
                         "errorMessage": "Cannot load property length from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::stringLabels with type QVariant.",
                         "functionName": "requestSyncAll",
                         "line": 171
@@ -62,7 +62,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 5,
-                        "durationMicroseconds": 70,
+                        "durationMicroseconds": 83,
                         "errorMessage": "Cannot load property length from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::sliderRegistry with type QVariant.",
                         "functionName": "syncAllSliders",
                         "line": 183
@@ -78,7 +78,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 5,
-                        "durationMicroseconds": 318,
+                        "durationMicroseconds": 338,
                         "errorMessage": "",
                         "functionName": "noteLocalChange",
                         "line": 227
@@ -102,7 +102,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 5,
-                        "durationMicroseconds": 110,
+                        "durationMicroseconds": 132,
                         "errorMessage": "Cannot retrieve a non-object type by ID: snapshotLabelField",
                         "functionName": "openSnapshotDialog",
                         "line": 282
@@ -121,7 +121,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Functions without type annotations won't be compiled",
                         "functionName": "formatValue",
-                        "line": 932
+                        "line": 934
                     },
                     {
                         "codegenSuccessfull": false,
@@ -129,7 +129,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Functions without type annotations won't be compiled",
                         "functionName": "getDecimalPlaces",
-                        "line": 939
+                        "line": 941
                     },
                     {
                         "codegenSuccessfull": false,
@@ -137,7 +137,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Functions without type annotations won't be compiled",
                         "functionName": "deltaLabel",
-                        "line": 947
+                        "line": 949
                     },
                     {
                         "codegenSuccessfull": false,
@@ -145,7 +145,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Functions without type annotations won't be compiled",
                         "functionName": "deltaColor",
-                        "line": 956
+                        "line": 958
                     },
                     {
                         "codegenSuccessfull": false,
@@ -153,12 +153,12 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Functions without type annotations won't be compiled",
                         "functionName": "normalized",
-                        "line": 962
+                        "line": 964
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 28,
-                        "durationMicroseconds": 1051,
+                        "durationMicroseconds": 528,
                         "errorMessage": "",
                         "functionName": "onCompleted",
                         "line": 26
@@ -166,7 +166,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 27,
-                        "durationMicroseconds": 216,
+                        "durationMicroseconds": 206,
                         "errorMessage": "method onCloseRequested cannot be resolved.",
                         "functionName": "onEscapePressed",
                         "line": 27
@@ -174,7 +174,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 1516,
+                        "durationMicroseconds": 435,
                         "errorMessage": "Cannot access value for name event",
                         "functionName": "onPressed",
                         "line": 34
@@ -182,7 +182,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 374,
+                        "durationMicroseconds": 380,
                         "errorMessage": "Cannot access value for name event",
                         "functionName": "onReleased",
                         "line": 42
@@ -190,7 +190,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 241,
+                        "durationMicroseconds": 262,
                         "errorMessage": "",
                         "functionName": "running",
                         "line": 58
@@ -198,7 +198,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 162,
+                        "durationMicroseconds": 173,
                         "errorMessage": "Cannot load property keyboardModifiers from QtObject::application with type QQmlApplication.",
                         "functionName": "onTriggered",
                         "line": 60
@@ -206,7 +206,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 17,
-                        "durationMicroseconds": 62,
+                        "durationMicroseconds": 69,
                         "errorMessage": "Cannot access value for name controller",
                         "functionName": "target",
                         "line": 87
@@ -214,7 +214,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 9,
-                        "durationMicroseconds": 797,
+                        "durationMicroseconds": 805,
                         "errorMessage": "",
                         "functionName": "onRevisionChanged",
                         "line": 88
@@ -222,7 +222,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 17,
-                        "durationMicroseconds": 84,
+                        "durationMicroseconds": 89,
                         "errorMessage": "Cannot access value for name bridge",
                         "functionName": "target",
                         "line": 98
@@ -230,7 +230,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 9,
-                        "durationMicroseconds": 271,
+                        "durationMicroseconds": 284,
                         "errorMessage": "",
                         "functionName": "onCalibrationGainsChanged",
                         "line": 99
@@ -238,7 +238,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 9,
-                        "durationMicroseconds": 616,
+                        "durationMicroseconds": 611,
                         "errorMessage": "",
                         "functionName": "onCalibrationParametersUpdated",
                         "line": 102
@@ -366,7 +366,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 22,
-                        "durationMicroseconds": 285,
+                        "durationMicroseconds": 326,
                         "errorMessage": "",
                         "functionName": "onTriggered",
                         "line": 168
@@ -374,7 +374,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 164,
+                        "durationMicroseconds": 161,
                         "errorMessage": "method syncAllSliders cannot be resolved.",
                         "functionName": "onTriggered",
                         "line": 180
@@ -382,7 +382,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 178,
+                        "durationMicroseconds": 181,
                         "errorMessage": "Cannot access value for name sliderSyncCursor",
                         "functionName": "onTriggered",
                         "line": 198
@@ -390,7 +390,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 26,
-                        "durationMicroseconds": 414,
+                        "durationMicroseconds": 309,
                         "errorMessage": "",
                         "functionName": "acceptedButtons",
                         "line": 305
@@ -398,7 +398,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 4398,
+                        "durationMicroseconds": 1006,
                         "errorMessage": "",
                         "functionName": "onWheel",
                         "line": 307
@@ -406,7 +406,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 232,
+                        "durationMicroseconds": 150,
                         "errorMessage": "",
                         "functionName": "onWheel",
                         "line": 307
@@ -414,7 +414,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 20,
-                        "durationMicroseconds": 202,
+                        "durationMicroseconds": 220,
                         "errorMessage": "",
                         "functionName": "onPressed",
                         "line": 313
@@ -422,7 +422,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 20,
-                        "durationMicroseconds": 92,
+                        "durationMicroseconds": 120,
                         "errorMessage": "",
                         "functionName": "onPressed",
                         "line": 313
@@ -430,7 +430,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 149,
+                        "durationMicroseconds": 184,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 301
@@ -438,7 +438,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 16,
-                        "durationMicroseconds": 209,
+                        "durationMicroseconds": 262,
                         "errorMessage": "",
                         "functionName": "width",
                         "line": 320
@@ -446,7 +446,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 17,
-                        "durationMicroseconds": 189,
+                        "durationMicroseconds": 195,
                         "errorMessage": "",
                         "functionName": "height",
                         "line": 321
@@ -454,7 +454,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 16,
-                        "durationMicroseconds": 71,
+                        "durationMicroseconds": 70,
                         "errorMessage": "Cannot access value for name panelColor",
                         "functionName": "color",
                         "line": 323
@@ -462,7 +462,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 18,
-                        "durationMicroseconds": 345,
+                        "durationMicroseconds": 408,
                         "errorMessage": "",
                         "functionName": "opacity",
                         "line": 326
@@ -470,7 +470,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 23,
-                        "durationMicroseconds": 69,
+                        "durationMicroseconds": 81,
                         "errorMessage": "Cannot access value for name panelBorder",
                         "functionName": "color",
                         "line": 324
@@ -478,7 +478,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 324,
+                        "durationMicroseconds": 349,
                         "errorMessage": "",
                         "functionName": "left",
                         "line": 332
@@ -486,7 +486,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 243,
+                        "durationMicroseconds": 293,
                         "errorMessage": "",
                         "functionName": "right",
                         "line": 333
@@ -494,7 +494,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 22,
-                        "durationMicroseconds": 215,
+                        "durationMicroseconds": 310,
                         "errorMessage": "",
                         "functionName": "top",
                         "line": 334
@@ -502,7 +502,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 105,
+                        "durationMicroseconds": 120,
                         "errorMessage": "Cannot access value for name controller",
                         "functionName": "syncWithController",
                         "line": 349
@@ -518,7 +518,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 44,
-                        "durationMicroseconds": 153,
+                        "durationMicroseconds": 214,
                         "errorMessage": "",
                         "functionName": "onCompleted",
                         "line": 354
@@ -526,7 +526,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 29,
-                        "durationMicroseconds": 94,
+                        "durationMicroseconds": 89,
                         "errorMessage": "Cannot access value for name controller",
                         "functionName": "target",
                         "line": 367
@@ -534,7 +534,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 492,
+                        "durationMicroseconds": 81,
                         "errorMessage": "Cannot retrieve a non-object type by ID: compareSwitch",
                         "functionName": "onCompareBaselineChanged",
                         "line": 368
@@ -582,7 +582,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 28,
-                        "durationMicroseconds": 1111,
+                        "durationMicroseconds": 1205,
                         "errorMessage": "Cannot generate efficient code for storing an array in a non-sequence type",
                         "functionName": "model",
                         "line": 397
@@ -774,7 +774,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 166,
+                        "durationMicroseconds": 218,
                         "errorMessage": "",
                         "functionName": "contentWidth",
                         "line": 456
@@ -782,7 +782,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 540,
+                        "durationMicroseconds": 249,
                         "errorMessage": "",
                         "functionName": "contentHeight",
                         "line": 457
@@ -790,7 +790,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 25,
-                        "durationMicroseconds": 313,
+                        "durationMicroseconds": 219,
                         "errorMessage": "",
                         "functionName": "boundsBehavior",
                         "line": 459
@@ -798,7 +798,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 308,
+                        "durationMicroseconds": 360,
                         "errorMessage": "",
                         "functionName": "left",
                         "line": 448
@@ -806,7 +806,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 232,
+                        "durationMicroseconds": 273,
                         "errorMessage": "",
                         "functionName": "right",
                         "line": 449
@@ -814,7 +814,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 22,
-                        "durationMicroseconds": 228,
+                        "durationMicroseconds": 277,
                         "errorMessage": "",
                         "functionName": "top",
                         "line": 450
@@ -822,7 +822,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 25,
-                        "durationMicroseconds": 237,
+                        "durationMicroseconds": 280,
                         "errorMessage": "",
                         "functionName": "bottom",
                         "line": 451
@@ -838,7 +838,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 20,
-                        "durationMicroseconds": 266,
+                        "durationMicroseconds": 297,
                         "errorMessage": "",
                         "functionName": "width",
                         "line": 467
@@ -846,7 +846,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 28,
-                        "durationMicroseconds": 89,
+                        "durationMicroseconds": 109,
                         "errorMessage": "Cannot access value for name controller",
                         "functionName": "model",
                         "line": 470
@@ -854,7 +854,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 32,
-                        "durationMicroseconds": 226,
+                        "durationMicroseconds": 262,
                         "errorMessage": "",
                         "functionName": "width",
                         "line": 472
@@ -868,76 +868,92 @@
                         "line": 476
                     },
                     {
-                        "codegenSuccessfull": true,
-                        "column": 36,
-                        "durationMicroseconds": 254,
-                        "errorMessage": "",
-                        "functionName": "width",
-                        "line": 484
+                        "codegenSuccessfull": false,
+                        "column": 38,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on visible.",
+                        "functionName": "visible",
+                        "line": 480
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 37,
-                        "durationMicroseconds": 80,
-                        "errorMessage": "Cannot access value for name root",
-                        "functionName": "active",
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on height.",
+                        "functionName": "height",
+                        "line": 481
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 36,
+                        "durationMicroseconds": 279,
+                        "errorMessage": "",
+                        "functionName": "width",
                         "line": 486
                     },
                     {
                         "codegenSuccessfull": false,
-                        "column": 46,
-                        "durationMicroseconds": 60,
-                        "errorMessage": "Cannot access value for name parameterListComponent",
-                        "functionName": "sourceComponent",
-                        "line": 487
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 55,
-                        "durationMicroseconds": 315,
-                        "errorMessage": "Cannot access value for name modelData",
-                        "functionName": "sectionData",
+                        "column": 37,
+                        "durationMicroseconds": 88,
+                        "errorMessage": "Cannot access value for name root",
+                        "functionName": "active",
                         "line": 488
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 46,
-                        "durationMicroseconds": 246,
-                        "errorMessage": "Cannot load property title from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::sectionData with type QVariant.",
-                        "functionName": "onStatusChanged",
+                        "durationMicroseconds": 65,
+                        "errorMessage": "Cannot access value for name parameterListComponent",
+                        "functionName": "sourceComponent",
                         "line": 489
                     },
                     {
                         "codegenSuccessfull": false,
+                        "column": 55,
+                        "durationMicroseconds": 357,
+                        "errorMessage": "Cannot access value for name modelData",
+                        "functionName": "sectionData",
+                        "line": 490
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 46,
+                        "durationMicroseconds": 249,
+                        "errorMessage": "Cannot load property title from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::sectionData with type QVariant.",
+                        "functionName": "onStatusChanged",
+                        "line": 491
+                    },
+                    {
+                        "codegenSuccessfull": false,
                         "column": 39,
-                        "durationMicroseconds": 130,
+                        "durationMicroseconds": 134,
                         "errorMessage": "Cannot load property title from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::sectionData with type QVariant.",
                         "functionName": "onLoaded",
-                        "line": 495
+                        "line": 497
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 36,
-                        "durationMicroseconds": 248,
+                        "durationMicroseconds": 274,
                         "errorMessage": "",
                         "functionName": "width",
-                        "line": 520
+                        "line": 522
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 37,
-                        "durationMicroseconds": 602,
+                        "durationMicroseconds": 562,
                         "errorMessage": "",
                         "functionName": "height",
-                        "line": 521
+                        "line": 523
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 38,
-                        "durationMicroseconds": 313,
+                        "durationMicroseconds": 392,
                         "errorMessage": "",
                         "functionName": "visible",
-                        "line": 522
+                        "line": 524
                     },
                     {
                         "codegenSuccessfull": false,
@@ -945,15 +961,15 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on centerIn.",
                         "functionName": "centerIn",
-                        "line": 525
+                        "line": 527
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 20,
-                        "durationMicroseconds": 425,
+                        "durationMicroseconds": 513,
                         "errorMessage": "",
                         "functionName": "width",
-                        "line": 540
+                        "line": 542
                     },
                     {
                         "codegenSuccessfull": false,
@@ -961,71 +977,71 @@
                         "durationMicroseconds": 151,
                         "errorMessage": "Cannot generate efficient code for storing an array in a non-sequence type",
                         "functionName": "stringLabels",
-                        "line": 544
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 36,
-                        "durationMicroseconds": 65,
-                        "errorMessage": "Cannot access value for name root",
-                        "functionName": "panelRef",
                         "line": 546
                     },
                     {
                         "codegenSuccessfull": false,
-                        "column": 35,
-                        "durationMicroseconds": 163,
-                        "errorMessage": "Cannot load property title from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::sectionData with type QVariant.",
-                        "functionName": "onSectionDataChanged",
+                        "column": 36,
+                        "durationMicroseconds": 70,
+                        "errorMessage": "Cannot access value for name root",
+                        "functionName": "panelRef",
                         "line": 548
                     },
                     {
                         "codegenSuccessfull": false,
+                        "column": 35,
+                        "durationMicroseconds": 165,
+                        "errorMessage": "Cannot load property title from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::sectionData with type QVariant.",
+                        "functionName": "onSectionDataChanged",
+                        "line": 550
+                    },
+                    {
+                        "codegenSuccessfull": false,
                         "column": 36,
-                        "durationMicroseconds": 136,
+                        "durationMicroseconds": 133,
                         "errorMessage": "Cannot load property title from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::sectionData with type QVariant.",
                         "functionName": "onCompleted",
-                        "line": 547
+                        "line": 549
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 222,
+                        "durationMicroseconds": 273,
                         "errorMessage": "",
                         "functionName": "width",
-                        "line": 552
+                        "line": 554
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 42,
-                        "durationMicroseconds": 2531,
+                        "durationMicroseconds": 2471,
                         "errorMessage": "",
                         "functionName": "cardWidth",
-                        "line": 557
+                        "line": 559
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 28,
-                        "durationMicroseconds": 119,
+                        "durationMicroseconds": 116,
                         "errorMessage": "Cannot access value for name sectionData",
                         "functionName": "model",
-                        "line": 568
+                        "line": 570
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 32,
-                        "durationMicroseconds": 109,
+                        "durationMicroseconds": 120,
                         "errorMessage": "Cannot access value for name parameterFlow",
                         "functionName": "width",
-                        "line": 571
+                        "line": 573
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 45,
-                        "durationMicroseconds": 343,
+                        "durationMicroseconds": 373,
                         "errorMessage": "Cannot access value for name modelData",
                         "functionName": "param",
-                        "line": 574
+                        "line": 576
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1033,23 +1049,23 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Functions without type annotations won't be compiled",
                         "functionName": "registerValueSample",
-                        "line": 586
+                        "line": 588
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 48,
-                        "durationMicroseconds": 128,
+                        "durationMicroseconds": 132,
                         "errorMessage": "Cannot access value for name parameterFlow",
                         "functionName": "onCompleted",
-                        "line": 576
+                        "line": 578
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 40,
-                        "durationMicroseconds": 75,
+                        "durationMicroseconds": 69,
                         "errorMessage": "Cannot access value for name cardPadding",
                         "functionName": "height",
-                        "line": 594
+                        "line": 596
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1057,7 +1073,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on text.",
                         "functionName": "text",
-                        "line": 599
+                        "line": 601
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1065,7 +1081,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on implicitWidth.",
                         "functionName": "implicitWidth",
-                        "line": 605
+                        "line": 607
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1073,7 +1089,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on implicitHeight.",
                         "functionName": "implicitHeight",
-                        "line": 606
+                        "line": 608
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1081,7 +1097,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on focusPolicy.",
                         "functionName": "focusPolicy",
-                        "line": 608
+                        "line": 610
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1089,7 +1105,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on onClicked.",
                         "functionName": "onClicked",
-                        "line": 627
+                        "line": 629
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1097,7 +1113,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on verticalCenter.",
                         "functionName": "verticalCenter",
-                        "line": 609
+                        "line": 611
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1105,7 +1121,7 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on visible.",
                         "functionName": "visible",
-                        "line": 610
+                        "line": 612
                     },
                     {
                         "codegenSuccessfull": false,
@@ -1113,495 +1129,87 @@
                         "durationMicroseconds": 0,
                         "errorMessage": "Cannot resolve property type  for binding on text.",
                         "functionName": "text",
-                        "line": 611
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 44,
-                        "durationMicroseconds": 107,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: commitButton",
-                        "functionName": "color",
-                        "line": 615
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 51,
-                        "durationMicroseconds": 179,
-                        "errorMessage": "",
-                        "functionName": "fill",
                         "line": 613
                     },
                     {
                         "codegenSuccessfull": false,
-                        "column": 51,
-                        "durationMicroseconds": 83,
+                        "column": 44,
+                        "durationMicroseconds": 101,
                         "errorMessage": "Cannot retrieve a non-object type by ID: commitButton",
                         "functionName": "color",
                         "line": 617
                     },
                     {
                         "codegenSuccessfull": true,
+                        "column": 51,
+                        "durationMicroseconds": 187,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 615
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 51,
+                        "durationMicroseconds": 80,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: commitButton",
+                        "functionName": "color",
+                        "line": 619
+                    },
+                    {
+                        "codegenSuccessfull": true,
                         "column": 45,
-                        "durationMicroseconds": 445,
+                        "durationMicroseconds": 454,
                         "errorMessage": "",
                         "functionName": "source",
-                        "line": 621
+                        "line": 623
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 47,
-                        "durationMicroseconds": 217,
+                        "durationMicroseconds": 186,
                         "errorMessage": "",
                         "functionName": "fillMode",
-                        "line": 624
+                        "line": 626
                     },
                     {
                         "codegenSuccessfull": true,
                         "column": 55,
-                        "durationMicroseconds": 176,
+                        "durationMicroseconds": 145,
                         "errorMessage": "",
                         "functionName": "centerIn",
-                        "line": 620
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 55,
-                        "durationMicroseconds": 92,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: paramLabel",
-                        "functionName": "width",
                         "line": 622
                     },
                     {
                         "codegenSuccessfull": false,
+                        "column": 55,
+                        "durationMicroseconds": 86,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: paramLabel",
+                        "functionName": "width",
+                        "line": 624
+                    },
+                    {
+                        "codegenSuccessfull": false,
                         "column": 56,
-                        "durationMicroseconds": 52,
+                        "durationMicroseconds": 38,
                         "errorMessage": "Cannot retrieve a non-object type by ID: paramLabel",
                         "functionName": "height",
-                        "line": 623
+                        "line": 625
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 35,
-                        "durationMicroseconds": 103,
+                        "durationMicroseconds": 88,
                         "errorMessage": "Cannot access value for name param",
                         "functionName": "text",
-                        "line": 639
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 39,
-                        "durationMicroseconds": 222,
-                        "errorMessage": "",
-                        "functionName": "wrapMode",
                         "line": 641
                     },
                     {
                         "codegenSuccessfull": true,
-                        "column": 36,
-                        "durationMicroseconds": 286,
+                        "column": 39,
+                        "durationMicroseconds": 199,
                         "errorMessage": "",
-                        "functionName": "width",
-                        "line": 645
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 40,
-                        "durationMicroseconds": 123,
-                        "errorMessage": "Cannot access value for name stringLabels",
-                        "functionName": "model",
-                        "line": 648
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 44,
-                        "durationMicroseconds": 665,
-                        "errorMessage": "",
-                        "functionName": "width",
-                        "line": 651
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 63,
-                        "durationMicroseconds": 139,
-                        "errorMessage": "Cannot access value for name stringLabels",
-                        "functionName": "stringIndex",
-                        "line": 653
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 66,
-                        "durationMicroseconds": 113,
-                        "errorMessage": "Cannot access value for name stringLabels",
-                        "functionName": "stringLabel",
-                        "line": 655
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 60,
-                        "durationMicroseconds": 222,
-                        "errorMessage": "Cannot access value for name param",
-                        "functionName": "onCompleted",
-                        "line": 656
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 48,
-                        "durationMicroseconds": 257,
-                        "errorMessage": "",
-                        "functionName": "width",
-                        "line": 659
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 51,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on text.",
-                        "functionName": "text",
-                        "line": 662
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 51,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on from.",
-                        "functionName": "from",
-                        "line": 670
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 49,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on to.",
-                        "functionName": "to",
-                        "line": 676
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 55,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on stepSize.",
-                        "functionName": "stepSize",
-                        "line": 682
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 55,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on snapMode.",
-                        "functionName": "snapMode",
-                        "line": 683
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 71,
-                        "durationMicroseconds": 126,
-                        "errorMessage": "Cannot access value for name param",
-                        "functionName": "paramKey",
-                        "line": 687
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 71,
-                        "durationMicroseconds": 235,
-                        "errorMessage": "",
-                        "functionName": "stringIndex",
-                        "line": 688
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 68,
-                        "durationMicroseconds": 92,
-                        "errorMessage": "Cannot access value for name paramListColumn",
-                        "functionName": "panelRef",
-                        "line": 690
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 88,
-                        "durationMicroseconds": 221,
-                        "errorMessage": "Cannot access value for name from",
-                        "functionName": "baselineNormalized",
-                        "line": 691
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 45,
-                        "durationMicroseconds": 320,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
-                        "functionName": "tryRegister",
-                        "line": 692
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 45,
-                        "durationMicroseconds": 159,
-                        "errorMessage": "Cannot load property controller from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::panelRef with type QVariant.",
-                        "functionName": "doSync",
-                        "line": 699
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 54,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on onMoved.",
-                        "functionName": "onMoved",
-                        "line": 764
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 63,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on onPressedChanged.",
-                        "functionName": "onPressedChanged",
-                        "line": 786
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 68,
-                        "durationMicroseconds": 230,
-                        "errorMessage": "Cannot access value for name param",
-                        "functionName": "onCompleted",
-                        "line": 724
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 70,
-                        "durationMicroseconds": 997,
-                        "errorMessage": "Cannot generate efficient code for call to untyped JavaScript function",
-                        "functionName": "onDestruction",
-                        "line": 729
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 52,
-                        "durationMicroseconds": 127,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
-                        "functionName": "x",
-                        "line": 744
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 58,
-                        "durationMicroseconds": 124,
-                        "errorMessage": "Cannot access value for name controller",
-                        "functionName": "visible",
-                        "line": 745
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 73,
-                        "durationMicroseconds": 83,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
-                        "functionName": "verticalCenter",
-                        "line": 743
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 58,
-                        "durationMicroseconds": 147,
-                        "errorMessage": "Cannot access value for name controller",
-                        "functionName": "visible",
-                        "line": 751
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 52,
-                        "durationMicroseconds": 74,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
-                        "functionName": "x",
-                        "line": 754
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 52,
-                        "durationMicroseconds": 57,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
-                        "functionName": "y",
-                        "line": 755
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 67,
-                        "durationMicroseconds": 159,
-                        "errorMessage": "",
-                        "functionName": "fill",
-                        "line": 757
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 45,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Functions without type annotations won't be compiled",
-                        "functionName": "getDecimalPlaces",
-                        "line": 804
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 45,
-                        "durationMicroseconds": 246,
-                        "errorMessage": "Cannot access value for name param",
-                        "functionName": "startEdit",
-                        "line": 823
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 45,
-                        "durationMicroseconds": 200,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: valueEditor",
-                        "functionName": "commitEdit",
-                        "line": 840
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 58,
-                        "durationMicroseconds": 324,
-                        "errorMessage": "",
-                        "functionName": "visible",
-                        "line": 870
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 56,
-                        "durationMicroseconds": 116,
-                        "errorMessage": "Cannot access value for name parameterCard",
-                        "functionName": "width",
-                        "line": 871
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 57,
-                        "durationMicroseconds": 58,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: valueLabel",
-                        "functionName": "height",
-                        "line": 872
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 59,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on text.",
-                        "functionName": "text",
-                        "line": 875
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 68,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on onTextChanged.",
-                        "functionName": "onTextChanged",
-                        "line": 883
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 76,
-                        "durationMicroseconds": 138,
-                        "errorMessage": "Cannot access value for name parameterCard",
-                        "functionName": "onCompleted",
-                        "line": 884
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 66,
-                        "durationMicroseconds": 283,
-                        "errorMessage": "",
-                        "functionName": "cursorShape",
-                        "line": 888
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 70,
-                        "durationMicroseconds": 267,
-                        "errorMessage": "",
-                        "functionName": "acceptedButtons",
-                        "line": 889
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 70,
-                        "durationMicroseconds": 333,
-                        "errorMessage": "",
-                        "functionName": "onDoubleClicked",
-                        "line": 890
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 67,
-                        "durationMicroseconds": 186,
-                        "errorMessage": "",
-                        "functionName": "fill",
-                        "line": 887
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 58,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on visible.",
-                        "functionName": "visible",
-                        "line": 896
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 56,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on width.",
-                        "functionName": "width",
-                        "line": 897
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 67,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on inputMethodHints.",
-                        "functionName": "inputMethodHints",
-                        "line": 901
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 61,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on onAccepted.",
-                        "functionName": "onAccepted",
-                        "line": 911
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 68,
-                        "durationMicroseconds": 0,
-                        "errorMessage": "Cannot resolve property type  for binding on onEditingFinished.",
-                        "functionName": "onEditingFinished",
-                        "line": 912
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 61,
-                        "durationMicroseconds": 103,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
-                        "functionName": "bottom",
-                        "line": 905
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 58,
-                        "durationMicroseconds": 46,
-                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
-                        "functionName": "top",
-                        "line": 906
-                    },
-                    {
-                        "codegenSuccessfull": false,
-                        "column": 63,
-                        "durationMicroseconds": 137,
-                        "errorMessage": "Cannot access value for name param",
-                        "functionName": "decimals",
-                        "line": 907
-                    },
-                    {
-                        "codegenSuccessfull": true,
-                        "column": 63,
-                        "durationMicroseconds": 214,
-                        "errorMessage": "",
-                        "functionName": "notation",
-                        "line": 908
+                        "functionName": "wrapMode",
+                        "line": 643
                     },
                     {
                         "codegenSuccessfull": true,
@@ -1609,15 +1217,423 @@
                         "durationMicroseconds": 233,
                         "errorMessage": "",
                         "functionName": "width",
-                        "line": 920
+                        "line": 647
                     },
                     {
                         "codegenSuccessfull": false,
                         "column": 40,
-                        "durationMicroseconds": 92,
+                        "durationMicroseconds": 97,
+                        "errorMessage": "Cannot access value for name stringLabels",
+                        "functionName": "model",
+                        "line": 650
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 44,
+                        "durationMicroseconds": 259,
+                        "errorMessage": "",
+                        "functionName": "width",
+                        "line": 653
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 63,
+                        "durationMicroseconds": 108,
+                        "errorMessage": "Cannot access value for name stringLabels",
+                        "functionName": "stringIndex",
+                        "line": 655
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 66,
+                        "durationMicroseconds": 150,
+                        "errorMessage": "Cannot access value for name stringLabels",
+                        "functionName": "stringLabel",
+                        "line": 657
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 60,
+                        "durationMicroseconds": 158,
+                        "errorMessage": "Cannot access value for name param",
+                        "functionName": "onCompleted",
+                        "line": 658
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 48,
+                        "durationMicroseconds": 280,
+                        "errorMessage": "",
+                        "functionName": "width",
+                        "line": 661
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 51,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on text.",
+                        "functionName": "text",
+                        "line": 664
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 51,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on from.",
+                        "functionName": "from",
+                        "line": 672
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 49,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on to.",
+                        "functionName": "to",
+                        "line": 678
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 55,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on stepSize.",
+                        "functionName": "stepSize",
+                        "line": 684
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 55,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on snapMode.",
+                        "functionName": "snapMode",
+                        "line": 685
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 71,
+                        "durationMicroseconds": 149,
+                        "errorMessage": "Cannot access value for name param",
+                        "functionName": "paramKey",
+                        "line": 689
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 71,
+                        "durationMicroseconds": 234,
+                        "errorMessage": "",
+                        "functionName": "stringIndex",
+                        "line": 690
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 68,
+                        "durationMicroseconds": 97,
+                        "errorMessage": "Cannot access value for name paramListColumn",
+                        "functionName": "panelRef",
+                        "line": 692
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 88,
+                        "durationMicroseconds": 223,
+                        "errorMessage": "Cannot access value for name from",
+                        "functionName": "baselineNormalized",
+                        "line": 693
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 45,
+                        "durationMicroseconds": 316,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
+                        "functionName": "tryRegister",
+                        "line": 694
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 45,
+                        "durationMicroseconds": 119,
+                        "errorMessage": "Cannot load property controller from (component in /home/general/SignalAssistant/qml/components/TuningPanel.qml)::panelRef with type QVariant.",
+                        "functionName": "doSync",
+                        "line": 701
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 54,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on onMoved.",
+                        "functionName": "onMoved",
+                        "line": 766
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 63,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on onPressedChanged.",
+                        "functionName": "onPressedChanged",
+                        "line": 788
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 68,
+                        "durationMicroseconds": 191,
+                        "errorMessage": "Cannot access value for name param",
+                        "functionName": "onCompleted",
+                        "line": 726
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 70,
+                        "durationMicroseconds": 841,
+                        "errorMessage": "Cannot generate efficient code for call to untyped JavaScript function",
+                        "functionName": "onDestruction",
+                        "line": 731
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 52,
+                        "durationMicroseconds": 90,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
+                        "functionName": "x",
+                        "line": 746
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 58,
+                        "durationMicroseconds": 99,
+                        "errorMessage": "Cannot access value for name controller",
+                        "functionName": "visible",
+                        "line": 747
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 73,
+                        "durationMicroseconds": 68,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
+                        "functionName": "verticalCenter",
+                        "line": 745
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 58,
+                        "durationMicroseconds": 121,
+                        "errorMessage": "Cannot access value for name controller",
+                        "functionName": "visible",
+                        "line": 753
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 52,
+                        "durationMicroseconds": 72,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
+                        "functionName": "x",
+                        "line": 756
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 52,
+                        "durationMicroseconds": 53,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
+                        "functionName": "y",
+                        "line": 757
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 67,
+                        "durationMicroseconds": 192,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 759
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 45,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Functions without type annotations won't be compiled",
+                        "functionName": "getDecimalPlaces",
+                        "line": 806
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 45,
+                        "durationMicroseconds": 494,
+                        "errorMessage": "Cannot access value for name param",
+                        "functionName": "startEdit",
+                        "line": 825
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 45,
+                        "durationMicroseconds": 201,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: valueEditor",
+                        "functionName": "commitEdit",
+                        "line": 842
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 58,
+                        "durationMicroseconds": 328,
+                        "errorMessage": "",
+                        "functionName": "visible",
+                        "line": 872
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 56,
+                        "durationMicroseconds": 123,
+                        "errorMessage": "Cannot access value for name parameterCard",
+                        "functionName": "width",
+                        "line": 873
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 57,
+                        "durationMicroseconds": 62,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: valueLabel",
+                        "functionName": "height",
+                        "line": 874
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 59,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on text.",
+                        "functionName": "text",
+                        "line": 877
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 68,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on onTextChanged.",
+                        "functionName": "onTextChanged",
+                        "line": 885
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 76,
+                        "durationMicroseconds": 120,
+                        "errorMessage": "Cannot access value for name parameterCard",
+                        "functionName": "onCompleted",
+                        "line": 886
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 66,
+                        "durationMicroseconds": 566,
+                        "errorMessage": "",
+                        "functionName": "cursorShape",
+                        "line": 890
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 70,
+                        "durationMicroseconds": 259,
+                        "errorMessage": "",
+                        "functionName": "acceptedButtons",
+                        "line": 891
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 70,
+                        "durationMicroseconds": 335,
+                        "errorMessage": "",
+                        "functionName": "onDoubleClicked",
+                        "line": 892
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 67,
+                        "durationMicroseconds": 194,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 889
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 58,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on visible.",
+                        "functionName": "visible",
+                        "line": 898
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 56,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on width.",
+                        "functionName": "width",
+                        "line": 899
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 67,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on inputMethodHints.",
+                        "functionName": "inputMethodHints",
+                        "line": 903
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 61,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on onAccepted.",
+                        "functionName": "onAccepted",
+                        "line": 913
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 68,
+                        "durationMicroseconds": 0,
+                        "errorMessage": "Cannot resolve property type  for binding on onEditingFinished.",
+                        "functionName": "onEditingFinished",
+                        "line": 914
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 61,
+                        "durationMicroseconds": 108,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
+                        "functionName": "bottom",
+                        "line": 907
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 58,
+                        "durationMicroseconds": 53,
+                        "errorMessage": "Cannot retrieve a non-object type by ID: slider",
+                        "functionName": "top",
+                        "line": 908
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 63,
+                        "durationMicroseconds": 142,
+                        "errorMessage": "Cannot access value for name param",
+                        "functionName": "decimals",
+                        "line": 909
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 63,
+                        "durationMicroseconds": 222,
+                        "errorMessage": "",
+                        "functionName": "notation",
+                        "line": 910
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 36,
+                        "durationMicroseconds": 296,
+                        "errorMessage": "",
+                        "functionName": "width",
+                        "line": 922
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 40,
+                        "durationMicroseconds": 97,
                         "errorMessage": "Cannot access value for name cardPadding",
                         "functionName": "height",
-                        "line": 925
+                        "line": 927
                     }
                 ],
                 "filepath": "/home/general/SignalAssistant/qml/components/TuningPanel.qml"

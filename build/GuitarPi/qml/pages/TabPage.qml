@@ -8,15 +8,6 @@ Item {
     implicitWidth: 1280
     implicitHeight: 720
 
-    // Bin overlay heatmap toggle
-    property bool binOverlayEnabled: false
-    
-    // Heatmap magnitude text meters toggle (shows live values over each bin cell)
-    property bool showHeatmapMagnitudeText: false
-    
-    // Heatmap logging toggle (logs magnitude values and UI draw states to logs/heatmaplog)
-    property bool heatmapLoggingEnabled: false
-
     property var bridge: (typeof AppController !== "undefined" && AppController)
                          ? AppController.tabBridge
                          : ((typeof TabBridge !== "undefined" && TabBridge) ? TabBridge : null)
@@ -29,9 +20,28 @@ Item {
     readonly property real scaleFactor: Math.min(width / baseWidth, height / baseHeight)
 
     Rectangle {
+        id: backgroundContainer
         anchors.fill: parent
-        color: "#0d0d0f"
-        z: -100
+        color: "transparent"
+       
+        
+        // Gradient base layer - fills entire display
+        Image {
+            id: gradientLayer
+            anchors.fill: parent
+            source: "../assets/gradientLayer.svg"
+            fillMode: Image.Stretch
+            z: -99
+        }
+
+        // Color overlay with 50% opacity - fills entire display
+        Rectangle {
+            id: colorOverlay
+            anchors.fill: parent
+            color: "#1d2c38"
+            opacity: 1
+             z: -100
+        }
     }
     function handleMonitorToggle(enabled) {
         if (!bridge)
@@ -168,14 +178,6 @@ Item {
         scale: scaleFactor
 
         Image {
-            id: backgroundFill
-            anchors.fill: parent
-            source: "../assets/blueBgFIll.png"
-            fillMode: Image.Stretch
-            z: -10
-        }
-
-        Image {
             id: tabCaptureLabel
             source: "../assets/TabPage/TabCaptureLabel.svg"
             anchors.left: parent.left
@@ -200,27 +202,13 @@ Item {
             visible: false
         }
 
-            Item {
-                id: neckStage
-                readonly property int bottomPadding: 28
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: bottomPadding
-            height: neckBackdrop.implicitWidth > 0
-                    ? width * neckBackdrop.implicitHeight / neckBackdrop.implicitWidth
-                    : 250
+        Item {
+            id: neckStage
+            x: 16
+            y: 468
+            width: parent.width - 32
+            height: 250
             z: -2
-
-            Image {
-                id: neckBackdrop
-                source: "../assets/neckDisplayBGDark.png"
-                anchors.fill: parent
-                anchors.bottomMargin: -neckStage.bottomPadding
-                fillMode: Image.Stretch
-                smooth: true
-                z: -1
-            }
 
             Item {
                 id: neckSection
@@ -411,6 +399,7 @@ Item {
                                                   envelope: energy
                                               });
                             updated = true;
+                            console.log("[QML-OVERLAY]  Updated S" + rawStringIndex + " F" + fretIndex + " energy=" + energy.toFixed(2));
                             break;
                         }
                     }
@@ -421,6 +410,7 @@ Item {
                                                  velocity: energy,
                                                  envelope: energy
                                              });
+                        console.log("[QML-OVERLAY]  Added S" + rawStringIndex + " F" + fretIndex + " energy=" + energy.toFixed(2));
                     }
                     allowMouseOverlay = false;
                 }
@@ -436,6 +426,7 @@ Item {
                         var entry = liveNoteModel.get(i);
                         if (entry.overlayString === overlayString && entry.fretIndex === fretIndex) {
                             liveNoteModel.remove(i);
+                            console.log("[QML-OVERLAY]  Removed S" + rawStringIndex + " F" + fretIndex);
                             break;
                         }
                     }
@@ -606,7 +597,6 @@ Item {
 
                 Image {
                     id: fretsImage
-                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/Frets.svg"
                     sourceSize.width: neckSection.baseFretWidth
                     sourceSize.height: 165
@@ -622,7 +612,6 @@ Item {
 
                 Image {
                     id: neckImage
-                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/Neck.png"
                     sourceSize.width: neckSection.baseNeckWidth
                     sourceSize.height: neckSection.baseNeckHeight
@@ -640,7 +629,6 @@ Item {
 
                 Image {
                     id: stringsImage
-                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/Strings.svg"
                     sourceSize.width: neckSection.baseStringsWidth
                     sourceSize.height: neckSection.baseStringHeight
@@ -657,7 +645,6 @@ Item {
 
                 Image {
                     id: stringLabels
-                    visible: !root.binOverlayEnabled
                     source: "../assets/TabPage/NeckDisplay/StringLabels.svg"
                     sourceSize.height: neckSection.baseNeckHeight
                     height: neckSection.baseNeckHeight
@@ -683,8 +670,6 @@ Item {
                     id: liveNoteRepeater
                     model: liveNoteModel
                     delegate: Rectangle {
-                        // Hide when bin overlay is active (heatmap replaces note overlay)
-                        visible: !root.binOverlayEnabled
                         width: 44
                         height: 18
                         radius: 6
@@ -941,7 +926,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Label {
-                    text: "envFloor"
+                    text: "Env"
                     width: 45
                     font.pixelSize: 8
                     color: "#7d8694"
@@ -1189,16 +1174,14 @@ Item {
                                 }
                             }
                         }
-                        // Bin Overlay Heatmap Toggle
+                        // Exit Button
                         ToolButton {
-                            id: binOverlayToggle
-                            checkable: true
-                            checked: root.binOverlayEnabled
+                            id: exitButton
                             implicitWidth: 44
                             implicitHeight: 44
                             y: -4
                             ToolTip.visible: hovered
-                            ToolTip.text: "Toggle CQT Bin Heatmap Overlay"
+                            ToolTip.text: "Exit Application"
                             ToolTip.delay: 500
                             background: Rectangle {
                                 anchors.fill: parent
@@ -1206,14 +1189,14 @@ Item {
                             }
                             contentItem: Image {
                                 anchors.centerIn: parent
-                                source: Qt.resolvedUrl("../assets/icons/heatmap-grid.svg")
+                                source: Qt.resolvedUrl("../assets/icons/lucide-x.svg")
                                 width: 28
                                 height: 28
                                 fillMode: Image.PreserveAspectFit
-                                opacity: binOverlayToggle.checked ? 1.0 : 0.12
+                                opacity: 1.0
                             }
                             onClicked: {
-                                root.binOverlayEnabled = !root.binOverlayEnabled
+                                Qt.quit()
                             }
                         }
                     }
@@ -1237,9 +1220,7 @@ Item {
             }
         }
         function onLiveNoteTriggered(stringIndex, fretIndex, velocity) {
-            // Skip note overlay processing when bin overlay (heatmap) is active
-            if (root.binOverlayEnabled)
-                return;
+            console.log("[QML-NOTE-ON]  S" + stringIndex + " F" + fretIndex + " vel=" + velocity.toFixed(2));
             if (stringIndex === undefined || fretIndex === undefined)
                 return;
             if (!neckSection)
@@ -1249,9 +1230,7 @@ Item {
             neckSection.addLiveNoteOverlay(stringIndex, fretIndex, velocity);
         }
         function onLiveNoteEnded(stringIndex, fretIndex) {
-            // Skip note overlay processing when bin overlay (heatmap) is active
-            if (root.binOverlayEnabled)
-                return;
+            console.log("[QML-NOTE-OFF] S" + stringIndex + " F" + fretIndex);
             if (stringIndex === undefined || fretIndex === undefined)
                 return;
             if (!neckSection)
@@ -1261,9 +1240,6 @@ Item {
             neckSection.removeLiveNoteOverlay(stringIndex, fretIndex);
         }
         function onLiveNoteEnvelopeUpdated(stringIndex, envelope) {
-            // Skip envelope updates when bin overlay (heatmap) is active
-            if (root.binOverlayEnabled)
-                return;
             if (stringIndex === undefined || envelope === undefined)
                 return;
             if (!neckSection)
@@ -1326,282 +1302,5 @@ Item {
     Component.onDestruction: {
         if (bridge)
             bridge.setRecording(false);
-    }
-
-    // Bin Overlay Heatmap - shows live CQT magnitude per fret/string
-    // Absolute positioning at root level (28, 478) - independent of fretboard display
-    Item {
-        id: binOverlayContainer
-        visible: root.binOverlayEnabled
-        
-        // Absolute position and size matching Fret Cells.svg (1216x127)
-        // Y offset accounts for toggle row above (-30px)
-        x: 28
-        y: 448
-        width: 1216
-        height: 157  // 30px toggle row + 127px heatmap
-        z: 100  // Above everything else
-        
-        // Toggle row for "Show magnitude values"
-        Row {
-            id: magnitudeToggleRow
-            x: 0
-            y: 0
-            height: 28
-            spacing: 8
-            z: 200  // Above everything
-            
-            // Debug background to see the row
-            Rectangle {
-                anchors.fill: parent
-                color: "#222222"
-                opacity: 0.8
-                z: -1
-            }
-            
-            ToolButton {
-                id: magnitudeTextToggle
-                checkable: true
-                checked: root.showHeatmapMagnitudeText
-                implicitWidth: 24
-                implicitHeight: 24
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    border.color: magnitudeTextToggle.checked ? "#F59452" : "#3d3d3d"
-                    border.width: 1
-                    radius: 4
-                }
-                contentItem: Rectangle {
-                    anchors.centerIn: parent
-                    width: 12
-                    height: 12
-                    radius: 2
-                    color: magnitudeTextToggle.checked ? "#F59452" : "transparent"
-                }
-                onClicked: {
-                    console.log("[TOGGLE] Magnitude toggle clicked, was=" + root.showHeatmapMagnitudeText)
-                    root.showHeatmapMagnitudeText = !root.showHeatmapMagnitudeText
-                    console.log("[TOGGLE] Now=" + root.showHeatmapMagnitudeText)
-                }
-            }
-            
-            Text {
-                text: "Show magnitude values"
-                color: magnitudeTextToggle.checked ? "#F59452" : "#8a8a8a"
-                font.pixelSize: 13
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-        
-        // Clear live notes when overlay becomes visible
-        onVisibleChanged: {
-            if (visible && neckSection) {
-                neckSection.clearLiveNotes();
-                // Request initial paint
-                binOverlay.canvas.requestPaint();
-            }
-        }
-        
-        // Heatmap container with clipping
-        Item {
-            id: heatmapArea
-            x: 0
-            y: 30
-            width: 1216
-            height: 127
-            clip: true
-        
-            Image {
-                source: Qt.resolvedUrl("../assets/TabPage/binInlays.svg")
-                x: 211.25 + 32  // F3 column (211.25) + 32px offset
-                y: 50
-                z: 50  // Below the interactive overlay but above background
-            }
-        
-            BatchedFretboardBinOverlay {
-                id: binOverlay
-                opacity: 0.85
-            
-                // Fill container - canvas uses SVG coords directly (1216x127)
-                anchors.fill: parent
-            
-                // Toggle for text magnitude meters (default off for performance)
-                showMagnitudeText: root.showHeatmapMagnitudeText
-            
-                // Magnitude provider for text meters - returns {magnitude, threshold}
-                magnitudeProvider: function(s1to6, f0to24) {
-                    if (!bridge) return null
-                    var stringIndex = s1to6 - 1
-                    return {
-                        magnitude: bridge.getBinMagnitude(stringIndex, f0to24),
-                        threshold: bridge.getBinThreshold(stringIndex, f0to24)
-                    }
-                }
-            
-                // Color provider: GHOSTING LOGIC - Pre-Threshold Visualization
-            // Raw CQT magnitudes: noise floor ~0.01, active input 0.1-0.3+
-            // Thresholds (Linear Growth): ~0.13-0.18 for F0 bins
-            colorProvider: function(s1to6, f0to24, binId) {
-                if (!bridge) {
-                    return "#181818";
-                }
-                
-                // BatchedFretboardBinOverlay uses s1to6 (1-based)
-                // Visual layout: s1 at bottom (Y=105), s6 at top (Y=0)
-                // Guitar standard: Low E at bottom, High E at top
-                // Data array: 0=low E, 5=high E
-                // So s1 (bottom) should map to low E (index 0): stringIndex = s1to6 - 1
-                var stringIndex = s1to6 - 1;
-                
-                // O(1) lookup via Q_INVOKABLE
-                var magnitude = bridge.getBinMagnitude(stringIndex, f0to24);
-                var threshold = bridge.getBinThreshold(stringIndex, f0to24);
-                
-                // DEBUG: (Disabled) Log magnitude values
-                // if (stringIndex === 0 && (f0to24 === 12 || f0to24 === 19) && magnitude > 0.001) {
-                //     console.log("BIN S:" + stringIndex + " F:" + f0to24 + " Mag:" + magnitude.toFixed(4) + " Thresh:" + threshold.toFixed(4));
-                // }
-                
-                // =========================================================
-                // GHOSTING LOGIC: PRE-THRESHOLD VISUALIZATION
-                // =========================================================
-                
-                // 1. NOISE FLOOR GATE (Hard cutoff at 0.01)
-                //    Hides electrical hum / handling noise
-                if (magnitude < 0.01) {
-                    return "#181818"; // Pure Black - below noise floor
-                }
-                
-                // 2. INTENSITY CALCULATION
-                //    intensity = magnitude / (threshold * 1.5)
-                //    At Mag 0.05, Thresh 0.15 → Intensity 0.22 (22%)
-                //    At Mag 0.15 (threshold)  → Intensity 0.66 (66%)
-                var safeThreshold = Math.max(threshold, 0.05);
-                var intensity = magnitude / (safeThreshold * 1.5);
-                intensity = Math.min(intensity, 1.0);  // Clamp to 1.0 max
-                
-                // 3. DYNAMIC ALPHA BLENDING
-                //    Active Note (above threshold): Full intensity green
-                //    Ghost Energy (below threshold): Faint, misty glow (50% alpha)
-                var alpha;
-                if (magnitude >= threshold) {
-                    // ACTIVE NOTE: High visibility
-                    alpha = intensity;
-                } else {
-                    // GHOST ENERGY: Faint pulsing glow
-                    alpha = intensity * 0.5;
-                }
-                
-                // Color: #37C38B (R=0.216, G=0.765, B=0.545)
-                // Result: 0.00-0.01 = Black, 0.01-0.14 = Ghost, 0.15+ = Solid Green
-                return Qt.rgba(0.216, 0.765, 0.545, alpha);
-            }
-            
-            // Winner-takes-all helper: Find the fret with highest magnitude above threshold per string
-            // Returns object with winning fret index per string: { 0: 5, 1: 12, ... } or { 0: -1 } if none
-            property var winningFrets: ({})
-            
-            function updateWinningFrets() {
-                if (!bridge) {
-                    winningFrets = {}
-                    return
-                }
-                
-                var winners = {}
-                for (var s = 0; s < 6; s++) {
-                    var maxMag = -1
-                    var winnerFret = -1
-                    
-                    for (var f = 0; f <= 24; f++) {
-                        var mag = bridge.getBinMagnitude(s, f)
-                        var thresh = bridge.getBinThreshold(s, f)
-                        
-                        // Only consider bins above threshold
-                        if (mag >= thresh && thresh > 0.01) {
-                            if (mag > maxMag) {
-                                maxMag = mag
-                                winnerFret = f
-                            }
-                        }
-                    }
-                    winners[s] = winnerFret
-                }
-                winningFrets = winners
-            }
-            
-            // Stroke provider: 0.5px stroke, #3d3d3d default, 3px #F59452 for winner bin only
-            strokeProvider: function(s1to6, f0to24, binId) {
-                if (!bridge) {
-                    return { color: "#3d3d3d", width: 0.5 };
-                }
-                
-                var stringIndex = s1to6 - 1;
-                
-                // Check if this bin is the winner for its string
-                if (winningFrets[stringIndex] === f0to24) {
-                    return { color: "#F59452", width: 3.0 };
-                }
-                return { color: "#3d3d3d", width: 0.5 };
-            }
-            
-            onBinClicked: (binId, s, f, x, y) => {
-                // Could show tooltip or detailed info here
-            }
-            
-            // C++ magnitude gate triggers repaint only when meaningful changes occur
-            Connections {
-                target: bridge
-                function onBinMagnitudesChanged() {
-                    // Update winner-takes-all cache before rendering
-                    binOverlay.updateWinningFrets();
-                    
-                    // Bump colorRevision to invalidate colorFor() cache
-                    binOverlay.colorRevision++;
-                    
-                    // Log note-off events for debugging overlay persistence
-                    var noteOffEvents = [];
-                    for (var s = 0; s < 6; s++) {
-                        for (var f = 0; f <= 24; f++) {
-                            var magnitude = bridge.getBinMagnitude(s, f);
-                            var threshold = bridge.getBinThreshold(s, f);
-                            // Detect bins that just dropped below threshold
-                            if (magnitude < threshold && magnitude > 0.01 && magnitude < 0.1) {
-                                noteOffEvents.push("S" + s + "F" + f + ":" + magnitude.toFixed(3));
-                            }
-                        }
-                    }
-                    if (noteOffEvents.length > 0 && noteOffEvents.length < 20) {
-                        console.log("[QML-NOTE-OFF] Bins below threshold: " + noteOffEvents.join(", "));
-                    }
-                    
-                    // Log UI draw states if heatmap logging is enabled
-                    if (root.heatmapLoggingEnabled && bridge) {
-                        bridge.logHeatmapUIBatchStart();
-                        // Log the computed UI states for all bins that will be drawn
-                        for (var s2 = 0; s2 < 6; s2++) {
-                            for (var f2 = 0; f2 <= 24; f2++) {
-                                var mag2 = bridge.getBinMagnitude(s2, f2);
-                                var thresh2 = bridge.getBinThreshold(s2, f2);
-                                
-                                // Only log significant values (same gate as render)
-                                if (mag2 >= 0.01) {
-                                    var safeThreshold = Math.max(thresh2, 0.05);
-                                    var intensity = Math.min(mag2 / (safeThreshold * 1.5), 1.0);
-                                    var alpha = (mag2 >= thresh2) ? intensity : intensity * 0.5;
-                                    var isAboveThreshold = (mag2 >= thresh2 && thresh2 > 0.01);
-                                    bridge.logHeatmapUIEntry(s2, f2, mag2, thresh2, intensity, alpha, isAboveThreshold);
-                                }
-                            }
-                        }
-                        bridge.logHeatmapUIBatchEnd();
-                    }
-                    
-                    // Direct requestPaint - C++ gate ensures we're not flooding
-                    binOverlay.canvas.requestPaint();
-                }
-            }
-        }
-        }  // Close heatmapArea
     }
 }

@@ -1,0 +1,67 @@
+-- ARM64 detected - enabling NEON SIMD optimizations
+-- Configuring done (0.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/general/SignalAssistant/build
+[  2%] Built target GuitarPi_copy_qml
+[  2%] Built target GuitarPi_qmlimportscan
+[  2%] Built target guitarpi_tab_autogen_timestamp_deps
+[  2%] Built target GuitarPi_copy_res
+[  3%] Built target TabPagePreview_qmlimportscan
+[  3%] Built target guitarpi_tab_autogen
+[ 14%] Built target guitarpi_tab
+[ 14%] Built target GuitarPi_autogen_timestamp_deps
+[ 14%] Built target TabPagePreview_autogen_timestamp_deps
+[ 14%] Built target tab_module_autogen_timestamp_deps
+[ 16%] Built target GuitarPi_autogen
+[ 17%] Built target TabPagePreview_autogen
+[ 18%] Built target tab_module_autogen
+[ 19%] Generating meta_types/qt6guitarpi_metatypes.json
+[ 20%] Building CXX object CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o
+[ 20%] Generating meta_types/qt6guitarpi_metatypes.json
+[ 22%] Linking CXX executable bin/GuitarPi
+/usr/bin/ld: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::~TabEngineBridge()':
+TabEngineBridge.cpp:(.text+0x1bb8): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::handleCalibrationFinished(std::array<float, 6ul> const&, std::array<float, 6ul> const&)':
+TabEngineBridge.cpp:(.text+0x2edc): undefined reference to `audio::YINWorkerThread::setCalibration(std::array<float, 6ul> const&, std::array<float, 6ul> const&)'
+/usr/bin/ld: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::setAudioClient(HexAudioClient*)':
+TabEngineBridge.cpp:(.text+0x42a8): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::initCQTForRecordedSession(float)':
+TabEngineBridge.cpp:(.text+0x45bc): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x46d8): undefined reference to `audio::YINWorkerThread::setCalibration(std::array<float, 6ul> const&, std::array<float, 6ul> const&)'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x46e8): undefined reference to `audio::YINWorkerThread::start()'
+/usr/bin/ld: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::initYINWorkerForJack(HexJackClient*)':
+TabEngineBridge.cpp:(.text+0x47b4): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x48e4): undefined reference to `audio::YINWorkerThread::setCalibration(std::array<float, 6ul> const&, std::array<float, 6ul> const&)'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x48f4): undefined reference to `audio::YINWorkerThread::start()'
+/usr/bin/ld: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: in function `std::__detail::_MakeUniq<audio::YINWorkerThread>::__single_object std::make_unique<audio::YINWorkerThread, audio::LockFreeRingBuffer<audio::AudioFrame, 8192ul>&, audio::AtomicNoteState&, audio::YINWorkerConfig&>(audio::LockFreeRingBuffer<audio::AudioFrame, 8192ul>&, audio::AtomicNoteState&, audio::YINWorkerConfig&)':
+TabEngineBridge.cpp:(.text._ZSt11make_uniqueIN5audio15YINWorkerThreadEJRNS0_18LockFreeRingBufferINS0_10AudioFrameELm8192EEERNS0_15AtomicNoteStateERNS0_15YINWorkerConfigEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_[_ZSt11make_uniqueIN5audio15YINWorkerThreadEJRNS0_18LockFreeRingBufferINS0_10AudioFrameELm8192EEERNS0_15AtomicNoteStateERNS0_15YINWorkerConfigEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_]+0x68): undefined reference to `audio::YINWorkerThread::YINWorkerThread(audio::LockFreeRingBuffer<audio::AudioFrame, 8192ul>&, audio::AtomicNoteState&, audio::YINWorkerConfig const&)'
+/usr/bin/ld: CMakeFiles/GuitarPi.dir/src/TabEngineBridge.cpp.o: in function `std::default_delete<audio::YINWorkerThread>::operator()(audio::YINWorkerThread*) const':
+TabEngineBridge.cpp:(.text._ZNKSt14default_deleteIN5audio15YINWorkerThreadEEclEPS1_[_ZNKSt14default_deleteIN5audio15YINWorkerThreadEEclEPS1_]+0x24): undefined reference to `audio::YINWorkerThread::~YINWorkerThread()'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/GuitarPi.dir/build.make:1020: bin/GuitarPi] Error 1
+make[1]: *** [CMakeFiles/Makefile2:123: CMakeFiles/GuitarPi.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 22%] Building CXX object CMakeFiles/TabPagePreview.dir/src/audio/HexJackClient.cpp.o
+[ 23%] Linking CXX executable TabPagePreview
+/usr/bin/ld: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::~TabEngineBridge()':
+TabEngineBridge.cpp:(.text+0x1bb8): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::handleCalibrationFinished(std::array<float, 6ul> const&, std::array<float, 6ul> const&)':
+TabEngineBridge.cpp:(.text+0x2edc): undefined reference to `audio::YINWorkerThread::setCalibration(std::array<float, 6ul> const&, std::array<float, 6ul> const&)'
+/usr/bin/ld: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::setAudioClient(HexAudioClient*)':
+TabEngineBridge.cpp:(.text+0x42a8): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::initCQTForRecordedSession(float)':
+TabEngineBridge.cpp:(.text+0x45bc): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x46d8): undefined reference to `audio::YINWorkerThread::setCalibration(std::array<float, 6ul> const&, std::array<float, 6ul> const&)'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x46e8): undefined reference to `audio::YINWorkerThread::start()'
+/usr/bin/ld: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o: in function `TabEngineBridge::initYINWorkerForJack(HexJackClient*)':
+TabEngineBridge.cpp:(.text+0x47b4): undefined reference to `audio::YINWorkerThread::stop()'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x48e4): undefined reference to `audio::YINWorkerThread::setCalibration(std::array<float, 6ul> const&, std::array<float, 6ul> const&)'
+/usr/bin/ld: TabEngineBridge.cpp:(.text+0x48f4): undefined reference to `audio::YINWorkerThread::start()'
+/usr/bin/ld: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o: in function `std::__detail::_MakeUniq<audio::YINWorkerThread>::__single_object std::make_unique<audio::YINWorkerThread, audio::LockFreeRingBuffer<audio::AudioFrame, 8192ul>&, audio::AtomicNoteState&, audio::YINWorkerConfig&>(audio::LockFreeRingBuffer<audio::AudioFrame, 8192ul>&, audio::AtomicNoteState&, audio::YINWorkerConfig&)':
+TabEngineBridge.cpp:(.text._ZSt11make_uniqueIN5audio15YINWorkerThreadEJRNS0_18LockFreeRingBufferINS0_10AudioFrameELm8192EEERNS0_15AtomicNoteStateERNS0_15YINWorkerConfigEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_[_ZSt11make_uniqueIN5audio15YINWorkerThreadEJRNS0_18LockFreeRingBufferINS0_10AudioFrameELm8192EEERNS0_15AtomicNoteStateERNS0_15YINWorkerConfigEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_]+0x68): undefined reference to `audio::YINWorkerThread::YINWorkerThread(audio::LockFreeRingBuffer<audio::AudioFrame, 8192ul>&, audio::AtomicNoteState&, audio::YINWorkerConfig const&)'
+/usr/bin/ld: CMakeFiles/TabPagePreview.dir/src/TabEngineBridge.cpp.o: in function `std::default_delete<audio::YINWorkerThread>::operator()(audio::YINWorkerThread*) const':
+TabEngineBridge.cpp:(.text._ZNKSt14default_deleteIN5audio15YINWorkerThreadEEclEPS1_[_ZNKSt14default_deleteIN5audio15YINWorkerThreadEEclEPS1_]+0x24): undefined reference to `audio::YINWorkerThread::~YINWorkerThread()'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/TabPagePreview.dir/build.make:299: TabPagePreview] Error 1
+make[1]: *** [CMakeFiles/Makefile2:159: CMakeFiles/TabPagePreview.dir/all] Error 2
+make: *** [Makefile:136: all] Error 2

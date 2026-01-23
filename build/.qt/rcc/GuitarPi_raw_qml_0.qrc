@@ -42,6 +42,7 @@
     <file alias="qml/assets/cabsOpen.svg">/home/general/SignalAssistant/qml/assets/cabsOpen.svg</file>
     <file alias="qml/assets/chevron.svg">/home/general/SignalAssistant/qml/assets/chevron.svg</file>
     <file alias="qml/assets/component.svg">/home/general/SignalAssistant/qml/assets/component.svg</file>
+    <file alias="qml/assets/gradientLayer.svg">/home/general/SignalAssistant/qml/assets/gradientLayer.svg</file>
     <file alias="qml/assets/icons/coreIcon.svg">/home/general/SignalAssistant/qml/assets/icons/coreIcon.svg</file>
     <file alias="qml/assets/icons/heatmap-grid.svg">/home/general/SignalAssistant/qml/assets/icons/heatmap-grid.svg</file>
     <file alias="qml/assets/icons/lucide-pause.svg">/home/general/SignalAssistant/qml/assets/icons/lucide-pause.svg</file>
@@ -50,6 +51,7 @@
     <file alias="qml/assets/icons/lucide-save.svg">/home/general/SignalAssistant/qml/assets/icons/lucide-save.svg</file>
     <file alias="qml/assets/icons/lucide-settings.svg">/home/general/SignalAssistant/qml/assets/icons/lucide-settings.svg</file>
     <file alias="qml/assets/icons/lucide-stop.svg">/home/general/SignalAssistant/qml/assets/icons/lucide-stop.svg</file>
+    <file alias="qml/assets/icons/lucide-x.svg">/home/general/SignalAssistant/qml/assets/icons/lucide-x.svg</file>
     <file alias="qml/assets/icons/note-overlay.svg">/home/general/SignalAssistant/qml/assets/icons/note-overlay.svg</file>
     <file alias="qml/assets/icons/systemIcon.svg">/home/general/SignalAssistant/qml/assets/icons/systemIcon.svg</file>
     <file alias="qml/assets/icons/toggle-switch-off.svg">/home/general/SignalAssistant/qml/assets/icons/toggle-switch-off.svg</file>

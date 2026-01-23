@@ -6,7 +6,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 20,
-                        "durationMicroseconds": 285,
+                        "durationMicroseconds": 208,
                         "errorMessage": "",
                         "functionName": "implicitWidth",
                         "line": 20
@@ -14,7 +14,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 21,
-                        "durationMicroseconds": 142,
+                        "durationMicroseconds": 141,
                         "errorMessage": "",
                         "functionName": "implicitHeight",
                         "line": 21
@@ -22,7 +22,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 12,
-                        "durationMicroseconds": 101,
+                        "durationMicroseconds": 113,
                         "errorMessage": "",
                         "functionName": "width",
                         "line": 22
@@ -30,7 +30,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 13,
-                        "durationMicroseconds": 100,
+                        "durationMicroseconds": 97,
                         "errorMessage": "",
                         "functionName": "height",
                         "line": 23
@@ -54,7 +54,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 5,
-                        "durationMicroseconds": 663,
+                        "durationMicroseconds": 817,
                         "errorMessage": "method dropCallback cannot be resolved.",
                         "functionName": "finishDrag",
                         "line": 158
@@ -62,7 +62,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 5,
-                        "durationMicroseconds": 495,
+                        "durationMicroseconds": 549,
                         "errorMessage": "",
                         "functionName": "cancelDrag",
                         "line": 183
@@ -70,7 +70,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 19,
-                        "durationMicroseconds": 206,
+                        "durationMicroseconds": 196,
                         "errorMessage": "",
                         "functionName": "fillMode",
                         "line": 28
@@ -78,7 +78,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 146,
+                        "durationMicroseconds": 132,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 26
@@ -86,7 +86,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 158,
+                        "durationMicroseconds": 153,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 34
@@ -94,7 +94,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 16,
-                        "durationMicroseconds": 289,
+                        "durationMicroseconds": 362,
                         "errorMessage": "",
                         "functionName": "width",
                         "line": 43
@@ -102,7 +102,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 15,
-                        "durationMicroseconds": 148,
+                        "durationMicroseconds": 187,
                         "errorMessage": "",
                         "functionName": "text",
                         "line": 44
@@ -110,7 +110,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 16,
-                        "durationMicroseconds": 212,
+                        "durationMicroseconds": 271,
                         "errorMessage": "",
                         "functionName": "color",
                         "line": 45
@@ -118,7 +118,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 30,
-                        "durationMicroseconds": 185,
+                        "durationMicroseconds": 223,
                         "errorMessage": "",
                         "functionName": "horizontalAlignment",
                         "line": 48
@@ -126,7 +126,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 16,
-                        "durationMicroseconds": 142,
+                        "durationMicroseconds": 187,
                         "errorMessage": "",
                         "functionName": "elide",
                         "line": 49
@@ -134,7 +134,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 27,
-                        "durationMicroseconds": 116,
+                        "durationMicroseconds": 159,
                         "errorMessage": "",
                         "functionName": "centerIn",
                         "line": 42
@@ -142,7 +142,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 25,
-                        "durationMicroseconds": 191,
+                        "durationMicroseconds": 203,
                         "errorMessage": "",
                         "functionName": "pixelSize",
                         "line": 46
@@ -150,7 +150,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 22,
-                        "durationMicroseconds": 177,
+                        "durationMicroseconds": 156,
                         "errorMessage": "",
                         "functionName": "weight",
                         "line": 47
@@ -158,7 +158,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 22,
-                        "durationMicroseconds": 527,
+                        "durationMicroseconds": 586,
                         "errorMessage": "",
                         "functionName": "cursorShape",
                         "line": 55
@@ -166,7 +166,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 26,
-                        "durationMicroseconds": 240,
+                        "durationMicroseconds": 278,
                         "errorMessage": "",
                         "functionName": "acceptedButtons",
                         "line": 56
@@ -174,7 +174,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 20,
-                        "durationMicroseconds": 76,
+                        "durationMicroseconds": 85,
                         "errorMessage": "Cannot access value for name mouse",
                         "functionName": "onPressed",
                         "line": 58
@@ -182,7 +182,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 28,
-                        "durationMicroseconds": 57,
+                        "durationMicroseconds": 76,
                         "errorMessage": "Cannot access value for name mouse",
                         "functionName": "onPositionChanged",
                         "line": 66
@@ -190,7 +190,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 64,
+                        "durationMicroseconds": 40,
                         "errorMessage": "Cannot access value for name mouse",
                         "functionName": "onReleased",
                         "line": 77
@@ -198,7 +198,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 21,
-                        "durationMicroseconds": 252,
+                        "durationMicroseconds": 279,
                         "errorMessage": "",
                         "functionName": "onCanceled",
                         "line": 82
@@ -206,7 +206,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 138,
+                        "durationMicroseconds": 157,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 54
@@ -214,7 +214,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 20,
-                        "durationMicroseconds": 57,
+                        "durationMicroseconds": 92,
                         "errorMessage": "Cannot access value for name root",
                         "functionName": "width",
                         "line": 93
@@ -222,7 +222,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 34,
+                        "durationMicroseconds": 50,
                         "errorMessage": "Cannot access value for name root",
                         "functionName": "height",
                         "line": 94
@@ -230,7 +230,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 27,
-                        "durationMicroseconds": 215,
+                        "durationMicroseconds": 244,
                         "errorMessage": "",
                         "functionName": "fillMode",
                         "line": 99
@@ -238,7 +238,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 31,
-                        "durationMicroseconds": 246,
+                        "durationMicroseconds": 157,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 97
@@ -246,7 +246,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 31,
-                        "durationMicroseconds": 140,
+                        "durationMicroseconds": 759,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 105
@@ -254,7 +254,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 373,
+                        "durationMicroseconds": 381,
                         "errorMessage": "",
                         "functionName": "width",
                         "line": 114
@@ -262,7 +262,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 23,
-                        "durationMicroseconds": 75,
+                        "durationMicroseconds": 88,
                         "errorMessage": "Cannot access value for name tileText",
                         "functionName": "text",
                         "line": 115
@@ -270,7 +270,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 24,
-                        "durationMicroseconds": 39,
+                        "durationMicroseconds": 53,
                         "errorMessage": "Cannot access value for name tileTextColor",
                         "functionName": "color",
                         "line": 116
@@ -278,7 +278,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 38,
-                        "durationMicroseconds": 160,
+                        "durationMicroseconds": 198,
                         "errorMessage": "",
                         "functionName": "horizontalAlignment",
                         "line": 119
@@ -286,7 +286,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 24,
-                        "durationMicroseconds": 136,
+                        "durationMicroseconds": 185,
                         "errorMessage": "",
                         "functionName": "elide",
                         "line": 120
@@ -294,7 +294,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 35,
-                        "durationMicroseconds": 111,
+                        "durationMicroseconds": 150,
                         "errorMessage": "",
                         "functionName": "centerIn",
                         "line": 113
@@ -302,7 +302,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 33,
-                        "durationMicroseconds": 55,
+                        "durationMicroseconds": 79,
                         "errorMessage": "Cannot access value for name tileFontSize",
                         "functionName": "pixelSize",
                         "line": 117
@@ -310,7 +310,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 30,
-                        "durationMicroseconds": 156,
+                        "durationMicroseconds": 245,
                         "errorMessage": "",
                         "functionName": "weight",
                         "line": 118

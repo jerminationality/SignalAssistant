@@ -382,9 +382,9 @@
                     "designable": true,
                     "final": false,
                     "index": 13,
-                    "name": "binMagnitudeRevision",
-                    "notify": "binMagnitudesChanged",
-                    "read": "binMagnitudeRevision",
+                    "name": "noteStateRevision",
+                    "notify": "noteStateChanged",
+                    "read": "noteStateRevision",
                     "required": false,
                     "scriptable": true,
                     "stored": true,
@@ -524,7 +524,7 @@
                 {
                     "access": "public",
                     "index": 13,
-                    "name": "binMagnitudesChanged",
+                    "name": "noteStateChanged",
                     "returnType": "void"
                 },
                 {

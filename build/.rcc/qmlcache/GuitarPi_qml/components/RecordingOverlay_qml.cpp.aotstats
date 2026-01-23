@@ -6,7 +6,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 185,
+                        "durationMicroseconds": 202,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 16
@@ -14,7 +14,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 37,
-                        "durationMicroseconds": 259,
+                        "durationMicroseconds": 301,
                         "errorMessage": "",
                         "functionName": "verticalCenter",
                         "line": 25
@@ -22,7 +22,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 37,
-                        "durationMicroseconds": 245,
+                        "durationMicroseconds": 280,
                         "errorMessage": "",
                         "functionName": "verticalCenter",
                         "line": 31
@@ -30,7 +30,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 30,
-                        "durationMicroseconds": 215,
+                        "durationMicroseconds": 211,
                         "errorMessage": "",
                         "functionName": "weight",
                         "line": 36
@@ -46,7 +46,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 20,
-                        "durationMicroseconds": 258,
+                        "durationMicroseconds": 276,
                         "errorMessage": "",
                         "functionName": "onClicked",
                         "line": 49
@@ -54,7 +54,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 127,
+                        "durationMicroseconds": 151,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 47

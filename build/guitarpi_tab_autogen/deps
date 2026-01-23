@@ -2,18 +2,23 @@ guitarpi_tab_autogen/timestamp: \
 	/home/general/SignalAssistant/CMakeLists.txt \
 	/home/general/SignalAssistant/build/CMakeFiles/3.31.6/CMakeCXXCompiler.cmake \
 	/home/general/SignalAssistant/build/CMakeFiles/3.31.6/CMakeSystem.cmake \
-	/home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp \
-	/home/general/SignalAssistant/src/CQT/CQTNoteDetector.h \
 	/home/general/SignalAssistant/src/HeatmapLogger.cpp \
 	/home/general/SignalAssistant/src/HeatmapLogger.h \
 	/home/general/SignalAssistant/src/NoteDetectionConfig.cpp \
 	/home/general/SignalAssistant/src/NoteDetectionConfig.h \
 	/home/general/SignalAssistant/src/NoteDetectionStore.cpp \
 	/home/general/SignalAssistant/src/NoteDetectionStore.h \
+	/home/general/SignalAssistant/src/NoteLogger.cpp \
+	/home/general/SignalAssistant/src/NoteLogger.h \
 	/home/general/SignalAssistant/src/SessionLogger.cpp \
 	/home/general/SignalAssistant/src/SessionLogger.h \
 	/home/general/SignalAssistant/src/TabEngine.cpp \
 	/home/general/SignalAssistant/src/TabEngine.h \
+	/home/general/SignalAssistant/src/YIN/FastYINDetector.cpp \
+	/home/general/SignalAssistant/src/YIN/FastYINDetector.h \
+	/home/general/SignalAssistant/src/YIN/YINConfig.h \
+	/home/general/SignalAssistant/src/YIN/YINDetector.cpp \
+	/home/general/SignalAssistant/src/YIN/YINDetector.h \
 	/home/general/SignalAssistant/src/util.cpp \
 	/home/general/SignalAssistant/src/util.h \
 	/usr/lib/aarch64-linux-gnu/cmake/Qt6/3rdparty/kwin/FindXKB.cmake \

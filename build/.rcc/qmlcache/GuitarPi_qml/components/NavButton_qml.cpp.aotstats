@@ -6,7 +6,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 16,
-                        "durationMicroseconds": 90,
+                        "durationMicroseconds": 74,
                         "errorMessage": "Cannot access value for name btn",
                         "functionName": "color",
                         "line": 12

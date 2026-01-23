@@ -337,12 +337,6 @@
 	"HEADERS" : 
 	[
 		[
-			"/home/general/SignalAssistant/src/CQT/CQTNoteDetector.h",
-			"Mu",
-			"GAZK6NHNS2/moc_CQTNoteDetector.cpp",
-			null
-		],
-		[
 			"/home/general/SignalAssistant/src/HeatmapLogger.h",
 			"Mu",
 			"UVLADIE3JM/moc_HeatmapLogger.cpp",
@@ -361,6 +355,12 @@
 			null
 		],
 		[
+			"/home/general/SignalAssistant/src/NoteLogger.h",
+			"Mu",
+			"UVLADIE3JM/moc_NoteLogger.cpp",
+			null
+		],
+		[
 			"/home/general/SignalAssistant/src/SessionLogger.h",
 			"Mu",
 			"UVLADIE3JM/moc_SessionLogger.cpp",
@@ -370,6 +370,24 @@
 			"/home/general/SignalAssistant/src/TabEngine.h",
 			"Mu",
 			"UVLADIE3JM/moc_TabEngine.cpp",
+			null
+		],
+		[
+			"/home/general/SignalAssistant/src/YIN/FastYINDetector.h",
+			"Mu",
+			"7XMZLZ7YQD/moc_FastYINDetector.cpp",
+			null
+		],
+		[
+			"/home/general/SignalAssistant/src/YIN/YINConfig.h",
+			"Mu",
+			"7XMZLZ7YQD/moc_YINConfig.cpp",
+			null
+		],
+		[
+			"/home/general/SignalAssistant/src/YIN/YINDetector.h",
+			"Mu",
+			"7XMZLZ7YQD/moc_YINDetector.cpp",
 			null
 		],
 		[
@@ -461,11 +479,6 @@
 	"SETTINGS_FILE" : "/home/general/SignalAssistant/build/CMakeFiles/guitarpi_tab_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[
-			"/home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp",
-			"Mu",
-			null
-		],
 		[ "/home/general/SignalAssistant/src/HeatmapLogger.cpp", "Mu", null ],
 		[
 			"/home/general/SignalAssistant/src/NoteDetectionConfig.cpp",
@@ -477,8 +490,15 @@
 			"Mu",
 			null
 		],
+		[ "/home/general/SignalAssistant/src/NoteLogger.cpp", "Mu", null ],
 		[ "/home/general/SignalAssistant/src/SessionLogger.cpp", "Mu", null ],
 		[ "/home/general/SignalAssistant/src/TabEngine.cpp", "Mu", null ],
+		[
+			"/home/general/SignalAssistant/src/YIN/FastYINDetector.cpp",
+			"Mu",
+			null
+		],
+		[ "/home/general/SignalAssistant/src/YIN/YINDetector.cpp", "Mu", null ],
 		[ "/home/general/SignalAssistant/src/util.cpp", "Mu", null ]
 	],
 	"USE_BETTER_GRAPH" : true,

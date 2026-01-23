@@ -67,9 +67,9 @@
 },
 {
   "directory": "/home/general/SignalAssistant/build",
-  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_OPENGL_LIB -DQT_QMLINTEGRATION_LIB -DQT_QMLMETA_LIB -DQT_QMLMODELS_LIB -DQT_QMLWORKERSCRIPT_LIB -DQT_QML_LIB -DQT_QUICKCONTROLS2_LIB -DQT_QUICK_LIB -I/home/general/SignalAssistant/build/GuitarPi_autogen/include -I/home/general/SignalAssistant -I/usr/include/carla -I/usr/include/carla/includes -I/home/general/SignalAssistant/src -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml/6.8.2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml/6.8.2/QtQml -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore/6.8.2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore/6.8.2/QtCore -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore -isystem /usr/include/aarch64-linux-gnu/qt6 -isystem /usr/lib/aarch64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlIntegration -isystem /usr/include/aarch64-linux-gnu/qt6/QtNetwork -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuick -isystem /usr/include/aarch64-linux-gnu/qt6/QtGui -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlMeta -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlModels -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlWorkerScript -isystem /usr/include/aarch64-linux-gnu/qt6/QtOpenGL -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuickControls2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtMultimedia -g -std=gnu++20 -o CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o -c /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp",
-  "file": "/home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp",
-  "output": "CMakeFiles/GuitarPi.dir/src/audio/CQTWorkerThread.cpp.o"
+  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_OPENGL_LIB -DQT_QMLINTEGRATION_LIB -DQT_QMLMETA_LIB -DQT_QMLMODELS_LIB -DQT_QMLWORKERSCRIPT_LIB -DQT_QML_LIB -DQT_QUICKCONTROLS2_LIB -DQT_QUICK_LIB -I/home/general/SignalAssistant/build/GuitarPi_autogen/include -I/home/general/SignalAssistant -I/usr/include/carla -I/usr/include/carla/includes -I/home/general/SignalAssistant/src -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml/6.8.2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml/6.8.2/QtQml -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore/6.8.2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore/6.8.2/QtCore -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore -isystem /usr/include/aarch64-linux-gnu/qt6 -isystem /usr/lib/aarch64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlIntegration -isystem /usr/include/aarch64-linux-gnu/qt6/QtNetwork -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuick -isystem /usr/include/aarch64-linux-gnu/qt6/QtGui -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlMeta -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlModels -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlWorkerScript -isystem /usr/include/aarch64-linux-gnu/qt6/QtOpenGL -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuickControls2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtMultimedia -g -std=gnu++20 -o CMakeFiles/GuitarPi.dir/src/audio/YINWorkerThread.cpp.o -c /home/general/SignalAssistant/src/audio/YINWorkerThread.cpp",
+  "file": "/home/general/SignalAssistant/src/audio/YINWorkerThread.cpp",
+  "output": "CMakeFiles/GuitarPi.dir/src/audio/YINWorkerThread.cpp.o"
 },
 {
   "directory": "/home/general/SignalAssistant/build",
@@ -271,9 +271,9 @@
 },
 {
   "directory": "/home/general/SignalAssistant/build",
-  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_OPENGL_LIB -DQT_QMLINTEGRATION_LIB -DQT_QMLMETA_LIB -DQT_QMLMODELS_LIB -DQT_QMLWORKERSCRIPT_LIB -DQT_QML_LIB -DQT_QUICKCONTROLS2_LIB -DQT_QUICK_LIB -I/home/general/SignalAssistant/build/TabPagePreview_autogen/include -I/usr/include/carla -I/usr/include/carla/includes -I/home/general/SignalAssistant/src -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore -isystem /usr/include/aarch64-linux-gnu/qt6 -isystem /usr/lib/aarch64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuick -isystem /usr/include/aarch64-linux-gnu/qt6/QtGui -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlIntegration -isystem /usr/include/aarch64-linux-gnu/qt6/QtNetwork -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlMeta -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlModels -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlWorkerScript -isystem /usr/include/aarch64-linux-gnu/qt6/QtOpenGL -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuickControls2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtMultimedia -g -std=gnu++20 -o CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o -c /home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp",
-  "file": "/home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp",
-  "output": "CMakeFiles/TabPagePreview.dir/src/audio/CQTWorkerThread.cpp.o"
+  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_OPENGL_LIB -DQT_QMLINTEGRATION_LIB -DQT_QMLMETA_LIB -DQT_QMLMODELS_LIB -DQT_QMLWORKERSCRIPT_LIB -DQT_QML_LIB -DQT_QUICKCONTROLS2_LIB -DQT_QUICK_LIB -I/home/general/SignalAssistant/build/TabPagePreview_autogen/include -I/usr/include/carla -I/usr/include/carla/includes -I/home/general/SignalAssistant/src -isystem /usr/include/aarch64-linux-gnu/qt6/QtCore -isystem /usr/include/aarch64-linux-gnu/qt6 -isystem /usr/lib/aarch64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuick -isystem /usr/include/aarch64-linux-gnu/qt6/QtGui -isystem /usr/include/aarch64-linux-gnu/qt6/QtQml -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlIntegration -isystem /usr/include/aarch64-linux-gnu/qt6/QtNetwork -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlMeta -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlModels -isystem /usr/include/aarch64-linux-gnu/qt6/QtQmlWorkerScript -isystem /usr/include/aarch64-linux-gnu/qt6/QtOpenGL -isystem /usr/include/aarch64-linux-gnu/qt6/QtQuickControls2 -isystem /usr/include/aarch64-linux-gnu/qt6/QtMultimedia -g -std=gnu++20 -o CMakeFiles/TabPagePreview.dir/src/audio/YINWorkerThread.cpp.o -c /home/general/SignalAssistant/src/audio/YINWorkerThread.cpp",
+  "file": "/home/general/SignalAssistant/src/audio/YINWorkerThread.cpp",
+  "output": "CMakeFiles/TabPagePreview.dir/src/audio/YINWorkerThread.cpp.o"
 },
 {
   "directory": "/home/general/SignalAssistant/build",
@@ -301,6 +301,12 @@
 },
 {
   "directory": "/home/general/SignalAssistant/build",
+  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DHAVE_AUBIO=1 -I/home/general/SignalAssistant/build/guitarpi_tab_autogen/include -I/home/general/SignalAssistant/src -I/usr/include/opus -g -std=gnu++20 -o CMakeFiles/guitarpi_tab.dir/src/NoteLogger.cpp.o -c /home/general/SignalAssistant/src/NoteLogger.cpp",
+  "file": "/home/general/SignalAssistant/src/NoteLogger.cpp",
+  "output": "CMakeFiles/guitarpi_tab.dir/src/NoteLogger.cpp.o"
+},
+{
+  "directory": "/home/general/SignalAssistant/build",
   "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DHAVE_AUBIO=1 -I/home/general/SignalAssistant/build/guitarpi_tab_autogen/include -I/home/general/SignalAssistant/src -I/usr/include/opus -g -std=gnu++20 -o CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o -c /home/general/SignalAssistant/src/HeatmapLogger.cpp",
   "file": "/home/general/SignalAssistant/src/HeatmapLogger.cpp",
   "output": "CMakeFiles/guitarpi_tab.dir/src/HeatmapLogger.cpp.o"
@@ -319,9 +325,15 @@
 },
 {
   "directory": "/home/general/SignalAssistant/build",
-  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DHAVE_AUBIO=1 -I/home/general/SignalAssistant/build/guitarpi_tab_autogen/include -I/home/general/SignalAssistant/src -I/usr/include/opus -g -std=gnu++20 -o CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o -c /home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp",
-  "file": "/home/general/SignalAssistant/src/CQT/CQTNoteDetector.cpp",
-  "output": "CMakeFiles/guitarpi_tab.dir/src/CQT/CQTNoteDetector.cpp.o"
+  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DHAVE_AUBIO=1 -I/home/general/SignalAssistant/build/guitarpi_tab_autogen/include -I/home/general/SignalAssistant/src -I/usr/include/opus -g -std=gnu++20 -o CMakeFiles/guitarpi_tab.dir/src/YIN/YINDetector.cpp.o -c /home/general/SignalAssistant/src/YIN/YINDetector.cpp",
+  "file": "/home/general/SignalAssistant/src/YIN/YINDetector.cpp",
+  "output": "CMakeFiles/guitarpi_tab.dir/src/YIN/YINDetector.cpp.o"
+},
+{
+  "directory": "/home/general/SignalAssistant/build",
+  "command": "/usr/bin/aarch64-linux-gnu-g++ -DHAVE_ARM_NEON=1 -DHAVE_AUBIO=1 -I/home/general/SignalAssistant/build/guitarpi_tab_autogen/include -I/home/general/SignalAssistant/src -I/usr/include/opus -g -std=gnu++20 -o CMakeFiles/guitarpi_tab.dir/src/YIN/FastYINDetector.cpp.o -c /home/general/SignalAssistant/src/YIN/FastYINDetector.cpp",
+  "file": "/home/general/SignalAssistant/src/YIN/FastYINDetector.cpp",
+  "output": "CMakeFiles/guitarpi_tab.dir/src/YIN/FastYINDetector.cpp.o"
 },
 {
   "directory": "/home/general/SignalAssistant/build",

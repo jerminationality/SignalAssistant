@@ -6,7 +6,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 33,
-                        "durationMicroseconds": 319,
+                        "durationMicroseconds": 385,
                         "errorMessage": "",
                         "functionName": "onShowMagnitudeTextChanged",
                         "line": 32
@@ -14,7 +14,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 34,
-                        "durationMicroseconds": 132,
+                        "durationMicroseconds": 170,
                         "errorMessage": "",
                         "functionName": "colorOverrides",
                         "line": 42
@@ -22,7 +22,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 36,
-                        "durationMicroseconds": 616,
+                        "durationMicroseconds": 512,
                         "errorMessage": "Cannot generate efficient code for storing an array in a non-sequence type",
                         "functionName": "stringY",
                         "line": 46
@@ -30,7 +30,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 34,
-                        "durationMicroseconds": 6393,
+                        "durationMicroseconds": 1685,
                         "errorMessage": "Cannot generate efficient code for storing an array in a non-sequence type",
                         "functionName": "fretX",
                         "line": 56
@@ -38,7 +38,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 34,
-                        "durationMicroseconds": 2478,
+                        "durationMicroseconds": 1640,
                         "errorMessage": "Cannot generate efficient code for storing an array in a non-sequence type",
                         "functionName": "fretW",
                         "line": 61
@@ -78,7 +78,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 5,
-                        "durationMicroseconds": 248,
+                        "durationMicroseconds": 316,
                         "errorMessage": "",
                         "functionName": "clearAllOverrides",
                         "line": 106
@@ -102,7 +102,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 25,
-                        "durationMicroseconds": 184,
+                        "durationMicroseconds": 234,
                         "errorMessage": "",
                         "functionName": "renderStrategy",
                         "line": 148
@@ -110,7 +110,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 130,
+                        "durationMicroseconds": 157,
                         "errorMessage": "",
                         "functionName": "renderTarget",
                         "line": 149
@@ -118,7 +118,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 18,
-                        "durationMicroseconds": 1890,
+                        "durationMicroseconds": 1187,
                         "errorMessage": "Type  stored as QQuickItem does not have a property strokeProvider for calling",
                         "functionName": "onPaint",
                         "line": 153
@@ -126,7 +126,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 264,
+                        "durationMicroseconds": 180,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 144
@@ -134,7 +134,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 1555,
+                        "durationMicroseconds": 1776,
                         "errorMessage": "Cannot generate efficient code for call to untyped JavaScript function",
                         "functionName": "onPressed",
                         "line": 258
@@ -142,7 +142,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 21,
-                        "durationMicroseconds": 126,
+                        "durationMicroseconds": 149,
                         "errorMessage": "",
                         "functionName": "onPressed",
                         "line": 258
@@ -150,7 +150,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 22,
-                        "durationMicroseconds": 1604,
+                        "durationMicroseconds": 1722,
                         "errorMessage": "Cannot generate efficient code for call to untyped JavaScript function",
                         "functionName": "onReleased",
                         "line": 262
@@ -158,7 +158,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 22,
-                        "durationMicroseconds": 128,
+                        "durationMicroseconds": 125,
                         "errorMessage": "",
                         "functionName": "onReleased",
                         "line": 262
@@ -166,7 +166,7 @@
                     {
                         "codegenSuccessfull": false,
                         "column": 21,
-                        "durationMicroseconds": 1522,
+                        "durationMicroseconds": 1729,
                         "errorMessage": "Cannot generate efficient code for call to untyped JavaScript function",
                         "functionName": "onClicked",
                         "line": 266
@@ -174,7 +174,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 21,
-                        "durationMicroseconds": 107,
+                        "durationMicroseconds": 132,
                         "errorMessage": "",
                         "functionName": "onClicked",
                         "line": 266
@@ -182,7 +182,7 @@
                     {
                         "codegenSuccessfull": true,
                         "column": 23,
-                        "durationMicroseconds": 123,
+                        "durationMicroseconds": 135,
                         "errorMessage": "",
                         "functionName": "fill",
                         "line": 255

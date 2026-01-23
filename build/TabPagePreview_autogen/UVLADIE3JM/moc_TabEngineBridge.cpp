@@ -56,7 +56,7 @@ static constexpr auto qt_meta_stringdata_ZN15TabEngineBridgeE = QtMocHelpers::st
     "tuningDeviationChanged",
     "calibrationGainsChanged",
     "calibrationParametersUpdated",
-    "binMagnitudesChanged",
+    "noteStateChanged",
     "binColorBatchChanged",
     "QVariantMap",
     "batchUpdates",
@@ -111,7 +111,7 @@ static constexpr auto qt_meta_stringdata_ZN15TabEngineBridgeE = QtMocHelpers::st
     "tuningModeEnabled",
     "tuningDeviation",
     "calibrationGains",
-    "binMagnitudeRevision",
+    "noteStateRevision",
     "heatmapEnabled"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
@@ -272,7 +272,7 @@ Q_CONSTINIT const QMetaObject TabEngineBridge::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<QVariantList, std::true_type>,
         // property 'calibrationGains'
         QtPrivate::TypeAndForceComplete<QVariantList, std::true_type>,
-        // property 'binMagnitudeRevision'
+        // property 'noteStateRevision'
         QtPrivate::TypeAndForceComplete<int, std::true_type>,
         // property 'heatmapEnabled'
         QtPrivate::TypeAndForceComplete<bool, std::true_type>,
@@ -311,7 +311,7 @@ Q_CONSTINIT const QMetaObject TabEngineBridge::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'calibrationParametersUpdated'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'binMagnitudesChanged'
+        // method 'noteStateChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'binColorBatchChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -408,7 +408,7 @@ void TabEngineBridge::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 10: _t->tuningDeviationChanged(); break;
         case 11: _t->calibrationGainsChanged(); break;
         case 12: _t->calibrationParametersUpdated(); break;
-        case 13: _t->binMagnitudesChanged(); break;
+        case 13: _t->noteStateChanged(); break;
         case 14: _t->binColorBatchChanged((*reinterpret_cast< std::add_pointer_t<QVariantMap>>(_a[1]))); break;
         case 15: _t->heatmapEnabledChanged(); break;
         case 16: _t->updateLiveMeters((*reinterpret_cast< std::add_pointer_t<std::array<float,6>>>(_a[1]))); break;
@@ -533,7 +533,7 @@ void TabEngineBridge::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         }
         {
             using _q_method_type = void (TabEngineBridge::*)();
-            if (_q_method_type _q_method = &TabEngineBridge::binMagnitudesChanged; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+            if (_q_method_type _q_method = &TabEngineBridge::noteStateChanged; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 13;
                 return;
             }
@@ -569,7 +569,7 @@ void TabEngineBridge::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 10: *reinterpret_cast< bool*>(_v) = _t->tuningModeEnabled(); break;
         case 11: *reinterpret_cast< QVariantList*>(_v) = _t->tuningDeviation(); break;
         case 12: *reinterpret_cast< QVariantList*>(_v) = _t->calibrationGains(); break;
-        case 13: *reinterpret_cast< int*>(_v) = _t->binMagnitudeRevision(); break;
+        case 13: *reinterpret_cast< int*>(_v) = _t->noteStateRevision(); break;
         case 14: *reinterpret_cast< bool*>(_v) = _t->heatmapEnabled(); break;
         default: break;
         }
@@ -704,7 +704,7 @@ void TabEngineBridge::calibrationParametersUpdated()
 }
 
 // SIGNAL 13
-void TabEngineBridge::binMagnitudesChanged()
+void TabEngineBridge::noteStateChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 13, nullptr);
 }

@@ -373,12 +373,6 @@
 			null
 		],
 		[
-			"/home/general/SignalAssistant/src/audio/CQTWorkerThread.h",
-			"Mu",
-			"MYYQ2Y7GGF/moc_CQTWorkerThread.cpp",
-			null
-		],
-		[
 			"/home/general/SignalAssistant/src/audio/CarlaClient.h",
 			"Mu",
 			"MYYQ2Y7GGF/moc_CarlaClient.cpp",
@@ -394,6 +388,12 @@
 			"/home/general/SignalAssistant/src/audio/JackMonitorSink.h",
 			"Mu",
 			"MYYQ2Y7GGF/moc_JackMonitorSink.cpp",
+			null
+		],
+		[
+			"/home/general/SignalAssistant/src/audio/YINWorkerThread.h",
+			"Mu",
+			"MYYQ2Y7GGF/moc_YINWorkerThread.cpp",
 			null
 		]
 	],
@@ -526,11 +526,6 @@
 		],
 		[ "/home/general/SignalAssistant/src/TabEngineBridge.cpp", "Mu", null ],
 		[ "/home/general/SignalAssistant/src/audio/AudioEngine.cpp", "Mu", null ],
-		[
-			"/home/general/SignalAssistant/src/audio/CQTWorkerThread.cpp",
-			"Mu",
-			null
-		],
 		[ "/home/general/SignalAssistant/src/audio/CarlaClient.cpp", "Mu", null ],
 		[
 			"/home/general/SignalAssistant/src/audio/HexJackClient.cpp",
@@ -539,6 +534,11 @@
 		],
 		[
 			"/home/general/SignalAssistant/src/audio/JackMonitorSink.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/general/SignalAssistant/src/audio/YINWorkerThread.cpp",
 			"Mu",
 			null
 		],
