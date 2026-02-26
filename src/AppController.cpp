@@ -4,12 +4,162 @@
 #include "audio/CarlaClient.h"
 #include "audio/HexJackClient.h"
 
+#include <QCoreApplication>
 #include <QDateTime>
 #include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QProcess>
+#include <QStandardPaths>
 #include <QtGlobal>
 #include <QTimer>
 #include <algorithm>
 #include <memory>
+
+#ifdef __linux__
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#endif
+
+// ---------------------------------------------------------------------------
+// Telemetry monitor helpers
+// ---------------------------------------------------------------------------
+namespace {
+
+// Resolve monitor.py: check env override first, then walk up from the
+// executable dir so it works both during development (build/bin/) and on
+// the Pi (~/SignalAssistant/bin/).
+static QString findMonitorScript() {
+    const QByteArray override = qgetenv("GUITARPI_MONITOR_SCRIPT");
+    if (!override.isEmpty())
+        return QString::fromUtf8(override);
+
+    const QDir appDir(QCoreApplication::applicationDirPath());
+    for (int levels = 1; levels <= 3; ++levels) {
+        QString candidate = appDir.absolutePath();
+        for (int i = 0; i < levels; ++i)
+            candidate = QFileInfo(candidate).path();
+        candidate = QDir(candidate).filePath(QStringLiteral("monitor.py"));
+        if (QFileInfo::exists(candidate))
+            return candidate;
+    }
+    return {};
+}
+
+// Returns the machine hostname (falls back to "localhost" on failure).
+static QString localHostname() {
+#ifdef __linux__
+    char buf[256] = {};
+    if (gethostname(buf, sizeof(buf) - 1) == 0 && buf[0] != '\0')
+        return QString::fromUtf8(buf);
+#endif
+    return QStringLiteral("localhost");
+}
+
+// Non-blocking TCP probe: returns true if something is listening on
+// 127.0.0.1:<port>.  Used to confirm Streamlit actually started.
+static bool tcpPortOpen(int port) {
+#ifdef __linux__
+    const int sock = ::socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) return false;
+    struct sockaddr_in addr {};
+    addr.sin_family      = AF_INET;
+    addr.sin_port        = htons(static_cast<uint16_t>(port));
+    addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    const bool open = (::connect(sock, reinterpret_cast<struct sockaddr*>(&addr),
+                                 sizeof(addr)) == 0);
+    ::close(sock);
+    return open;
+#else
+    Q_UNUSED(port)
+    return false;
+#endif
+}
+
+} // namespace
+
+// ---------------------------------------------------------------------------
+// Streamlit monitor launcher (member – runs as a child of AppController so
+// its stdout/stderr are forwarded to the parent terminal).
+// ---------------------------------------------------------------------------
+int AppController::tryLaunchMonitor()
+{
+    // --- Pre-flight 1: locate streamlit binary -----------------------------
+    const QString streamlitBin = QStandardPaths::findExecutable(QStringLiteral("streamlit"));
+    if (streamlitBin.isEmpty()) {
+        qCritical("\n"
+                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                  " RMS MONITOR: streamlit not found in PATH               \n"
+                  " Install it:  pip install streamlit                      \n"
+                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        return -1;
+    }
+
+    // --- Pre-flight 2: locate monitor.py -----------------------------------
+    const QString script = findMonitorScript();
+    if (script.isEmpty()) {
+        qCritical("\n"
+                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                  " RMS MONITOR: monitor.py not found                      \n"
+                  " Set override: GUITARPI_MONITOR_SCRIPT=/path/monitor.py \n"
+                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        return -1;
+    }
+
+    const QByteArray portEnv = qgetenv("PORT");
+    const QString portStr = portEnv.isEmpty() ? QStringLiteral("8501") : QString::fromUtf8(portEnv);
+    const int port = portStr.toInt();
+
+    QStringList args {
+        QStringLiteral("run"), script,
+        QStringLiteral("--server.port"),     portStr,
+        QStringLiteral("--server.address"),  QStringLiteral("0.0.0.0"),
+        QStringLiteral("--server.headless"), QStringLiteral("true")
+    };
+
+    // Prefer taskset -c 0 to pin alongside network IRQs
+    QString program;
+    if (!QStandardPaths::findExecutable(QStringLiteral("taskset")).isEmpty()) {
+        program = QStringLiteral("taskset");
+        args.prepend(QStringLiteral("streamlit"));
+        args.prepend(QStringLiteral("0"));
+        args.prepend(QStringLiteral("-c"));
+    } else {
+        program = QStringLiteral("streamlit");
+    }
+
+    // Use a child QProcess with forwarded channels so Streamlit's startup
+    // output (including the web UI URL) appears in this terminal.
+    m_streamlitProcess = new QProcess(this);
+    m_streamlitProcess->setProcessChannelMode(QProcess::ForwardedChannels);
+    m_streamlitProcess->start(program, args);
+
+    if (!m_streamlitProcess->waitForStarted(5000)) {
+        qCritical("\n"
+                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                  " RMS MONITOR: process failed to start (OS error)        \n"
+                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        m_streamlitProcess->deleteLater();
+        m_streamlitProcess = nullptr;
+        return -1;
+    }
+
+    const QString url = QStringLiteral("http://%1:%2").arg(localHostname(), portStr);
+    qInfo("\n"
+          "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+          " RMS MONITOR: starting… (confirm in ~5 s)              \n"
+          "   URL : %s                                            \n"
+          " streamlit: %s                                         \n"
+          " script   : %s                                         \n"
+          "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+          url.toUtf8().constData(),
+          streamlitBin.toUtf8().constData(),
+          script.toUtf8().constData());
+
+    return port;
+}
 
 AppController::AppController(const RunSessionOptions& options, QObject* parent)
     : QObject(parent)
@@ -100,6 +250,31 @@ void AppController::startAudio() {
             m_hexRunning = true;
             qInfo() << "AppController" << "hex" << "started"
                     << "sr" << m_requestedSampleRate << "buffer" << m_requestedBufferSize;
+            const int monitorPort = tryLaunchMonitor();
+            if (monitorPort > 0) {
+                // Confirm the HTTP server actually came up after 5 s.
+                // Runs on the Qt event loop — zero impact on the audio thread.
+                QTimer::singleShot(5000, this, [monitorPort, this]() {
+                    const QString host = localHostname();
+                    const QString url  = QStringLiteral("http://%1:%2").arg(host).arg(monitorPort);
+                    if (tcpPortOpen(monitorPort)) {
+                        qInfo("\n"
+                              "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                              " RMS MONITOR: ✅ server confirmed listening             \n"
+                              "   URL : %s                                             \n"
+                              "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                              url.toUtf8().constData());
+                    } else {
+                        qCritical("\n"
+                                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                                  " RMS MONITOR: ❌ server did NOT start on port %d       \n"
+                                  " Check: journalctl -u streamlit  or run manually:      \n"
+                                  "   streamlit run ~/SignalAssistant/monitor.py          \n"
+                                  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                                  monitorPort);
+                    }
+                });
+            }
         } else {
             qWarning("AppController: hex capture start failed");
         }

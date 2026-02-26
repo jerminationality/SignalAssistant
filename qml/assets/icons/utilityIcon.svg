@@ -1,13 +1,11 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M23.5 0.5V23.5H0.5V0.5H23.5Z" fill="#242424"/>
-<path d="M23.5 0.5V23.5H0.5V0.5H23.5Z" stroke="#282727"/>
-<path d="M10 8H14" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12 21V12" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12 8V3" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M17 16H21" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M19 12V3" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M19 21V16" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M3 14H7" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M5 10V3" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M5 21V14" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10 8H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 21V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 8V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17 16H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19 12V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19 21V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3 14H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5 10V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5 21V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -57,14 +57,6 @@ ApplicationWindow {
     }
 
     Component {
-        id: rigPageComponent
-        RigPage {
-            anchors.fill: parent
-            onShowTabCaptureRequested: pageLoader.sourceComponent = tabPageComponent
-        }
-    }
-
-    Component {
         id: tabPageComponent
         TabPage {
             anchors.fill: parent
@@ -153,7 +145,7 @@ ApplicationWindow {
     TuningPanel {
         id: tuningPanel
         x: 24
-        y: 24
+        y: 8
         width: root.width - 48
         z: 50
         controller: AppController ? AppController.tuningController : null

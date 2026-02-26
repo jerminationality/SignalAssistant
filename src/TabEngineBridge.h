@@ -53,6 +53,7 @@ public:
     Q_INVOKABLE void setRecording(bool value);
     Q_INVOKABLE void startCalibration();
     Q_INVOKABLE void recalibrateString(int stringIndex);
+    Q_INVOKABLE void cancelCalibration();
     Q_INVOKABLE void setTuningModeEnabled(bool enabled);
     Q_INVOKABLE void setCalibrationGain(int stringIndex, double gain);
     Q_INVOKABLE void updateCalibrationMultipliers();
@@ -95,16 +96,7 @@ signals:
     void calibrationGainsChanged();
 
 private:
-    struct LiveEvent {
-        int stringIndex = -1;
-        int fretIndex = -1;
-        float velocity = 0.f;
-        float startSec = 0.f;
-    };
-
     void syncFromEngine();
-    void scheduleLiveDispatch();
-    void dispatchLiveEvents();
     void resetCalibrationSteps();
     void setCalibrationStepState(int stringIdx, int state);
     void markSingleCalibrationPending(int stringIdx);
@@ -144,22 +136,18 @@ private:
     bool m_calibrationLoaded {false};
     int m_requestedCalibrationString {-1};
     bool m_partialCalibration {false};
+    float m_rawCalibrationNoiseFloor {0.f};  // raw RMS captured during noise phase
     // Indicates whether we are actively collecting a capture session; live detection
     // stays active regardless so overlays remain responsive when capture is off.
     std::atomic<bool> m_captureEnabled {false};
     std::atomic<bool> m_resetRequested {true};
-    std::atomic<int> m_lastDispatchedEvent {0};
     float m_liveTimeSec {0.f};
     float m_liveSampleRate {0.f};
     std::atomic<int> m_lastProcessBlockFrames {0};
 
     HexAudioClient* m_audioClient {nullptr};
-    std::mutex m_liveMutex;
-    std::vector<LiveEvent> m_livePending;
-    std::atomic<bool> m_dispatchQueued {false};
     std::array<float, 6> m_lastLiveTriggerSec {};
     std::array<int, 6> m_lastLiveFret {};
-    std::array<bool, 6> m_activeNoteDisplayed {};
     std::array<std::vector<float>, 6> m_captureBuffers;
     std::array<std::vector<float>, 6> m_pendingCaptureBuffers;
     std::array<std::vector<float>, 6> m_sessionWaveTap;

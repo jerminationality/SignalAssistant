@@ -1,5 +1,7 @@
 #pragma once
 #include <array>
+#include <functional>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -46,11 +48,17 @@ struct FrameFeatures {
   float tSec = 0.f;
   float pitchHz = -1.f;
   float pitchCents = 0.f;
+  float pitchConfidence = 0.f;   // aubio yinfast confidence [0..1]
   float onsetStrength = 0.f;
   float envelopeRms = 0.f;
+  float crestFactor = 0.f;       // peak / RMS ratio (high = tonal, low = noise-like)
 };
 
 class StringTracker; // fwd
+
+// Callback for note events: (isNoteOn, stringIdx, fret, velocity)
+// velocity is 0.0 for note-off events
+using NoteEventCallback = std::function<void(bool isNoteOn, int stringIdx, int fret, float velocity)>;
 
 class TabEngine {
 public:
@@ -64,19 +72,28 @@ public:
   const std::vector<NoteEvent>& events() const { return _events; }
   std::string toJson(bool onlyFinished=true) const;
   void importEvents(const std::vector<NoteEvent>& events);
-  void applyCalibration(const CalibrationProfile& profile);
   std::array<float, 6> tuningDeviationCents() const;
-  std::array<float, 6> calibrationGains() const;
-  void setCalibrationGain(int stringIndex, float gain);
   std::array<StringThresholds, 6> getThresholds() const;
+
+  // Set callback for real-time note events (called from audio thread)
+  void setNoteEventCallback(NoteEventCallback cb) { _noteCallback = std::move(cb); }
+  
+  // Called by StringTracker when note state changes
+  void onNoteOn(int stringIdx, int fret, float velocity);
+  void onNoteOff(int stringIdx, int fret);
+
+  // Thread-safety: get mutex for protecting _events access
+  std::mutex& getEventMutex() { return _eventMutex; }
 
 private:
   void fuseEvents(float t0); // TODO(Copilot): rules (hammer/pull/slide/bend/pm)
 
   Tuning _tuning;
   TrackerConfig _cfg;
-  CalibrationProfile _calibration;
   std::vector<NoteEvent> _events;
   std::vector<int> _activeIdx; // per-string active event index or -1
+  mutable std::mutex _eventMutex;  // protects concurrent access to _events from audio & UI threads
   std::vector<StringTracker*> _trkPtrs; // owned
+  NoteEventCallback _noteCallback;
+  std::array<bool, 6> _crosstalkMask {true, true, true, true, true, true}; // per-string masking state (hysteresis)
 };

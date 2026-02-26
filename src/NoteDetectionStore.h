@@ -11,20 +11,17 @@
 #include <vector>
 
 struct NoteDetectionParameterSetAtomic {
-    std::array<std::atomic<float>, 6> onsetThresholdScale;
-    std::array<std::atomic<float>, 6> baselineFloor;
-    std::array<std::atomic<float>, 6> envelopeFloor;
-    std::array<std::atomic<float>, 6> gateRatio;
-    std::array<std::atomic<float>, 6> sustainFloorScale;
-    std::array<std::atomic<float>, 6> retriggerGateScale;
-    std::array<std::atomic<float>, 6> pitchTolerance;
-    std::array<std::atomic<float>, 6> targetRms;
+    std::array<std::atomic<float>, 6> noiseGate;
+    std::array<std::atomic<float>, 6> attackSensitivity;
+    std::array<std::atomic<float>, 6> triggerGuardMs;
+    std::array<std::atomic<float>, 6> noteOnThreshold;
+    std::array<std::atomic<float>, 6> noteOffRatio;
     std::array<std::atomic<float>, 6> calibrationGainMultiplier;
-    std::array<std::atomic<float>, 6> lowCutMultiplier;
-    std::array<std::atomic<float>, 6> highCutMultiplier;
-    std::array<std::atomic<float>, 6> aubioThresholdScale;
-    std::array<std::atomic<float>, 6> onsetSilenceDb;
-    std::array<std::atomic<float>, 6> pitchSilenceDb;
+    std::array<std::atomic<float>, 6> repitchThreshold;
+    std::array<std::atomic<float>, 6> repitchConfirmFrames;
+    std::array<std::atomic<float>, 6> repitchMinConfidence;
+    std::array<std::atomic<float>, 6> pitchConfidence;
+    std::array<std::atomic<float>, 6> retriggerDeltaRatio;
 
     void store(const NoteDetectionParameterSet& source);
 };

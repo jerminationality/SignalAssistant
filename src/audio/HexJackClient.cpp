@@ -18,12 +18,64 @@
 #include <cmath>
 #include <string>
 
+#ifdef __linux__
+#include <pthread.h>
+#include <sched.h>
+#include <arpa/inet.h>
+#include <fcntl.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#endif
+
 namespace {
 constexpr int kTabCaptureBaseChannel = 3;
 constexpr const char* kHexClientName = "guitarpi_hex";
 constexpr const char* kDefaultJackCommand = "JACK_NO_AUDIO_RESERVATION=1 jackd -R -P70 -d alsa -d hw:2,0 -p128 -n3 -r48000 -s~";
 constexpr float kCalibrationCaptureSecPerString = 1.25f;
-constexpr float kCalibrationTriggerLevel = 0.008f;
+constexpr float kCalibrationTriggerLevel = 0.016f;
+
+// ---------------------------------------------------------------------------
+// UDP telemetry sender — always active.
+// Optionally set GUITARPI_TELEMETRY_HOST=<ip> to target a remote machine.
+// ---------------------------------------------------------------------------
+#ifdef __linux__
+class RmsTelemetrySender {
+public:
+    RmsTelemetrySender() {
+        m_sock = ::socket(AF_INET, SOCK_DGRAM, 0);
+        if (m_sock < 0) return;
+        // Non-blocking: drop packets silently when no receiver is present
+        int flags = ::fcntl(m_sock, F_GETFL, 0);
+        ::fcntl(m_sock, F_SETFL, flags | O_NONBLOCK);
+
+        const QByteArray host = qgetenv("GUITARPI_TELEMETRY_HOST");
+        const char* hostStr = host.isEmpty() ? "127.0.0.1" : host.constData();
+
+        m_addr = {};
+        m_addr.sin_family = AF_INET;
+        m_addr.sin_port   = htons(5005);
+        m_addr.sin_addr.s_addr = inet_addr(hostStr);
+
+        qInfo("RmsTelemetrySender: streaming RMS to %s:5005", hostStr);
+    }
+
+    ~RmsTelemetrySender() {
+        if (m_sock >= 0) ::close(m_sock);
+    }
+
+    void send(const float* rms6) const {
+        if (m_sock < 0) return;
+        ::sendto(m_sock, rms6, sizeof(float) * 6, 0,
+                 reinterpret_cast<const struct sockaddr*>(&m_addr), sizeof(m_addr));
+    }
+
+    bool valid() const { return m_sock >= 0; }
+
+private:
+    int m_sock {-1};
+    struct sockaddr_in m_addr {};
+};
+#endif // __linux__
 
 float computeLevel(const jack_default_audio_sample_t* buffer, jack_nframes_t frames) {
     if (!buffer || frames == 0)
@@ -34,7 +86,7 @@ float computeLevel(const jack_default_audio_sample_t* buffer, jack_nframes_t fra
         sum += sample * sample;
     }
     const double rms = std::sqrt(sum / static_cast<double>(frames));
-    return static_cast<float>(std::clamp(rms, 0.0, 1.0));
+    return static_cast<float>(rms);
 }
 
 } // namespace
@@ -186,6 +238,11 @@ void HexJackClient::requestCalibration(int stringIndex) {
     m_pendingCalibrationTarget.store(target, std::memory_order_release);
 }
 
+void HexJackClient::cancelCalibration() {
+    // -3 is the cancel sentinel — processed by the RT callback on the next cycle.
+    m_pendingCalibrationTarget.store(-3, std::memory_order_release);
+}
+
 void HexJackClient::setLiveMonitorEnabled(bool enabled) {
     m_monitorRequested.store(enabled, std::memory_order_release);
     if (enabled) {
@@ -259,6 +316,31 @@ void HexJackClient::pushMonitorBlock(const float* const channels[6], int frames)
 
 int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
     auto* self = static_cast<HexJackClient*>(arg);
+
+#ifdef __linux__
+    // Pin JACK audio thread to Core 3 with SCHED_RR priority 90 (once)
+    static bool pinned = false;
+    if (!pinned) {
+        pinned = true;
+        cpu_set_t cpuset;
+        CPU_ZERO(&cpuset);
+        CPU_SET(3, &cpuset);
+        pthread_t thisThread = pthread_self();
+        if (pthread_setaffinity_np(thisThread, sizeof(cpu_set_t), &cpuset) == 0) {
+            std::fprintf(stderr, "HexJackClient: audio thread pinned to Core 3\n");
+        } else {
+            std::fprintf(stderr, "HexJackClient: WARNING - failed to pin audio thread to Core 3\n");
+        }
+        struct sched_param param {};
+        param.sched_priority = 90;
+        if (pthread_setschedparam(thisThread, SCHED_RR, &param) == 0) {
+            std::fprintf(stderr, "HexJackClient: audio thread set to SCHED_RR priority 90\n");
+        } else {
+            std::fprintf(stderr, "HexJackClient: WARNING - failed to set SCHED_RR (need root or rtprio)\n");
+        }
+    }
+#endif
+
     std::array<const float*, 6> channels {};
 
     // Get raw JACK input buffers
@@ -321,8 +403,12 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
     }
 
     const int pendingTarget = self->m_pendingCalibrationTarget.exchange(-2, std::memory_order_acq_rel);
-    if (pendingTarget != -2)
+    if (pendingTarget == -3) {
+        // Cancel sentinel: silently abort active calibration, no results emitted.
+        self->m_calibrationState = CalibrationState{};
+    } else if (pendingTarget != -2) {
         self->handleCalibrationRequest(pendingTarget);
+    }
 
     // Compute raw levels for calibration (before gain applied)
     float rawLevelSnapshot[6] {};
@@ -384,6 +470,16 @@ void HexJackClient::emitMeters() {
     for (int s = 0; s < 6; ++s)
         snapshot[static_cast<std::size_t>(s)] = m_detectionMeters[static_cast<std::size_t>(s)].load();
     emit hexMetersSnapshot(snapshot);
+
+#ifdef __linux__
+    // UDP telemetry — fires once per MeterPump tick (~40 ms), ~25 packets/sec.
+    // Optionally set GUITARPI_TELEMETRY_HOST=<ip> for remote monitoring.
+    static const std::unique_ptr<RmsTelemetrySender> s_telemetry = []() {
+        return std::make_unique<RmsTelemetrySender>();
+    }();
+    if (s_telemetry)
+        s_telemetry->send(snapshot.data());
+#endif
 
     if (!m_meterLoggingEnabled)
         return;
@@ -554,7 +650,11 @@ void HexJackClient::handleCalibrationRequest(int targetString) {
     state.samples.fill(0);
     state.peakRms.fill(0.0f);
     QMetaObject::invokeMethod(this, [this]() { emit calibrationStarted(); }, Qt::QueuedConnection);
-    announceCalibrationStep(state.currentString, false);
+    // For partial cal, announce the target string immediately.
+    // For full cal, handleCalibrationStarted sets up the noise-phase UI;
+    // the audio thread auto-starts noise capture in advanceCalibration.
+    if (state.partial)
+        announceCalibrationStep(state.currentString, false);
 }
 
 void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) {
@@ -562,16 +662,55 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
     if (!state.active)
         return;
 
-    // currentString == -1 means noise floor capture phase
     const bool noisePhase = (state.currentString == -1);
-    
+
     if (!noisePhase && (state.currentString < 0 || state.currentString >= 6)) {
         state.active = false;
         announceCalibrationStep(-1, false);
         return;
     }
 
-    const int idx = noisePhase ? 0 : state.currentString;
+    // ── Noise floor capture: auto-start, dedicated counters ──────────
+    if (noisePhase) {
+        if (!state.capturing) {
+            state.capturing = true;
+            state.framesRemaining = state.captureFramesPerString;
+            state.noiseFloorSum = 0.0;
+            state.noiseFloorSamples = 0;
+            // UI already shows dark-grey circles via handleCalibrationStarted
+        }
+
+        // Accumulate average RMS across all 6 channels
+        double blockSum = 0.0;
+        for (int s = 0; s < 6; ++s)
+            blockSum += std::max(0.f, levels[s]);
+        state.noiseFloorSum += blockSum / 6.0;
+        state.noiseFloorSamples += 1;
+        state.framesRemaining -= static_cast<int>(nframes);
+
+        if (state.framesRemaining > 0)
+            return;
+
+        // Noise capture complete
+        state.capturing = false;
+        state.framesRemaining = 0;
+
+        if (state.noiseFloorSamples > 0) {
+            const float avgNoise = static_cast<float>(
+                state.noiseFloorSum / static_cast<double>(state.noiseFloorSamples));
+            QMetaObject::invokeMethod(this, [this, avgNoise]() {
+                emit calibrationBaselineFloorCaptured(avgNoise);
+            }, Qt::QueuedConnection);
+        }
+
+        state.sequenceIndex += 1;
+        state.currentString = state.sequence[static_cast<std::size_t>(state.sequenceIndex)];
+        announceCalibrationStep(state.currentString, false);
+        return;
+    }
+
+    // ── Per-string calibration ───────────────────────────────────────
+    const int idx = state.currentString;
     if (!state.capturing) {
         const float level = std::max(0.f, levels[idx]);
         if (level >= kCalibrationTriggerLevel) {
@@ -598,14 +737,6 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
     state.capturing = false;
     state.framesRemaining = 0;
     state.updated[slot] = true;
-
-    // Emit noise floor if we just finished the noise phase
-    if (noisePhase && state.samples[slot] > 0) {
-        const float avgNoise = static_cast<float>(state.sumRms[slot] / static_cast<double>(state.samples[slot]));
-        QMetaObject::invokeMethod(this, [this, avgNoise]() {
-            emit calibrationBaselineFloorCaptured(avgNoise);
-        }, Qt::QueuedConnection);
-    }
 
     state.sequenceIndex += 1;
 

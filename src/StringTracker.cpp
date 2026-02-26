@@ -14,11 +14,10 @@
 namespace {
 constexpr float kMinPitchHz = 60.0f;
 constexpr float kMaxPitchHz = 6000.0f;
-constexpr float kMinOnsetSeparationSec = 0.060f;
 constexpr int kPitchConfidenceFrames = 3;
 constexpr float kPitchConfidenceMaxCents = 28.0f;
 constexpr float kPitchConfidenceHzFloor = 0.8f;
-constexpr int kPitchHoldFrames = 4;
+constexpr int kPitchHoldFrames = 3;
 constexpr int kPitchHoldReleaseFrames = 10;
 constexpr float kEnvRiseAlpha = 0.15f;
 constexpr float kEnvFallAlpha = 0.03f;
@@ -26,6 +25,8 @@ constexpr float kEnvMin = 1.0e-5f;
 constexpr int kReleaseQuietFrameCount = 8;
 constexpr float kOpenBiasMinHoldSec = 0.36f;
 constexpr float kLowStringRetriggerGuardSec = 0.22f;
+constexpr float kAdaptiveGuardMaxExtraMs = 40.0f;  // Hard-coded limit for adaptive guard extension
+constexpr float kMinCrestFactorForOnset = 2.0f;    // Reject noise-like signals below this peak/RMS ratio (applied to raw signal)
 constexpr int kAubioDebugString = 0; // set to -1 to disable raw aubio logging
 constexpr float kCalibrationBaseTargetRms = 0.0018f;
 constexpr float kCalibrationMinTargetRms = 5.0e-5f;
@@ -52,18 +53,17 @@ void logTrackerSettingsOnce(const Tuning& tuning, const TrackerConfig& cfg) {
       const float highHz = std::min(6000.f, trackerparams::highCutMultiplier(s));
       logger.logf(
           "tracker-settings",
-          "string%d midi=%d lowCut=%.2fHz highCut=%.2fHz baseline=%.6f gateRatio=%.5f envFloor=%.6f sustainScale=%.3f retriggerScale=%.3f pitchTol=%.3f onsetScale=%.3f",
+          "string%d midi=%d lowCut=%.2fHz highCut=%.2fHz baseline=%.6f noteOn=%.6f noteOff=%.6f retriggerScale=%.3f pitchTol=%.3f guardMs=%.1f",
           s + 1,
           midi,
           lowHz,
           highHz,
           trackerparams::baselineFloor(s),
-          trackerparams::gateRatio(s),
-          trackerparams::envelopeFloor(s),
-          trackerparams::sustainFloorScale(s),
+          trackerparams::noteOnThreshold(s),
+          trackerparams::noteOffThreshold(s),
           trackerparams::retriggerGateScale(s),
           trackerparams::pitchTolerance(s),
-          trackerparams::onsetThresholdScale(s, 1.0f));
+          trackerparams::triggerGuardMs(s));
     }
   });
 }
@@ -84,16 +84,12 @@ float stringBaselineFloor(int s) {
   return trackerparams::baselineFloor(s);
 }
 
-float stringGateRatio(int s) {
-  return trackerparams::gateRatio(s);
+float stringNoteOnThreshold(int s) {
+  return trackerparams::noteOnThreshold(s);
 }
 
-float stringEnvelopeFloor(int s) {
-  return trackerparams::envelopeFloor(s);
-}
-
-float stringSustainFloorScale(int s) {
-  return trackerparams::sustainFloorScale(s);
+float stringNoteOffThreshold(int s) {
+  return trackerparams::noteOffThreshold(s);
 }
 
 float stringRetriggerGateScale(int s) {
@@ -111,6 +107,27 @@ float stringOnsetSilenceDb(int s) {
 float stringPitchSilenceDb(int s) {
   return trackerparams::pitchSilenceDb(s);
 }
+
+float stringTriggerGuardSec(int s) {
+  return trackerparams::triggerGuardMs(s) * 0.001f;
+}
+
+float stringRepitchThreshold(int s) {
+  return trackerparams::repitchThreshold(s);
+}
+
+int stringRepitchConfirmFrames(int s) {
+  return trackerparams::repitchConfirmFrames(s);
+}
+
+float stringRepitchMinConfidence(int s) {
+  return trackerparams::repitchMinConfidence(s);
+}
+
+float stringPitchConfidence(int s) {
+  return trackerparams::pitchConfidence(s);
+}
+
 
 inline float energyToVelocity(float rmsVal) {
   return std::clamp(rmsVal * 12.0f, 0.0f, 1.0f);
@@ -151,28 +168,11 @@ void StringTracker::BandpassFilter::configure(float sr, float lowCutHz, float hi
     return;
   }
 
-  // For low E string (index 0), use aggressive LPF to suppress harmonics
-  // For other strings, use standard bandpass
-  if (stringIdx == 0) {
-    // Aggressive 2nd-order Butterworth LPF at 150Hz for Low E
-    // This attenuates 246Hz (3rd harmonic) by ~10dB while preserving 82Hz fundamental better
-    const float cutoff = 150.0f;
-    const float ff = std::tan(float(M_PI) * cutoff / sr);
-    const float root2 = std::sqrt(2.0f);
-    const float denom = 1.0f + root2 * ff + ff * ff;
-    
-    // Lowpass only - no highpass for low E
-    hp_b0 = 1.0f; hp_b1 = 0.0f; hp_b2 = 0.0f;
-    hp_a1 = 0.0f; hp_a2 = 0.0f;
-    
-    // Aggressive lowpass coefficients
-    lp_b0 = (ff * ff) / denom;
-    lp_b1 = 2.0f * lp_b0;
-    lp_b2 = lp_b0;
-    lp_a1 = 2.0f * (ff * ff - 1.0f) / denom;
-    lp_a2 = (1.0f - root2 * ff + ff * ff) / denom;
-  } else {
-    // Standard bandpass for other strings
+  // For all strings, use standard bandpass with configurable cutoffs.
+  // Strings 0-2 (Low E, A, D): tight LPF ~450Hz to eliminate octave errors.
+  // Strings 3-5 (G, B, e): wider LPF ~1200-1500Hz.
+  {
+    // Standard bandpass for all strings
     const float low = std::max(1.f, lowCutHz);
     const float high = std::max(low + 10.f, highCutHz);
 
@@ -207,27 +207,17 @@ void StringTracker::BandpassFilter::configure(float sr, float lowCutHz, float hi
     }
   }
 
-  if (stringIdx == 0) {
-    std::fprintf(stderr, "Low E AGGRESSIVE LPF: 150Hz cutoff (sr=%.1f)\n", sr);
-    std::fprintf(stderr, "  LP: b0=%.6f b1=%.6f b2=%.6f a1=%.6f a2=%.6f\n",
-                 lp_b0, lp_b1, lp_b2, lp_a1, lp_a2);
-    SessionLogger::instance().logf("filter",
-                                   "Low E AGGRESSIVE LPF: 150Hz, LP[%.6f,%.6f,%.6f,%.6f,%.6f]",
-                                   lp_b0, lp_b1, lp_b2, lp_a1, lp_a2);
-  }
+  std::fprintf(stderr, "String %d bandpass: HPF=%.1fHz LPF=%.1fHz (sr=%.1f)\n", stringIdx + 1, lowCutHz, highCutHz, sr);
+  SessionLogger::instance().logf("filter",
+                                 "String %d bandpass: HPF=%.1fHz LPF=%.1fHz",
+                                 stringIdx + 1, lowCutHz, highCutHz);
 }
 
 float StringTracker::BandpassFilter::process(float x) {
-  // Highpass section (2nd-order biquad, Direct Form I) - bypassed for low E
-  float hp_out;
-  if (hp_b0 == 1.0f && hp_b1 == 0.0f) {
-    // Bypass highpass (low E string)
-    hp_out = x;
-  } else {
-    hp_out = hp_b0 * x + hp_b1 * hp_x1 + hp_b2 * hp_x2 - hp_a1 * hp_y1 - hp_a2 * hp_y2;
-    hp_x2 = hp_x1; hp_x1 = x;
-    hp_y2 = hp_y1; hp_y1 = hp_out;
-  }
+  // Highpass section (2nd-order biquad, Direct Form I)
+  const float hp_out = hp_b0 * x + hp_b1 * hp_x1 + hp_b2 * hp_x2 - hp_a1 * hp_y1 - hp_a2 * hp_y2;
+  hp_x2 = hp_x1; hp_x1 = x;
+  hp_y2 = hp_y1; hp_y1 = hp_out;
 
   // Lowpass section (2nd-order biquad, cascaded with HP output)
   const float lp_out = lp_b0 * hp_out + lp_b1 * lp_x1 + lp_b2 * lp_x2 
@@ -244,15 +234,15 @@ StringTracker::StringTracker(int stringIdx,
                              const Tuning& t,
                              const TrackerConfig& c,
                              std::vector<NoteEvent>& sharedEvents,
-                             std::vector<int>& activeIdx)
-: _s(stringIdx), _tuning(t), _cfg(c), _events(sharedEvents), _activeIdx(activeIdx)
+                             std::vector<int>& activeIdx,
+                             TabEngine& engine)
+: _s(stringIdx), _tuning(t), _cfg(c), _engine(engine), _events(sharedEvents), _activeIdx(activeIdx)
 {
   logTrackerSettingsOnce(_tuning, _cfg);
   _filter.reset();
   _filteredScratch.reserve(2048);
-  _calibrationAvgRms = 0.001f;
-  _calibrationValid = false;
-  refreshCalibrationTarget();
+  // Calibration is applied upstream (HexJackClient / RecordedSessionPlayer)
+  // before audio reaches StringTracker — no calibration state needed here.
 }
 
 StringTracker::~StringTracker() {
@@ -275,8 +265,8 @@ void StringTracker::configureProcessing(float sr, int blockSamples) {
   if (!paramsChanged && std::fabs(sr - _currentSr) < 1e-3f && desiredHop == _hopSamples)
     return;
 
-  if (paramsChanged)
-    refreshCalibrationTarget();
+  // paramsChanged is tracked for filter reconfiguration — no calibration
+  // state to refresh (calibration is applied upstream).
 
   _paramGeneration = storeGen;
   _currentSr = sr;
@@ -335,7 +325,7 @@ void StringTracker::configureProcessing(float sr, int blockSamples) {
   if (_aubioPitchOut) { del_fvec(_aubioPitchOut); _aubioPitchOut = nullptr; }
 
   _aubioOnset = new_aubio_onset("specflux", static_cast<uint_t>(_fftSize), static_cast<uint_t>(_hopSamples), static_cast<uint_t>(sr));
-  const char* pitchAlgo = (_s <= 1) ? "yin" : "yinfast";
+  const char* pitchAlgo = "yinfast";
   _aubioPitch = new_aubio_pitch(pitchAlgo, static_cast<uint_t>(_fftSize), static_cast<uint_t>(_hopSamples), static_cast<uint_t>(sr));
   _aubioIn = new_fvec(static_cast<uint_t>(_hopSamples));
   _aubioOnsetOut = new_fvec(1);
@@ -412,7 +402,7 @@ void StringTracker::updateFeatures(const float* samples, int n, float sr, float 
       
       _filteredScratch.resize(static_cast<std::size_t>(n));
       for (int i = 0; i < n; ++i) {
-        const float in = samples ? samples[i] * _calibrationGain : 0.f;
+        const float in = samples ? samples[i] : 0.f;
         _filteredScratch[static_cast<std::size_t>(i)] = _filter.process(in);
       }
     }
@@ -431,21 +421,43 @@ void StringTracker::updateFeatures(const float* samples, int n, float sr, float 
       const float* rawPtr = (samples && offset < n)
               ? samples + offset
               : nullptr;
-      f.envelopeRms = rms(framePtr, frameLen);
 
-      float framePeak = 0.f;
-      float rawPeak = 0.f;
+      // Consolidate RMS and peak calculation into single loop (filtered signal for RMS/envelope)
+      float sumSq = 0.0f;
+      float framePeak = 0.0f;
       if (framePtr) {
-        for (int i = 0; i < frameLen; ++i)
-          framePeak = std::max(framePeak, std::fabs(framePtr[i]));
+        for (int i = 0; i < frameLen; ++i) {
+          float val = framePtr[i];
+          float absVal = std::fabs(val);
+          if (absVal > framePeak) framePeak = absVal;
+          sumSq += val * val;
+        }
+        f.envelopeRms = std::sqrt(sumSq / frameLen);
+      } else {
+        f.envelopeRms = 0.f;
       }
-      if (rawPtr) {
-        for (int i = 0; i < frameLen; ++i)
-          rawPeak = std::max(rawPeak, std::fabs(rawPtr[i] * _calibrationGain));
+
+      // Crest factor from raw signal — the pluck transient gives a genuine spike
+      // on the raw waveform, making it reliable for distinguishing tonal attacks
+      // from sustained broadband noise. Filtered signal would be near-sinusoidal
+      // (crest ≈ √2), too low to gate against noise.
+      if (rawPtr && frameLen > 0) {
+        float rawPeak = 0.f;
+        float rawSumSq = 0.f;
+        for (int i = 0; i < frameLen; ++i) {
+          const float absVal = std::fabs(rawPtr[i]);
+          if (absVal > rawPeak) rawPeak = absVal;
+          rawSumSq += rawPtr[i] * rawPtr[i];
+        }
+        const float rawRms = std::sqrt(rawSumSq / frameLen);
+        f.crestFactor = (rawRms > 1e-8f) ? (rawPeak / rawRms) : 0.f;
+      } else {
+        f.crestFactor = 0.f;
       }
+
       const bool useFilteredForPitch = true;  // Use filtered signal for pitch detection
       const float onsetGain = framePeak > 1e-5f ? std::min(1.0f, 0.35f / framePeak) : 1.f;
-      const float pitchPeak = useFilteredForPitch ? framePeak : rawPeak;
+      const float pitchPeak = framePeak;  // Always use filtered peak (useFilteredForPitch == true)
       const float pitchGain = pitchPeak > 1e-5f ? std::min(1.0f, 0.45f / pitchPeak) : 1.f;
 
       float onsetMarker = 0.f;
@@ -455,7 +467,7 @@ void StringTracker::updateFeatures(const float* samples, int n, float sr, float 
         for (int i = 0; i < hop; ++i) {
           float directSample = 0.f;
           if (rawPtr && i < frameLen) {
-            directSample = rawPtr[i] * _calibrationGain;
+            directSample = rawPtr[i];
           } else if (framePtr && i < frameLen) {
             directSample = framePtr[i];
           }
@@ -471,7 +483,7 @@ void StringTracker::updateFeatures(const float* samples, int n, float sr, float 
             if (useFilteredForPitch && framePtr && i < frameLen)
               pitchSample = framePtr[i];
             else if (rawPtr && i < frameLen)
-              pitchSample = rawPtr[i] * _calibrationGain;
+              pitchSample = rawPtr[i];
             _aubioIn->data[i] = pitchSample * pitchGain;
           }
           
@@ -485,14 +497,13 @@ void StringTracker::updateFeatures(const float* samples, int n, float sr, float 
             }
             rms = std::sqrt(rms / hop);
             
-            // Simple FFT to check frequency content
-            std::vector<float> fft_in(hop);
-            for (int i = 0; i < hop; ++i) fft_in[i] = _aubioIn->data[i];
+            // Simple zero-crossing frequency check (no heap allocation)
+            // Use aubioIn->data directly instead of allocating a temporary vector
             
             // Count zero crossings as rough frequency indicator
             int zeroCrossings = 0;
             for (int i = 1; i < hop; ++i) {
-              if (fft_in[i-1] * fft_in[i] < 0) zeroCrossings++;
+              if (_aubioIn->data[i-1] * _aubioIn->data[i] < 0) zeroCrossings++;
             }
             // Estimated frequency from zero crossings: f = (crossings/2) * (sr/hop)
             float zcFreq = (zeroCrossings / 2.0f) * (sr / hop);
@@ -506,6 +517,7 @@ void StringTracker::updateFeatures(const float* samples, int n, float sr, float 
           
           aubio_pitch_do(_aubioPitch, _aubioIn, _aubioPitchOut);
           const float pitchHz = fvec_get_sample(_aubioPitchOut, 0);
+          const float pitchConf = aubio_pitch_get_confidence(_aubioPitch);
           
           // Debug logging for low E string pitch detection (MUTED)
           // if (_s == 0 && pitchHz > 0.f && pitchHz >= kMinPitchHz) {
@@ -514,8 +526,10 @@ void StringTracker::updateFeatures(const float* samples, int n, float sr, float 
           //                                  pitchHz, useFilteredForPitch ? 1 : 0, pitchPeak);
           // }
           
-          if (pitchHz > 0.f && pitchHz >= kMinPitchHz && pitchHz <= kMaxPitchHz)
+          if (pitchHz > 0.f && pitchHz >= kMinPitchHz && pitchHz <= kMaxPitchHz) {
             detectedPitchHz = pitchHz;
+            f.pitchConfidence = pitchConf;
+          }
         }
       }
 #endif
@@ -569,39 +583,27 @@ bool StringTracker::detectOnset(std::size_t frameIdx) {
   const float onsetStrength = frame.onsetStrength;
   const float envelope = frame.envelopeRms;
 
-  // Direct onset threshold - no scaling multiplication
+  // Direct thresholds - no complex calculations
   const float onsetThreshold = stringOnsetThreshold(_s, 1.0f);
   const float baseFloor = stringBaselineFloor(_s);
-  const float gateRatio = stringGateRatio(_s);
-  const float envelopeFloorParam = stringEnvelopeFloor(_s);
-  
-  // Static baseline - hard noise floor, discard everything below this
   const float baseline = std::max(baseFloor, kSliderMixEpsilon);
-  
-  // Static envFloor - musical threshold, must be >= baseline
-  const float envFloor = std::max(envelopeFloorParam, baseline);
-  
-  // Both gate and sustain based on envFloor (musical threshold)
-  const float gateThreshold = envFloor * gateRatio;
-  
-  // sustainFloor can dip below envFloor (scale < 1.0) but never below baseline
-  const float sustainFloorScale = stringSustainFloorScale(_s);
-  const float sustainFloor = std::max(baseline, envFloor * sustainFloorScale);
+  const float noteOnThreshold = stringNoteOnThreshold(_s);
+  const float noteOffThreshold = stringNoteOffThreshold(_s);
   
   // Calculate retriggerGate for UI display (also computed in noteShouldClose)
   const float retriggerGateScale = stringRetriggerGateScale(_s);
-  const float cappedPeak = std::min(_lastOnsetPeakRms, gateThreshold * 2.5f);
-  const float retriggerGate = std::max(sustainFloor, cappedPeak * 0.4f) * retriggerGateScale;
+  const float cappedPeak = std::min(_lastOnsetPeakRms, noteOnThreshold * 2.5f);
+  const float retriggerGate = std::max(noteOffThreshold, cappedPeak * 0.4f) * retriggerGateScale;
   
   // Store for UI display
-  _lastThresholds.onsetThreshold = onsetThreshold;  // Store computed threshold used in comparison
+  _lastThresholds.onsetThreshold = onsetThreshold;
   _lastThresholds.baseline = baseline;
-  _lastThresholds.gateThreshold = gateThreshold;
-  _lastThresholds.envFloor = envFloor;
-  _lastThresholds.sustainFloor = sustainFloor;
+  _lastThresholds.gateThreshold = noteOnThreshold;  // Note ON threshold
+  _lastThresholds.envFloor = noteOnThreshold;       // Not used anymore but keep for UI
+  _lastThresholds.sustainFloor = noteOffThreshold;   // Note OFF threshold
   _lastThresholds.retriggerGate = retriggerGate;
   
-  const float separationGuard = std::max(_currentHopSec, kMinOnsetSeparationSec);
+  const float separationGuard = std::max(_currentHopSec, stringTriggerGuardSec(_s));
   const float timeSinceLastOnset = (_lastOnsetSec >= 0.f) ? frame.tSec - _lastOnsetSec : -1.f;
   const float guardRemaining = (_lastOnsetSec >= 0.f) ? std::max(0.f, separationGuard - timeSinceLastOnset) : 0.f;
   float activeAge = -1.f;
@@ -612,11 +614,11 @@ bool StringTracker::detectOnset(std::size_t frameIdx) {
       : 0.f;
   const float sliderRetriggerScale = stringRetriggerGateScale(_s);
   const float onsetDelta = onsetStrength - onsetThreshold;
-  const float envDelta = envelope - gateThreshold;
+  const float envDelta = envelope - noteOnThreshold;
 
   auto& sessionLogger = SessionLogger::instance();
   const bool logString = sessionLogger.enabled() && (_s == kAubioDebugString);
-  const bool shouldLog = logString && (onsetStrength > onsetThreshold * 0.35f || envelope > gateThreshold * 0.7f);
+  const bool shouldLog = logString && (onsetStrength > onsetThreshold * 0.35f || envelope > noteOnThreshold * 0.7f);
   auto logDecision = [&](const char* tag) {
     (void)tag; // unused
     // if (!shouldLog)
@@ -652,11 +654,10 @@ bool StringTracker::detectOnset(std::size_t frameIdx) {
   // Check if a note is already active first - if so, exit early without logging PASS messages
   const bool noActiveNote = (_activeIdx[_s] < 0 || _activeIdx[_s] >= static_cast<int>(_events.size()));
   
-  if (!noActiveNote) {
-    // When a note is active, reject onset detection - note closure logic in noteShouldClose() will handle replucks
-    logDecision("active-note");
-    return false;
-  }
+  // Active notes no longer block onset detection.
+  // The trigger guard (separation guard) handles debouncing — if enough time
+  // has elapsed since the last onset, a new onset during an active note will
+  // close the old note and start a new one (retrigger).
 
   if (onsetStrength < onsetThreshold) {
     logDecision("below-threshold");
@@ -675,34 +676,35 @@ bool StringTracker::detectOnset(std::size_t frameIdx) {
     return false;
   }
 
-  if (envelope < gateThreshold) {
+  if (envelope < noteOnThreshold) {
     logDecision("below-gate");
     // if (noActiveNote) {
     //   const int estMidi = estimateMidi(frame);
     //   const int estFret = (estMidi >= 0) ? midiToFret(estMidi, _tuning.stringMidi[_s]) : -1;
     //   SessionLogger::instance().logf("detection", "     S%dF%d Rejected Note (onset=%.2f > thresh=%.2f; env=%.4f < gate=%.4f)", 
-    //                                  _s + 1, estFret, onsetStrength, onsetThreshold, envelope, gateThreshold);
+    //                                  _s + 1, estFret, onsetStrength, onsetThreshold, envelope, noteOnThreshold);
     // }
     return false;
   }
 
-  if (envelope < envFloor) {
-    logDecision("below-env-floor");
-    // if (noActiveNote) {
-    //   const int estMidi = estimateMidi(frame);
-    //   const int estFret = (estMidi >= 0) ? midiToFret(estMidi, _tuning.stringMidi[_s]) : -1;
-    //   SessionLogger::instance().logf("detection", "     S%dF%d Rejected Note (onset=%.2f > thresh=%.2f; env=%.4f < floor=%.4f)", 
-    //                                  _s + 1, estFret, onsetStrength, onsetThreshold, envelope, envFloor);
-    // }
+  // Crest factor gate: disabled for now — needs further tuning.
+  // if (frame.crestFactor > 0.f && frame.crestFactor < kMinCrestFactorForOnset) {
+  //   logDecision("low-crest");
+  //   SessionLogger::instance().logf("detection",
+  //                                  "       S%d Rejected Onset (crest=%.2f < min=%.2f)  RMS=%.4f",
+  //                                  _s + 1, frame.crestFactor, kMinCrestFactorForOnset, envelope);
+  //   return false;
+  // }
+
+  // Adaptive guard: check _retriggerBlockUntilSec (set on note-on with intensity-scaled duration)
+  if (_retriggerBlockUntilSec > 0.f && frame.tSec < _retriggerBlockUntilSec) {
+    logDecision("adaptive-guard");
     return false;
   }
 
+  // Fallback static separation guard (for first onset or if retrigger block wasn't set)
   if (_lastOnsetSec >= 0.f && (frame.tSec - _lastOnsetSec) < separationGuard) {
     logDecision("separation-guard");
-    // if (noActiveNote) {
-    //   SessionLogger::instance().logf("detection", "     S%d Rejected Onset (separation: %.3fs < guard=%.3fs)", 
-    //                                  _s + 1, frame.tSec - _lastOnsetSec, separationGuard);
-    // }
     return false;
   }
 
@@ -770,7 +772,7 @@ int StringTracker::applyLowStringBias(int midi, const FrameFeatures& frame) cons
     return midi;
   }
 
-  const float minEnv = std::max(stringEnvelopeFloor(_s) * 0.65f, _calibrationTargetRms * 0.55f);
+  const float minEnv = std::max(stringNoteOnThreshold(_s) * 0.65f, kCalibrationBaseTargetRms * 0.55f);
   const float minOnset = stringOnsetThreshold(_s, 1.0f) * 1.6f;
   if (frame.envelopeRms < minEnv || frame.onsetStrength < minOnset)
     return midi;
@@ -823,13 +825,11 @@ bool StringTracker::noteShouldClose(std::size_t frameIdx) const {
     return false;
   avgEnv /= static_cast<float>(count);
 
-  // Use same formulas as detectOnset
+  // Use direct note OFF threshold
   const float baseFloor = stringBaselineFloor(_s);
   const float baseline = std::max(baseFloor, kSliderMixEpsilon);
-  const float envelopeFloorParam = stringEnvelopeFloor(_s);
-  const float envFloor = std::max(envelopeFloorParam, baseline);
-  const float sustainScale = std::max(0.05f, stringSustainFloorScale(_s));
-  const float sustainFloor = std::max(baseline, envFloor * sustainScale);
+  const float noteOffThreshold = stringNoteOffThreshold(_s);
+  const float sustainFloor = std::max(baseline, noteOffThreshold);
   
   // Store for UI display
   _lastThresholds.sustainFloor = sustainFloor;
@@ -849,10 +849,9 @@ bool StringTracker::noteShouldClose(std::size_t frameIdx) const {
     if (_activeIdx[_s] >= 0 && _activeIdx[_s] < static_cast<int>(_events.size())) {
       const auto& active = _events[_activeIdx[_s]];
       SessionLogger::instance().logf("detection",
-                                     "     S%dF%d OFF (sharp-drop: %.4f -> %.4f | sustainFloor=%.4f)",
+                                     "[OFF]      S%d  F%-2d        RMS = %.4f  <  OFF = %.4f  (sharp-drop)",
                                      _s + 1,
                                      active.fret,
-                                     _lastOnsetPeakRms,
                                      avgEnv,
                                      sustainFloor);
     }
@@ -885,7 +884,7 @@ bool StringTracker::noteShouldClose(std::size_t frameIdx) const {
     if (_activeIdx[_s] >= 0 && _activeIdx[_s] < static_cast<int>(_events.size())) {
       const auto& active = _events[_activeIdx[_s]];
       SessionLogger::instance().logf("detection",
-                                     "     S%dF%d OFF (sustained-quiet: avgEnv=%.4f < floor=%.4f)",
+                                     "[OFF]      S%d  F%-2d        RMS = %.4f  <  OFF = %.4f  (sustained-quiet)",
                                      _s + 1,
                                      active.fret,
                                      avgEnv,
@@ -894,71 +893,8 @@ bool StringTracker::noteShouldClose(std::size_t frameIdx) const {
     return true;
   }
 
-  const float cappedPeak = sliderDominantMix(sustainFloor, _lastOnsetPeakRms, 6.0f);
-  float retriggerGate = std::max(sustainFloor, cappedPeak * 0.4f);
-  retriggerGate = std::max(envFloor * 0.3f, retriggerGate * stringRetriggerGateScale(_s));
-  retriggerGate = std::min(retriggerGate, sustainFloor * 6.0f);
-  
-  // Store for UI display
-  _lastThresholds.retriggerGate = retriggerGate;
-  bool allowRetriggerRelease = true;
-  // if (_s == 0 && _activeForcedOpen) {
-  //   const bool holdExpired = !(_activeHoldUntilSec > 0.f && frame.tSec < _activeHoldUntilSec);
-  //   const float peakRef = std::max(_lastOnsetPeakRms, 1.0e-6f);
-  //   const float envRatio = peakRef > 0.f ? avgEnv / peakRef : 0.f;
-  //   if (!holdExpired || envRatio > 0.55f) {
-  //     allowRetriggerRelease = false;
-  //   } else {
-  //     retriggerGate *= 1.8f;
-  //   }
-  // }
-  if (allowRetriggerRelease && frame.onsetStrength > retriggerGate && age >= _cfg.minNoteDurSec * 0.75f) {
-    // Temporal RMS comparison: compare recent RMS (last 5 hops) vs earlier RMS (hops 5-10 back)
-    // A real repluck shows rising energy; a fading note shows flat or decreasing energy
-    float recentRmsSum = 0.0f, earlierRmsSum = 0.0f;
-    int recentCount = 0, earlierCount = 0;
-    
-    for (int i = 0; i < 10 && i < static_cast<int>(_feat.size()); ++i) {
-      const float rms = _feat[i].envelopeRms;
-      if (i < 5) {
-        recentRmsSum += rms;
-        recentCount++;
-      } else {
-        earlierRmsSum += rms;
-        earlierCount++;
-      }
-    }
-    
-    const float recentAvg = (recentCount > 0) ? (recentRmsSum / recentCount) : 0.0f;
-    const float earlierAvg = (earlierCount > 0) ? (earlierRmsSum / earlierCount) : 0.0f;
-    const float rmsRatio = (earlierAvg > 1e-6f) ? (recentAvg / earlierAvg) : 0.0f;
-    const float rmsAbsFloor = std::max(sustainFloor * 1.2f, envFloor * 0.5f);
-    const bool rmsRising = (rmsRatio >= 1.4f) && (recentAvg > rmsAbsFloor);
-    
-    if (rmsRising) {
-      // SessionLogger::instance().logf("tracker",
-      //                                "[s%d] retrigger-accepted: onset=%.3f gate=%.3f ratio=%.2f (%.4f/%.4f) absFloor=%.4f age=%.3f",
-      //                                _s + 1,
-      //                                frame.onsetStrength,
-      //                                retriggerGate,
-      //                                rmsRatio,
-      //                                recentAvg,
-      //                                earlierAvg,
-      //                                rmsAbsFloor,
-      //                                age);
-      // Get active note fret for OFF message
-      if (_activeIdx[_s] >= 0 && _activeIdx[_s] < static_cast<int>(_events.size())) {
-        const auto& active = _events[_activeIdx[_s]];
-        SessionLogger::instance().logf("detection",
-                                       "     S%dF%d OFF (retrigger: onset=%.3f > gate=%.3f)",
-                                       _s + 1,
-                                       active.fret,
-                                       frame.onsetStrength,
-                                       retriggerGate);
-      }
-      return true;
-    }
-  }
+  // Retrigger detection removed — onset detector now handles replucks
+  // via trigger guard lockout in detectOnset() + processBlock().
 
   return false;
 }
@@ -1060,16 +996,8 @@ int StringTracker::applyPitchHold(int midi, bool stable) {
   return _pitchHoldMidi;
 }
 
-void StringTracker::refreshCalibrationTarget() {
-  // sliderScale is no longer used - calibration applied in HexJackClient
-  _calibrationTargetRms = std::clamp(kCalibrationBaseTargetRms,
-                                     kCalibrationMinTargetRms,
-                                     kCalibrationMaxTargetRms);
-
-  // Calibration gain is no longer calculated here - it's applied in HexJackClient
-  // This method is kept for logging purposes only
-  _calibrationGain = 1.0f;
-}
+// refreshCalibrationTarget() removed — calibration is applied upstream in
+// HexJackClient before any audio reaches the engine.
 
 float StringTracker::lastPitchHz() const {
   return _lastFeaturePitchHz;
@@ -1154,56 +1082,193 @@ void StringTracker::processBlock(const float* samples, int n, float sr, float t0
       auto& active = _events[_activeIdx[_s]];
       active.endSec = frame.tSec;
       active.velocity = std::max(active.velocity, energyToVelocity(frame.envelopeRms));
+      
+      // REPITCH: Detect discrete pitch transition during sustain (hammer-on / pull-off)
+      // Algorithm: compare current pitch to active note in cents. If the
+      // cents delta exceeds a dead-zone threshold (filtering vibrato/shimmer)
+      // and is sustained for confirmFrames with high aubio confidence
+      // AND onset strength is LOW (ruling out a repluck), fire repitch event.
+      if (heldMidi >= 0 && pitchStable) {
+        const int activeMidi = active.midi;
+        const int pitchDelta = std::abs(heldMidi - activeMidi);
+        const float thresholdCents = stringRepitchThreshold(_s) * 100.0f; // convert semitones → cents
+        const int   confirmFrames = stringRepitchConfirmFrames(_s);
+        const float minConfidence = stringRepitchMinConfidence(_s);
+
+        // Cents-based dead-zone: require a significant pitch shift before
+        // acknowledging a potential new note (filters vibrato/shimmer)
+        const float activeNoteHz = midiToHz(activeMidi);
+        const float pitchDiffCents = std::fabs(centsBetween(frame.pitchHz, activeNoteHz));
+
+        // Prevent repitch too soon after note onset or last repitch
+        const float triggerGuard = std::max(_currentHopSec, stringTriggerGuardSec(_s));
+        const float timeSinceOnset = frame.tSec - active.startSec;
+        const float timeSinceLastRepitch = (_lastRepitchSec > 0.f)
+            ? (frame.tSec - _lastRepitchSec) : 999.f;
+
+        if (pitchDiffCents >= thresholdCents && pitchDelta >= 1 && pitchDelta < 12
+            && timeSinceOnset > triggerGuard
+            && timeSinceLastRepitch > triggerGuard) {
+          // Candidate matches previous candidate — increment counter
+          if (_repitchCandidateMidi == heldMidi) {
+            _repitchStabilityCounter++;
+            _repitchLastConfidence = std::min(_repitchLastConfidence, frame.pitchConfidence);
+            _repitchMaxOnsetSeen = std::max(_repitchMaxOnsetSeen, frame.onsetStrength);
+          } else {
+            _repitchCandidateMidi = heldMidi;
+            _repitchStabilityCounter = 1;
+            _repitchLastConfidence = frame.pitchConfidence;
+            _repitchMaxOnsetSeen = frame.onsetStrength;
+          }
+
+          // Check stability + confidence + onset pre-flight
+          if (_repitchStabilityCounter >= confirmFrames
+              && _repitchLastConfidence >= minConfidence) {
+            // Onset pre-flight: reject if onset was elevated at ANY point during
+            // the confirm window, not just the current frame. Fret noise often
+            // spikes onset briefly at the start and then decays — checking only
+            // the current frame misses this. Also require the envelope is still
+            // above noteOnThreshold to prevent harmonics firing during deep decay.
+            const float onsetThreshold = stringOnsetThreshold(_s, 1.0f);
+            const bool onsetClean = (_repitchMaxOnsetSeen < onsetThreshold)
+                                    && (frame.onsetStrength < onsetThreshold);
+            const bool sustainedEnough = (frame.envelopeRms >= stringNoteOnThreshold(_s));
+            if (onsetClean && sustainedEnough) {
+              const int oldFret = active.fret;
+              const int newFret = midiToFret(heldMidi, _tuning.stringMidi[_s]);
+
+              if (newFret >= 0 && newFret <= 24) {
+                // Notify engine of note-off for old note
+                _engine.onNoteOff(_s, oldFret);
+
+                // Close the current note
+                active.endSec = frame.tSec;
+
+                // Create new event inheriting velocity
+                NoteEvent ev;
+                ev.stringIdx = _s;
+                ev.fret = newFret;
+                ev.midi = heldMidi;
+                ev.startSec = frame.tSec;
+                ev.endSec = frame.tSec;
+                ev.velocity = active.velocity;  // inherit velocity from parent note
+                {
+                  std::lock_guard<std::mutex> lock(_engine.getEventMutex());
+                  _events.push_back(ev);
+                  _activeIdx[_s] = static_cast<int>(_events.size() - 1);
+                }
+
+                // Notify engine of note-on for new note
+                _engine.onNoteOn(_s, newFret, ev.velocity);
+
+                // Reset trigger guard so retrigger won't fire immediately
+                _lastOnsetSec = frame.tSec;
+                _lastRepitchSec = frame.tSec;
+
+                SessionLogger::instance().logf("detection",
+                                               "[REPITCH]  S%d  F%-2d->F%-2d   Pitch = %.2f Hz  |  Conf = %.2f  |  Delta = %d st",
+                                               _s + 1, oldFret, newFret,
+                                               frame.pitchHz, _repitchLastConfidence, pitchDelta);
+
+                _repitchCandidateMidi = -1;
+                _repitchStabilityCounter = 0;
+                _repitchLastConfidence = 0.f;
+                _repitchMaxOnsetSeen = 0.f;
+              }
+            } else {
+              // Blocked by onset spike during confirm window or envelope too low
+              SessionLogger::instance().logf("detection",
+                                             "[REPITCH-BLOCK] S%d F%-2d->%d  onsetClean=%d(maxOnset=%.3f) sustained=%d(rms=%.4f>=%.4f)",
+                                             _s + 1, active.fret, heldMidi,
+                                             onsetClean ? 1 : 0, _repitchMaxOnsetSeen,
+                                             sustainedEnough ? 1 : 0,
+                                             frame.envelopeRms, stringNoteOnThreshold(_s));
+              // Reset so noise doesn't keep accumulating a stale candidate
+              _repitchCandidateMidi = -1;
+              _repitchStabilityCounter = 0;
+              _repitchLastConfidence = 0.f;
+              _repitchMaxOnsetSeen = 0.f;
+            }
+          }
+        } else {
+          // Pitch matches active note or delta out of range — reset candidate
+          _repitchCandidateMidi = -1;
+          _repitchStabilityCounter = 0;
+          _repitchLastConfidence = 0.f;
+          _repitchMaxOnsetSeen = 0.f;
+        }
+      } else {
+        // No stable pitch — reset repitch candidate
+        _repitchCandidateMidi = -1;
+        _repitchStabilityCounter = 0;
+        _repitchLastConfidence = 0.f;
+        _repitchMaxOnsetSeen = 0.f;
+      }
     }
 
+    // ── Pitch search window removed ──
+
     if (detectOnset(idx)) {
+      // Close active note if one exists (retrigger)
+      bool wasRetrigger = false;
       if (_activeIdx[_s] >= 0 && _activeIdx[_s] < static_cast<int>(_events.size())) {
+        wasRetrigger = true;
+        // Delta check: retrigger requires energy to be rising
+        const float energyDiff = frame.envelopeRms - _prevFrameRms;
+        const float retrigDeltaSens = 0.05f;  // Base delta sensitivity (filters 0.01-0.03 wobble)
+        // Relative delta: require jump to be at least retriggerDeltaRatio × previous energy,
+        // but never lower than the base absolute sensitivity floor.
+        const float deltaRatio = trackerparams::retriggerDeltaRatio(_s);
+        const float minDeltaRequired = std::max(retrigDeltaSens, _prevFrameRms * deltaRatio);
+
+        // Decay check: require the note to have genuinely dipped before retriggering.
+        // This prevents sustain wobble from firing retriggers without a real re-pluck.
+        // The signal must have fallen to ≤55% of onset peak before we trust a rising delta.
+        constexpr float kDecayRatioRequired = 0.55f;
+        const bool noteDecayed = (_minRmsAfterOnset < _lastOnsetPeakRms * kDecayRatioRequired);
+
+        if (energyDiff < minDeltaRequired || !noteDecayed) {
+          // Energy not rising enough, or note never decayed — suppress retrigger (sustain suppression)
+          _onsetLatched = false;
+          _prevFrameRms = frame.envelopeRms;
+          continue;
+        }
+
         auto& active = _events[_activeIdx[_s]];
         active.endSec = std::max(frame.tSec, active.startSec + _cfg.minNoteDurSec);
-        // SessionLogger::instance().logf("tracker",
-        //                                "[s%d] note-ended (new onset - should not happen!) t=%.3f fret=%d dur=%.3f",
-        //                                _s + 1,
-        //                                active.endSec,
-        //                                active.fret,
-        //                                active.endSec - active.startSec);
+
+        // Calculate trigger guard details for logging
+        const float separationGuard = std::max(_currentHopSec, stringTriggerGuardSec(_s));
+        const float timeSinceLastOnset = (_lastOnsetSec >= 0.f) ? frame.tSec - _lastOnsetSec : 0.f;
+        const float delayMs = timeSinceLastOnset * 1000.f;
+        const float guardMs = separationGuard * 1000.f;
+
         SessionLogger::instance().logf("detection",
-                                       "     S%dF%d OFF (ERROR: new-onset detected despite active-note rejection)",
-                                       _s + 1,
-                                       active.fret);
+                                       "[RETRIG]   S%d  F%-2d        Delay = %.1fms  >  Guard = %.1fms   |   RMS = %.4f > ENV = %.4f  Delta = %.4f",
+                                       _s + 1, active.fret, delayMs, guardMs, frame.envelopeRms, _lastThresholds.gateThreshold, energyDiff);
+        _engine.onNoteOff(_s, active.fret);
+
         _activeIdx[_s] = -1;
         _releaseQuietFrames = 0;
         _activeHoldUntilSec = 0.f;
         _retriggerBlockUntilSec = 0.f;
         _activeForcedOpen = false;
-      }
 
-      if (_s == 0) {
-        const int testFret = (heldMidi >= 0) ? midiToFret(heldMidi, _tuning.stringMidi[_s]) : -1;
-        if (testFret >= 0 && testFret <= 3) {
-          SessionLogger::instance().logf("detection",
-                                         "LOW E ONSET: fret=%d pitch=%.2fHz midi=%d stable=%d env=%.4f onset=%.3f",
-                                         testFret, frame.pitchHz, heldMidi, pitchStable ? 1 : 0, 
-                                         frame.envelopeRms, frame.onsetStrength);
-        }
+        // Reset repitch state
+        _repitchCandidateMidi = -1;
+        _repitchStabilityCounter = 0;
+        _repitchLastConfidence = 0.f;
+        _repitchMaxOnsetSeen = 0.f;
       }
 
       if (frame.pitchHz <= 0.f || heldMidi < 0) {
         _onsetLatched = false;
-        if (_s == 0) {
-          SessionLogger::instance().logf("detection",
-                                         "LOW E REJECT: pitch=%.2f midi=%d (no pitch or midi)",
-                                         frame.pitchHz, heldMidi);
-        }
         continue;
       }
 
-      if (!pitchStable) {
+      // Accept if pitch is stable (3-frame consistency) OR aubio confidence meets threshold
+      if (!pitchStable && frame.pitchConfidence < stringPitchConfidence(_s)) {
         _onsetLatched = false;
-        if (_s == 0) {
-          SessionLogger::instance().logf("detection",
-                                         "LOW E REJECT: pitch unstable (%.2fHz midi=%d)",
-                                         frame.pitchHz, heldMidi);
-        }
         continue;
       }
 
@@ -1211,12 +1276,12 @@ void StringTracker::processBlock(const float* samples, int n, float sr, float t0
       int midi = heldMidi;
       if (midi >= 0) {
         const int fret = midiToFret(midi, _tuning.stringMidi[_s]);
-        if (_s == 0 && fret >= 0 && fret <= 3) {
-          const float expectedHz = midiToHz(_tuning.stringMidi[_s] + fret);
-          SessionLogger::instance().logf("detection",
-                                         "LOW E ACCEPTED: detectedHz=%.2f expectedHz=%.2f midi=%d(should be %d) fret=%d",
-                                         frame.pitchHz, expectedHz, midi, _tuning.stringMidi[_s] + fret, fret);
-        }
+        // if (_s == 0 && fret >= 0 && fret <= 3) {
+        //   const float expectedHz = midiToHz(_tuning.stringMidi[_s] + fret);
+        //   SessionLogger::instance().logf("detection",
+        //                                  "LOW E ACCEPTED: detectedHz=%.2f expectedHz=%.2f midi=%d(should be %d) fret=%d",
+        //                                  frame.pitchHz, expectedHz, midi, _tuning.stringMidi[_s] + fret, fret);
+        // }
         if (fret >= 0 && fret <= 24) {
           const float velocity = energyToVelocity(frame.envelopeRms);
           NoteEvent ev;
@@ -1226,43 +1291,38 @@ void StringTracker::processBlock(const float* samples, int n, float sr, float t0
           ev.startSec = frame.tSec;
           ev.endSec = frame.tSec;
           ev.velocity = velocity;
-          _events.push_back(ev);
-          _activeIdx[_s] = static_cast<int>(_events.size() - 1);
+          {
+            std::lock_guard<std::mutex> lock(_engine.getEventMutex());
+            _events.push_back(ev);
+            _activeIdx[_s] = static_cast<int>(_events.size() - 1);
+          }
           _lastOnsetPeakRms = frame.envelopeRms;
           _lastOnsetSec = frame.tSec;
+          _minRmsAfterOnset = frame.envelopeRms;  // Reset decay tracker
           _releaseQuietFrames = 0;
           _activeHoldUntilSec = 0.f;
-          _retriggerBlockUntilSec = 0.f;
           _activeForcedOpen = false;
-          // if (_s == 0) {
-          //   _retriggerBlockUntilSec = frame.tSec + kLowStringRetriggerGuardSec;
-          //   const bool forcedOpenBias = (midi == _tuning.stringMidi[_s] && midi != beforeBiasMidi);
-          //   if (forcedOpenBias) {
-          //     _activeHoldUntilSec = frame.tSec + kOpenBiasMinHoldSec;
-          //     _activeForcedOpen = true;
-          //     SessionLogger::instance().logf("tracker",
-          //                                    "[s%d] open-hold t=%.3f hold=%.3fs",
-          //                                    _s + 1,
-          //                                    frame.tSec,
-          //                                    kOpenBiasMinHoldSec);
-          //   }
-          // }
-          // SessionLogger::instance().logf("tracker",
-          //                                "[s%d] note-start t=%.3f fret=%d midi=%d vel=%.2f env=%.5f",
-          //                                _s + 1,
-          //                                ev.startSec,
-          //                                ev.fret,
-          //                                ev.midi,
-          //                                ev.velocity,
-          //                                frame.envelopeRms);
-          SessionLogger::instance().logf("detection",
-                                         "     S%dF%d ON (onset=%.3f > thresh=%.3f | env=%.4f > gate=%.4f)",
-                                         _s + 1,
-                                         ev.fret,
-                                         frame.onsetStrength,
-                                         _lastThresholds.onsetThreshold,
-                                         frame.envelopeRms,
-                                         _lastThresholds.gateThreshold);
+
+          // Adaptive guard: scale refractory period based on onset intensity
+          {
+            const float baseGuardMs = trackerparams::triggerGuardMs(_s);
+            const float adaptiveAddonMs = std::min(kAdaptiveGuardMaxExtraMs, frame.envelopeRms * 100.0f);
+            const float finalGuardSec = (baseGuardMs + adaptiveAddonMs) / 1000.0f;
+            _retriggerBlockUntilSec = frame.tSec + finalGuardSec;
+          }
+          
+          // Notify engine of note-on event
+          _engine.onNoteOn(_s, fret, velocity);
+
+          // Only log [ON] for fresh onsets; retriggers already log [RETRIG]
+          if (!wasRetrigger) {
+            SessionLogger::instance().logf("detection",
+                                           "[ON]       S%d  F%-2d        RMS = %.4f  >  ENV = %.4f",
+                                           _s + 1,
+                                           ev.fret,
+                                           frame.envelopeRms,
+                                           _lastThresholds.gateThreshold);
+          }
         }
       } else {
         _onsetLatched = false;
@@ -1270,17 +1330,18 @@ void StringTracker::processBlock(const float* samples, int n, float sr, float t0
       continue;
     }
 
+    _prevFrameRms = frame.envelopeRms;
+    // Track minimum RMS since last onset for decay-based retrigger suppression
+    if (_activeIdx[_s] >= 0)
+      _minRmsAfterOnset = std::min(_minRmsAfterOnset, frame.envelopeRms);
+
     if (noteShouldClose(idx)) {
       if (_activeIdx[_s] >= 0 && _activeIdx[_s] < static_cast<int>(_events.size())) {
         auto& active = _events[_activeIdx[_s]];
         active.endSec = std::max(frame.tSec, active.startSec + _cfg.minNoteDurSec);
-        // SessionLogger::instance().logf("tracker",
-        //                                "[s%d] note-ended t=%.3f fret=%d dur=%.3f",
-        //                                _s + 1,
-        //                                active.endSec,
-        //                                active.fret,
-        //                                active.endSec - active.startSec);
-        // S%dF%d OFF message already logged in noteShouldClose() with type details
+        
+        // Notify engine of note-off event
+        _engine.onNoteOff(_s, active.fret);
       }
       _activeIdx[_s] = -1;
       _releaseQuietFrames = 0;
@@ -1317,7 +1378,14 @@ void StringTracker::resetState() {
   _activeHoldUntilSec = 0.f;
   _retriggerBlockUntilSec = 0.f;
   _activeForcedOpen = false;
+  _prevFrameRms = 0.f;
+  _minRmsAfterOnset = 0.f;
   _lastFeaturePitchHz = -1.f;
+  _lastRepitchSec = -1.f;
+  _repitchCandidateMidi = -1;
+  _repitchStabilityCounter = 0;
+  _repitchLastConfidence = 0.f;
+  _repitchMaxOnsetSeen = 0.f;
 #ifdef HAVE_AUBIO
   if (_aubioIn) {
     for (uint_t i = 0; i < _aubioIn->length; ++i)
@@ -1326,28 +1394,5 @@ void StringTracker::resetState() {
 #endif
 }
 
-void StringTracker::setCalibration(const CalibrationProfile& profile) {
-  if (!profile.valid) {
-    _calibrationValid = false;
-    _calibrationAvgRms = 0.001f;
-    refreshCalibrationTarget();
-    // SessionLogger::instance().logf("tracker",
-    //                                "[s%d] calibration reset target=%.5f gain=%.3f",
-    //                                _s + 1,
-    //                                _calibrationTargetRms,
-    //                                _calibrationGain);
-    return;
-  }
-
-  const std::size_t idx = static_cast<std::size_t>(_s);
-  _calibrationAvgRms = std::max(profile.avgRms[idx], 1.0e-4f);
-  _calibrationValid = true;
-  refreshCalibrationTarget();
-  _envAdaptiveRms = std::max(_envAdaptiveRms, _calibrationTargetRms);
-  // SessionLogger::instance().logf("tracker",
-  //                                "[s%d] calibration avg=%.5f target=%.5f gain=%.3f",
-  //                                _s + 1,
-  //                                _calibrationAvgRms,
-  //                                _calibrationTargetRms,
-  //                                _calibrationGain);
-}
+// setCalibration() removed — calibration gain is applied upstream before
+// audio reaches the engine.  The engine operates solely on calibrated samples.

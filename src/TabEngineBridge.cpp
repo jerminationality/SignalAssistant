@@ -2,6 +2,7 @@
 
 #include "SessionLogger.h"
 #include "NoteDetectionStore.h"
+#include "StringTrackerParams.h"
 #include "audio/HexAudioClient.h"
 #include "audio/HexJackClient.h"
 #include <QJsonDocument>
@@ -61,6 +62,27 @@ TabEngineBridge::TabEngineBridge(QObject* parent)
         stringThresholds["retriggerGate"] = 0.0;
         m_thresholds.append(stringThresholds);
     }
+    
+    // Register callback for direct note events from StringTracker
+    m_engine->setNoteEventCallback([this](bool isNoteOn, int stringIdx, int fret, float velocity) {
+        if (stringIdx < 0 || stringIdx >= 6 || fret < 0 || fret > 24)
+            return;
+        
+        if (isNoteOn) {
+            QMetaObject::invokeMethod(this,
+                [this, stringIdx, fret, velocity]() {
+                    emit liveNoteTriggered(stringIdx, fret, velocity);
+                },
+                Qt::QueuedConnection);
+        } else {
+            QMetaObject::invokeMethod(this,
+                [this, stringIdx, fret]() {
+                    emit liveNoteEnded(stringIdx, fret);
+                },
+                Qt::QueuedConnection);
+        }
+    });
+    
     resetCalibrationSteps();
     m_calibrationFadeTimer = new QTimer(this);
     m_calibrationFadeTimer->setSingleShot(true);
@@ -143,8 +165,11 @@ void TabEngineBridge::handleCalibrationStarted() {
     if (m_partialCalibration && m_requestedCalibrationString >= 0) {
         const QString label = calibrationStringName(m_requestedCalibrationString);
         m_calibrationMessage = QStringLiteral("Pluck %1 (single string)").arg(label);
-    } else if (m_activeCalibrationString < 0) {
-        m_calibrationMessage = QStringLiteral("Calibrating... follow string prompts");
+    } else {
+        // Full calibration: show dark-grey circles during noise capture
+        m_calibrationMessage = QStringLiteral("Capturing noise floor...");
+        for (int s = 0; s < 6; ++s)
+            setCalibrationStepState(s, 4);
     }
     emit calibrationStatusChanged();
 }
@@ -177,27 +202,41 @@ void TabEngineBridge::handleCalibrationStepChanged(int stringIndex, bool capturi
         return;
     }
 
+    // stringIndex == -1 means either:
+    //   (a) the noise-floor phase just started/completed (m_activeCalibrationString still -1), or
+    //   (b) the full sequence has finished (comes just before calibrationFinished signal).
+    // In both cases we only need to tidy up the last active string — handleCalibrationFinished
+    // will do the final state promotion for all strings.
     if (stringIndex < 0) {
         if (m_activeCalibrationString >= 0)
             setCalibrationStepState(m_activeCalibrationString, 3);
-        for (int s = 0; s < 6; ++s)
-            setCalibrationStepState(s, std::max(m_calibrationStepStates[static_cast<std::size_t>(s)], 3));
-        m_activeCalibrationString = -1;
         m_activeCalibrationCapturing = false;
+        // Don't touch strings that haven't been reached yet (state 0 stays dark).
         m_calibrationMessage = QStringLiteral("Finalizing calibration...");
         emit calibrationStatusChanged();
         return;
     }
 
+    // Transitioning to a new string.
     if (stringIndex != m_activeCalibrationString) {
-        if (m_activeCalibrationString >= 0)
-            setCalibrationStepState(m_activeCalibrationString, 3);
-        for (int s = 0; s < stringIndex; ++s)
-            setCalibrationStepState(s, 3);
-        for (int s = stringIndex + 1; s < 6; ++s) {
-            const std::size_t slot = static_cast<std::size_t>(s);
-            if (m_calibrationStepStates[slot] > 0 && m_calibrationStepStates[slot] < 3)
+        if (m_activeCalibrationString < 0) {
+            // Coming from noise phase — reset all indicators to default
+            for (int s = 0; s < 6; ++s)
                 setCalibrationStepState(s, 0);
+        } else {
+            // Mark the previously active string as done.
+            setCalibrationStepState(m_activeCalibrationString, 3);
+            // Also ensure all strings before this one are marked done in case of gaps.
+            for (int s = 0; s < stringIndex; ++s) {
+                if (m_calibrationStepStates[static_cast<std::size_t>(s)] > 0)
+                    setCalibrationStepState(s, 3);
+            }
+            // Strings after the current one should be reset to pending (0 / dark)
+            for (int s = stringIndex + 1; s < 6; ++s) {
+                const std::size_t slot = static_cast<std::size_t>(s);
+                if (m_calibrationStepStates[slot] > 0 && m_calibrationStepStates[slot] < 3)
+                    setCalibrationStepState(s, 0);
+            }
         }
     }
 
@@ -216,8 +255,13 @@ void TabEngineBridge::handleCalibrationStepChanged(int stringIndex, bool capturi
 
 void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& averages,
                                                 const std::array<float, 6>& peaks) {
-    for (int s = 0; s < 6; ++s)
-        setCalibrationStepState(s, std::max(m_calibrationStepStates[static_cast<std::size_t>(s)], 3));
+    // Only mark strings that were actually captured (avg >= 0) as done (green).
+    // Strings that were never reached keep their current state (dark/0).
+    for (int s = 0; s < 6; ++s) {
+        const float avg = averages[static_cast<std::size_t>(s)];
+        if (avg >= 0.f)
+            setCalibrationStepState(s, 3);
+    }
     m_activeCalibrationString = -1;
     m_activeCalibrationCapturing = false;
     m_calibrationRunning = false;
@@ -229,7 +273,8 @@ void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& aver
             m_calibrationProfile.avgRms[static_cast<std::size_t>(s)] = avg;
             m_calibrationProfile.peakRms[static_cast<std::size_t>(s)] = peak;
             // Calculate multiplier: targetRMS / avgInputRMS
-            const float targetRms = NoteDetectionStore::instance().currentValueFromKey("targetRms", s);
+            // kTargetRms is the hardcoded target (0.25f) from StringTrackerParams
+            const float targetRms = trackerparams::targetRms(s);
             const float multiplier = (avg > 0.f) ? (targetRms / avg) : 1.0f;
             m_calibrationProfile.multipliers[static_cast<std::size_t>(s)] = std::clamp(multiplier, 0.2f, 8.0f);
             anyUpdated = true;
@@ -243,16 +288,32 @@ void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& aver
                                                           m_calibrationProfile.multipliers[static_cast<std::size_t>(s)]);
         }
         m_calibrationProfile.valid = true;
-        if (m_engine)
-            m_engine->applyCalibration(m_calibrationProfile);
         
+        // ── Rescale noise floor into the calibrated domain ──────────────
+        // The noise floor was captured in the raw (pre-gain) domain.  The
+        // engine will see input multiplied by calibrationGainMultiplier, so
+        // the noise gate must be expressed in that calibrated domain.
+        // Use per-string: calibratedNoise = rawNoise × multiplier.
+        if (m_rawCalibrationNoiseFloor > 0.f) {
+            for (int s = 0; s < 6; ++s) {
+                const float mult = m_calibrationProfile.multipliers[static_cast<std::size_t>(s)];
+                const float calibratedNoise = m_rawCalibrationNoiseFloor * mult;
+                const float clamped = std::max(calibratedNoise, 0.0005f);
+                const float ng = std::clamp(std::log(clamped / 0.0005f) / std::log(20.f), 0.0f, 1.0f);
+                NoteDetectionStore::instance().setValueFromKey("noiseGate", s, ng);
+                SessionLogger::instance().logf("calibration",
+                    "String %d: calibrated noise floor %.6f (raw %.6f × mult %.3f) → noiseGate %.4f",
+                    s + 1, calibratedNoise, m_rawCalibrationNoiseFloor, mult, ng);
+            }
+        }
+
         // Commit calibration values to tuning state
         NoteDetectionStore::instance().commit();
         
         // Log calibration data
         SessionLogger::instance().log("calibration", "=== Calibration Complete ===");
         for (int s = 0; s < 6; ++s) {
-            const float targetRms = NoteDetectionStore::instance().currentValueFromKey("targetRms", s);
+            const float targetRms = trackerparams::targetRms(s);
             SessionLogger::instance().logf("calibration", 
                 "String %d: avgRms=%.6f peakRms=%.6f targetRms=%.6f multiplier=%.3f",
                 s + 1,
@@ -273,23 +334,22 @@ void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& aver
 }
 
 void TabEngineBridge::handleCalibrationBaselineFloorCaptured(float noiseFloor) {
-    // Update baselineFloor parameter for all strings in tuning panel
+    // Store the raw noise floor.  The definitive noiseGate values will be set
+    // in handleCalibrationFinished() once per-string calibration multipliers
+    // are known, so that the noise gate is expressed in the calibrated domain.
+    m_rawCalibrationNoiseFloor = noiseFloor;
+
+    // Set a provisional noiseGate using the raw value so the UI updates
+    // immediately.  It will be overwritten with the correct (calibrated)
+    // value once the full calibration sequence completes.
+    const float clamped = std::max(noiseFloor, 0.0005f);
+    const float ng = std::clamp(std::log(clamped / 0.0005f) / std::log(20.f), 0.0f, 1.0f);
     for (int s = 0; s < 6; ++s) {
-        NoteDetectionStore::instance().setValueFromKey("baselineFloor", s, noiseFloor);
+        NoteDetectionStore::instance().setValueFromKey("noiseGate", s, ng);
     }
-    // Commit baseline floor to tuning state
-    NoteDetectionStore::instance().commit();
-    SessionLogger::instance().logf("calibration", "Baseline noise floor captured: %.6f", noiseFloor);
-    
-    // Set all circles to fade state (medium-dark grey)
-    for (int s = 0; s < 6; ++s) {
-        setCalibrationStepState(s, 4);
-    }
-    m_calibrationMessage = QStringLiteral("Noise floor captured");
-    emit calibrationStatusChanged();
-    
-    // Start 2-second fade timer
-    m_calibrationFadeTimer->start(2000);
+    SessionLogger::instance().logf("calibration", "Baseline noise floor captured (raw): %.6f  provisional noiseGate: %.4f", noiseFloor, ng);
+    // Circle state transitions are handled by handleCalibrationStepChanged
+    // when the audio thread announces the transition to the first string.
 }
 
 void TabEngineBridge::handleCalibrationFadeComplete() {
@@ -312,13 +372,8 @@ void TabEngineBridge::clear() {
     if (m_engine) {
         m_engine->importEvents({});
     }
-    {
-        std::lock_guard<std::mutex> guard(m_liveMutex);
-        m_livePending.clear();
-    }
     m_liveTimeSec = 0.f;
     m_liveSampleRate = 0.f;
-    m_lastDispatchedEvent.store(0, std::memory_order_release);
     m_lastLiveTriggerSec.fill(-1.f);
     m_lastLiveFret.fill(-1);
     syncFromEngine();
@@ -457,8 +512,23 @@ void TabEngineBridge::recalibrateString(int stringIndex) {
     m_audioClient->requestCalibration(stringIndex);
 }
 
-void TabEngineBridge::setAudioClient(HexAudioClient* client) {
-    if (m_audioClient == client)
+void TabEngineBridge::cancelCalibration() {
+    if (!m_calibrationRunning)
+        return;
+    if (m_audioClient)
+        m_audioClient->cancelCalibration();
+    // Reset display state immediately on the Qt thread.
+    m_calibrationRunning = false;
+    m_activeCalibrationString = -1;
+    m_activeCalibrationCapturing = false;
+    m_partialCalibration = false;
+    m_requestedCalibrationString = -1;
+    resetCalibrationSteps();
+    m_calibrationMessage = QStringLiteral("Calibration cancelled");
+    emit calibrationStatusChanged();
+}
+
+void TabEngineBridge::setAudioClient(HexAudioClient* client) {    if (m_audioClient == client)
         return;
 
     if (m_audioClient) {
@@ -490,17 +560,14 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
         m_engine->importEvents({});
         m_liveTimeSec = 0.f;
         m_liveSampleRate = sr;
-        m_lastDispatchedEvent.store(0, std::memory_order_release);
         m_lastLiveTriggerSec.fill(-1.f);
         m_lastLiveFret.fill(-1);
-        m_activeNoteDisplayed.fill(false);
         reset = true;
         if (m_debugNoteLogging)
             qInfo() << "TabBridge" << "engine-reset" << "sr" << sr << "capturing" << capturing;
     }
 
     if (!capturing && reset) {
-        // Keep preview responsive when capture is off by avoiding stale time bases.
         m_liveTimeSec = 0.f;
     }
 
@@ -510,12 +577,16 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
         appendCaptureAudio(channels, n);
     }
 
-    std::array<float, 6> blockRms {};
-    if (n > 0) {
+    // NOTE: meter snapshot is handled by HexJackClient::emitMeters() via MeterPump
+    // at 40ms intervals from the Qt thread. Calling postMeterSnapshot() here was
+    // redundant and caused QMetaObject heap allocations on every RT callback → XRuns.
+
+    if (m_debugNoteLogging) {
+        // Debug-only: compute block RMS and log (disabled in normal operation)
+        std::array<float, 6> blockRms {};
         for (int i = 0; i < 6; ++i) {
             const float* data = channels[static_cast<std::size_t>(i)];
-            if (!data)
-                continue;
+            if (!data) continue;
             double sum = 0.0;
             for (int sample = 0; sample < n; ++sample) {
                 const double value = static_cast<double>(data[sample]);
@@ -523,142 +594,36 @@ void TabEngineBridge::processLiveAudioBlock(const float* const channels[6], int 
             }
             blockRms[static_cast<std::size_t>(i)] = static_cast<float>(std::sqrt(sum / static_cast<double>(n)));
         }
-    }
-
-    // Always update meters when processing audio blocks
-    // This ensures both live (JACK) and recorded session playback show meter activity
-    postMeterSnapshot(blockRms);
-
-    if (m_debugNoteLogging) {
         QStringList rmsSummary;
         for (int i = 0; i < 6; ++i)
             rmsSummary << QStringLiteral("s%1=%2").arg(i + 1).arg(blockRms[static_cast<std::size_t>(i)], 0, 'f', 5);
         qInfo() << "TabBridge" << "block-rms" << rmsSummary.join(' ');
     }
 
+    // Process audio through engine - note events are handled via callback
     const float blockStart = m_liveTimeSec;
     m_engine->processBlock(channels, n, sr, blockStart);
-    updateTuningDeviation();
-    
-    // Update thresholds (throttled to 100ms to avoid overwhelming QML)
-    if (!m_thresholdsUpdateTimer.isValid() || m_thresholdsUpdateTimer.elapsed() >= 100) {
-        auto thresholds = m_engine->getThresholds();
-        for (int i = 0; i < 6; ++i) {
-            QVariantMap stringThresholds;
-            stringThresholds["onsetThreshold"] = thresholds[i].onsetThreshold;
-            stringThresholds["baseline"] = thresholds[i].baseline;
-            stringThresholds["gateThreshold"] = thresholds[i].gateThreshold;
-            stringThresholds["envFloor"] = thresholds[i].envFloor;
-            stringThresholds["sustainFloor"] = thresholds[i].sustainFloor;
-            stringThresholds["retriggerGate"] = thresholds[i].retriggerGate;
-            m_thresholds[i] = stringThresholds;
-        }
-        emit thresholdsChanged();
+
+    // Schedule tuning deviation + threshold updates on the Qt thread.
+    // Calling updateTuningDeviation() / emit thresholdsChanged() directly from
+    // the JACK RT thread is not safe — those functions touch Qt containers and
+    // emit signals which do heap allocation and locking.
+    const bool thresholdsDue = !m_thresholdsUpdateTimer.isValid() || m_thresholdsUpdateTimer.elapsed() >= 100;
+    if (thresholdsDue)
         m_thresholdsUpdateTimer.restart();
-    }
+
+    QMetaObject::invokeMethod(this, [this, thresholdsDue]() {
+        updateTuningDeviation();
+        if (thresholdsDue)
+            updateThresholdsDisplay();
+    }, Qt::QueuedConnection);
     
     m_liveTimeSec += static_cast<float>(n) / sr;
 
-    const auto& events = m_engine->events();
-    const int total = static_cast<int>(events.size());
-    int last = m_lastDispatchedEvent.load(std::memory_order_acquire);
-    
-    std::vector<LiveEvent> newEvents;
-    if (total > last) {
-        newEvents.reserve(static_cast<std::size_t>(total - last));
-        for (int i = last; i < total; ++i) {
-            const auto& ev = events[std::size_t(i)];
-            if (ev.stringIdx < 0 || ev.stringIdx >= 6)
-                continue;
-            if (ev.fret < 0 || ev.fret > 24)
-                continue;
-
-            const float prevTrigger = m_lastLiveTriggerSec[std::size_t(ev.stringIdx)];
-            const int prevFret = m_lastLiveFret[std::size_t(ev.stringIdx)];
-            const float dt = (prevTrigger >= 0.f) ? ev.startSec - prevTrigger : std::numeric_limits<float>::infinity();
-            if (prevTrigger >= 0.f && std::fabs(dt) < 0.06f && prevFret == ev.fret)
-                continue;
-
-            newEvents.push_back({ev.stringIdx, ev.fret, ev.velocity, ev.startSec});
-            // Mark this note as displayed immediately
-            m_activeNoteDisplayed[std::size_t(ev.stringIdx)] = true;
-            if (m_debugNoteLogging) {
-                qInfo() << "TabBridge" << "note"
-                        << "string" << ev.stringIdx
-                        << "fret" << ev.fret
-                        << "velocity" << QString::number(ev.velocity, 'f', 3)
-                        << "start" << QString::number(ev.startSec, 'f', 3);
-            }
-        }
-
-        m_lastDispatchedEvent.store(total, std::memory_order_release);
-    }
-
-    // Check for notes that have ended and emit liveNoteEnded signal
-    // Also emit envelope updates for active notes to drive visual feedback
-    // Skip entirely if no notes are active to avoid unnecessary processing
-    bool anyNotesDisplayed = false;
-    for (int s = 0; s < 6; ++s) {
-        if (m_activeNoteDisplayed[std::size_t(s)]) {
-            anyNotesDisplayed = true;
-            break;
-        }
-    }
-    
-    if (anyNotesDisplayed) {
-        for (int s = 0; s < 6; ++s) {
-            // Only check if we have a displayed note on this string
-            if (!m_activeNoteDisplayed[std::size_t(s)])
-                continue;
-            
-        bool hasActiveNote = false;
-        float activeEnvelope = 0.f;
-        
-        // Find if string s has an active note (endSec within 50ms of current time)
-        for (int i = total - 1; i >= 0; --i) {
-            const auto& ev = events[std::size_t(i)];
-            if (ev.stringIdx == s) {
-                const float timeSinceEnd = m_liveTimeSec - ev.endSec;
-                // Active if endSec is very recent (within 50ms)
-                if (timeSinceEnd >= -0.001f && timeSinceEnd <= 0.050f) {
-                    hasActiveNote = true;
-                    activeEnvelope = ev.velocity; // velocity is updated from envelope
-                    break;
-                }
-            }
-        }
-        
-        // If we have an active note, emit envelope update
-        if (hasActiveNote) {
-            QMetaObject::invokeMethod(this,
-                [this, s, activeEnvelope]() { emit liveNoteEnvelopeUpdated(s, activeEnvelope); },
-                Qt::QueuedConnection);
-        }
-        
-        // If we had a displayed note and now it's not active, emit noteEnded
-        if (!hasActiveNote) {
-            const int endedFret = m_lastLiveFret[std::size_t(s)];
-            if (endedFret >= 0) {
-                QMetaObject::invokeMethod(this,
-                    [this, s, endedFret]() { emit liveNoteEnded(s, endedFret); },
-                    Qt::QueuedConnection);
-            }
-            m_activeNoteDisplayed[std::size_t(s)] = false;
-        }
-    }
-    }
-
-    if (newEvents.empty())
-        return;
-
-    {
-        std::lock_guard<std::mutex> guard(m_liveMutex);
-        m_livePending.insert(m_livePending.end(), newEvents.begin(), newEvents.end());
-    }
-
-    scheduleLiveDispatch();
-
+    // Limit event list growth when not capturing
     if (!capturing) {
+        const auto& events = m_engine->events();
+        const int total = static_cast<int>(events.size());
         const int maxPreviewEvents = 256;
         if (total > maxPreviewEvents) {
             m_resetRequested.store(true, std::memory_order_release);
@@ -704,13 +669,6 @@ void TabEngineBridge::syncFromEngine() {
     emit eventsChanged();
 }
 
-void TabEngineBridge::scheduleLiveDispatch() {
-    bool expected = false;
-    if (m_dispatchQueued.compare_exchange_strong(expected, true, std::memory_order_acq_rel)) {
-        QMetaObject::invokeMethod(this, [this]() { dispatchLiveEvents(); }, Qt::QueuedConnection);
-    }
-}
-
 void TabEngineBridge::updateTuningDeviation() {
     if (!m_engine)
         return;
@@ -719,25 +677,6 @@ void TabEngineBridge::updateTuningDeviation() {
         return;
     m_tuningDeviationCents = deviations;
     emit tuningDeviationChanged();
-}
-
-void TabEngineBridge::dispatchLiveEvents() {
-    std::vector<LiveEvent> batch;
-    {
-        std::lock_guard<std::mutex> guard(m_liveMutex);
-        batch.swap(m_livePending);
-        m_dispatchQueued.store(false, std::memory_order_release);
-    }
-
-    if (batch.empty())
-        return;
-
-    for (const auto& ev : batch) {
-        m_lastLiveTriggerSec[std::size_t(ev.stringIndex)] = ev.startSec;
-        m_lastLiveFret[std::size_t(ev.stringIndex)] = ev.fretIndex;
-        qInfo() << "EMIT liveNoteTriggered: S" << ev.stringIndex << " F" << ev.fretIndex;
-        emit liveNoteTriggered(ev.stringIndex, ev.fretIndex, ev.velocity);
-    }
 }
 
 void TabEngineBridge::resetCalibrationSteps() {
@@ -808,8 +747,6 @@ void TabEngineBridge::loadPersistentCalibration() {
     }
     
     m_calibrationProfile.valid = true;
-    if (m_engine)
-        m_engine->applyCalibration(m_calibrationProfile);
 
     m_calibrationLoaded = true;
     m_calibrationMessage = QStringLiteral("Calibration loaded from tuning state");
@@ -829,11 +766,8 @@ void TabEngineBridge::updateCalibrationMultipliers() {
     
     if (anyChanged) {
         m_calibrationProfile.valid = true;
-        // Apply to engine
-        if (m_engine)
-            m_engine->applyCalibration(m_calibrationProfile);
         
-        SessionLogger::instance().log("calibration", "Calibration multipliers synced to engine");
+        SessionLogger::instance().log("calibration", "Calibration multipliers synced");
     }
 }
 

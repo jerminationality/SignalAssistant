@@ -39,6 +39,7 @@ public:
     void connectMeters(TabEngineBridge* bridge) override;
     void connectCalibration(TabEngineBridge* bridge) override;
     void requestCalibration(int stringIndex = -1) override;
+    void cancelCalibration() override;
     void setLiveMonitorEnabled(bool enabled);
     bool liveMonitorEnabled() const noexcept { return m_monitorRequested.load(std::memory_order_acquire); }
 
@@ -119,7 +120,7 @@ private:
         int sequenceCount {0};
         int framesRemaining {0};
         int captureFramesPerString {0};
-        std::array<int, 6> sequence {};
+        std::array<int, 7> sequence {};   // noise phase + 6 strings
         std::array<bool, 6> updated {};
         std::array<double, 6> sumRms {};
         std::array<int, 6> samples {};

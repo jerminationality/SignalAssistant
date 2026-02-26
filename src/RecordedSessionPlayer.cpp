@@ -512,12 +512,36 @@ void RecordedSessionPlayer::playbackLoop() {
         chunkHint = std::clamp(chunkHint, kMinChunkFrames, kPlaybackReadFrames);
 
         const bool monitorActive = m_monitorEnabled.load(std::memory_order_acquire);
+        
+        // Read calibration multipliers once per outer block (same as live path).
+        // HexJackClient applies these in its RT callback; for offline playback we
+        // must replicate that so the engine always sees calibrated input.
+        std::array<float, 6> calibMult;
+        calibMult.fill(1.0f);
+        if (m_bridge)
+            m_bridge->getCalibrationMultipliers(calibMult);
+
+        // Per-string scratch buffers sized to the largest chunk we'll use.
+        std::array<std::vector<float>, 6> calibBufs;
+        for (auto& v : calibBufs)
+            v.resize(static_cast<std::size_t>(chunkHint));
+
         int consumed = 0;
         while (consumed < framesThisBlock) {
             const int framesNow = std::min(chunkHint, framesThisBlock - consumed);
+
+            // Apply calibration gain (mirrors HexJackClient pre-amplification)
             const float* channelPtrs[6];
-            for (int i = 0; i < 6; ++i)
-                channelPtrs[i] = buffers[static_cast<std::size_t>(i)].data() + consumed;
+            for (int i = 0; i < 6; ++i) {
+                const float* src = buffers[static_cast<std::size_t>(i)].data() + consumed;
+                const float mult = calibMult[static_cast<std::size_t>(i)];
+                auto& dst = calibBufs[static_cast<std::size_t>(i)];
+                if (dst.size() < static_cast<std::size_t>(framesNow))
+                    dst.resize(static_cast<std::size_t>(framesNow));
+                for (int j = 0; j < framesNow; ++j)
+                    dst[static_cast<std::size_t>(j)] = src[j] * mult;
+                channelPtrs[i] = dst.data();
+            }
 
             if (m_bridge)
                 m_bridge->processLiveAudioBlock(channelPtrs, framesNow, static_cast<float>(m_sampleRate));

@@ -137,17 +137,21 @@ bool CarlaClient::start() {
 }
 
 void CarlaClient::stop() {
-    shutdownCarlaHost();
-
     if (m_meterPump) {
         m_meterPump.reset();
     }
 
+    // Deactivate and close the JACK client BEFORE Carla engine teardown.
+    // Closing Carla first causes jackd to send notifications to GuitarPiRack
+    // while the client sockets are already gone, producing "Broken pipe" errors.
     if (m_client) {
+        jack_deactivate(m_client);
         jack_client_t* client = m_client;
         m_client = nullptr;
         jack_client_close(client);
     }
+
+    shutdownCarlaHost();
 
     m_inputL = nullptr;
     m_inputR = nullptr;

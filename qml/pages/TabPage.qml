@@ -4,8 +4,16 @@ import QtQuick.Layouts 1.15
 
 Item {
     id: root
-    implicitWidth: 1280
-    implicitHeight: 720
+    implicitWidth: 1024
+    implicitHeight: 600
+    focus: true
+
+    Keys.onEscapePressed: {
+        if (bridge && bridge.calibrationRunning) {
+            bridge.cancelCalibration()
+            event.accepted = true
+        }
+    }
 
     property var bridge: (typeof AppController !== "undefined" && AppController)
                          ? AppController.tabBridge
@@ -14,8 +22,8 @@ Item {
     readonly property var stringLabels: ["E", "A", "D", "G", "B", "e"]
     property string lastTestPlaybackState: ""
 
-    readonly property real baseWidth: 1280
-    readonly property real baseHeight: 720
+    readonly property real baseWidth: 1024
+    readonly property real baseHeight: 600
     readonly property real scaleFactor: Math.min(width / baseWidth, height / baseHeight)
 
     Rectangle {
@@ -67,22 +75,14 @@ Item {
     }
 
     function tuningColorFromDeviation(cents) {
-        var absCents = Math.min(36, Math.abs(cents));
-        // Use a tighter range for green (faster fade from green)
-        // Green window is now ~6 cents instead of 12 cents
-        var ratio = Math.min(1, absCents / 18);
-        // Apply exponential curve to make green even tighter
-        ratio = ratio * ratio; // Square it to make it fade faster
-        var startR = 0.337;
-        var startG = 0.835;
-        var startB = 0.431;
-        var endR = 0.867;
-        var endG = 0.243;
-        var endB = 0.262;
-        var r = startR + (endR - startR) * ratio;
-        var g = startG + (endG - startG) * ratio;
-        var b = startB + (endB - startB) * ratio;
-        return Qt.rgba(r, g, b, 1);
+        var absCents = Math.abs(cents);
+        if (absCents <= 3)
+            return "#00FF00";  // PERFECT_ZONE — Bright Green
+        if (absCents <= 10)
+            return "#ADFF2F";  // OK_ZONE — Green-Yellow
+        if (absCents <= 25)
+            return "#FFA500";  // WARNING_ZONE — Orange
+        return "#FF0000";      // OUT_ZONE — Red
     }
 
     function getActiveTuningString() {
@@ -105,19 +105,16 @@ Item {
 
     function tuningCircleColor(state, index) {
         if (bridge && bridge.tuningModeEnabled && !bridge.calibrationRunning) {
-            var activeString = getActiveTuningString();
+            // Only color strings with significant input (hex meter above threshold)
+            if (!bridge.hexMeters || index < 0 || index >= bridge.hexMeters.length)
+                return "#3b3b43";
+            var level = Number(bridge.hexMeters[index]);
+            if (level < 0.02)
+                return "#3b3b43";  // Default gray — no significant input
             var deviation = tuningDeviationAt(index);
-            
-            // Show color only for the currently active string
-            // If no string is active or current deviation is 0, show gray
-            if (activeString >= 0 && activeString === index) {
-                return tuningColorFromDeviation(deviation);
-            } else if (activeString === -1 && Math.abs(deviation) > 0.1) {
-                // Fallback: if no clear active string but this one has deviation, show it
-                return tuningColorFromDeviation(deviation);
-            }
-            // All other strings show neutral gray
-            return "#3b3b43";
+            if (Math.abs(deviation) < 0.01)
+                return "#3b3b43";  // No valid pitch detected yet
+            return tuningColorFromDeviation(deviation);
         }
         return calibrationStepColor(state);
     }
@@ -133,8 +130,8 @@ Item {
         Image {
             id: backgroundFill
             anchors.fill: parent
-            source: "../assets/blueBgFIll.png"
-            fillMode: Image.Stretch
+            source: "../assets/BGFill.png"
+            fillMode: Image.PreserveAspectCrop
             z: -10
         }
 
@@ -165,7 +162,7 @@ Item {
 
             Item {
                 id: neckStage
-                readonly property int bottomPadding: 28
+                readonly property int bottomPadding: 39
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
@@ -177,7 +174,7 @@ Item {
 
             Image {
                 id: neckBackdrop
-                source: "../assets/neckDisplayBGDark.png"
+                source: "../assets/NeckBG.svg"
                 anchors.fill: parent
                 anchors.bottomMargin: -neckStage.bottomPadding
                 fillMode: Image.Stretch
@@ -187,54 +184,54 @@ Item {
 
             Item {
                 id: neckSection
-                readonly property real baseFretWidth: 1205
-                readonly property real baseStringHeight: 109
-                readonly property real baseNeckWidth: 1185
-                readonly property real baseNeckHeight: 134
-                readonly property real baseStringsWidth: 1221
+                readonly property real baseFretWidth: 964
+                readonly property real baseStringHeight: 87
+                readonly property real baseNeckWidth: 948
+                readonly property real baseNeckHeight: 107
+                readonly property real baseStringsWidth: 977
                 readonly property real stringsHorizontalExpansion: baseStringsWidth - baseFretWidth
                 readonly property real stringsVerticalOffset: (baseNeckHeight - baseStringHeight) / 2
-                readonly property real fretDetectionOffset: 6
-                readonly property real fretZeroOverlayOffset: 8
+                readonly property real fretDetectionOffset: 5
+                readonly property real fretZeroOverlayOffset: 6
                 property bool playbackActive: false
                 property int playbackIndex: 0
                 property var playbackEvents: []
                 width: fretsImage.width > 0 ? fretsImage.width : baseFretWidth
-                height: fretsImage.height > 0 ? fretsImage.height : 165
+                height: fretsImage.height > 0 ? fretsImage.height : 132
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 z: 1
 
                 readonly property var baseFretBoundaries: [
                     0,
-                    26.0342,
-                    115.471,
-                    198.308,
-                    276.854,
-                    350.779,
-                    420.415,
-                    486.42,
-                    548.795,
-                    607.869,
-                    663.314,
-                    715.458,
-                    764.632,
-                    811.495,
-                    855.389,
-                    896.642,
-                    935.915,
-                    973.208,
-                    1007.86,
-                    1041.19,
-                    1072.22,
-                    1101.59,
-                    1129.31,
-                    1155.38,
-                    1179.8,
-                    1203.57
+                    20.827,
+                    92.377,
+                    158.646,
+                    221.483,
+                    280.623,
+                    336.332,
+                    389.136,
+                    439.036,
+                    486.295,
+                    530.651,
+                    572.366,
+                    611.706,
+                    649.196,
+                    684.311,
+                    717.314,
+                    748.732,
+                    778.566,
+                    806.288,
+                    832.952,
+                    857.776,
+                    881.272,
+                    903.448,
+                    924.304,
+                    943.84,
+                    962.856
                 ]
 
-                readonly property var baseStringOffsets: [0.25293, 20.4473, 40.6436, 60.8398, 81.0342, 101.229]
+                readonly property var baseStringOffsets: [0.202, 16.358, 32.515, 48.672, 64.827, 80.983]
                 readonly property var normalizedFretBoundaries: baseFretBoundaries.map(function(value) {
                     return value / baseFretWidth;
                 })
@@ -363,28 +360,22 @@ Item {
                         return;
 
                     var energy = Math.max(0, Math.min(1, velocity === undefined ? 0.6 : velocity));
-                    var updated = false;
-                    for (var i = 0; i < liveNoteModel.count; ++i) {
+                    
+                    // Remove any existing overlay on this string (only one note per string)
+                    for (var i = liveNoteModel.count - 1; i >= 0; --i) {
                         var entry = liveNoteModel.get(i);
-                        if (entry.overlayString === overlayString && entry.fretIndex === fretIndex) {
-                            liveNoteModel.set(i, {
-                                                  overlayString: overlayString,
-                                                  fretIndex: fretIndex,
-                                                  velocity: Math.max(entry.velocity, energy),
-                                                  envelope: energy
-                                              });
-                            updated = true;
-                            break;
+                        if (entry.overlayString === overlayString) {
+                            liveNoteModel.remove(i);
                         }
                     }
-                    if (!updated) {
-                        liveNoteModel.append({
-                                                 overlayString: overlayString,
-                                                 fretIndex: fretIndex,
-                                                 velocity: energy,
-                                                 envelope: energy
-                                             });
-                    }
+                    
+                    // Add the new overlay
+                    liveNoteModel.append({
+                                             overlayString: overlayString,
+                                             fretIndex: fretIndex,
+                                             velocity: energy,
+                                             envelope: energy
+                                         });
                     allowMouseOverlay = false;
                 }
 
@@ -395,11 +386,12 @@ Item {
                     if (overlayString < 0 || overlayString >= normalizedStringOffsets.length)
                         return;
                     
+                    // Remove any overlay on this string (fretIndex is for reference but we match by string)
                     for (var i = liveNoteModel.count - 1; i >= 0; --i) {
                         var entry = liveNoteModel.get(i);
-                        if (entry.overlayString === overlayString && entry.fretIndex === fretIndex) {
+                        if (entry.overlayString === overlayString) {
                             liveNoteModel.remove(i);
-                            break;
+                            // Don't break - clean up any duplicates that might exist
                         }
                     }
                     
@@ -571,13 +563,13 @@ Item {
                     id: fretsImage
                     source: "../assets/TabPage/NeckDisplay/Frets.svg"
                     sourceSize.width: neckSection.baseFretWidth
-                    sourceSize.height: 165
+                    sourceSize.height: 132
                     width: neckSection.baseFretWidth
-                    height: 165
+                    height: 132
                     fillMode: Image.Stretch
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
-                    anchors.topMargin: -3
+                    anchors.topMargin: -2
                     smooth: true
                     z: 2
                 }
@@ -592,9 +584,9 @@ Item {
                     fillMode: Image.Stretch
                     // Anchor neck to the parent so it does not move when frets are adjusted.
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.horizontalCenterOffset: 14
+                    anchors.horizontalCenterOffset: 11
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: -19
+                    anchors.verticalCenterOffset: -15
                     smooth: true
                     z: 0
                 }
@@ -608,9 +600,9 @@ Item {
                     height: neckSection.baseStringHeight
                     fillMode: Image.Stretch
                     anchors.horizontalCenter: fretsImage.horizontalCenter
-                    anchors.horizontalCenterOffset: -4
+                    anchors.horizontalCenterOffset: -3
                     anchors.top: parent.top
-                    anchors.topMargin: neckSection.stringsVerticalOffset - 3
+                    anchors.topMargin: neckSection.stringsVerticalOffset - 2
                     smooth: true
                     z: 1
                 }
@@ -621,7 +613,7 @@ Item {
                     sourceSize.height: neckSection.baseNeckHeight
                     height: neckSection.baseNeckHeight
                     anchors.right: fretsImage.left
-                    anchors.rightMargin: 22
+                    anchors.rightMargin: 18
                     anchors.verticalCenter: neckImage.verticalCenter
                     anchors.verticalCenterOffset: neckSection.stringsVerticalOffset + 2 + neckSection.baseStringHeight / 2 - neckSection.baseNeckHeight / 2
                     smooth: true
@@ -645,16 +637,33 @@ Item {
                         width: 44
                         height: 18
                         radius: 6
-                        color: Qt.rgba(0.96, 0.58, 0.32, 0.85)
-                        border.color: "#ffd8a2"
+                        color: fillColor
                         border.width: 1
+                        border.color: strokeColor
                         x: neckSection.fretCenter(fretIndex) - width / 2
                         y: neckSection.stringCenter(overlayString) - height / 2
                         // Opacity linked to envelope for smooth decay visualization
                         // Minimum 0.2 opacity to keep visible, max at full envelope
                         opacity: Math.max(0.2, Math.min(1.0, envelope * 1.2))
                         z: 2.5
-                        
+
+                        // Onset flash: fill and stroke spike bright on creation, fade to resting colors
+                        property color fillColor: "#F5BC96"
+                        ColorAnimation on fillColor {
+                            from: "#F5BC96"
+                            to: "#F59452"
+                            duration: 300
+                            easing.type: Easing.OutQuad
+                        }
+
+                        property color strokeColor: "white"
+                        ColorAnimation on strokeColor {
+                            from: "white"
+                            to: "#ffd8a2"
+                            duration: 300
+                            easing.type: Easing.OutQuad
+                        }
+
                         Behavior on opacity {
                             NumberAnimation {
                                 duration: 40
@@ -779,6 +788,43 @@ Item {
             }
         }
         
+        ToolButton {
+            id: tuningPanelButton
+            checkable: true
+            implicitWidth: 30
+            implicitHeight: 30
+            x: hexMeterStrip.x + hexMeterStrip.width - 5
+            y: hexMeterStrip.y + (hexMeterStrip.height - height) / 2 + 20
+            z: 10
+            Component.onCompleted: {
+                var w = ApplicationWindow.window
+                if (w && typeof w.tuningPanelVisible !== 'undefined') {
+                    checked = Qt.binding(function() { return w.tuningPanelVisible })
+                    console.log("qml", "tuning-panel-button", "connected to main window")
+                } else {
+                    console.log("qml", "tuning-panel-button", "failed to find main window")
+                }
+            }
+            background: Rectangle {
+                anchors.fill: parent
+                color: "transparent"
+            }
+            contentItem: Image {
+                anchors.centerIn: parent
+                source: Qt.resolvedUrl("../assets/icons/lucide-settings.svg")
+                width: 25
+                height: 25
+                fillMode: Image.PreserveAspectFit
+                opacity: tuningPanelButton.checked ? 1.0 : 0.20
+            }
+            onClicked: {
+                var w = ApplicationWindow.window
+                if (w && typeof w.tuningPanelVisible !== 'undefined') {
+                    w.tuningPanelVisible = !w.tuningPanelVisible
+                }
+            }
+        }
+
         // RMS Numeric Display
         Column {
             id: rmsNumericDisplay
@@ -906,14 +952,6 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Label {
-                    text: "envFloor"
-                    width: 45
-                    font.pixelSize: 8
-                    color: "#7d8694"
-                    font.family: "Monospace"
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Label {
                     text: "Gate"
                     width: 45
                     font.pixelSize: 8
@@ -943,7 +981,7 @@ Item {
                 model: 6
                 delegate: Row {
                     spacing: 3
-                    property int stringIndex: index
+                    property int stringIndex: 5 - index
                     property string stringLabel: root.stringLabels[stringIndex]
                     property var thresholdData: (bridge && bridge.thresholds && bridge.thresholds.length > stringIndex) 
                         ? bridge.thresholds[stringIndex] : null
@@ -964,14 +1002,6 @@ Item {
                     }
                     Label {
                         text: (thresholdData && typeof thresholdData.baseline === 'number') ? thresholdData.baseline.toFixed(4) : "-.----"
-                        width: 45
-                        font.family: "Monospace"
-                        font.pixelSize: 9
-                        color: "#cbd5e1"
-                        horizontalAlignment: Text.AlignHCenter
-                    }
-                    Label {
-                        text: (thresholdData && typeof thresholdData.envFloor === 'number') ? thresholdData.envFloor.toFixed(4) : "-.----"
                         width: 45
                         font.family: "Monospace"
                         font.pixelSize: 9
@@ -1072,14 +1102,18 @@ Item {
                                             height: 20
                                             radius: width / 2
                                             color: tuningCircleColor(Number(modelData), index)
-                                            border.color: Number(modelData) >= 2 ? "#fefefe" : "#b0b3bb"
+                                            border.color: (bridge && bridge.tuningModeEnabled && !bridge.calibrationRunning)
+                                                          ? (color !== "#3b3b43" ? "#fefefe" : "#b0b3bb")
+                                                          : (Number(modelData) >= 2 ? "#fefefe" : "#b0b3bb")
                                             border.width: 1
-                                            opacity: Number(modelData) === 0 ? 0.7 : 1
+                                            opacity: (bridge && bridge.tuningModeEnabled && !bridge.calibrationRunning)
+                                                     ? (color !== "#3b3b43" ? 1.0 : 0.7)
+                                                     : (Number(modelData) === 0 ? 0.7 : 1)
                                             
                                             Behavior on color {
                                                 ColorAnimation {
-                                                    duration: 2000
-                                                    easing.type: Easing.InOutQuad
+                                                    duration: bridge && bridge.tuningModeEnabled ? 150 : 2000
+                                                    easing.type: bridge && bridge.tuningModeEnabled ? Easing.OutQuad : Easing.InOutQuad
                                                 }
                                             }
                                         }
@@ -1110,7 +1144,9 @@ Item {
                             checkable: true
                             implicitWidth: 40
                             implicitHeight: 40
+                            x: -16
                             anchors.verticalCenter: calibrationButton.verticalCenter
+                            anchors.verticalCenterOffset: -4
                             enabled: !(bridge && bridge.calibrationRunning)
                             background: Rectangle {
                                 anchors.fill: parent
@@ -1119,8 +1155,8 @@ Item {
                             contentItem: Image {
                                 anchors.centerIn: parent
                                 source: Qt.resolvedUrl("../assets/icons/tuningFork.svg")
-                                width: 28
-                                height: 28
+                                width: 14
+                                height: 14
                                 fillMode: Image.PreserveAspectFit
                                 opacity: tuningToggle.checked ? 1.0 : 0.12 
                             }
@@ -1132,41 +1168,6 @@ Item {
                             Connections {
                                 target: bridge
                                 onTuningModeEnabledChanged: if (bridge) checked = bridge.tuningModeEnabled
-                            }
-                        }
-                        ToolButton {
-                            id: tuningPanelButton
-                            checkable: true
-                            implicitWidth: 44
-                            implicitHeight: 44
-                            y: -6
-                            x: -14
-                            Component.onCompleted: {
-                                var w = ApplicationWindow.window
-                                    if (w && typeof w.tuningPanelVisible !== 'undefined') {
-                                        checked = Qt.binding(function() { return w.tuningPanelVisible })
-                                        console.log("qml", "tuning-panel-button", "connected to main window")
-                                    } else {
-                                        console.log("qml", "tuning-panel-button", "failed to find main window")
-                                    }
-                                }
-                                background: Rectangle {
-                                    anchors.fill: parent
-                                color: "transparent"
-                            }
-                            contentItem: Image {
-                                anchors.centerIn: parent
-                                source: Qt.resolvedUrl("../assets/icons/lucide-settings.svg")
-                                width: 28
-                                height: 28
-                                fillMode: Image.PreserveAspectFit
-                                opacity: tuningPanelButton.checked ? 1.0 : 0.12
-                            }
-                            onClicked: {
-                                var w = ApplicationWindow.window
-                                if (w && typeof w.tuningPanelVisible !== 'undefined') {
-                                    w.tuningPanelVisible = !w.tuningPanelVisible
-                                }
                             }
                         }
                     }

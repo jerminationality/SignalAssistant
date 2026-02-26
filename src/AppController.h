@@ -6,6 +6,8 @@
 #include <memory>
 #include <QElapsedTimer>
 
+class QProcess;
+
 #include "TabEngineBridge.h"
 #include "RunSessionOptions.h"
 #include "DetectionTuningController.h"
@@ -96,12 +98,13 @@ private:
     void handleRecordedFinished();
     void handleRecordedError(const QString& description);
     bool autoTestPlayEnabled() const;
+    int tryLaunchMonitor();
 
     QString m_currentPreset {"Default"};
     QString m_latencyText {"—"};
     std::unique_ptr<CarlaClient> m_audioClient;
     std::unique_ptr<HexJackClient> m_hexClient;
-    int m_requestedBufferSize {0};
+    int m_requestedBufferSize {128};
     int m_requestedSampleRate {0};
     int m_activeBufferSize {0};
     int m_activeSampleRate {0};
@@ -124,4 +127,5 @@ private:
     qreal m_lastLiveRecordingDuration {0.0};
     bool m_liveRecordingAwaitingLabel {false};
     bool m_autoTestPlaybackTriggered {false};
+    QProcess* m_streamlitProcess {nullptr};
 };

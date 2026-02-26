@@ -1,18 +1,26 @@
 #include "TabEngine.h"
 #include "StringTracker.h"
+#include "SessionLogger.h"
 #include "util.h"
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <sstream>
 #include <iomanip>
+
+namespace {
+// ── Relative-amplitude crosstalk masking constants ────────────────────
+constexpr float kCrosstalkThreshold = 0.15f;  // 15% of primary string's RMS
+constexpr float kHysteresisBuffer   = 0.05f;  // Prevents chatter at borderline levels
+constexpr float kMinGateLevel       = 0.01f;  // Absolute silence floor (ignore hum)
+} // namespace
 
 TabEngine::TabEngine(const Tuning& t, const TrackerConfig& c)
 : _tuning(t), _cfg(c), _activeIdx(6, -1)
 {
   _trkPtrs.reserve(6);
   for (int s = 0; s < 6; ++s) {
-    auto* tracker = new StringTracker(s, _tuning, _cfg, _events, _activeIdx);
-    tracker->setCalibration(_calibration);
+    auto* tracker = new StringTracker(s, _tuning, _cfg, _events, _activeIdx, *this);
     _trkPtrs.push_back(tracker);
   }
 }
@@ -25,8 +33,60 @@ TabEngine::~TabEngine() {
 }
 
 void TabEngine::processBlock(const float* const channels[6], int n, float sr, float t0) {
+  // ── Crosstalk masking: compute per-string RMS and suppress bleed ────
+  std::array<float, 6> amplitudes{};
   for (int s = 0; s < 6; ++s) {
-    _trkPtrs[s]->processBlock(channels[s], n, sr, t0);
+    if (!channels[s] || n <= 0) {
+      amplitudes[s] = 0.f;
+      continue;
+    }
+    float sumSq = 0.f;
+    for (int i = 0; i < n; ++i) {
+      const float v = channels[s][i];
+      sumSq += v * v;
+    }
+    amplitudes[s] = std::sqrt(sumSq / static_cast<float>(n));
+  }
+
+  // Identify the primary (loudest) string
+  float maxVal = 0.f;
+  int primaryString = -1;
+  for (int s = 0; s < 6; ++s) {
+    if (amplitudes[s] > maxVal) {
+      maxVal = amplitudes[s];
+      primaryString = s;
+    }
+  }
+
+  // Build mask: true = pass audio, false = suppress (send nullptr)
+  std::array<bool, 6> mask{};
+  if (maxVal < kMinGateLevel) {
+    // Nobody playing — silence all
+    mask.fill(false);
+  } else {
+    const float dynamicFloor = maxVal * kCrosstalkThreshold;
+    for (int s = 0; s < 6; ++s) {
+      if (s == primaryString) {
+        mask[s] = true;
+      } else if (amplitudes[s] > (dynamicFloor + kHysteresisBuffer)) {
+        mask[s] = true;   // Legitimate chord note
+      } else if (amplitudes[s] < (dynamicFloor - kHysteresisBuffer)) {
+        mask[s] = false;  // Crosstalk bleed
+      } else {
+        // Inside hysteresis band — preserve previous state
+        mask[s] = _crosstalkMask[s];
+      }
+    }
+  }
+  _crosstalkMask = mask;
+
+  for (int s = 0; s < 6; ++s) {
+    // Never mask a string that has an active note — the tracker must keep
+    // processing audio so it can detect envelope decay and fire note-off.
+    const bool hasActiveNote = (_activeIdx[s] >= 0
+                                && _activeIdx[s] < static_cast<int>(_events.size()));
+    const bool passAudio = mask[s] || hasActiveNote;
+    _trkPtrs[s]->processBlock(passAudio ? channels[s] : nullptr, n, sr, t0);
   }
   fuseEvents(t0);
 }
@@ -84,7 +144,10 @@ void TabEngine::fuseEvents(float /*t0*/) {
 }
 
 void TabEngine::importEvents(const std::vector<NoteEvent>& events) {
-  _events = events;
+  {
+    std::lock_guard<std::mutex> lock(_eventMutex);
+    _events = events;
+  }
   std::fill(_activeIdx.begin(), _activeIdx.end(), -1);
   if (events.empty()) {
     for (auto* trk : _trkPtrs) {
@@ -94,13 +157,9 @@ void TabEngine::importEvents(const std::vector<NoteEvent>& events) {
   }
 }
 
-void TabEngine::applyCalibration(const CalibrationProfile& profile) {
-  _calibration = profile;
-  for (auto* trk : _trkPtrs) {
-    if (trk)
-      trk->setCalibration(profile);
-  }
-}
+// applyCalibration / calibrationGains / setCalibrationGain removed —
+// calibration is applied to raw audio upstream (HexJackClient / RecordedSessionPlayer)
+// before it reaches the engine.  The engine only sees calibrated samples.
 
 std::array<float, 6> TabEngine::tuningDeviationCents() const {
   std::array<float, 6> deviations{};
@@ -117,43 +176,26 @@ std::array<float, 6> TabEngine::tuningDeviationCents() const {
   return deviations;
 }
 
-std::array<float, 6> TabEngine::calibrationGains() const {
-  std::array<float, 6> gains{};
-  for (int s = 0; s < 6; ++s) {
-    const auto* tracker = _trkPtrs[static_cast<std::size_t>(s)];
-    if (tracker)
-      gains[static_cast<std::size_t>(s)] = tracker->calibrationGain();
-    else
-      gains[static_cast<std::size_t>(s)] = 1.f;
-  }
-  return gains;
-}
-
-void TabEngine::setCalibrationGain(int stringIndex, float gain) {
-  if (stringIndex < 0 || stringIndex >= 6)
-    return;
-  auto* tracker = _trkPtrs[static_cast<std::size_t>(stringIndex)];
-  if (tracker)
-    tracker->setCalibrationGain(gain);
-}
-
 std::string TabEngine::toJson(bool onlyFinished) const {
   std::ostringstream oss;
   oss << "[";
-  bool first = true;
-  for (const auto& e : _events) {
-    if (onlyFinished && e.endSec <= e.startSec) continue;
-    if (!first) oss << ",";
-    first = false;
-    oss << "{"
-        << "\"string\":" << e.stringIdx
-        << ",\"fret\":" << e.fret
-        << ",\"midi\":" << e.midi
-        << ",\"start\":" << std::fixed << std::setprecision(6) << e.startSec
-        << ",\"end\":"   << std::fixed << std::setprecision(6) << e.endSec
-        << ",\"vel\":"   << std::fixed << std::setprecision(3) << e.velocity
-        << ",\"art\":\"" << e.articulation << "\""
-        << "}";
+  {
+    std::lock_guard<std::mutex> lock(_eventMutex);
+    bool first = true;
+    for (const auto& e : _events) {
+      if (onlyFinished && e.endSec <= e.startSec) continue;
+      if (!first) oss << ",";
+      first = false;
+      oss << "{"
+          << "\"string\":" << e.stringIdx
+          << ",\"fret\":" << e.fret
+          << ",\"midi\":" << e.midi
+          << ",\"start\":" << std::fixed << std::setprecision(6) << e.startSec
+          << ",\"end\":"   << std::fixed << std::setprecision(6) << e.endSec
+          << ",\"vel\":"   << std::fixed << std::setprecision(3) << e.velocity
+          << ",\"art\":\"" << e.articulation << "\""
+          << "}";
+    }
   }
   oss << "]";
   return oss.str();
@@ -167,4 +209,16 @@ std::array<StringThresholds, 6> TabEngine::getThresholds() const {
     }
   }
   return result;
+}
+
+void TabEngine::onNoteOn(int stringIdx, int fret, float velocity) {
+  if (_noteCallback) {
+    _noteCallback(true, stringIdx, fret, velocity);
+  }
+}
+
+void TabEngine::onNoteOff(int stringIdx, int fret) {
+  if (_noteCallback) {
+    _noteCallback(false, stringIdx, fret, 0.f);
+  }
 }

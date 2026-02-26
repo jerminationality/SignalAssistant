@@ -3,13 +3,24 @@ import QtQuick 2.15
 Item {
     id: root
     property string text: ""
+    property string componentType: ""
     property color textColor: "#F5F5F5"
     property int fontSize: 14
     property Item dragLayer: null
     property Item dropTarget: null
     property var dropCallback: null
-    property int designWidth: 127
-    property int designHeight: 63
+    property var dropController: null
+    property int sidebarWidth: 211
+    property int designWidth: {
+        if (componentType === "AMPS") return 138
+        if (componentType === "CABINETS") return 127
+        return 72  // PRE-FX and POST-FX
+    }
+    property int designHeight: {
+        if (componentType === "AMPS") return 68
+        if (componentType === "CABINETS") return 127
+        return 112  // PRE-FX and POST-FX
+    }
     property Item dragProxy: null
     property bool dragActive: false
     property real dragOffsetX: 0
@@ -22,20 +33,18 @@ Item {
     width: implicitWidth
     height: implicitHeight
 
-    Image {
-        anchors.fill: parent
-        source: "../assets/component.svg"
-        fillMode: Image.Stretch
-        smooth: true
-        asynchronous: true
-    }
-
     Rectangle {
         anchors.fill: parent
-        anchors.margins: 10
-        radius: 10
+        radius: 3
         color: "#2C2C2C"
-        border.width: 0
+        border.width: 2.5
+        border.color: {
+            if (root.componentType === "PRE-FX") return "#33964D"
+            if (root.componentType === "AMPS") return "#CF6C42"
+            if (root.componentType === "CABINETS") return "#B18F60"
+            if (root.componentType === "POST-FX") return "#30768F"
+            return "#FFFFFF"
+        }
     }
 
     Text {
@@ -46,7 +55,9 @@ Item {
         font.pixelSize: root.fontSize
         font.weight: Font.DemiBold
         horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
+        wrapMode: Text.WordWrap
     }
 
     MouseArea {
@@ -54,7 +65,7 @@ Item {
         anchors.fill: parent
         cursorShape: root.dragActive ? Qt.ClosedHandCursor : Qt.OpenHandCursor
         acceptedButtons: Qt.LeftButton
-        preventStealing: true
+        preventStealing: root.dragActive  // Only prevent stealing once drag is active
         onPressed: {
             if (mouse.button !== Qt.LeftButton) {
                 mouse.accepted = false
@@ -68,8 +79,14 @@ Item {
                 return
 
             if (!root.dragActive) {
-                if (Math.abs(mouse.x - pressX) > 4 || Math.abs(mouse.y - pressY) > 4)
+                var deltaX = Math.abs(mouse.x - pressX)
+                var deltaY = Math.abs(mouse.y - pressY)
+                
+                // Only start drag if horizontal movement is clearly dominant
+                // Require: horizontal > vertical AND horizontal > threshold
+                if (deltaX > deltaY && deltaX > 10) {
                     root.startDrag(mouse.x, mouse.y)
+                }
             } else {
                 root.updateDrag(mouse.x, mouse.y)
             }
@@ -153,6 +170,15 @@ Item {
         var mapped = root.mapToItem(dragLayer, x, y)
         dragProxy.x = mapped.x - dragOffsetX
         dragProxy.y = mapped.y - dragOffsetY
+
+        // Check if over sidebar
+        var isOverSidebar = (dragProxy.x + dragProxy.width / 2) < sidebarWidth
+
+        // Update preview in drop target
+        if (dropController && dropController.updateDragPreview && dropTarget) {
+            var centerInTarget = dragProxy.mapToItem(dropTarget, dragProxy.width / 2, dragProxy.height / 2)
+            dropController.updateDragPreview(root.componentType, centerInTarget.x, centerInTarget.y, root.text, isOverSidebar, false)
+        }
     }
 
     function finishDrag() {
@@ -160,21 +186,31 @@ Item {
             return
 
         if (dragProxy) {
+            // Check if over sidebar
+            var isOverSidebar = (dragProxy.x + dragProxy.width / 2) < sidebarWidth
+
             if (dropTarget) {
                 var center = dragProxy.mapToItem(dropTarget, dragProxy.width / 2, dragProxy.height / 2)
                 if (center.x >= 0 && center.x <= dropTarget.width && center.y >= 0 && center.y <= dropTarget.height) {
                     if (dropCallback)
                         dropCallback({
                             text: root.text,
+                            componentType: root.componentType,
                             color: root.textColor,
                             fontSize: root.fontSize,
-                            localPoint: center
+                            localPoint: center,
+                            isOverSidebar: isOverSidebar
                         })
                 }
             }
 
             dragProxy.destroy()
             dragProxy = null
+        }
+
+        // Clear preview
+        if (dropController && dropController.clearDragPreview) {
+            dropController.clearDragPreview()
         }
 
         dragActive = false
@@ -185,6 +221,12 @@ Item {
             dragProxy.destroy()
             dragProxy = null
         }
+
+        // Clear preview
+        if (dropController && dropController.clearDragPreview) {
+            dropController.clearDragPreview()
+        }
+
         dragActive = false
     }
 }

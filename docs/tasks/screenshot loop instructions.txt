@@ -1,0 +1,47 @@
+Step 1: Configure the MCP Server 
+In VS Code, open User Settings (JSON) (Ctrl+Shift+P > Open User Settings (JSON)) and add the following at the bottom. Note: Ensure you replace the file path with your actual project directory. 
+json
+{
+    "github.copilot.chat.mcpServers": {
+        "qml-preview": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "C:\\Users\\YourName\\Documents\\MyQmlProject"
+            ]
+        }
+    }
+}
+Use code with caution.
+
+Step 2: Create the Watcher Script
+Create a new file in your project folder named auto_snap.ps1 (for Windows) or auto_snap.sh (for Mac/Linux). This script uses nodemon to watch for saves and triggers a screenshot. 
+For Windows (PowerShell):
+powershell
+# Prerequisites: npm install -g nodemon
+# This watches main.qml and overwrites preview.png on every save
+nodemon -e qml --exec "qml main.qml --screenshot preview.png"
+Use code with caution.
+
+For macOS/Linux (Bash):
+bash
+# Prerequisites: npm install -g nodemon
+# This watches main.qml and overwrites preview.png on every save
+nodemon -e qml --exec "qml main.qml --screenshot preview.png"
+Use code with caution.
+
+Step 3: Usage Workflow
+Start the Watcher: Open a terminal in your project and run your script (./auto_snap.ps1 or bash auto_snap.sh).
+Edit your QML: Whenever you save your code, the renderer updates preview.png instantly.
+Chat with Copilot: In the Copilot Chat panel, switch to Agent Mode (from the dropdown) and ask:
+"Read preview.png and tell me if the button alignment is correct."
+Troubleshooting "Greyed Out" Settings
+If the setting appears greyed out in your JSON file: 
+Enable MCP: Search VS Code settings for chat.mcp.enabled and ensure it is checked.
+Update: Ensure you are on the latest version of VS Code and the GitHub Copilot extension.
+Workspace Config: If global settings fail, create a file at .vscode/mcp.json in your project root with the same server configuration. 
+If you'd like, I can provide the exact Bash one-liner for Linux or help you verify if the MCP server is successfully connected.
+
+
+

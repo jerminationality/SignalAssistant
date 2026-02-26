@@ -13,6 +13,8 @@ Item {
     property Item dragLayer: null
     property Item dropTarget: null
     property var dropCallback: null
+    property var dropController: null
+    property int sidebarWidth: 211
     readonly property int headerHeight: 42
     readonly property int padding: 16
     readonly property int topPadding: 0
@@ -76,6 +78,7 @@ Item {
         clip: true
         color: headerColor
         border.width: 0
+        
         Behavior on height {
             NumberAnimation {
                 duration: 220
@@ -83,14 +86,14 @@ Item {
             }
         }
 
-        Column {
+        Grid {
             id: contentColumn
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: root.topPadding
-            spacing: root.itemSpacing
-            padding: root.padding
-            width: parent.width - root.padding * 2
+            columnSpacing: (root.title === "PRE-FX" || root.title === "POST-FX") ? 16 : 0
+            rowSpacing: root.itemSpacing
+            columns: (root.title === "PRE-FX" || root.title === "POST-FX") ? 2 : 1
             visible: root.expanded
             Behavior on y {
                 NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
@@ -99,12 +102,14 @@ Item {
             Repeater {
                 model: root.items
                 delegate: CoreComponent {
-                    anchors.horizontalCenter: parent.horizontalCenter
                     text: typeof modelData === "string" ? modelData : modelData.text
                     textColor: root.textColor
+                    componentType: root.title
                     dragLayer: root.dragLayer
                     dropTarget: root.dropTarget
                     dropCallback: root.dropCallback
+                    dropController: root.dropController
+                    sidebarWidth: root.sidebarWidth
                 }
             }
         }

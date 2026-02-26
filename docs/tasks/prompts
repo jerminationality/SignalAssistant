@@ -1,0 +1,30 @@
+
+
+INTERFACE
+-----------------------------
+
+
+
+
+
+
+T A B   P A G E
+---------------------------------------------------------
+
+OVERLAY
+------------------------------
+For hammer on and pull off overlay display, have the prior notes of the sequence change to /home/general/SignalAssistant/qml/assets/TabPage/opaqueOverlayMarker.svg to signify a run of notes with the most recent hammered on / pulled into notes display the normal overlay marker
+
+For slides, have a line from fret to fret appear with the most recent note detected in the slide appear full opacity with the trailing line having half opacity.wh'
+
+
+TUNING PANEL
+-----------------------------
+Give the ability to click the text label for each slider to manually enter a number. Display the slider range on the prompt
+
+Add a button to open the tuning panel in the bottom left of the tab mode page, about the same height as the meters. Use some sort of standard settings icon for the button
+
+Add an are you sure prompt when committing values, and give an additional option for Backup old values as state
+
+
+

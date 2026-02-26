@@ -1,6 +1,24 @@
 cmake_minimum_required(VERSION 3.16)
 project(GuitarPi LANGUAGES CXX)
 
+# Set Release as default build type for optimal performance
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
+# Compiler optimizations for faster builds and better performance
+if(CMAKE_BUILD_TYPE MATCHES Release)
+    # Enable Link Time Optimization for smaller, faster binaries
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT HAVE_IPO)
+    if(HAVE_IPO)
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+    endif()
+    
+    # Additional optimization flags
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -march=armv8-a -mtune=cortex-a76 -flto=auto")
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)

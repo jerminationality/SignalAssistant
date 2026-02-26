@@ -4,6 +4,7 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQmlError>
+#include <QQuickWindow>
 #include <QDebug>
 #include <QStringList>
 #include <algorithm>
@@ -22,6 +23,11 @@
 #include <sstream>
 #include <string>
 #include <vector>
+
+#ifdef __linux__
+#include <pthread.h>
+#include <sched.h>
+#endif
 
 #include "AppController.h"
 #include "RunSessionOptions.h"
@@ -609,6 +615,20 @@ int main(int argc, char *argv[]) {
             << (runOptions.isRecorded() ? "recorded" : "live")
             << QString::fromStdString(runOptions.sessionName);
 
+#ifdef __linux__
+    // Pin main/UI thread to Core 1
+    {
+        cpu_set_t cpuset;
+        CPU_ZERO(&cpuset);
+        CPU_SET(1, &cpuset);
+        if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset) == 0) {
+            std::fprintf(stderr, "main: UI thread pinned to Core 1\n");
+        } else {
+            std::fprintf(stderr, "main: WARNING - failed to pin UI thread to Core 1\n");
+        }
+    }
+#endif
+
     qInfo() << "startup" << "creating-qguiapplication";
     QGuiApplication app(argc, argv);
     qInfo() << "startup" << "qguiapplication-ready";
@@ -638,6 +658,32 @@ int main(int argc, char *argv[]) {
     qInfo() << "startup" << "qml-engine-load" << url;
     engine.load(url);
     qInfo() << "startup" << "qml-engine-load-complete" << engine.rootObjects().size();
+
+#ifdef __linux__
+    // Pin the QML Scene Graph render thread to Core 2 once it initialises
+    for (QObject* root : engine.rootObjects()) {
+        if (auto* window = qobject_cast<QQuickWindow*>(root)) {
+            QObject::connect(window, &QQuickWindow::sceneGraphInitialized, window, [window]() {
+                cpu_set_t cpuset;
+                CPU_ZERO(&cpuset);
+                CPU_SET(2, &cpuset);
+                if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset) == 0) {
+                    std::fprintf(stderr, "main: render thread pinned to Core 2\n");
+                } else {
+                    std::fprintf(stderr, "main: WARNING - failed to pin render thread to Core 2\n");
+                }
+                struct sched_param param {};
+                param.sched_priority = 20;
+                if (pthread_setschedparam(pthread_self(), SCHED_RR, &param) == 0) {
+                    std::fprintf(stderr, "main: render thread set to SCHED_RR priority 20\n");
+                } else {
+                    std::fprintf(stderr, "main: WARNING - failed to set render thread SCHED_RR\n");
+                }
+            }, Qt::DirectConnection);  // DirectConnection: runs on the render thread itself
+            break;
+        }
+    }
+#endif
 
     return app.exec();
 }

@@ -1,32 +1,12 @@
 #include "NoteDetectionStore.h"
 
 #include <algorithm>
-#include <cstdio>
-#include <cstdarg>
 
 namespace {
 
-void logStoreLookup(const char* stage, const std::string& key, int stringIdx, const float* value = nullptr) {
-    std::fprintf(stderr,
-                 "store %s key=%s string=%d",
-                 stage,
-                 key.c_str(),
-                 stringIdx);
-    if (value)
-        std::fprintf(stderr, " value=%.6f", static_cast<double>(*value));
-    std::fprintf(stderr, "\n");
-    std::fflush(stderr);
-}
+void logStoreLookup(const char*, const std::string&, int, const float* = nullptr) {}
 
-void logStoreDetail(const char* fmt, ...) {
-    std::fprintf(stderr, "store ");
-    va_list args;
-    va_start(args, fmt);
-    std::vfprintf(stderr, fmt, args);
-    va_end(args);
-    std::fprintf(stderr, "\n");
-    std::fflush(stderr);
-}
+[[maybe_unused]] static void logStoreDetail(const char*, ...) {}
 
 }
 
@@ -35,20 +15,17 @@ void NoteDetectionParameterSetAtomic::store(const NoteDetectionParameterSet& sou
         for (std::size_t i = 0; i < destArr.size(); ++i)
             destArr[i].store(srcArr[i], std::memory_order_release);
     };
-    transfer(onsetThresholdScale, source.onsetThresholdScale);
-    transfer(baselineFloor, source.baselineFloor);
-    transfer(envelopeFloor, source.envelopeFloor);
-    transfer(gateRatio, source.gateRatio);
-    transfer(sustainFloorScale, source.sustainFloorScale);
-    transfer(retriggerGateScale, source.retriggerGateScale);
-    transfer(pitchTolerance, source.pitchTolerance);
-    transfer(targetRms, source.targetRms);
+    transfer(noiseGate, source.noiseGate);
+    transfer(attackSensitivity, source.attackSensitivity);
+    transfer(triggerGuardMs, source.triggerGuardMs);
+    transfer(noteOnThreshold, source.noteOnThreshold);
+    transfer(noteOffRatio, source.noteOffRatio);
     transfer(calibrationGainMultiplier, source.calibrationGainMultiplier);
-    transfer(lowCutMultiplier, source.lowCutMultiplier);
-    transfer(highCutMultiplier, source.highCutMultiplier);
-    transfer(aubioThresholdScale, source.aubioThresholdScale);
-    transfer(onsetSilenceDb, source.onsetSilenceDb);
-    transfer(pitchSilenceDb, source.pitchSilenceDb);
+    transfer(repitchThreshold, source.repitchThreshold);
+    transfer(repitchConfirmFrames, source.repitchConfirmFrames);
+    transfer(repitchMinConfidence, source.repitchMinConfidence);
+    transfer(pitchConfidence, source.pitchConfidence);
+    transfer(retriggerDeltaRatio, source.retriggerDeltaRatio);
 }
 
 NoteDetectionStore& NoteDetectionStore::instance() {
@@ -72,20 +49,17 @@ float* NoteDetectionStore::access(NoteDetectionParameterSet& set, NoteParameter 
 
     float* result = nullptr;
     switch (id) {
-        case NoteParameter::OnsetThresholdScale: result = &set.onsetThresholdScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::BaselineFloor: result = &set.baselineFloor[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::EnvelopeFloor: result = &set.envelopeFloor[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::GateRatio: result = &set.gateRatio[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::SustainFloorScale: result = &set.sustainFloorScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::RetriggerGateScale: result = &set.retriggerGateScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::PitchTolerance: result = &set.pitchTolerance[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::TargetRms: result = &set.targetRms[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::NoiseGate: result = &set.noiseGate[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::AttackSensitivity: result = &set.attackSensitivity[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::TriggerGuardMs: result = &set.triggerGuardMs[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::NoteOnThreshold: result = &set.noteOnThreshold[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::NoteOffRatio: result = &set.noteOffRatio[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::CalibrationGainMultiplier: result = &set.calibrationGainMultiplier[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::LowCutMultiplier: result = &set.lowCutMultiplier[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::HighCutMultiplier: result = &set.highCutMultiplier[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::AubioThresholdScale: result = &set.aubioThresholdScale[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::OnsetSilenceDb: result = &set.onsetSilenceDb[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::PitchSilenceDb: result = &set.pitchSilenceDb[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::RepitchThreshold: result = &set.repitchThreshold[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::RepitchConfirmFrames: result = &set.repitchConfirmFrames[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::RepitchMinConfidence: result = &set.repitchMinConfidence[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::PitchConfidence: result = &set.pitchConfidence[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::RetriggerDeltaRatio: result = &set.retriggerDeltaRatio[static_cast<std::size_t>(stringIdx)]; break;
     }
 
     if (!result)
@@ -107,20 +81,17 @@ float NoteDetectionStore::activeValue(NoteParameter id, int stringIdx) const {
         return arr[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire);
     };
     switch (id) {
-        case NoteParameter::OnsetThresholdScale: return fetch(m_active.onsetThresholdScale);
-        case NoteParameter::BaselineFloor: return fetch(m_active.baselineFloor);
-        case NoteParameter::EnvelopeFloor: return fetch(m_active.envelopeFloor);
-        case NoteParameter::GateRatio: return fetch(m_active.gateRatio);
-        case NoteParameter::SustainFloorScale: return fetch(m_active.sustainFloorScale);
-        case NoteParameter::RetriggerGateScale: return fetch(m_active.retriggerGateScale);
-        case NoteParameter::PitchTolerance: return fetch(m_active.pitchTolerance);
-        case NoteParameter::TargetRms: return fetch(m_active.targetRms);
+        case NoteParameter::NoiseGate: return fetch(m_active.noiseGate);
+        case NoteParameter::AttackSensitivity: return fetch(m_active.attackSensitivity);
+        case NoteParameter::TriggerGuardMs: return fetch(m_active.triggerGuardMs);
+        case NoteParameter::NoteOnThreshold: return fetch(m_active.noteOnThreshold);
+        case NoteParameter::NoteOffRatio: return fetch(m_active.noteOffRatio);
         case NoteParameter::CalibrationGainMultiplier: return fetch(m_active.calibrationGainMultiplier);
-        case NoteParameter::LowCutMultiplier: return fetch(m_active.lowCutMultiplier);
-        case NoteParameter::HighCutMultiplier: return fetch(m_active.highCutMultiplier);
-        case NoteParameter::AubioThresholdScale: return fetch(m_active.aubioThresholdScale);
-        case NoteParameter::OnsetSilenceDb: return fetch(m_active.onsetSilenceDb);
-        case NoteParameter::PitchSilenceDb: return fetch(m_active.pitchSilenceDb);
+        case NoteParameter::RepitchThreshold: return fetch(m_active.repitchThreshold);
+        case NoteParameter::RepitchConfirmFrames: return fetch(m_active.repitchConfirmFrames);
+        case NoteParameter::RepitchMinConfidence: return fetch(m_active.repitchMinConfidence);
+        case NoteParameter::PitchConfidence: return fetch(m_active.pitchConfidence);
+        case NoteParameter::RetriggerDeltaRatio: return fetch(m_active.retriggerDeltaRatio);
     }
     return 0.f;
 }

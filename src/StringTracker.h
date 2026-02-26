@@ -19,16 +19,14 @@ public:
                 const Tuning& tuning,
                 const TrackerConfig& cfg,
                 std::vector<NoteEvent>& sharedEvents,
-                std::vector<int>& activeIdx);
+                std::vector<int>& activeIdx,
+                TabEngine& engine);
   ~StringTracker();
 
   // mono samples may be nullptr => treat as silence
   void processBlock(const float* samples, int n, float sr, float blockStartSec);
   void resetState();
-  void setCalibration(const CalibrationProfile& profile);
   float lastPitchHz() const;
-  float calibrationGain() const { return _calibrationGain; }
-  void setCalibrationGain(float gain) { _calibrationGain = gain; }
   StringThresholds getThresholds() const { return _lastThresholds; }
 
 private:
@@ -41,7 +39,6 @@ private:
   float applyPitchMedian(float pitchHz);
   bool updatePitchConfidence(int midi, float pitchHz);
   int  applyPitchHold(int midi, bool stable);
-  void refreshCalibrationTarget();
 
   struct BandpassFilter {
     // 2nd-order Butterworth bandpass (cascade of 2nd-order HP and LP sections)
@@ -65,6 +62,7 @@ private:
   int _s = 0;
   const Tuning& _tuning;
   const TrackerConfig& _cfg;
+  TabEngine& _engine;
   std::deque<FrameFeatures> _feat; // rolling ~500ms
   std::vector<NoteEvent>& _events;
   std::vector<int>& _activeIdx;    // per-string active idx reference
@@ -92,12 +90,15 @@ private:
   float _activeHoldUntilSec = 0.f;
   float _retriggerBlockUntilSec = 0.f;
   bool _activeForcedOpen = false;
-  float _calibrationAvgRms = 0.001f;
-  float _calibrationGain = 1.f;
-  float _calibrationTargetRms = 0.0018f;
-  bool  _calibrationValid = false;
+  float _prevFrameRms = 0.f;       // Previous frame's envelopeRms for retrigger delta check
+  float _minRmsAfterOnset = 0.f;  // Minimum RMS seen since last note-on (decay tracking)
   float _lastFeaturePitchHz = -1.f;
   mutable StringThresholds _lastThresholds;
+  float _lastRepitchSec = -1.f;
+  int _repitchCandidateMidi = -1;
+  int _repitchStabilityCounter = 0;
+  float _repitchLastConfidence = 0.f;
+  float _repitchMaxOnsetSeen = 0.f;  // peak onset strength seen during confirm window
 #ifndef HAVE_AUBIO
   bool _warnedNoAubio = false;
 #endif

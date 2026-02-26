@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.15
 
 FocusScope {
     id: root
-    height: 372
+    width: 1024
+    height: 600
     focus: visible
     property var controller: null
     property var bridge: null
@@ -23,7 +24,9 @@ FocusScope {
             shiftHeld = false
         }
     }
+    Component.onCompleted: console.log("qml", "TuningPanel", "component-completed")
     Keys.onEscapePressed: {
+        console.log("qml", "TuningPanel", "escape-pressed")
         if (typeof onCloseRequested === "function")
             onCloseRequested()
         event.accepted = true
@@ -35,16 +38,6 @@ FocusScope {
         const isShift = (event.key === Qt.Key_Shift) || ((event.modifiers & Qt.ShiftModifier) !== 0)
         if (isShift)
             shiftHeld = true
-        // Ctrl+Z = undo, Ctrl+Y = redo
-        if (event.modifiers & Qt.ControlModifier) {
-            if (event.key === Qt.Key_Z) {
-                root.handleHistoryAction("undo")
-                event.accepted = true
-            } else if (event.key === Qt.Key_Y) {
-                root.handleHistoryAction("redo")
-                event.accepted = true
-            }
-        }
     }
 
     Keys.onReleased: {
@@ -84,6 +77,7 @@ FocusScope {
     readonly property int compactButtonFontSize: 12
 
     onControllerChanged: {
+        console.log("qml", "TuningPanel", "controller", controller ? "connected" : "null")
         stringLabels = controller ? controller.stringLabels() : []
         if (compareSwitch)
             compareSwitch.syncWithController()
@@ -165,6 +159,7 @@ FocusScope {
     }
 
     function requestSyncAll() {
+        console.log("qml", "TuningPanel", "sync-all", stringLabels.length)
         syncAllTimer.restart()
     }
 
@@ -177,10 +172,12 @@ FocusScope {
 
     function syncAllSliders() {
         if (!controller || sliderRegistry.length === 0) {
+            console.log("qml", "TuningPanel", "sync-all-skip")
             return
         }
         sliderSyncCursor = 0
         syncBatchTimer.stop()
+        console.log("qml", "TuningPanel", "sync-all-triggered", sliderRegistry.length)
         syncBatchTimer.start()
     }
 
@@ -189,7 +186,9 @@ FocusScope {
         interval: 50
         repeat: true
         onTriggered: {
+            console.log("qml", "TuningPanel", "sync-batch-tick", sliderSyncCursor, sliderRegistry.length)
             if (sliderSyncCursor >= sliderRegistry.length) {
+                console.log("qml", "TuningPanel", "sync-complete", sliderRegistry.length)
                 stop()
                 return
             }
@@ -199,9 +198,12 @@ FocusScope {
                 var idx = sliderSyncCursor
                 var sliderItem = sliderRegistry[sliderSyncCursor++]
                 if (sliderItem && typeof sliderItem.doSync === "function") {
+                    console.log("qml", "TuningPanel", "sync-calling", idx)
                     try {
                         sliderItem.doSync()
+                        console.log("qml", "TuningPanel", "sync-done", idx)
                     } catch (e) {
+                        console.log("qml", "TuningPanel", "sync-error", idx, e)
                     }
                 }
             }
@@ -219,10 +221,6 @@ FocusScope {
     function applyGroupDelta(paramKey, sourceIndex, delta, originSlider) {
         if (!controller || !originSlider || Math.abs(delta) <= 0)
             return
-
-        // Wrap all six string changes in a single batch edit so a shift-group
-        // move produces exactly one undo entry rather than one per string.
-        controller.beginBatchEdit()
 
         function commitValue(targetSlider) {
             noteLocalChange()
@@ -243,11 +241,10 @@ FocusScope {
             sliderItem.suppress = false
             commitValue(sliderItem)
         }
-
-        controller.endBatchEdit()
     }
 
     function handleHistoryAction(actionKey) {
+        console.log("qml", "TuningPanel", "history-request", actionKey, !!controller)
         if (!controller)
             return
         var handled = false
@@ -265,8 +262,10 @@ FocusScope {
             handled = true
             break
         default:
+            console.log("qml", "TuningPanel", "history-action-unknown", actionKey)
             return
         }
+        console.log("qml", "TuningPanel", "history-action-dispatched", actionKey, handled)
         requestSyncAll()
     }
 
@@ -347,7 +346,7 @@ FocusScope {
             }
         }
         
-RowLayout {
+        RowLayout {
             spacing: 2
             Switch {
                 id: compareSwitch
@@ -374,6 +373,22 @@ RowLayout {
                 target: controller
                 function onCompareBaselineChanged() {
                     compareSwitch.syncWithController()
+                }
+            }
+        }
+        
+        Button {
+            text: "Commit"
+            enabled: !!controller
+            implicitWidth: root.compactButtonWidth
+            implicitHeight: root.compactButtonHeight
+            font.pixelSize: root.compactButtonFontSize
+            onClicked: {
+                if (controller) {
+                    controller.commit()
+                    if (bridge) {
+                        bridge.updateCalibrationMultipliers()
+                    }
                 }
             }
         }
@@ -409,22 +424,6 @@ RowLayout {
             implicitHeight: root.compactButtonHeight
             font.pixelSize: root.compactButtonFontSize
             onClicked: root.openSnapshotDialog()
-        }
-        
-        Button {
-            text: "Commit"
-            enabled: !!controller
-            implicitWidth: root.compactButtonWidth
-            implicitHeight: root.compactButtonHeight
-            font.pixelSize: root.compactButtonFontSize
-            onClicked: {
-                if (controller) {
-                    controller.commit()
-                    if (bridge) {
-                        bridge.updateCalibrationMultipliers()
-                    }
-                }
-            }
         }
     }
 
@@ -471,16 +470,31 @@ RowLayout {
                             active: !!root.controller
                             sourceComponent: parameterListComponent
                             property var sectionData: modelData
+                            onStatusChanged: {
+                                if (status === Loader.Loading)
+                                    console.log("qml", "TuningPanel", "section-loading", sectionData ? sectionData.title : "")
+                                else if (status === Loader.Ready)
+                                    console.log("qml", "TuningPanel", "section-ready", sectionData ? sectionData.title : "")
+                            }
                             onLoaded: {
+                                console.log("qml", "TuningPanel", "section-loaded", sectionData ? sectionData.title : "")
                                 if (!item) {
+                                    console.log("qml", "TuningPanel", "section-loaded-null-item")
                                     return
                                 }
+                                console.log("qml", "TuningPanel", "section-assign", "sectionData")
                                 item.sectionData = sectionLoader.sectionData
+                                console.log("qml", "TuningPanel", "section-assign", "accentColor")
                                 item.accentColor = root.accentColor
+                                console.log("qml", "TuningPanel", "section-assign", "panelRef")
                                 item.panelRef = root
+                                console.log("qml", "TuningPanel", "section-assign", "stringLabels")
                                 item.stringLabels = Qt.binding(function() { return root.stringLabels })
+                                console.log("qml", "TuningPanel", "section-assign", "controller")
                                 item.controller = Qt.binding(function() { return root.controller })
+                                console.log("qml", "TuningPanel", "section-init-complete")
                                 Qt.callLater(function() {
+                                    console.log("qml", "TuningPanel", "section-sync-request")
                                     root.requestSyncAll()
                                 })
                             }
@@ -514,6 +528,8 @@ RowLayout {
             property var stringLabels: []
             property color accentColor: "#38bdf8"
             property var panelRef: root
+            Component.onCompleted: console.log("qml", "TuningPanel", "section-ui-create", sectionData ? sectionData.title : "", sectionData && sectionData.parameters ? sectionData.parameters.length : 0)
+            onSectionDataChanged: console.log("qml", "TuningPanel", "section-data-assigned", sectionData ? sectionData.title : "", sectionData && sectionData.parameters ? sectionData.parameters.length : 0)
 
             Flow {
                 id: parameterFlow
@@ -543,6 +559,7 @@ RowLayout {
                         property real valueColumnWidth: 0
                         Component.onCompleted: {
                             parameterFlow.createdCards += 1
+                            console.log("qml", "TuningPanel", "param-card", sectionData ? sectionData.title : "", param ? param.key : "", parameterFlow.createdCards)
                         }
                         Text {
                             id: valueWidthProbe
@@ -565,7 +582,7 @@ RowLayout {
                                 id: paramLabel
                                 text: param.label
                                 color: "#f1f5f9"
-                                font.pixelSize: 13
+                                font.pixelSize: 14
                             }
                             Button {
                                 id: commitButton
@@ -597,6 +614,7 @@ RowLayout {
                                         if (root.bridge) {
                                             root.bridge.updateCalibrationMultipliers()
                                         }
+                                        console.log("qml", "TuningPanel", "param-commit", param.label)
                                     }
                                 }
                             }
@@ -605,7 +623,7 @@ RowLayout {
                             text: param.description
                             color: "#94a3b8"
                             wrapMode: Text.WordWrap
-                            font.pixelSize: 11
+                            font.pixelSize: 12
                         }
                         Column {
                             width: parent.width
@@ -619,6 +637,7 @@ RowLayout {
                                     property int stringIndex: stringLabels && stringLabels.length > 0 ? (stringLabels.length - 1 - index) : index
                                     property double baselineValue: 0.0
                                     property string stringLabel: stringLabels && stringLabels.length > stringIndex ? stringLabels[stringIndex] : ""
+                                    Component.onCompleted: console.log("qml", "TuningPanel", "string-row", param ? param.key : "", stringLabel, stringIndex)
 
                                     RowLayout {
                                         width: parent.width
@@ -657,29 +676,37 @@ RowLayout {
                                             function tryRegister() {
                                                 if (registryEntry || !panelRef)
                                                     return
+                                                console.log("qml", "TuningPanel", "slider-register", paramKey, stringIndex)
                                                 panelRef.registerSlider(slider)
                                                 registryEntry = slider // Just use slider reference
                                             }
                                             function doSync() {
                                                 var ctrl = panelRef ? panelRef.controller : null
                                                 if (!ctrl) {
+                                                    console.log("qml", "TuningPanel", "slider-sync-skip", param ? param.key : "", stringIndex, "no-controller")
                                                     return
                                                 }
                                                 suppress = true
+                                                console.log("qml", "TuningPanel", "slider-sync-start", param ? param.key : "", stringIndex)
                                                 try {
                                                     var newValue = ctrl.parameterValue(param.key, stringIndex)
+                                                    console.log("qml", "TuningPanel", "slider-sync-value", param ? param.key : "", stringIndex, newValue)
                                                     lastDispatchedValue = newValue
                                                     if (value !== newValue)
                                                         value = newValue
                                                     initialSyncDone = true
                                                     var baseline = ctrl.baselineValue(param.key, stringIndex)
                                                     stringRow.baselineValue = baseline
+                                                    console.log("qml", "TuningPanel", "slider-sync-baseline", param ? param.key : "", stringIndex, baseline)
                                                 } catch (e) {
+                                                    console.log("qml", "TuningPanel", "slider-sync-error", param ? param.key : "", stringIndex, e)
                                                 } finally {
                                                     suppress = false
+                                                    console.log("qml", "TuningPanel", "slider-sync-complete", param ? param.key : "", stringIndex, value)
                                                 }
                                             }
                                             Component.onCompleted: {
+                                                console.log("qml", "TuningPanel", "slider-created", param ? param.key : "", stringRow.stringLabel, stringIndex)
                                                 lastDispatchedValue = value
                                                 Qt.callLater(tryRegister)
                                             }
@@ -720,19 +747,23 @@ RowLayout {
                                             }
                                             onMoved: {
                                                 if (!controller) {
+                                                    console.log("qml", "TuningPanel", "slider-move-skipped", param ? param.key : "", stringIndex, "no-controller")
                                                     return
                                                 }
                                                 if (suppress) {
+                                                    console.log("qml", "TuningPanel", "slider-move-skipped", param ? param.key : "", stringIndex, "suppressed")
                                                     return
                                                 }
                                                 var delta = value - lastDispatchedValue
                                                 lastDispatchedValue = value
                                                 var shiftEngaged = panelRef ? panelRef.shiftActive() : false
                                                 if (shiftEngaged && Math.abs(delta) > 0) {
+                                                    console.log("qml", "TuningPanel", "slider-move-group", param ? param.key : "", stringIndex, value, delta)
                                                     panelRef.applyGroupDelta(paramKey, stringIndex, delta, slider)
                                                 } else {
                                                     if (panelRef)
                                                         panelRef.noteLocalChange()
+                                                    console.log("qml", "TuningPanel", "slider-moved", param ? param.key : "", stringIndex, value)
                                                     controller.setParameterValue(paramKey, stringIndex, value)
                                                 }
                                             }
@@ -811,8 +842,10 @@ RowLayout {
                                                     if (slider.panelRef)
                                                         slider.panelRef.noteLocalChange()
                                                     if (controller) {
+                                                        console.log("qml", "TuningPanel", "value-commit", slider.paramKey, slider.stringIndex, parsed)
                                                         controller.setParameterValue(slider.paramKey, slider.stringIndex, parsed)
                                                     } else {
+                                                        console.log("qml", "TuningPanel", "value-commit-skipped", slider.paramKey, slider.stringIndex, "no-controller")
                                                     }
                                                 }
                                             }
