@@ -15,17 +15,12 @@ void NoteDetectionParameterSetAtomic::store(const NoteDetectionParameterSet& sou
         for (std::size_t i = 0; i < destArr.size(); ++i)
             destArr[i].store(srcArr[i], std::memory_order_release);
     };
-    transfer(noiseGate, source.noiseGate);
-    transfer(attackSensitivity, source.attackSensitivity);
-    transfer(triggerGuardMs, source.triggerGuardMs);
-    transfer(noteOnThreshold, source.noteOnThreshold);
-    transfer(noteOffRatio, source.noteOffRatio);
+    transfer(touchSensitivity, source.touchSensitivity);
+    transfer(attackResponse, source.attackResponse);
+    transfer(sustainTail, source.sustainTail);
+    transfer(legatoSpeed, source.legatoSpeed);
+    transfer(trackingStability, source.trackingStability);
     transfer(calibrationGainMultiplier, source.calibrationGainMultiplier);
-    transfer(repitchThreshold, source.repitchThreshold);
-    transfer(repitchConfirmFrames, source.repitchConfirmFrames);
-    transfer(repitchMinConfidence, source.repitchMinConfidence);
-    transfer(pitchConfidence, source.pitchConfidence);
-    transfer(retriggerDeltaRatio, source.retriggerDeltaRatio);
 }
 
 NoteDetectionStore& NoteDetectionStore::instance() {
@@ -49,17 +44,12 @@ float* NoteDetectionStore::access(NoteDetectionParameterSet& set, NoteParameter 
 
     float* result = nullptr;
     switch (id) {
-        case NoteParameter::NoiseGate: result = &set.noiseGate[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::AttackSensitivity: result = &set.attackSensitivity[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::TriggerGuardMs: result = &set.triggerGuardMs[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::NoteOnThreshold: result = &set.noteOnThreshold[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::NoteOffRatio: result = &set.noteOffRatio[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::TouchSensitivity: result = &set.touchSensitivity[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::AttackResponse: result = &set.attackResponse[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::SustainTail: result = &set.sustainTail[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::LegatoSpeed: result = &set.legatoSpeed[static_cast<std::size_t>(stringIdx)]; break;
+        case NoteParameter::TrackingStability: result = &set.trackingStability[static_cast<std::size_t>(stringIdx)]; break;
         case NoteParameter::CalibrationGainMultiplier: result = &set.calibrationGainMultiplier[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::RepitchThreshold: result = &set.repitchThreshold[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::RepitchConfirmFrames: result = &set.repitchConfirmFrames[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::RepitchMinConfidence: result = &set.repitchMinConfidence[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::PitchConfidence: result = &set.pitchConfidence[static_cast<std::size_t>(stringIdx)]; break;
-        case NoteParameter::RetriggerDeltaRatio: result = &set.retriggerDeltaRatio[static_cast<std::size_t>(stringIdx)]; break;
     }
 
     if (!result)
@@ -81,17 +71,12 @@ float NoteDetectionStore::activeValue(NoteParameter id, int stringIdx) const {
         return arr[static_cast<std::size_t>(stringIdx)].load(std::memory_order_acquire);
     };
     switch (id) {
-        case NoteParameter::NoiseGate: return fetch(m_active.noiseGate);
-        case NoteParameter::AttackSensitivity: return fetch(m_active.attackSensitivity);
-        case NoteParameter::TriggerGuardMs: return fetch(m_active.triggerGuardMs);
-        case NoteParameter::NoteOnThreshold: return fetch(m_active.noteOnThreshold);
-        case NoteParameter::NoteOffRatio: return fetch(m_active.noteOffRatio);
+        case NoteParameter::TouchSensitivity: return fetch(m_active.touchSensitivity);
+        case NoteParameter::AttackResponse: return fetch(m_active.attackResponse);
+        case NoteParameter::SustainTail: return fetch(m_active.sustainTail);
+        case NoteParameter::LegatoSpeed: return fetch(m_active.legatoSpeed);
+        case NoteParameter::TrackingStability: return fetch(m_active.trackingStability);
         case NoteParameter::CalibrationGainMultiplier: return fetch(m_active.calibrationGainMultiplier);
-        case NoteParameter::RepitchThreshold: return fetch(m_active.repitchThreshold);
-        case NoteParameter::RepitchConfirmFrames: return fetch(m_active.repitchConfirmFrames);
-        case NoteParameter::RepitchMinConfidence: return fetch(m_active.repitchMinConfidence);
-        case NoteParameter::PitchConfidence: return fetch(m_active.pitchConfidence);
-        case NoteParameter::RetriggerDeltaRatio: return fetch(m_active.retriggerDeltaRatio);
     }
     return 0.f;
 }

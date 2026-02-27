@@ -31,50 +31,68 @@ inline float active(NoteParameter param, int s, float fallback) {
     return NoteDetectionStore::instance().activeValue(param, s);
 }
 
-// ── User-facing parameters (6 knobs) ─────────────────────────────────
+// ── User-facing parameters (peak-first: 6 knobs, Section 9A) ─────────
+//
+//  Old internal accessor  →  New NoteParameter source
+//  noiseGate              →  derived from TouchSensitivity
+//  attackSensitivity      →  AttackResponse
+//  triggerGuardMs         →  hardcoded (system-managed, Section 9B)
+//  noteOnThreshold        →  TouchSensitivity
+//  noteOffRatio           →  derived from SustainTail / TouchSensitivity
+//  calibrationGainMult    →  CalibrationGainMultiplier
+//  repitchThreshold       →  TrackingStability
+//  repitchConfirmFrames   →  LegatoSpeed
+//  repitchMinConfidence   →  derived from TrackingStability + offset
+//  pitchConfidence        →  TrackingStability
+//  retriggerDeltaRatio    →  derived from AttackResponse
 
 inline float noiseGate(int s) {
-    return active(NoteParameter::NoiseGate, s, 0.30f);
+    // TouchSensitivity is the delta above adaptive noise floor (0.01-0.25).
+    // Scale to the old noiseGate range so derived dB helpers remain valid.
+    return active(NoteParameter::TouchSensitivity, s, 0.08f) * 3.75f;
 }
 
 inline float attackSensitivity(int s) {
-    return active(NoteParameter::AttackSensitivity, s, 1.0f);
+    return active(NoteParameter::AttackResponse, s, 1.5f);
 }
 
-inline float triggerGuardMs(int s) {
-    return active(NoteParameter::TriggerGuardMs, s, 45.f);
+inline float triggerGuardMs(int /*s*/) {
+    return 45.f;   // system-managed (Section 9B)
 }
 
 inline float noteOnThreshold(int s) {
-    return active(NoteParameter::NoteOnThreshold, s, 0.020f);
+    return active(NoteParameter::TouchSensitivity, s, 0.08f);
 }
 
 inline float noteOffRatio(int s) {
-    return active(NoteParameter::NoteOffRatio, s, 0.60f);
+    const float tail = active(NoteParameter::SustainTail, s, 0.02f);
+    const float onTh = noteOnThreshold(s);
+    return (onTh > 0.f) ? std::clamp(tail / onTh, 0.1f, 1.0f) : 0.60f;
 }
 
 inline float calibrationGainMultiplier(int s) {
-    return active(NoteParameter::CalibrationGainMultiplier, s, 5.0f);
+    return active(NoteParameter::CalibrationGainMultiplier, s, 1.0f);
 }
 
 inline float repitchThreshold(int s) {
-    return active(NoteParameter::RepitchThreshold, s, 0.5f);
+    return active(NoteParameter::TrackingStability, s, 0.65f);
 }
 
 inline int repitchConfirmFrames(int s) {
-    return static_cast<int>(active(NoteParameter::RepitchConfirmFrames, s, 3.f));
+    return static_cast<int>(active(NoteParameter::LegatoSpeed, s, 2.f));
 }
 
 inline float repitchMinConfidence(int s) {
-    return active(NoteParameter::RepitchMinConfidence, s, 0.85f);
+    return std::min(active(NoteParameter::TrackingStability, s, 0.65f) + 0.20f, 0.98f);
 }
 
 inline float pitchConfidence(int s) {
-    return active(NoteParameter::PitchConfidence, s, 0.70f);
+    return active(NoteParameter::TrackingStability, s, 0.65f);
 }
 
 inline float retriggerDeltaRatio(int s) {
-    return active(NoteParameter::RetriggerDeltaRatio, s, 0.50f);
+    // Higher AttackResponse → harder to retrigger → larger delta ratio
+    return 1.f / active(NoteParameter::AttackResponse, s, 1.5f);
 }
 
 // ── Derived / hardcoded accessors (used by StringTracker) ─────────────

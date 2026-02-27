@@ -35,69 +35,60 @@ void fromJson(const QJsonValue& value, std::array<float, 6>& arr) {
 
 QJsonObject serializeParameterSetJson(const NoteDetectionParameterSet& set) {
     QJsonObject obj;
-    obj.insert("noiseGate", toJson(set.noiseGate));
-    obj.insert("attackSensitivity", toJson(set.attackSensitivity));
-    obj.insert("triggerGuardMs", toJson(set.triggerGuardMs));
-    obj.insert("noteOnThreshold", toJson(set.noteOnThreshold));
-    obj.insert("noteOffRatio", toJson(set.noteOffRatio));
+    obj.insert("touchSensitivity", toJson(set.touchSensitivity));
+    obj.insert("attackResponse", toJson(set.attackResponse));
+    obj.insert("sustainTail", toJson(set.sustainTail));
+    obj.insert("legatoSpeed", toJson(set.legatoSpeed));
+    obj.insert("trackingStability", toJson(set.trackingStability));
     obj.insert("calibrationGainMultiplier", toJson(set.calibrationGainMultiplier));
-    obj.insert("repitchThreshold", toJson(set.repitchThreshold));
-    obj.insert("repitchConfirmFrames", toJson(set.repitchConfirmFrames));
-    obj.insert("repitchMinConfidence", toJson(set.repitchMinConfidence));
-    obj.insert("pitchConfidence", toJson(set.pitchConfidence));
-    obj.insert("retriggerDeltaRatio", toJson(set.retriggerDeltaRatio));
     return obj;
 }
 
-// Deserialize a parameter set from JSON, with backward compatibility for v1 format.
-// If the JSON contains "noiseGate" we assume v2 format; otherwise we migrate from v1.
+// Deserialize a parameter set from JSON, with backward compatibility for legacy formats.
+// If the JSON contains "touchSensitivity" we assume peak-first format; otherwise we migrate.
 void deserializeParameterSet(const QJsonObject& obj, NoteDetectionParameterSet& set) {
-    if (obj.contains("noiseGate")) {
-        // ── v2 (consolidated 6-param) format ──
-        fromJson(obj.value("noiseGate"), set.noiseGate);
-        fromJson(obj.value("attackSensitivity"), set.attackSensitivity);
-        fromJson(obj.value("triggerGuardMs"), set.triggerGuardMs);
-        fromJson(obj.value("noteOnThreshold"), set.noteOnThreshold);
-        fromJson(obj.value("noteOffRatio"), set.noteOffRatio);
+    if (obj.contains("touchSensitivity")) {
+        // ── Peak-first (Section 9A) format ──
+        fromJson(obj.value("touchSensitivity"), set.touchSensitivity);
+        fromJson(obj.value("attackResponse"), set.attackResponse);
+        fromJson(obj.value("sustainTail"), set.sustainTail);
+        fromJson(obj.value("legatoSpeed"), set.legatoSpeed);
+        fromJson(obj.value("trackingStability"), set.trackingStability);
         if (obj.contains("calibrationGainMultiplier"))
             fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
-        if (obj.contains("repitchThreshold"))
-            fromJson(obj.value("repitchThreshold"), set.repitchThreshold);
+    } else if (obj.contains("noiseGate")) {
+        // ── Legacy v2 (11-param) migration ──
+        // Map old noteOnThreshold → touchSensitivity
+        if (obj.contains("noteOnThreshold"))
+            fromJson(obj.value("noteOnThreshold"), set.touchSensitivity);
+        // Map old attackSensitivity → attackResponse
+        if (obj.contains("attackSensitivity"))
+            fromJson(obj.value("attackSensitivity"), set.attackResponse);
+        // Map old noteOffRatio → sustainTail (approximate)
+        if (obj.contains("noteOffRatio")) {
+            std::array<float, 6> ratio {};
+            fromJson(obj.value("noteOffRatio"), ratio);
+            for (int i = 0; i < 6; ++i)
+                set.sustainTail[static_cast<std::size_t>(i)] =
+                    std::clamp(set.touchSensitivity[static_cast<std::size_t>(i)] * ratio[i], 0.005f, 0.1f);
+        }
+        // Map old repitchConfirmFrames → legatoSpeed
         if (obj.contains("repitchConfirmFrames"))
-            fromJson(obj.value("repitchConfirmFrames"), set.repitchConfirmFrames);
-        if (obj.contains("repitchMinConfidence"))
-            fromJson(obj.value("repitchMinConfidence"), set.repitchMinConfidence);
+            fromJson(obj.value("repitchConfirmFrames"), set.legatoSpeed);
+        // Map old pitchConfidence → trackingStability
         if (obj.contains("pitchConfidence"))
-            fromJson(obj.value("pitchConfidence"), set.pitchConfidence);
-        if (obj.contains("retriggerDeltaRatio"))
-            fromJson(obj.value("retriggerDeltaRatio"), set.retriggerDeltaRatio);
+            fromJson(obj.value("pitchConfidence"), set.trackingStability);
+        if (obj.contains("calibrationGainMultiplier"))
+            fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
     } else {
         // ── v1 (legacy 13-param) migration ──
-        // noteOnThreshold carries over directly
         if (obj.contains("noteOnThreshold"))
-            fromJson(obj.value("noteOnThreshold"), set.noteOnThreshold);
-
-        // Derive noteOffRatio from old noteOn / noteOff
-        if (obj.contains("noteOffThreshold") && obj.contains("noteOnThreshold")) {
-            std::array<float, 6> oldOn {}, oldOff {};
-            fromJson(obj.value("noteOnThreshold"), oldOn);
-            fromJson(obj.value("noteOffThreshold"), oldOff);
-            for (int i = 0; i < 6; ++i)
-                set.noteOffRatio[static_cast<std::size_t>(i)] =
-                    (oldOn[i] > 1e-7f) ? std::clamp(oldOff[i] / oldOn[i], 0.1f, 1.0f) : 0.6f;
-        }
-
-        // Derive attackSensitivity from old aubioThresholdScale
+            fromJson(obj.value("noteOnThreshold"), set.touchSensitivity);
         if (obj.contains("aubioThresholdScale"))
-            fromJson(obj.value("aubioThresholdScale"), set.attackSensitivity);
-
-        // calibrationGainMultiplier carries over
+            fromJson(obj.value("aubioThresholdScale"), set.attackResponse);
         if (obj.contains("calibrationGainMultiplier"))
             fromJson(obj.value("calibrationGainMultiplier"), set.calibrationGainMultiplier);
-        else
-            for (auto& v : set.calibrationGainMultiplier) v = 5.0f;
-
-        // noiseGate and triggerGuardMs keep defaults (no v1 equivalent)
+        // Other fields keep defaults
     }
 }
 
@@ -120,18 +111,13 @@ QVariantList buildCategories() {
 
     const std::array<CategoryDef, 3> kCategoryDefs = {{
         {"detection", "Detection", {
-            NoteParameter::NoiseGate,
-            NoteParameter::AttackSensitivity,
-            NoteParameter::TriggerGuardMs,
-            NoteParameter::NoteOnThreshold,
-            NoteParameter::NoteOffRatio,
-            NoteParameter::PitchConfidence,
-            NoteParameter::RetriggerDeltaRatio
+            NoteParameter::TouchSensitivity,
+            NoteParameter::AttackResponse,
+            NoteParameter::SustainTail
         }},
-        {"repitch", "Repitch", {
-            NoteParameter::RepitchThreshold,
-            NoteParameter::RepitchConfirmFrames,
-            NoteParameter::RepitchMinConfidence
+        {"tracking", "Tracking", {
+            NoteParameter::LegatoSpeed,
+            NoteParameter::TrackingStability
         }},
         {"calibration", "Calibration", {
             NoteParameter::CalibrationGainMultiplier

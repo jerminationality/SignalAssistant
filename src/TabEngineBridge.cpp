@@ -55,11 +55,11 @@ TabEngineBridge::TabEngineBridge(QObject* parent)
     m_thresholds.clear();
     for (int i = 0; i < 6; ++i) {
         QVariantMap stringThresholds;
-        stringThresholds["onsetThreshold"] = 0.0;
-        stringThresholds["gateThreshold"] = 0.0;
-        stringThresholds["envFloor"] = 0.0;
-        stringThresholds["sustainFloor"] = 0.0;
+        stringThresholds["onsetPeakThreshold"] = 0.0;
+        stringThresholds["noiseFloor"] = 0.0;
         stringThresholds["retriggerGate"] = 0.0;
+        stringThresholds["envelopePeak"] = 0.0;
+        stringThresholds["exitRmsThreshold"] = 0.0;
         m_thresholds.append(stringThresholds);
     }
     
@@ -100,12 +100,12 @@ void TabEngineBridge::updateThresholdsDisplay() {
     auto thresholds = m_engine->getThresholds();
     for (int i = 0; i < 6; ++i) {
         QVariantMap stringThresholds;
-        stringThresholds["onsetThreshold"] = thresholds[i].onsetThreshold;
-        stringThresholds["baseline"] = thresholds[i].baseline;
-        stringThresholds["gateThreshold"] = thresholds[i].gateThreshold;
-        stringThresholds["envFloor"] = thresholds[i].envFloor;
-        stringThresholds["sustainFloor"] = thresholds[i].sustainFloor;
+        stringThresholds["onsetPeakThreshold"] = thresholds[i].onsetPeakThreshold;
+        stringThresholds["noiseFloor"] = thresholds[i].noiseFloor;
         stringThresholds["retriggerGate"] = thresholds[i].retriggerGate;
+        stringThresholds["envelopePeak"] = thresholds[i].envelopePeak;
+        stringThresholds["exitRmsThreshold"] = thresholds[i].exitRmsThreshold;
+        stringThresholds["envelopeRms"] = thresholds[i].envelopeRms;
         m_thresholds[i] = stringThresholds;
     }
     emit thresholdsChanged();
@@ -143,7 +143,20 @@ void TabEngineBridge::updateLiveMeters(const std::array<float, 6>& meters) {
         list.append(value);
     m_hexMeters = list;
     emit hexMetersChanged();
-    
+
+    // Check for hardware clip risk: any peak meter > 0.9
+    bool clipRisk = false;
+    for (float value : meters) {
+        if (value > 0.9f) {
+            clipRisk = true;
+            break;
+        }
+    }
+    if (clipRisk != m_hardwareClipRisk) {
+        m_hardwareClipRisk = clipRisk;
+        emit hardwareClipRiskChanged();
+    }
+
     // Update raw meters (only available during live JACK sessions)
     if (!m_audioClient) {
         return;
@@ -271,12 +284,13 @@ void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& aver
         const float peak = peaks[static_cast<std::size_t>(s)];
         if (avg >= 0.f && peak >= 0.f) {
             m_calibrationProfile.avgRms[static_cast<std::size_t>(s)] = avg;
-            m_calibrationProfile.peakRms[static_cast<std::size_t>(s)] = peak;
-            // Calculate multiplier: targetRMS / avgInputRMS
-            // kTargetRms is the hardcoded target (0.25f) from StringTrackerParams
-            const float targetRms = trackerparams::targetRms(s);
-            const float multiplier = (avg > 0.f) ? (targetRms / avg) : 1.0f;
-            m_calibrationProfile.multipliers[static_cast<std::size_t>(s)] = std::clamp(multiplier, 0.2f, 8.0f);
+            m_calibrationProfile.peakLevel[static_cast<std::size_t>(s)] = peak;
+            // Peak-first: scale hottest transient to 0.8 peak
+            if (peak > 0.001f) {
+                m_calibrationProfile.multipliers[static_cast<std::size_t>(s)] = std::clamp(0.8f / peak, 0.2f, 8.0f);
+            } else {
+                m_calibrationProfile.multipliers[static_cast<std::size_t>(s)] = 1.0f;
+            }
             anyUpdated = true;
         }
     }
@@ -313,13 +327,11 @@ void TabEngineBridge::handleCalibrationFinished(const std::array<float, 6>& aver
         // Log calibration data
         SessionLogger::instance().log("calibration", "=== Calibration Complete ===");
         for (int s = 0; s < 6; ++s) {
-            const float targetRms = trackerparams::targetRms(s);
             SessionLogger::instance().logf("calibration", 
-                "String %d: avgRms=%.6f peakRms=%.6f targetRms=%.6f multiplier=%.3f",
+                "String %d: avgRms=%.6f peakLevel=%.6f target=0.8peak multiplier=%.3f",
                 s + 1,
                 m_calibrationProfile.avgRms[static_cast<std::size_t>(s)],
-                m_calibrationProfile.peakRms[static_cast<std::size_t>(s)],
-                targetRms,
+                m_calibrationProfile.peakLevel[static_cast<std::size_t>(s)],
                 m_calibrationProfile.multipliers[static_cast<std::size_t>(s)]);
         }
     }
@@ -659,6 +671,16 @@ void TabEngineBridge::syncFromEngine() {
         map.insert(QStringLiteral("start"), ev.startSec);
         map.insert(QStringLiteral("end"), ev.endSec);
         map.insert(QStringLiteral("velocity"), ev.velocity);
+        map.insert(QStringLiteral("peakLevel"), ev.peakLevel);
+        {
+            const char* stateStr = "unknown";
+            switch (ev.state) {
+                case NoteEvent::AnalysisState::PENDING_ANALYSIS: stateStr = "pending"; break;
+                case NoteEvent::AnalysisState::CONFIRMED:        stateStr = "confirmed"; break;
+                case NoteEvent::AnalysisState::CLOSED:           stateStr = "closed"; break;
+            }
+            map.insert(QStringLiteral("state"), QString::fromLatin1(stateStr));
+        }
         map.insert(QStringLiteral("articulation"), QString());
         list.push_back(map);
     }
@@ -725,7 +747,7 @@ void TabEngineBridge::loadPersistentCalibration() {
             NoteDetectionStore::instance().committedValueFromKey("calibrationGainMultiplier", i);
     }
     
-    // Try to load avgRms and peakRms from legacy calibration file if it exists
+    // Try to load avgRms and peakLevel from legacy calibration file if it exists
     const QString path = calibrationStoragePath();
     if (!path.isEmpty()) {
         QFile file(path);
@@ -738,9 +760,9 @@ void TabEngineBridge::loadPersistentCalibration() {
                 if (avgArr.size() == 6 && peakArr.size() == 6) {
                     for (int i = 0; i < 6; ++i) {
                         m_calibrationProfile.avgRms[static_cast<std::size_t>(i)] = static_cast<float>(avgArr[i].toDouble());
-                        m_calibrationProfile.peakRms[static_cast<std::size_t>(i)] = static_cast<float>(peakArr[i].toDouble());
+                        m_calibrationProfile.peakLevel[static_cast<std::size_t>(i)] = static_cast<float>(peakArr[i].toDouble());
                     }
-                    SessionLogger::instance().log("calibration", "Loaded avgRms/peakRms from legacy calibration file");
+                    SessionLogger::instance().log("calibration", "Loaded avgRms/peakLevel from legacy calibration file");
                 }
             }
         }

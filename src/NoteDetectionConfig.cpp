@@ -4,49 +4,34 @@
 
 namespace {
 
-// ── Default per-string values for the 6 user-facing controls ────────────
-constexpr std::array<float, 6> kDefaultNoiseGate             {{0.35f, 0.35f, 0.35f, 0.35f, 0.35f, 0.35f}};
-constexpr std::array<float, 6> kDefaultAttackSensitivity     {{1.3f,  1.3f,  1.3f,  1.3f,  1.3f,  1.3f}};
-constexpr std::array<float, 6> kDefaultTriggerGuardMs        {{60.f,  60.f,  60.f,  60.f,  60.f,  60.f}};
-constexpr std::array<float, 6> kDefaultNoteOnThreshold       {{0.015f, 0.020f, 0.025f, 0.035f, 0.045f, 0.055f}};
-constexpr std::array<float, 6> kDefaultNoteOffRatio          {{0.50f, 0.50f, 0.50f, 0.50f, 0.50f, 0.50f}};
-constexpr std::array<float, 6> kDefaultCalibrationGainMult   {{5.0f,  5.0f,  5.0f,  5.0f,  5.0f,  5.0f}};
-constexpr std::array<float, 6> kDefaultRepitchThreshold      {{0.5f,  0.5f,  0.5f,  0.5f,  0.5f,  0.5f}};  // 0.5 semitones = 50 cents dead-zone
-constexpr std::array<float, 6> kDefaultRepitchConfirmFrames  {{3.f,   3.f,   3.f,   3.f,   3.f,   3.f}};
-constexpr std::array<float, 6> kDefaultRepitchMinConfidence  {{0.80f, 0.80f, 0.80f, 0.80f, 0.80f, 0.80f}};
-constexpr std::array<float, 6> kDefaultPitchConfidence       {{0.65f, 0.65f, 0.65f, 0.65f, 0.65f, 0.65f}};
-constexpr std::array<float, 6> kDefaultRetriggerDeltaRatio    {{0.65f, 0.65f, 0.65f, 0.65f, 0.65f, 0.65f}};
+// ── Default per-string values (Section 9A) ──────────────────────────────
+constexpr std::array<float, 6> kDefaultTouchSensitivity      {{0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f}};
+constexpr std::array<float, 6> kDefaultAttackResponse        {{1.5f,  1.5f,  1.5f,  1.5f,  1.5f,  1.5f}};
+constexpr std::array<float, 6> kDefaultSustainTail           {{0.02f, 0.02f, 0.02f, 0.02f, 0.02f, 0.02f}};
+constexpr std::array<float, 6> kDefaultLegatoSpeed           {{2.f,   2.f,   2.f,   2.f,   2.f,   2.f}};
+constexpr std::array<float, 6> kDefaultTrackingStability     {{0.65f, 0.65f, 0.65f, 0.65f, 0.65f, 0.65f}};
+constexpr std::array<float, 6> kDefaultCalibrationGainMult   {{1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f}};
 
 constexpr std::array<const char*, 6> kDefaultStringLabels {{"E", "A", "D", "G", "B", "e"}};
 
 NoteDetectionParameterSet fromDefaults() {
     NoteDetectionParameterSet set;
-    set.noiseGate               = kDefaultNoiseGate;
-    set.attackSensitivity       = kDefaultAttackSensitivity;
-    set.triggerGuardMs          = kDefaultTriggerGuardMs;
-    set.noteOnThreshold         = kDefaultNoteOnThreshold;
-    set.noteOffRatio            = kDefaultNoteOffRatio;
+    set.touchSensitivity        = kDefaultTouchSensitivity;
+    set.attackResponse          = kDefaultAttackResponse;
+    set.sustainTail             = kDefaultSustainTail;
+    set.legatoSpeed             = kDefaultLegatoSpeed;
+    set.trackingStability       = kDefaultTrackingStability;
     set.calibrationGainMultiplier = kDefaultCalibrationGainMult;
-    set.repitchThreshold       = kDefaultRepitchThreshold;
-    set.repitchConfirmFrames   = kDefaultRepitchConfirmFrames;
-    set.repitchMinConfidence   = kDefaultRepitchMinConfidence;
-    set.pitchConfidence        = kDefaultPitchConfidence;
-    set.retriggerDeltaRatio    = kDefaultRetriggerDeltaRatio;
     return set;
 }
 
 const std::array<ParameterDescriptor, kNumNoteParameters> kDescriptors {{
-    {NoteParameter::NoiseGate,               "noiseGate",               "Noise Gate",          "Silence floor / noise rejection (0 = most sensitive).",        0.001f, 0.01f, 0.0001f, false},
-    {NoteParameter::AttackSensitivity,       "attackSensitivity",       "Attack Sensitivity",  "Aubio onset detector sensitivity (lower = more sensitive).",   0.5f,  3.0f,  0.05f, false},
-    {NoteParameter::TriggerGuardMs,          "triggerGuardMs",          "Trigger Guard (ms)",  "Minimum ms between successive note-on events.",                5.0f,  80.0f, 1.0f,  false},
-    {NoteParameter::NoteOnThreshold,         "noteOnThreshold",        "Note ON",             "RMS level that opens a new note.",                             0.01f, 0.35f, 0.001f, false},
-    {NoteParameter::NoteOffRatio,            "noteOffRatio",           "Note OFF Ratio",      "Note OFF = Note ON × this ratio.",                             0.1f,  1.0f,  0.01f, false},
-    {NoteParameter::CalibrationGainMultiplier, "calibrationGainMultiplier", "Gain Trim",       "Per-string gain multiplier.",                                  0.2f,  8.0f,  0.01f, false},
-    {NoteParameter::RepitchThreshold,      "repitchThreshold",      "Repitch Threshold",   "Semitone delta dead-zone for repitch (0.5 = 50 cents).",      0.2f,  0.8f,  0.01f, false},
-    {NoteParameter::RepitchConfirmFrames,  "repitchConfirmFrames",  "Repitch Confirm",     "Blocks the new pitch must be stable before repitch fires.",    1.0f,  5.0f,  1.0f,  false},
-    {NoteParameter::RepitchMinConfidence,  "repitchMinConfidence",  "Repitch Confidence",  "Minimum aubio pitch confidence to accept a repitch.",          0.3f,  0.9f,  0.01f, false},
-    {NoteParameter::PitchConfidence,        "pitchConfidence",       "Onset Confidence",    "Minimum aubio confidence to accept a new note-on (lower = more lenient).", 0.0f, 1.0f, 0.01f, false},
-    {NoteParameter::RetriggerDeltaRatio,    "retriggerDeltaRatio",   "Retrigger Delta",     "Relative energy-rise multiplier for retrigger gate (higher = harder to retrigger during sustain).", 0.1f, 1.0f, 0.01f, false}
+    {NoteParameter::TouchSensitivity,        "touchSensitivity",        "Touch Sensitivity",  "Delta added to adaptive noise floor for onset threshold (lower = more sensitive).", 0.01f, 0.25f, 0.005f, false},
+    {NoteParameter::AttackResponse,          "attackResponse",          "Attack Response",    "Retrigger multiplier: NewPeak must exceed CurrentRMS * this value.",                1.1f,  3.0f,  0.05f, false},
+    {NoteParameter::SustainTail,             "sustainTail",             "Sustain Tail",       "RMS exit threshold for note-off (lower = longer sustain detection).",               0.005f, 0.1f, 0.001f, false},
+    {NoteParameter::LegatoSpeed,             "legatoSpeed",             "Legato Speed",       "Minimum consecutive stable-pitch frames before repitch fires.",                    1.0f,  5.0f,  1.0f,  false},
+    {NoteParameter::TrackingStability,       "trackingStability",       "Tracking Stability", "Minimum pitch confidence to accept pitch lock (lower = more lenient).",             0.4f,  0.95f, 0.01f, false},
+    {NoteParameter::CalibrationGainMultiplier, "calibrationGainMultiplier", "Gain Trim",      "Per-string gain multiplier (set by calibration routine).",                         0.2f,  8.0f,  0.01f, false}
 }};
 
 } // namespace

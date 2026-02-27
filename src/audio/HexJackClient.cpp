@@ -77,16 +77,24 @@ private:
 };
 #endif // __linux__
 
-float computeLevel(const jack_default_audio_sample_t* buffer, jack_nframes_t frames) {
-    if (!buffer || frames == 0)
-        return 0.0f;
+float computePeakLevel(const float* buffer, jack_nframes_t frames) {
+    if (!buffer || frames == 0) return 0.0f;
+    float peak = 0.0f;
+    for (jack_nframes_t i = 0; i < frames; ++i) {
+        const float absVal = std::fabs(buffer[i]);
+        if (absVal > peak) peak = absVal;
+    }
+    return peak;
+}
+
+float computeRmsLevel(const float* buffer, jack_nframes_t frames) {
+    if (!buffer || frames == 0) return 0.0f;
     double sum = 0.0;
     for (jack_nframes_t i = 0; i < frames; ++i) {
         const double sample = buffer[i];
         sum += sample * sample;
     }
-    const double rms = std::sqrt(sum / static_cast<double>(frames));
-    return static_cast<float>(rms);
+    return static_cast<float>(std::sqrt(sum / static_cast<double>(frames)));
 }
 
 } // namespace
@@ -373,19 +381,14 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
         channels[static_cast<std::size_t>(s)] = buf.data();
     }
 
-    // Calculate meters from CALIBRATED audio (after multiplier applied)
+    // Calculate meters from CALIBRATED audio — instantaneous peak (no smoothing)
     for (int s = 0; s < 6; ++s) {
         const float* calibratedBuffer = channels[static_cast<std::size_t>(s)];
-        float level = calibratedBuffer ? computeLevel(calibratedBuffer, nframes) : 0.0f;
-        const float prev = self->m_detectionMeters[static_cast<std::size_t>(s)].load(std::memory_order_relaxed);
-        const float mix = (s == 0) ? 0.35f : (s == 1 ? 0.45f : 1.0f);
-        if (mix < 1.0f) {
-            level = prev * (1.0f - mix) + level * mix;
-        }
+        const float level = calibratedBuffer ? computePeakLevel(calibratedBuffer, nframes) : 0.0f;
         self->m_detectionMeters[static_cast<std::size_t>(s)].store(level, std::memory_order_relaxed);
     }
 
-    // Calculate RAW meters (before calibration gain)
+    // Calculate RAW meters (before calibration gain) — instantaneous peak
     for (int s = 0; s < 6; ++s) {
         jack_port_t* port = self->m_inputs[static_cast<std::size_t>(s)];
         if (!port) {
@@ -393,12 +396,7 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
             continue;
         }
         auto* rawBuf = static_cast<jack_default_audio_sample_t*>(jack_port_get_buffer(port, nframes));
-        float rawLevel = rawBuf ? computeLevel(rawBuf, nframes) : 0.0f;
-        const float prevRaw = self->m_rawMeters[static_cast<std::size_t>(s)].load(std::memory_order_relaxed);
-        const float mix = (s == 0) ? 0.35f : (s == 1 ? 0.45f : 1.0f);
-        if (mix < 1.0f) {
-            rawLevel = prevRaw * (1.0f - mix) + rawLevel * mix;
-        }
+        const float rawLevel = rawBuf ? computePeakLevel(rawBuf, nframes) : 0.0f;
         self->m_rawMeters[static_cast<std::size_t>(s)].store(rawLevel, std::memory_order_relaxed);
     }
 
@@ -411,18 +409,21 @@ int HexJackClient::processCallback(jack_nframes_t nframes, void* arg) {
     }
 
     // Compute raw levels for calibration (before gain applied)
-    float rawLevelSnapshot[6] {};
+    float rawPeakSnapshot[6] {};
+    float rawRmsSnapshot[6] {};
     if (self->m_calibrationState.active) {
         for (int s = 0; s < 6; ++s) {
             jack_port_t* port = self->m_inputs[static_cast<std::size_t>(s)];
             if (!port) {
-                rawLevelSnapshot[s] = 0.0f;
+                rawPeakSnapshot[s] = 0.0f;
+                rawRmsSnapshot[s] = 0.0f;
                 continue;
             }
             auto* rawBuf = static_cast<jack_default_audio_sample_t*>(jack_port_get_buffer(port, nframes));
-            rawLevelSnapshot[s] = rawBuf ? computeLevel(rawBuf, nframes) : 0.0f;
+            rawPeakSnapshot[s] = rawBuf ? computePeakLevel(rawBuf, nframes) : 0.0f;
+            rawRmsSnapshot[s] = rawBuf ? computeRmsLevel(rawBuf, nframes) : 0.0f;
         }
-        self->advanceCalibration(rawLevelSnapshot, nframes);
+        self->advanceCalibration(rawPeakSnapshot, rawRmsSnapshot, nframes);
     }
 
     const float sr = static_cast<float>(self->m_currentSampleRate.load(std::memory_order_acquire));
@@ -506,9 +507,9 @@ void HexJackClient::emitMeters() {
                 rawSnapshot[static_cast<std::size_t>(s)],
                 snapshot[static_cast<std::size_t>(s)]));
         }
-        const QString logLine = QStringLiteral("RMS -> %1").arg(parts.join(QStringLiteral(" | ")));
+        const QString logLine = QStringLiteral("peak -> %1").arg(parts.join(QStringLiteral(" | ")));
         qInfo().noquote() << logLine;
-        SessionLogger::instance().log("rms-meters", logLine.toStdString());
+        SessionLogger::instance().log("peak-meters", logLine.toStdString());
     }
 }
 
@@ -657,7 +658,7 @@ void HexJackClient::handleCalibrationRequest(int targetString) {
         announceCalibrationStep(state.currentString, false);
 }
 
-void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) {
+void HexJackClient::advanceCalibration(float peakLevels[6], float rmsLevels[6], jack_nframes_t nframes) {
     auto& state = m_calibrationState;
     if (!state.active)
         return;
@@ -680,10 +681,10 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
             // UI already shows dark-grey circles via handleCalibrationStarted
         }
 
-        // Accumulate average RMS across all 6 channels
+        // Accumulate average RMS across all 6 channels (noise floor uses RMS)
         double blockSum = 0.0;
         for (int s = 0; s < 6; ++s)
-            blockSum += std::max(0.f, levels[s]);
+            blockSum += std::max(0.f, rmsLevels[s]);
         state.noiseFloorSum += blockSum / 6.0;
         state.noiseFloorSamples += 1;
         state.framesRemaining -= static_cast<int>(nframes);
@@ -709,10 +710,10 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
         return;
     }
 
-    // ── Per-string calibration ───────────────────────────────────────
+    // ── Per-string calibration (peak-based, targeting 0.8 Peak) ──────
     const int idx = state.currentString;
     if (!state.capturing) {
-        const float level = std::max(0.f, levels[idx]);
+        const float level = std::max(0.f, peakLevels[idx]);
         if (level >= kCalibrationTriggerLevel) {
             state.capturing = true;
             state.framesRemaining = state.captureFramesPerString;
@@ -725,7 +726,7 @@ void HexJackClient::advanceCalibration(float levels[6], jack_nframes_t nframes) 
     }
 
     const std::size_t slot = static_cast<std::size_t>(idx);
-    const float level = std::max(0.f, levels[idx]);
+    const float level = std::max(0.f, peakLevels[idx]);
     state.sumRms[slot] += level;
     state.samples[slot] += 1;
     state.peakRms[slot] = std::max(state.peakRms[slot], level);

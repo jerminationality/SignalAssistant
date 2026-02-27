@@ -78,7 +78,7 @@ private:
     bool launchJackServer(const QString& command) const;
     void connectSystemPorts();
     void handleCalibrationRequest(int targetString);
-    void advanceCalibration(float levels[6], jack_nframes_t nframes);
+    void advanceCalibration(float peakLevels[6], float rmsLevels[6], jack_nframes_t nframes);
     void announceCalibrationStep(int stringIndex, bool capturing);
     void pushMonitorBlock(const float* const channels[6], int frames);
     bool ensureMonitorSink();

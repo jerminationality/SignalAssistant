@@ -11,17 +11,12 @@
 #include <vector>
 
 struct NoteDetectionParameterSetAtomic {
-    std::array<std::atomic<float>, 6> noiseGate;
-    std::array<std::atomic<float>, 6> attackSensitivity;
-    std::array<std::atomic<float>, 6> triggerGuardMs;
-    std::array<std::atomic<float>, 6> noteOnThreshold;
-    std::array<std::atomic<float>, 6> noteOffRatio;
+    std::array<std::atomic<float>, 6> touchSensitivity;
+    std::array<std::atomic<float>, 6> attackResponse;
+    std::array<std::atomic<float>, 6> sustainTail;
+    std::array<std::atomic<float>, 6> legatoSpeed;
+    std::array<std::atomic<float>, 6> trackingStability;
     std::array<std::atomic<float>, 6> calibrationGainMultiplier;
-    std::array<std::atomic<float>, 6> repitchThreshold;
-    std::array<std::atomic<float>, 6> repitchConfirmFrames;
-    std::array<std::atomic<float>, 6> repitchMinConfidence;
-    std::array<std::atomic<float>, 6> pitchConfidence;
-    std::array<std::atomic<float>, 6> retriggerDeltaRatio;
 
     void store(const NoteDetectionParameterSet& source);
 };

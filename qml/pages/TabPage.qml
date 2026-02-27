@@ -944,7 +944,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Label {
-                    text: "Baseline"
+                    text: "Noise"
                     width: 45
                     font.pixelSize: 8
                     color: "#7d8694"
@@ -960,7 +960,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Label {
-                    text: "Sust"
+                    text: "Exit"
                     width: 45
                     font.pixelSize: 8
                     color: "#7d8694"
@@ -993,7 +993,7 @@ Item {
                         width: 10
                     }
                     Label {
-                        text: (thresholdData && typeof thresholdData.onsetThreshold === 'number') ? thresholdData.onsetThreshold.toFixed(4) : "-.----"
+                        text: (thresholdData && typeof thresholdData.onsetPeakThreshold === 'number') ? thresholdData.onsetPeakThreshold.toFixed(4) : "-.----"
                         width: 45
                         font.family: "Monospace"
                         font.pixelSize: 9
@@ -1001,7 +1001,7 @@ Item {
                         horizontalAlignment: Text.AlignHCenter
                     }
                     Label {
-                        text: (thresholdData && typeof thresholdData.baseline === 'number') ? thresholdData.baseline.toFixed(4) : "-.----"
+                        text: (thresholdData && typeof thresholdData.noiseFloor === 'number') ? thresholdData.noiseFloor.toFixed(4) : "-.----"
                         width: 45
                         font.family: "Monospace"
                         font.pixelSize: 9
@@ -1009,7 +1009,7 @@ Item {
                         horizontalAlignment: Text.AlignHCenter
                     }
                     Label {
-                        text: (thresholdData && typeof thresholdData.gateThreshold === 'number') ? thresholdData.gateThreshold.toFixed(4) : "-.----"
+                        text: (thresholdData && typeof thresholdData.retriggerGate === 'number') ? thresholdData.retriggerGate.toFixed(4) : "-.----"
                         width: 45
                         font.family: "Monospace"
                         font.pixelSize: 9
@@ -1017,7 +1017,7 @@ Item {
                         horizontalAlignment: Text.AlignHCenter
                     }
                     Label {
-                        text: (thresholdData && typeof thresholdData.sustainFloor === 'number') ? thresholdData.sustainFloor.toFixed(4) : "-.----"
+                        text: (thresholdData && typeof thresholdData.exitRmsThreshold === 'number') ? thresholdData.exitRmsThreshold.toFixed(4) : "-.----"
                         width: 45
                         font.family: "Monospace"
                         font.pixelSize: 9

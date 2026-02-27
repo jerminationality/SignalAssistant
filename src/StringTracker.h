@@ -12,9 +12,19 @@ extern "C" {
 }
 #endif
 
+// ═══════════════════════════════════════════════════════════════════════════
+// Peak-First Dual-Path Detection Architecture (Sections 3-8)
+//
+//   Path A  (Peak/Transient) — raw signal peak → onset/retrigger
+//   Path B  (RMS/Body)       — filtered RMS    → velocity/sustain/note-off
+//
+//   Noise floor: leaky integrator, frozen while note ACTIVE, resumes on RELEASE
+//   State flow:  PENDING_ANALYSIS → CONFIRMED → CLOSED
+// ═══════════════════════════════════════════════════════════════════════════
+
 class StringTracker {
 public:
-  // events/out indices are shared with TabEngine so we can open/close notes centrally
+  // events/activeIdx are shared with TabEngine for centralised note management
   StringTracker(int stringIdx,
                 const Tuning& tuning,
                 const TrackerConfig& cfg,
@@ -23,52 +33,55 @@ public:
                 TabEngine& engine);
   ~StringTracker();
 
-  // mono samples may be nullptr => treat as silence
+  // mono samples may be nullptr → treat as silence
   void processBlock(const float* samples, int n, float sr, float blockStartSec);
   void resetState();
   float lastPitchHz() const;
   StringThresholds getThresholds() const { return _lastThresholds; }
 
 private:
+  // ─── Processing Pipeline ─────────────────────────────────────────────
   void configureProcessing(float sr, int blockSamples);
-  void updateFeatures(const float* samples, int n, float sr, float t0);
-  bool detectOnset(std::size_t frameIdx);
-  int  estimateMidi(const FrameFeatures& frame) const;
-  int  applyLowStringBias(int midi, const FrameFeatures& frame) const;
-  bool noteShouldClose(std::size_t frameIdx) const;
-  float applyPitchMedian(float pitchHz);
-  bool updatePitchConfidence(int midi, float pitchHz);
-  int  applyPitchHold(int midi, bool stable);
 
+  // ─── Pitch Helpers ───────────────────────────────────────────────────
+  int   estimateMidi(float pitchHz) const;
+  int   applyLowStringBias(int midi, float pitchHz, float envelopeRms) const;
+  float applyPitchMedian(float pitchHz);
+  bool  updatePitchConfidence(int midi, float pitchHz);
+  int   applyPitchHold(int midi, bool stable);
+
+  // ─── Note Lifecycle ──────────────────────────────────────────────────
+  void closeActiveNote(float tSec, const char* reason);
+
+  // ─── Bandpass Filter (2nd-order Butterworth HP + LP cascade) ─────────
   struct BandpassFilter {
-    // 2nd-order Butterworth bandpass (cascade of 2nd-order HP and LP sections)
-    // Highpass section (2nd order)
     float hp_b0 = 0.f, hp_b1 = 0.f, hp_b2 = 0.f;
     float hp_a1 = 0.f, hp_a2 = 0.f;
-    float hp_x1 = 0.f, hp_x2 = 0.f;  // input delay line
-    float hp_y1 = 0.f, hp_y2 = 0.f;  // output delay line
-    
-    // Lowpass section (2nd order)
+    float hp_x1 = 0.f, hp_x2 = 0.f;
+    float hp_y1 = 0.f, hp_y2 = 0.f;
+
     float lp_b0 = 0.f, lp_b1 = 0.f, lp_b2 = 0.f;
     float lp_a1 = 0.f, lp_a2 = 0.f;
     float lp_x1 = 0.f, lp_x2 = 0.f;
     float lp_y1 = 0.f, lp_y2 = 0.f;
-    
+
     void reset();
     void configure(float sr, float lowCutHz, float highCutHz, int stringIdx);
     float process(float x);
   };
 
+  // ─── Noise Floor State Machine (Section 8) ──────────────────────────
+  enum class NoiseFloorState { IDLE, ACTIVE, RELEASE };
+
+  // ─── Core State ──────────────────────────────────────────────────────
   int _s = 0;
   const Tuning& _tuning;
   const TrackerConfig& _cfg;
   TabEngine& _engine;
-  std::deque<FrameFeatures> _feat; // rolling ~500ms
   std::vector<NoteEvent>& _events;
-  std::vector<int>& _activeIdx;    // per-string active idx reference
+  std::vector<int>& _activeIdx;
 
-  float _lastOnsetPeakRms = 0.f;
-  float _lastOnsetSec = -1.f;
+  // Processing configuration
   float _currentSr = 0.f;
   int   _hopSamples = 0;
   int   _fftSize = 0;
@@ -77,7 +90,26 @@ private:
   BandpassFilter _filter;
   std::vector<float> _filteredScratch;
   bool _aubioReady = false;
-  bool _onsetLatched = false;
+
+  // ─── Path A: Peak / Transient ────────────────────────────────────────
+  float _currentPeak = 0.f;
+  float _lastOnsetSec = -1.f;
+
+  // ─── Path B: RMS / Body ──────────────────────────────────────────────
+  float _currentRms = 0.f;
+  int   _releaseQuietFrames = 0;
+
+  // ─── Noise Floor ────────────────────────────────────────────────────
+  NoiseFloorState _noiseFloorState = NoiseFloorState::IDLE;
+  float _noiseFloor = 0.001f;
+  float _cachedNoiseFloor = 0.001f;
+
+  // ─── Analysis Delay (PENDING_ANALYSIS → CONFIRMED timing) ───────────
+  int   _analysisFrameCount = 0;
+  float _pendingPeakLevel = 0.f;
+
+  // ─── Pitch State ────────────────────────────────────────────────────
+  float _lastFeaturePitchHz = -1.f;
   float _pitchConfidenceHz = -1.f;
   int   _pitchConfidenceMidi = -1;
   int   _pitchConfidenceFrames = 0;
@@ -85,30 +117,29 @@ private:
   int   _pitchHoldPendingMidi = -1;
   int   _pitchHoldPendingFrames = 0;
   int   _pitchHoldSilenceFrames = 0;
-  float _envAdaptiveRms = 0.001f;
-  mutable int _releaseQuietFrames = 0;
-  float _activeHoldUntilSec = 0.f;
+  std::deque<float> _pitchMedianWindow;
+  float _lastPitchConf = 0.f;
+
+  // ─── Retrigger ──────────────────────────────────────────────────────
   float _retriggerBlockUntilSec = 0.f;
-  bool _activeForcedOpen = false;
-  float _prevFrameRms = 0.f;       // Previous frame's envelopeRms for retrigger delta check
-  float _minRmsAfterOnset = 0.f;  // Minimum RMS seen since last note-on (decay tracking)
-  float _lastFeaturePitchHz = -1.f;
-  mutable StringThresholds _lastThresholds;
+
+  // ─── Repitch ────────────────────────────────────────────────────────
   float _lastRepitchSec = -1.f;
-  int _repitchCandidateMidi = -1;
-  int _repitchStabilityCounter = 0;
+  int   _repitchCandidateMidi = -1;
+  int   _repitchStabilityCounter = 0;
   float _repitchLastConfidence = 0.f;
-  float _repitchMaxOnsetSeen = 0.f;  // peak onset strength seen during confirm window
+
+  // ─── UI / Debug ─────────────────────────────────────────────────────
+  mutable StringThresholds _lastThresholds;
+
 #ifndef HAVE_AUBIO
   bool _warnedNoAubio = false;
 #endif
-  std::deque<float> _pitchMedianWindow;
 
 #ifdef HAVE_AUBIO
-  aubio_onset_t* _aubioOnset = nullptr;
+  // Pitch detection only — onset detection uses Path A peak, not aubio
   aubio_pitch_t* _aubioPitch = nullptr;
   fvec_t*        _aubioIn = nullptr;
-  fvec_t*        _aubioOnsetOut = nullptr;
   fvec_t*        _aubioPitchOut = nullptr;
 #endif
 };

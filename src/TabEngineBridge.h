@@ -29,6 +29,7 @@ class TabEngineBridge : public QObject {
     Q_PROPERTY(bool tuningModeEnabled READ tuningModeEnabled WRITE setTuningModeEnabled NOTIFY tuningModeEnabledChanged)
     Q_PROPERTY(QVariantList tuningDeviation READ tuningDeviation NOTIFY tuningDeviationChanged)
     Q_PROPERTY(QVariantList calibrationGains READ calibrationGains NOTIFY calibrationGainsChanged)
+    Q_PROPERTY(bool hardwareClipRisk READ hardwareClipRisk NOTIFY hardwareClipRiskChanged)
 public:
     explicit TabEngineBridge(QObject* parent=nullptr);
     ~TabEngineBridge();
@@ -46,6 +47,7 @@ public:
     bool tuningModeEnabled() const { return m_tuningModeEnabled; }
     QVariantList tuningDeviation() const;
     QVariantList calibrationGains() const;
+    bool hardwareClipRisk() const { return m_hardwareClipRisk; }
 
     Q_INVOKABLE void requestRefresh();
     Q_INVOKABLE void clear();
@@ -94,6 +96,7 @@ signals:
     void tuningModeEnabledChanged();
     void tuningDeviationChanged();
     void calibrationGainsChanged();
+    void hardwareClipRiskChanged();
 
 private:
     void syncFromEngine();
@@ -163,6 +166,7 @@ private:
     bool m_debugNoteLogging {false};
     bool m_externalMetersActive {false};
     bool m_tuningModeEnabled {false};
+    bool m_hardwareClipRisk {false};
     std::array<float, 6> m_tuningDeviationCents {};
     QElapsedTimer m_thresholdsUpdateTimer;
 
