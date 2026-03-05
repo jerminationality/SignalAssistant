@@ -621,8 +621,10 @@ FocusScope {
                         }
                         Text {
                             text: param.description
+                            width: parent.width
                             color: "#94a3b8"
-                            wrapMode: Text.WordWrap
+                            wrapMode: Text.NoWrap
+                            elide: Text.ElideRight
                             font.pixelSize: 12
                         }
                         Column {
@@ -671,6 +673,7 @@ FocusScope {
                                             property string paramKey: param ? param.key : ""
                                             property int stringIndex: stringRow.stringIndex
                                             property double lastDispatchedValue: 0
+                                            property bool groupMode: false
                                             property var panelRef: paramListColumn.panelRef
                                             readonly property real baselineNormalized: panelRef ? panelRef.normalized(stringRow.baselineValue, from, to) : 0
                                             function tryRegister() {
@@ -745,6 +748,9 @@ FocusScope {
                                                     border.color: "#14532d"
                                                 }
                                             }
+                                            TapHandler {
+                                                onTapped: if (tapCount === 2) slider.groupMode = true
+                                            }
                                             onMoved: {
                                                 if (!controller) {
                                                     console.log("qml", "TuningPanel", "slider-move-skipped", param ? param.key : "", stringIndex, "no-controller")
@@ -756,7 +762,7 @@ FocusScope {
                                                 }
                                                 var delta = value - lastDispatchedValue
                                                 lastDispatchedValue = value
-                                                var shiftEngaged = panelRef ? panelRef.shiftActive() : false
+                                                var shiftEngaged = (panelRef ? panelRef.shiftActive() : false) || groupMode
                                                 if (shiftEngaged && Math.abs(delta) > 0) {
                                                     console.log("qml", "TuningPanel", "slider-move-group", param ? param.key : "", stringIndex, value, delta)
                                                     panelRef.applyGroupDelta(paramKey, stringIndex, delta, slider)
@@ -773,6 +779,7 @@ FocusScope {
                                                     if (controller)
                                                         controller.beginBatchEdit()
                                                 } else {
+                                                    groupMode = false
                                                     if (controller)
                                                         controller.endBatchEdit()
                                                     if (panelRef)

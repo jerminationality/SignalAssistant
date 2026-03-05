@@ -603,8 +603,10 @@ RowLayout {
                         }
                         Text {
                             text: param.description
+                            width: parent.width
                             color: "#94a3b8"
-                            wrapMode: Text.WordWrap
+                            wrapMode: Text.NoWrap
+                            elide: Text.ElideRight
                             font.pixelSize: 11
                         }
                         Column {
@@ -652,6 +654,7 @@ RowLayout {
                                             property string paramKey: param ? param.key : ""
                                             property int stringIndex: stringRow.stringIndex
                                             property double lastDispatchedValue: 0
+                                            property bool groupMode: false
                                             property var panelRef: paramListColumn.panelRef
                                             readonly property real baselineNormalized: panelRef ? panelRef.normalized(stringRow.baselineValue, from, to) : 0
                                             function tryRegister() {
@@ -718,6 +721,9 @@ RowLayout {
                                                     border.color: "#14532d"
                                                 }
                                             }
+                                            TapHandler {
+                                                onTapped: if (tapCount === 2) slider.groupMode = true
+                                            }
                                             onMoved: {
                                                 if (!controller) {
                                                     return
@@ -727,7 +733,7 @@ RowLayout {
                                                 }
                                                 var delta = value - lastDispatchedValue
                                                 lastDispatchedValue = value
-                                                var shiftEngaged = panelRef ? panelRef.shiftActive() : false
+                                                var shiftEngaged = (panelRef ? panelRef.shiftActive() : false) || groupMode
                                                 if (shiftEngaged && Math.abs(delta) > 0) {
                                                     panelRef.applyGroupDelta(paramKey, stringIndex, delta, slider)
                                                 } else {
@@ -742,6 +748,7 @@ RowLayout {
                                                     if (controller)
                                                         controller.beginBatchEdit()
                                                 } else {
+                                                    groupMode = false
                                                     if (controller)
                                                         controller.endBatchEdit()
                                                     if (panelRef)
